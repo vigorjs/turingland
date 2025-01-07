@@ -17,25 +17,42 @@ class RoleAndPermissionSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         // Create permissions
-        Permission::create(['name' => 'view listing']);
-        Permission::create(['name' => 'create listing']);
-        Permission::create(['name' => 'edit listing']);
-        Permission::create(['name' => 'delete listing']);
+        Permission::create(['name' => 'view ads']);
+        Permission::create(['name' => 'create ads']);
+        Permission::create(['name' => 'edit ads']);
+        Permission::create(['name' => 'delete ads']);
         Permission::create(['name' => 'view reports']);
+        Permission::create(['name' => 'view user']);
+        Permission::create(['name' => 'create user']);
+        Permission::create(['name' => 'edit user']);
+        Permission::create(['name' => 'delete user']);
 
         // Create roles and assign permissions
         $customerRole = Role::create(['name' => 'customer']);
         $customerRole->givePermissionTo([
-            'view listing',
+            'view ads',
         ]);
 
         $adminRole = Role::create(['name' => 'admin']);
         $adminRole->givePermissionTo([
-            'view listing',
-            'create listing',
-            'edit listing',
-            'delete listing',
+            'view ads',
+            'create ads',
+            'edit ads',
+            'delete ads',
             'view reports',
+        ]);
+
+        $adminRole = Role::create(['name' => 'super_admin']);
+        $adminRole->givePermissionTo([
+            'view ads',
+            'create ads',
+            'edit ads',
+            'delete ads',
+            'view reports',
+            'view user',
+            'create user',
+            'edit user',
+            'delete user',
         ]);
     }
 }
