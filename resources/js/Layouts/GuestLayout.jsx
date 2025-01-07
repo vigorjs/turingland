@@ -14,12 +14,12 @@ export default function GuestLayout({ children }) {
     return (
         <div className="flex min-h-screen flex-col bg-gray-100">
             {/* Header */}
-            <header className="w-full bg-[#FD9458] py-4 shadow-md">
+            <header className="w-full bg-[#FD9458] py-4 shadow-md mb-6">
                 <div className="container mx-auto flex items-center justify-between px-32"> {/* Padding horizontal lebih besar */}
                     {/* Logo */}
                     <Link href="/" className="flex items-center">
                         <img
-                            src="/turinglandlogo.png" // Akses file logo dari folder public
+                            src="/assets/turinglandlogo.png" // Akses file logo dari folder public
                             alt="Application Logo"
                             className="h-10 w-auto"
                         />
@@ -44,20 +44,16 @@ export default function GuestLayout({ children }) {
             </header>
 
             {/* Main Content */}
-            <main className="flex-grow flex items-center justify-center pt-6 sm:pt-0">
-                <div className="mt-6 w-full overflow-hidden bg-white px-6 py-4 shadow-md sm:max-w-md sm:rounded-lg">
-                    {children}
-                </div>
-            </main>
+            {children}
 
             {/* Footer */}
-            <footer className="bg-[#222222] text-white py-8">
+            <footer className="bg-[#222222] text-white py-8 mt-6">
                 <div className="container mx-auto flex justify-between items-start px-32">
                     {/* Left Side: Logo and Address */}
                     <div className="flex flex-col items-start">
                         <div className="flex items-center mb-4">
                             <img
-                                src="/turinglandlogo.png" // Akses file logo dari folder public
+                                src="/assets/turinglandlogo.png" // Akses file logo dari folder public
                                 alt="Turingland Logo"
                                 className="h-10 w-auto mr-4"
                             />

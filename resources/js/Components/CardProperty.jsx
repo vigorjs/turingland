@@ -1,7 +1,7 @@
 export const CardProperty = ({ children, img }) => {
     return (
         <div
-            className="relative w-full aspect-square h-auto sm:w-[287.73px] sm:h-[287.73px] rounded-xl"
+            className="relative w-[287.73px] h-[287.73px] rounded-xl"
         >
             <img
                 src={img}

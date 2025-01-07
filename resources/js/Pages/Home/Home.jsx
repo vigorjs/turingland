@@ -4,6 +4,8 @@ import {
     CarouselContent,
     CarouselItem,
 } from "@/Components/ui/carousel";
+import GuestLayout from "@/Layouts/GuestLayout";
+import Autoplay from "embla-carousel-autoplay";
 import React from "react";
 
 export default function Home() {
@@ -19,142 +21,149 @@ export default function Home() {
     const arr = [{}, {}, {}, {}, {}, {}, {}, {}];
 
     return (
-        <div className="px-3 md:px-6 lg:px-[150px]">
+        <GuestLayout>
+            <div className="px-3 md:px-6 lg:px-[150px]">
+                {/* HERO SECTION */}
+                <Carousel
+                    plugins={[
+                        Autoplay({
+                            delay: 6000,
+                        }),
+                    ]}
+                    opts={{
+                        loop: true,
+                    }}
+                >
+                    <CarouselContent>
+                        {arr.length > 0
+                            ? arr.map((_, index) => (
+                                  <CarouselItem key={index}>
+                                      <div
+                                          className="relative w-full min-h-[580px] h-auto rounded-2xl bg-cover bg-center bg-fixed border border-gray-400"
+                                          style={{
+                                              backgroundImage: `url(${img})`,
+                                          }}
+                                      >
+                                          {/* <div className="w-full min-h-full rounded-2xl bg-black/30 absolute top-0"/> */}
+                                      </div>
+                                  </CarouselItem>
+                              ))
+                            : null}
+                    </CarouselContent>
+                    {/* FILTRE */}
+                    <div
+                        className="absolute h-32 w-full overflow-x-auto -mt-36 z-50 px-4"
+                        style={{ zIndex: 99999999 }}
+                    >
+                        <div className="shadow-xl bg-white w-full h-full rounded-2xl"></div>
+                    </div>
+                </Carousel>
 
-            {/* HERO SECTION */}
-            <Carousel>
-                <CarouselContent>
-                    {arr.length > 0
-                        ? arr.map((_, index) => (
-                              <CarouselItem key={index}>
-                                  <div
-                                      className="relative w-full min-h-[550px] h-auto rounded-2xl my-4 bg-cover bg-center bg-fixed"
-                                      style={{
-                                          backgroundImage: `url(${img})`,
-                                      }}
+                {/* ADS SECTION */}
+                <Carousel
+                    className="mt-24 mb-4"
+                    plugins={[
+                        Autoplay({
+                            delay: 4500,
+                        }),
+                    ]}
+                    opts={{
+                        align: "start",
+                        loop: true,
+                    }}
+                >
+                    <CarouselContent>
+                        {arr.length > 0
+                            ? arr.map((_, index) => (
+                                  <CarouselItem
+                                      key={`ads-section-${index}`}
+                                      className="md:basis-1/1 lg:basis-1/2"
                                   >
-                                      {/* <img
-                    src={img}
-                    alt=""
-                    className="rounded-2xl h-full w-full object-cover"
-                /> */}
-                                      <div className="w-full min-h-full bg-black/30 absolute top-0 flex flex-col justify-between items-center p-3 sm:p-5 rounded-2xl">
-                                          <div className="mt-32 mb-4 w-full lg:w-1/2 text-center flex flex-col gap-5">
-                                              {/* TEXT */}
-                                              <h1 className="text-white font-bold text-4xl md:text-5xl">
-                                                  Solusi Properti Terbaik untuk
-                                                  Hidup Lebih Nyaman
-                                              </h1>
-                                              <div className="w-[80%] mx-auto">
-                                                  <p className="text-white text-base sm:text-lg">
-                                                      Miliki hunian strategis
-                                                      dengan proses cepat,
-                                                      mudah, dan aman. Mulai
-                                                      perjalanan properti
-                                                      impianmu hari ini!
+                                      <div
+                                          className="relative rounded-2xl h-[279px] bg-center bg-cover"
+                                          style={{
+                                              backgroundImage: `url(${img2})`,
+                                          }}
+                                      >
+                                          {/* <div className="w-full h-full bg-black/30 absolute top-0 rounded-2xl flex justify-center items-center">
+                                              <div className="w-4/5 mx-auto">
+                                                  <h2 className="text-white text-4xl sm:text-5xl font-bold mb-3">
+                                                      Fauzan Properties
+                                                  </h2>
+                                                  <p className="text-white text-base sm:text-xl">
+                                                      Lorem ipsum dolor sit amet
+                                                      consectetur, adipisicing
+                                                      elit. Asperiores animi,
+                                                      laboriosam aspernatur est
+                                                      modi hic nulla
+                                                      reprehenderit et
                                                   </p>
                                               </div>
-                                          </div>
+                                          </div> */}
                                       </div>
-                                  </div>
-                              </CarouselItem>
-                          ))
-                        : null}
-                </CarouselContent>
-                <div
-                    className="absolute h-32 w-full overflow-x-auto -mt-40 z-50 px-4"
-                    style={{ zIndex: 99999999 }}
-                >
-                    <div className="bg-white w-full h-full rounded-2xl"></div>
-                </div>
-                {/* FILTRE */}
-            </Carousel>
+                                  </CarouselItem>
+                              ))
+                            : null}
+                    </CarouselContent>
+                </Carousel>
 
+                {/* RECCOMENDATION PROPERTIES */}
+                <div className="mt-16 mb-4">
+                    <div className="mb-3">
+                        <h2 className="text-xl sm:text-2xl font-bold">
+                            Rekomendasi Properti Terpopuler
+                        </h2>
+                        <p className="text-base">
+                            Cek rekomendasi properti terpopuler kami
+                        </p>
+                    </div>
 
-
-            {/* ADS SECTION */}
-            <Carousel
-                className="mt-4 sm:mt-16 mb-4"
-                opts={{
-                    align: "start",
-                    // loop: true,
-                }}
-            >
-                <CarouselContent>
-                    {arr.length > 0
-                        ? arr.map((_, index) => (
-                              <CarouselItem
-                                  key={`ads-section-${index}`}
-                                  className="md:basis-1/1 lg:basis-1/2"
-                              >
-                                  <div
-                                      className="relative rounded-2xl h-[279.2px] bg-center bg-cover"
-                                      style={{
-                                          backgroundImage: `url(${img2})`,
-                                      }}
-                                  >
-                                      <div className="w-full h-full bg-black/30 absolute top-0 rounded-2xl flex justify-center items-center">
-                                          <div className="w-4/5 mx-auto">
-                                              <h2 className="text-white text-4xl sm:text-5xl font-bold mb-3">
-                                                  Fauzan Properties
-                                              </h2>
-                                              <p className="text-white text-base sm:text-xl">
-                                                  Lorem ipsum dolor sit amet
-                                                  consectetur, adipisicing elit.
-                                                  Asperiores animi, laboriosam
-                                                  aspernatur est modi hic nulla
-                                                  reprehenderit et
+                    {/* CARD */}
+                    <div
+                        className="flex overflow-x-scroll space-x-3 sm:space-x-5 snap-mandatory [&::-webkit-scrollbar]:h-0"
+                        // [&::-webkit-scrollbar]:w-1
+                        // [&::-webkit-scrollbar-track]:bg-gray-100
+                        // [&::-webkit-scrollbar-thumb]:bg-[#FD9458]
+                        // [&::-webkit-scrollbar-thumb]:rounded-full
+                    >
+                        {arr.length > 0
+                            ? arr.map((_, index) => (
+                                  <div className="flex-shrink-0">
+                                      <CardProperty
+                                          img={img3}
+                                          key={`properties-card-${index}`}
+                                      >
+                                          <h2 className="text-base font-bold">
+                                              Fauzan Properties
+                                          </h2>
+                                          <div className="flex justify-start items-center gap-2">
+                                              <p className="text-xs text-neutral-600">
+                                                  I
+                                              </p>
+                                              <p className="text-xs text-neutral-600">
+                                                  Jl. Kebon Jeruk, Jakarta
                                               </p>
                                           </div>
-                                      </div>
-                                  </div>
-                              </CarouselItem>
-                          ))
-                        : null}
-                </CarouselContent>
-            </Carousel>
 
-            {/* RECCOMENDATION PROPERTIES */}
-            <div className="mt-16 mb-4">
-                <div className="mb-3">
-                    <h2 className="text-xl sm:text-2xl font-bold">
-                        Rekomendasi Properti Terpopuler
-                    </h2>
-                    <p className="text-base">
-                        Cek rekomendasi properti terpopuler kami
-                    </p>
-                </div>
-
-                {/* CARD */}
-                <div className="flex flex-wrap justify-between items-center gap-2 sm:gap-4">
-                    {arr.length > 0
-                        ? arr.map((_, index) => (
-                              <CardProperty img={img3} key={index}>
-                                  <h2 className="text-base font-bold">
-                                      Fauzan Properties
-                                  </h2>
-                                  <div className="flex justify-start items-center gap-2">
-                                      <p className="text-xs text-neutral-600">
-                                          I
-                                      </p>
-                                      <p className="text-xs text-neutral-600">
-                                          Jl. Kebon Jeruk, Jakarta
-                                      </p>
+                                          <div className="flex justify-start items-center gap-3.5 mt-1">
+                                              <p className="text-xs">
+                                                  LT: 40&sup2;
+                                              </p>
+                                              <p className="text-xs">
+                                                  LB: 40&sup2;
+                                              </p>
+                                          </div>
+                                          <hr className="my-1" />
+                                          <p className="text-xs font-semibold">
+                                              Rp 200 juta
+                                          </p>
+                                      </CardProperty>
                                   </div>
-
-                                  <div className="flex justify-start items-center gap-3.5 mt-1">
-                                      <p className="text-xs">LT: 40&sup2;</p>
-                                      <p className="text-xs">LB: 40&sup2;</p>
-                                  </div>
-                                  <hr className="my-1" />
-                                  <p className="text-xs font-semibold">
-                                      Rp 200 juta
-                                  </p>
-                              </CardProperty>
-                          ))
-                        : null}
+                              ))
+                            : null}
+                    </div>
                 </div>
             </div>
-        </div>
+        </GuestLayout>
     );
 }
