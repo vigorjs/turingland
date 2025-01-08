@@ -12,7 +12,7 @@ const AdminProfile = ({ imgSrc, name, email }) => {
 
             {/* Profile Info */}
             <div className="pr-4">
-                <p className="text-[15px] font-bold">{name}</p>
+                <p className="text-[15px] text-black font-bold">{name}</p>
                 <p className="text-[10px] text-black">{email}</p>
             </div>
         </div>

@@ -20,7 +20,7 @@ const AdminSearchBar = () => {
                 placeholder="Rumah Fauzan Property"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)} // Update state saat input berubah
-                className="flex-1 px-4 py-2 border border-[#C6C6C6] bg-[#EDEDED] rounded-lg pr-10" // Padding kanan untuk memberi ruang bagi ikon
+                className="flex-1 px-4 py-2 border border-[#C6C6C6] bg-[#EDEDED] rounded-lg pr-10 text-black" // Padding kanan untuk memberi ruang bagi ikon
             />
             {/* Ikon Pencarian */}
             <FaSearch 

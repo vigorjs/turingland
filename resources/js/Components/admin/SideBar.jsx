@@ -39,7 +39,7 @@ const Sidebar = () => {
                         }`}
                     >
                         <span className="text-xl">{link.icon}</span>
-                        <span className="font-bold text-[18px]">{link.name}</span>
+                        <span className="font-bold text-[15px]">{link.name}</span>
                     </Link>
                 ))}
             </nav>
