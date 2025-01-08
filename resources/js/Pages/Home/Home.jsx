@@ -158,7 +158,7 @@ export default function Home() {
                     >
                         {arr.length > 0
                             ? arr.map((_, index) => (
-                                  <div className="flex-shrink-0">
+                                  <div className="flex-shrink-0" key={index}>
                                       <CardProperty
                                           img={img3}
                                           key={`properties-card-${index}`}
