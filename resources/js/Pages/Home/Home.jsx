@@ -196,7 +196,7 @@ export default function Home() {
 
                 {/* TESTIMONIAL SECTION */}
                 <div className="py-12">
-                    <h2 className="text-2xl sm:text-3xl font-bold mb-8 text-left text-gray-800">
+                    <h2 className="text-xl sm:text-2xl font-bold mb-8 text-left text-gray-800">
                         Kata Mereka Tentang TuringLand
                     </h2>
                     <Carousel
