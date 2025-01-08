@@ -1,8 +1,12 @@
 import { CardProperty } from "@/Components/CardProperty";
+import { FilterSearch } from "@/Components/FilterSearch";
+import { TestimonialCard } from "@/Components/TestimonialCard";
 import {
     Carousel,
     CarouselContent,
     CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
 } from "@/Components/ui/carousel";
 import GuestLayout from "@/Layouts/GuestLayout";
 import Autoplay from "embla-carousel-autoplay";
@@ -19,6 +23,37 @@ export default function Home() {
         "https://s3-alpha-sig.figma.com/img/db80/4347/cb68839c79ca58a9b46777e9c9c07cc0?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=nXWoIhqAUTi-at1criMJPC8l-xudGFynTTWb9Y-EQ3SJVxbjtvcOe0gMCLVH-t9DqTyNiL-Yzev8ZoIv8rUhxICHbXB8rkLeNKxj7EQ62uTTgu9cxyvbWTE~QRaByjGG1cJ6vcaSQ6MXKBL0oqfIGiBf0VqSA6UKFh5uufI7P4FLQmWmiBmecXFnhZ2A5p2FkQ5Vc~d9jsWCoMVMpC711S6lfNymccRCkodcG15Mx22s-p2ydCVU06b5TyCZg7x1tG2lcqPcdyaX07KFBNHfmAp9N23KdaCvnBgsmBAeg76eEDgO9y7B4xcEcerX559xGjDraUB~HpMhDXtZGXxetg__";
 
     const arr = [{}, {}, {}, {}, {}, {}, {}, {}];
+
+    const testimonials = [
+        {
+            id: 1,
+            img: "https://via.placeholder.com/150",
+            name: "Saydova",
+            role: "Investor Kripto",
+            text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, ex.",
+        },
+        {
+            id: 2,
+            img: "https://via.placeholder.com/150",
+            name: "Tommy",
+            role: "Penyewa ",
+            text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nobis.",
+        },
+        {
+            id: 3,
+            img: "https://via.placeholder.com/150",
+            name: "Jake Doe",
+            role: "Pembeli",
+            text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim, voluptate.",
+        },
+        {
+            id: 4,
+            img: "https://via.placeholder.com/150",
+            name: "Attahlah",
+            role: "Investor",
+            text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim, voluptate.",
+        },
+    ];
 
     return (
         <GuestLayout>
@@ -39,24 +74,19 @@ export default function Home() {
                             ? arr.map((_, index) => (
                                   <CarouselItem key={index}>
                                       <div
-                                          className="relative w-full min-h-[580px] h-auto rounded-2xl bg-cover bg-center bg-fixed border border-gray-400"
+                                          className="relative w-full min-h-[450px] h-auto rounded-2xl bg-cover bg-center bg-fixed border border-gray-400"
                                           style={{
                                               backgroundImage: `url(${img})`,
                                           }}
                                       >
-                                          {/* <div className="w-full min-h-full rounded-2xl bg-black/30 absolute top-0"/> */}
+                                          <div className="w-full min-h-full rounded-2xl bg-black/10 absolute top-0"/>
                                       </div>
                                   </CarouselItem>
                               ))
                             : null}
                     </CarouselContent>
                     {/* FILTRE */}
-                    <div
-                        className="absolute h-32 w-full overflow-x-auto -mt-36 z-50 px-4"
-                        style={{ zIndex: 99999999 }}
-                    >
-                        <div className="shadow-xl bg-white w-full h-full rounded-2xl"></div>
-                    </div>
+                            <FilterSearch/>
                 </Carousel>
 
                 {/* ADS SECTION */}
@@ -162,6 +192,59 @@ export default function Home() {
                               ))
                             : null}
                     </div>
+                </div>
+
+                {/* TESTIMONIAL SECTION */}
+                <div className="py-12">
+                    <h2 className="text-xl sm:text-2xl font-bold mb-8 text-left text-gray-800">
+                        Kata Mereka Tentang TuringLand
+                    </h2>
+                    <Carousel
+                        opts={{
+                            align: "start",
+                        }}
+                        className="w-full"
+                    >
+                        <CarouselContent className="flex gap-4">
+                            {testimonials.map((testimonial, index) => (
+                                <CarouselItem
+                                    key={index}
+                                    className="md:basis-1/2 lg:basis-1/3"
+                                >
+                                    <div className="p-1">
+                                        <TestimonialCard
+                                            img={testimonial.img}
+                                            name={testimonial.name}
+                                            role={testimonial.role}
+                                            text={testimonial.text}
+                                            className="bg-white rounded-lg shadow-lg"
+                                        >
+                                            <div className="flex items-start gap-4 p-4">
+                                                <img
+                                                    src={testimonial.img}
+                                                    alt={testimonial.name}
+                                                    className="w-16 h-16 rounded-full object-cover border-2 border-gray-200"
+                                                />
+                                                <div>
+                                                    <h4 className="text-lg font-bold text-gray-800">
+                                                        {testimonial.name}
+                                                    </h4>
+                                                    <p className="text-sm text-gray-500 mb-2">
+                                                        {testimonial.role}
+                                                    </p>
+                                                    <p className="text-sm text-gray-600">
+                                                        {testimonial.text}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </TestimonialCard>
+                                    </div>
+                                </CarouselItem>
+                            ))}
+                        </CarouselContent>
+                        <CarouselPrevious />
+                        <CarouselNext />
+                    </Carousel>
                 </div>
             </div>
         </GuestLayout>
