@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
@@ -35,6 +36,18 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    //rules untuk role agent wa_number harus diisi
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($user) {
+            if ($user->hasRole('agent') && empty($user->wa_number)) {
+                throw new \Exception('WA Number is required for users with the role "agent".');
+            }
+        });
+    }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -46,5 +59,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function properties(): HasMany
+    {
+        return $this->hasMany(Property::class);
     }
 }
