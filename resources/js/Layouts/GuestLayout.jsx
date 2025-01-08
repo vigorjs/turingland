@@ -6,7 +6,7 @@ export default function GuestLayout({ children }) {
     // Daftar menu navigasi
     const navigationLinks = [
         { name: 'Home', href: '/' },
-        { name: 'Search', href: '/search' },
+        { name: 'Search', href: '/search-page' },
         { name: 'About', href: '/' },
         { name: 'Contact', href: '/' },
     ];
