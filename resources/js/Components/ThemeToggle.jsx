@@ -1,12 +1,12 @@
 import { Moon, Sun } from "lucide-react";
 import { Button } from "./ui/button";
 import { useTheme } from "@/hooks/useTheme";
-import { useToast } from "@/hooks/use-toast";
+// import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 
 export function ThemeToggle() {
     const { setTheme } = useTheme();
-    const { toast } = useToast();
+    // const { toast } = useToast();
     const [isDarkMode, setIsDarkMode] = useState(false);
 
     const handleToggle = () => {
@@ -14,25 +14,25 @@ export function ThemeToggle() {
         setIsDarkMode(!isDarkMode);
         setTheme(newTheme);
 
-        toast({
-            title: isDarkMode
-                ? "Blinding Headlights! 🌞"
-                : "Hello Darkness! 👏",
-            variant: "default",
-        });
+        // toast({
+        //     title: isDarkMode
+        //         ? "Blinding Headlights! 🌞"
+        //         : "Hello Darkness! 👏",
+        //     variant: "default",
+        // });
     };
 
     return (
         <Button
             variant="ghost"
-            size="icon"
             onClick={handleToggle}
             aria-label="Toggle theme"
+            className="text-white dark:text-white dark:hover:text-[#FD9458] hover:text-white hover:bg-inherit"
         >
             {isDarkMode ? (
-                <Moon className="h-[1.2rem] w-[1.2rem] transition-all" />
+                <Moon className="transition-all" size={40}  />
             ) : (
-                <Sun className="h-[1.2rem] w-[1.2rem] transition-all" />
+                <Sun className="transition-all" size={40}/>
             )}
         </Button>
     );

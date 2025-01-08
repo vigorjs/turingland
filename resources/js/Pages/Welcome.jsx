@@ -1,6 +1,7 @@
 import { ThemeToggle } from "@/Components/ThemeToggle";
 import { Button } from "@/Components/ui/button";
-import { Head, Link } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
+import GuestLayout from "@/Layouts/GuestLayout";
 
 export default function Welcome({ auth, laravelVersion, phpVersion }) {
     return (
