@@ -1,4 +1,5 @@
 import { CardProperty } from "@/Components/CardProperty";
+import { FilterSearch } from "@/Components/FilterSearch";
 import { TestimonialCard } from "@/Components/TestimonialCard";
 import {
     Carousel,
@@ -73,24 +74,19 @@ export default function Home() {
                             ? arr.map((_, index) => (
                                   <CarouselItem key={index}>
                                       <div
-                                          className="relative w-full min-h-[580px] h-auto rounded-2xl bg-cover bg-center bg-fixed border border-gray-400"
+                                          className="relative w-full min-h-[450px] h-auto rounded-2xl bg-cover bg-center bg-fixed border border-gray-400"
                                           style={{
                                               backgroundImage: `url(${img})`,
                                           }}
                                       >
-                                          {/* <div className="w-full min-h-full rounded-2xl bg-black/30 absolute top-0"/> */}
+                                          <div className="w-full min-h-full rounded-2xl bg-black/10 absolute top-0"/>
                                       </div>
                                   </CarouselItem>
                               ))
                             : null}
                     </CarouselContent>
                     {/* FILTRE */}
-                    <div
-                        className="absolute h-32 w-full overflow-x-auto -mt-36 z-50 px-4"
-                        style={{ zIndex: 99999999 }}
-                    >
-                        <div className="shadow-xl bg-white w-full h-full rounded-2xl"></div>
-                    </div>
+                            <FilterSearch/>
                 </Carousel>
 
                 {/* ADS SECTION */}
