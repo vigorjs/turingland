@@ -16,6 +16,10 @@ use Inertia\Inertia;
 // });
 Route::get("/", [HomeController::class, 'index']);
 
+Route::get('/search-page', function () {
+    return Inertia::render("Search/Search");
+});
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

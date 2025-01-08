@@ -12,7 +12,7 @@ export default function GuestLayout({ children }) {
     ];
 
     return (
-        <div className="flex min-h-screen flex-col bg-gray-100">
+        <div className="flex min-h-screen flex-col">
             {/* Header */}
             <header className="w-full bg-[#FD9458] py-4 shadow-md mb-6">
                 <div className="container mx-auto flex items-center justify-between px-32"> {/* Padding horizontal lebih besar */}
