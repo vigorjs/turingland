@@ -15,7 +15,7 @@ export const FilterSearch = () => {
 
     return (
         <div
-            className={`absolute h-auto w-full overflow-x-auto z-10 px-4 ${
+            className={`absolute h-auto w-full overflow-x-auto z-10 px-3 md:px-6 lg:px-[150px] ${
                 isSimpleSearch ? "-mt-36" : "-mt-[216px]"
             }`}
         >
