@@ -15,7 +15,7 @@ const Footer = () => {
         <>
             {/* Footer */}
             <footer className="bg-[#222222] text-white py-12">
-                <div className="container mx-auto flex flex-col md:flex-row md:justify-between md:items-start px-6 lg:px-32">
+                <div className="container mx-auto flex flex-col md:flex-row flex-wrap gap-4 md:justify-between md:items-start px-6 lg:px-32">
                     {/* Left Side: Logo and Address */}
                     <div className="flex flex-col items-start mb-8 md:mb-0 md:w-1/3">
                         <div className="flex items-center mb-4">
