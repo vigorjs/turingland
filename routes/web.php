@@ -20,6 +20,19 @@ Route::get('/search', function () {
     return Inertia::render("Search/Search");
 });
 
+Route::get('/admin-page-one', function () {
+    return Inertia::render("Admin/AdminPageOne");
+});
+
+Route::get('/admin-page-two', function () {
+    return Inertia::render("Admin/AdminPageTwo");
+});
+
+Route::get('/admin-page-three', function () {
+    return Inertia::render("Admin/AdminPageThree");
+});
+
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
