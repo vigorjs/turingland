@@ -216,7 +216,6 @@ const Navbar = () => {
                         </div>
                     </div>
 
-                    {/* Right side buttons */}
                     <div className="flex items-center space-x-4">
                         <Button className="bg-white hover:bg-white text-primary px-4 py-2 rounded-md text-sm font-bold">
                             <HiOutlineSpeakerphone />
@@ -232,7 +231,6 @@ const Navbar = () => {
                             </button>
                             <ThemeToggle />
                         </div> */}
-                        {/* Mobile menu button */}
                         <button
                             className="lg:hidden"
                             onClick={() =>
@@ -248,7 +246,6 @@ const Navbar = () => {
                     </div>
                 </div>
 
-                {/* Mobile Navigation */}
                 {isMobileMenuOpen && (
                     <div className="lg:hidden">
                         <div className="px-2 pt-2 pb-3 space-y-1">
