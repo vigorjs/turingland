@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import { ThemeToggle } from "@/Components/ThemeToggle";
 import { navigationLinks } from "@/const/NavigationLink";
-import { useTheme } from "@/hooks/useTheme";
 import { Link } from "@inertiajs/react";
 import { ChevronRight } from "lucide-react";
 import { FaBars, FaTimes } from "react-icons/fa";
+import ApplicationLogo from "./ApplicationLogo";
 
 const Header = () => {
-    const { theme } = useTheme();
     const [menuOpen, setMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
-    const currentPath = typeof window !== "undefined" ? window.location.pathname : "/";
+    const currentPath =
+        typeof window !== "undefined" ? window.location.pathname : "/";
 
     const toggleMenu = () => setMenuOpen(!menuOpen);
 
@@ -38,24 +38,7 @@ const Header = () => {
         >
             <div className="flex items-center justify-between px-3 md:px-4 lg:px-[200px] w-full h-full">
                 {/* Logo */}
-                <Link
-                    href="/"
-                    className="flex items-center hover:opacity-90 transition-opacity"
-                >
-                    {theme === "dark" ? (
-                        <img
-                            src="/assets/turinglandlogodark.png"
-                            alt="Application Logo"
-                            className="h-auto w-auto"
-                        />
-                    ) : (
-                        <img
-                            src="/assets/turinglandlogo.png"
-                            alt="Application Logo"
-                            className="h-auto w-auto"
-                        />
-                    )}
-                </Link>
+                <ApplicationLogo />
 
                 {/* Desktop Navigation */}
                 <nav className="hidden md:flex items-center space-x-6">
@@ -83,7 +66,11 @@ const Header = () => {
                         className="text-white focus:outline-none"
                         onClick={toggleMenu}
                     >
-                        {menuOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
+                        {menuOpen ? (
+                            <FaTimes size={20} />
+                        ) : (
+                            <FaBars size={20} />
+                        )}
                     </button>
                 </div>
             </div>
