@@ -1,6 +1,7 @@
 import { CardProperty } from "@/Components/CardProperty";
 import { FilterSearch } from "@/Components/FilterSearch";
 import { TestimonialCard } from "@/Components/TestimonialCard";
+import { Button } from "@/Components/ui/button";
 import {
     Carousel,
     CarouselContent,
@@ -75,7 +76,7 @@ export default function Home() {
                             ? arr.map((_, index) => (
                                   <CarouselItem key={index}> */}
                 <div
-                    className="relative w-full h-[60vh] bg-cover bg-center bg-fixed border border-gray-400"
+                    className="relative w-full h-[50vh] bg-cover bg-center bg-fixed border border-gray-400"
                     //   style={{
                     //       backgroundImage: `url(${img})`,
                     //   }}
@@ -89,62 +90,61 @@ export default function Home() {
                     </CarouselContent> */}
                 {/* FILTRE */}
                 <FilterSearch />
+
                 {/* </Carousel> */}
-                <div className="px-3 md:px-6 lg:px-[150px]">
+                <div className="px-3 sm:px-4 md:px-6 lg:px-[150px]">
                     {/* ADS SECTION */}
                     <Carousel
-                        className="mt-24 mb-4"
+                        className="mt-16 mb-4"
                         plugins={[
                             Autoplay({
-                                delay:5000,
+                                delay: 2500,
                             }),
                         ]}
                         opts={{
-                            align: "center",
+                            align: "start",
                             loop: true,
                         }}
                     >
-                        <CarouselContent className="">
-                            {arr.length > 0
-                                ? arr.map((_, index) => (
-                                      <CarouselItem
-                                          key={`ads-section-${index}`}
-                                        //   className="md:basis-1/1 lg:basis-1/2"
-                                          className="basis-auto"
-                                      >
-                                          <div>
-                                            <img src={img2} alt="" className="h-[259px] sm:h-[279px] object-contain rounded-2xl" />
-                                          </div>
-                                              {/* <div className="w-full h-full bg-black/30 absolute top-0 rounded-2xl flex justify-center items-center">
-                                              <div className="w-4/5 mx-auto">
-                                                  <h2 className="text-white text-4xl sm:text-5xl font-bold mb-3">
-                                                      Fauzan Properties
-                                                  </h2>
-                                                  <p className="text-white text-base sm:text-xl">
-                                                      Lorem ipsum dolor sit amet
-                                                      consectetur, adipisicing
-                                                      elit. Asperiores animi,
-                                                      laboriosam aspernatur est
-                                                      modi hic nulla
-                                                      reprehenderit et
-                                                  </p>
-                                              </div>
-                                          </div> */}
-                                      </CarouselItem>
-                                  ))
-                                : null}
+                        <CarouselContent>
+                            {arr.length > 0 ? (
+                                arr.map((_, index) => (
+                                    <CarouselItem
+                                        key={`ads-section-${index}`}
+                                        className="flex-shrink-0 basis-1/1 md:basis-1/2 max-h-[40vh]"
+                                    >
+                                        <img
+                                            src={img}
+                                            alt={`Carousel item ${index}`}
+                                            className="object-contain md:rounded-2xl rounded-none w-auto h-full"
+                                        />
+                                    </CarouselItem>
+                                ))
+                            ) : (
+                                <p className="text-center text-gray-500">
+                                    No items available for the carousel.
+                                </p>
+                            )}
                         </CarouselContent>
                     </Carousel>
 
                     {/* RECCOMENDATION PROPERTIES */}
                     <div className="mt-16 mb-4">
-                        <div className="mb-3">
-                            <h2 className="text-xl sm:text-2xl font-bold">
-                                Rekomendasi Properti Terpopuler
-                            </h2>
-                            <p className="text-base">
-                                Cek rekomendasi properti terpopuler kami
-                            </p>
+                        <div className="mb-4 flex justify-between items-center">
+                            <div>
+                                <h2 className="text-xl sm:text-2xl font-bold">
+                                    Rekomendasi Properti Terpopuler
+                                </h2>
+                                <p className="text-base">
+                                    Cek rekomendasi properti terpopuler kami
+                                </p>
+                            </div>
+                            <Button
+                                variant={"outline"}
+                                className="hidden md:mr-0 md:block lg:mr-40"
+                            >
+                                Lihat Selengkapnya
+                            </Button>
                         </div>
 
                         {/* CARD */}
@@ -153,13 +153,7 @@ export default function Home() {
                                 align: "start",
                             }}
                         >
-                            <CarouselContent
-                                className="flex space-x-1 sm:space-x-5 pb-8"
-                                // [&::-webkit-scrollbar]:w-1
-                                // [&::-webkit-scrollbar-track]:bg-gray-100
-                                // [&::-webkit-scrollbar-thumb]:bg-primary
-                                // [&::-webkit-scrollbar-thumb]:rounded-full
-                            >
+                            <CarouselContent className="flex space-x-1 sm:space-x-5 pb-8">
                                 {arr.length > 0
                                     ? arr.map((_, index) => (
                                           <CarouselItem
@@ -200,9 +194,9 @@ export default function Home() {
                                       ))
                                     : null}
                             </CarouselContent>
-                            <div className="absolute bottom-0 w-full bg-black flex justify-center items-center">
-                                <CarouselPrevious className="absolute left-0 bottom-0" />
-                                <CarouselNext className="absolute right-0 bottom-0" />
+                            <div className="absolute -top-11 right-20  justify-center items-center hidden lg:flex">
+                                <CarouselPrevious className="" />
+                                <CarouselNext className="" />
                             </div>
                         </Carousel>
                     </div>
