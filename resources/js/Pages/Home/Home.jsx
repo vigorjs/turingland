@@ -1,4 +1,5 @@
 import { CardProperty } from "@/Components/CardProperty";
+import { CategoriesSection } from "@/Components/CategoriesSection";
 import { FilterSearch } from "@/Components/FilterSearch";
 import { TestimonialCard } from "@/Components/TestimonialCard";
 import { Button } from "@/Components/ui/button";
@@ -58,6 +59,33 @@ export default function Home() {
         },
     ];
 
+    const categories = [
+        {
+            img: "/assets/apartemen.png",
+            name: "Apartment",
+        },
+        {
+            img: "/assets/villa.png",
+            name: "Villa",
+        },
+        {
+            img: "/assets/kost.png",
+            name: "Kost",
+        },
+        {
+            img: "/assets/ruko.png",
+            name: "Ruko",
+        },
+        {
+            img: "/assets/rumah.png",
+            name: "Rumah",
+        },
+        {
+            img: "/assets/tanah.png",
+            name: "Tanah",
+        },
+    ]
+
     return (
         <GuestLayout>
             <Head title="Tempat Jual Beli Rumah Apartement" />
@@ -93,11 +121,13 @@ export default function Home() {
                 {/* FILTRE */}
                 <FilterSearch />
 
+                <CategoriesSection categories={categories} />
+
                 {/* </Carousel> */}
                 <div className="px-3 sm:px-4 md:px-6 lg:px-[150px]">
                     {/* ADS SECTION */}
                     <Carousel
-                        className="mt-16 mb-4"
+                        className="mb-4"
                         plugins={[
                             Autoplay({
                                 delay: 2500,

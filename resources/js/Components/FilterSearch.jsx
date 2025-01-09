@@ -12,14 +12,14 @@ import {
 
 export const FilterSearch = () => {
     const [isSimpleSearch, setIsSimpleSearch] = useState(true);
-  
+
     return (
       <div
         className={`absolute w-full overflow-x-auto z-10 px-3 md:px-6 lg:px-10 ${
           isSimpleSearch ? "-mt-36" : "-mt-[216px]"
         }`}
       >
-        <div className="shadow-xl bg-white/85 dark:bg-muted w-full h-full rounded-2xl">
+        <div className="bg-white/85 dark:bg-muted w-full h-full sm:rounded-2xl">
           <div className="p-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
               {isSimpleSearch ? (
@@ -33,7 +33,7 @@ export const FilterSearch = () => {
       </div>
     );
   };
-  
+
   const SimpleFilterSearch = ({ setIsSimpleSearch }) => {
     return (
       <>
