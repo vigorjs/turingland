@@ -1,31 +1,27 @@
-import { FaSearch } from 'react-icons/fa'; // Ikon pencarian
-import { useState } from 'react'; // Untuk mengelola state pencarian
+import { FaSearch } from 'react-icons/fa';
+import { useState } from 'react';
 
 const AdminSearchBar = () => {
-    const [searchQuery, setSearchQuery] = useState(''); // Menyimpan query pencarian
+    const [searchQuery, setSearchQuery] = useState('');
 
-    // Fungsi untuk menangani pencarian
     const handleSearch = () => {
         if (searchQuery.trim() !== '') {
             console.log('Melakukan pencarian untuk:', searchQuery);
-            // Lakukan aksi pencarian, bisa menggunakan API atau manipulasi data
         }
     };
 
     return (
-        <div className="relative flex items-center">
-            {/* Input Pencarian */}
+        <div className="relative flex items-center w-full">
             <input
                 type="text"
-                placeholder="Rumah Fauzan Property"
+                placeholder="Cari sesuatu..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)} // Update state saat input berubah
-                className="flex-1 px-4 py-2 border border-[#C6C6C6] bg-[#EDEDED] rounded-lg pr-10 text-black" // Padding kanan untuk memberi ruang bagi ikon
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 bg-gray-100 rounded-lg pr-10 text-black"
             />
-            {/* Ikon Pencarian */}
-            <FaSearch 
+            <FaSearch
                 className="absolute right-3 text-gray-500 text-lg cursor-pointer"
-                onClick={handleSearch} // Ketika ikon diklik, lakukan pencarian
+                onClick={handleSearch}
             />
         </div>
     );
