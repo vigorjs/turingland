@@ -13,13 +13,13 @@ export default function ApplicationLogo(props, className) {
                 <img
                     src="/assets/turinglandlogodark.png"
                     alt="Application Logo"
-                    className="h-auto w-auto"
+                    className="h-12 w-auto"
                 />
             ) : (
                 <img
                     src="/assets/turinglandlogo.png"
                     alt="Application Logo"
-                    className="h-auto w-auto"
+                    className="h-12 w-auto"
                 />
             )}
         </Link>

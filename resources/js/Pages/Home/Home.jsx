@@ -10,6 +10,7 @@ import {
     CarouselPrevious,
 } from "@/Components/ui/carousel";
 import GuestLayout from "@/Layouts/GuestLayout";
+import { Head } from "@inertiajs/react";
 import Autoplay from "embla-carousel-autoplay";
 import { QuoteIcon } from "lucide-react";
 import React from "react";
@@ -59,6 +60,7 @@ export default function Home() {
 
     return (
         <GuestLayout>
+            <Head title="Tempat Jual Beli Rumah Apartement" />
             <div>
                 {/* HERO SECTION */}
                 {/* <Carousel
@@ -82,7 +84,7 @@ export default function Home() {
                     //   }}
                 >
                     <img src={img} className="w-full h-full object-cover" />
-                    <div className="w-full min-h-full bg-black/10 absolute top-0" />
+                    <div className="w-full min-h-full dark:bg-black/10 absolute top-0" />
                 </div>
                 {/* </CarouselItem>
                               ))

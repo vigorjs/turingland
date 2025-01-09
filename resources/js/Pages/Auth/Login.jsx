@@ -1,6 +1,6 @@
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import { LoginForm } from "@/Components/auth/login-form";
-import { ThemeToggle } from "@/Components/ThemeToggle";
+import AuthLayout from "@/Layouts/AuthLayout";
 import GuestLayout from "@/Layouts/GuestLayout";
 import { Head } from "@inertiajs/react";
 
@@ -12,9 +12,8 @@ export default function Login({
     ...props
 }) {
     return (
-        <GuestLayout>
-            <Head title="Log in" />
-
+        <AuthLayout>
+            <Head title="Login" />
             {status && (
                 <div className="mb-4 font-medium text-sm text-green-600">
                     {status}
@@ -26,7 +25,6 @@ export default function Login({
                     <div className="mx-auto grid w-[350px] gap-3">
                         <div className="flex flex-col justify-center items-center">
                             <ApplicationLogo className="h-20 w-20 fill-current text-gray-500" />
-                            <ThemeToggle />
                         </div>
 
                         <LoginForm />
@@ -46,6 +44,6 @@ export default function Login({
                     />
                 </div>
             </div>
-        </GuestLayout>
+        </AuthLayout>
     );
 }
