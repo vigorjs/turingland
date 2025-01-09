@@ -19,7 +19,7 @@ export function ThemeToggle() {
             variant="ghost"
             onClick={handleToggle}
             aria-label="Toggle theme"
-            className="text-white dark:text-white dark:hover:text-[#FD9458] hover:text-white hover:bg-white/10 dark:hover:bg-black/10 p-2 rounded-full"
+            className="text-white dark:text-white dark:hover:text-primary hover:text-white hover:bg-white/10 dark:hover:bg-black/10 p-2 rounded-full"
         >
             {isDarkMode ? (
                 <Moon className="transition-transform transform rotate-0 dark:rotate-180"/>

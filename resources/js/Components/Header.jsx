@@ -32,7 +32,7 @@ const Header = () => {
         <header
             className={`fixed top-0 w-full z-20 h-[102px] flex items-center transition-all duration-300 ${
                 isScrolled
-                    ? "bg-[#FD9458] shadow-md dark:bg-[#282828]"
+                    ? "bg-primary shadow-md dark:bg-[#282828]"
                     : "bg-transparent dark:bg-[#282828]"
             }`}
         >
@@ -63,9 +63,9 @@ const Header = () => {
                         <Link
                             key={index}
                             href={link.href}
-                            className={`text-white transition-colors hover:text-[#FFD6B0] dark:hover:text-[#FD9458] font-inter ${
+                            className={`text-white transition-colors hover:text-[#FFD6B0] dark:hover:text-primary font-inter ${
                                 currentPath === link.href
-                                    ? "font-semibold dark:text-[#FD9458]"
+                                    ? "font-semibold dark:text-primary"
                                     : "font-medium"
                             }`}
                         >
@@ -91,7 +91,7 @@ const Header = () => {
             {/* Mobile Navigation */}
             {menuOpen && (
                 <div
-                    className={`absolute top-[102px] left-0 w-full bg-[#FD9458] dark:bg-[#282828] pb-4 shadow-md z-10 rounded-b-lg transition-transform duration-300 ease-in-out ${
+                    className={`absolute top-[102px] left-0 w-full bg-primary dark:bg-[#282828] pb-4 shadow-md z-10 rounded-b-lg transition-transform duration-300 ease-in-out ${
                         menuOpen
                             ? "translate-y-0 opacity-100"
                             : "-translate-y-full opacity-0"
@@ -103,9 +103,9 @@ const Header = () => {
                                 <Link
                                     key={index}
                                     href={link.href}
-                                    className={`text-white transition-colors hover:text-[#FFD6B0] dark:hover:text-[#FD9458] font-inter ${
+                                    className={`text-white transition-colors hover:text-[#FFD6B0] dark:hover:text-primary font-inter ${
                                         currentPath === link.href
-                                            ? "font-semibold dark:text-[#FD9458]"
+                                            ? "font-semibold dark:text-primary"
                                             : "font-medium"
                                     }`}
                                     onClick={toggleMenu} // Close menu on link click

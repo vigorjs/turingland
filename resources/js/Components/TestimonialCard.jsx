@@ -11,8 +11,8 @@ export const TestimonialCard = ({ img, name, role, text }) => {
             />
             <div>
                 <div className="flex justify-between items-center">
-                    <h4 className="text-lg font-extrabold text-[#FD9458]">{name}</h4>
-                    <FaQuoteRight size={14} className="text-[#FD9458]" />
+                    <h4 className="text-lg font-extrabold text-primary">{name}</h4>
+                    <FaQuoteRight size={14} className="text-primary" />
                 </div>
                 <p className="text-sm text-gray-500">{role}</p>
                 <p className="text-sm text-gray-600 mt-2">{text}</p>

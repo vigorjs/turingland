@@ -157,7 +157,7 @@ export default function Home() {
                                 className="flex space-x-1 sm:space-x-5 pb-8"
                                 // [&::-webkit-scrollbar]:w-1
                                 // [&::-webkit-scrollbar-track]:bg-gray-100
-                                // [&::-webkit-scrollbar-thumb]:bg-[#FD9458]
+                                // [&::-webkit-scrollbar-thumb]:bg-primary
                                 // [&::-webkit-scrollbar-thumb]:rounded-full
                             >
                                 {arr.length > 0

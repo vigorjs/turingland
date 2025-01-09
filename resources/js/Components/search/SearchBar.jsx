@@ -45,7 +45,7 @@ const SearchBar = () => {
                     />
                     <Button
                         size="lg"
-                        className="bg-[#FD9458] hover:bg-[#FD9458]/90 text-white px-6 py-2 rounded-lg"
+                        className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-lg"
                     >
                         Search
                     </Button>
@@ -63,7 +63,7 @@ const SearchBar = () => {
                             key={`filter-order-ads-${index}`}
                             className={
                                 orderAdsFilter === item &&
-                                "bg-[#FD9458] text-white hover:bg-[#FD9458]/90 hover:text-white"
+                                "bg-primary text-white hover:bg-primary/90 hover:text-white"
                             }
                             onClick={() => handleClickOrderAdsFilter(item)}
                             size="sm"
@@ -141,7 +141,7 @@ const FilterModal = ({
                                     key={`filter-order-ads-${index}`}
                                     className={
                                         orderAdsFilter === item &&
-                                        "bg-[#FD9458] text-white hover:bg-[#FD9458]/90 hover:text-white"
+                                        "bg-primary text-white hover:bg-primary/90 hover:text-white"
                                     }
                                     onClick={() =>
                                         handleClickOrderAdsFilter(item)
@@ -163,7 +163,7 @@ const FilterModal = ({
                                     key={`filter-type-ads-${index}`}
                                     className={
                                         typeAdsFilter === item &&
-                                        "bg-[#FD9458] text-white hover:bg-[#FD9458]/90 hover:text-white"
+                                        "bg-primary text-white hover:bg-primary/90 hover:text-white"
                                     }
                                     onClick={() =>
                                         handleClickTypeAdsFilter(item)
@@ -185,7 +185,7 @@ const FilterModal = ({
                                     key={`filter-properties-ads-${index}`}
                                     className={
                                         propertyAdsFilter.includes(item) &&
-                                        "bg-[#FD9458] text-white hover:bg-[#FD9458]/90 hover:text-white"
+                                        "bg-primary text-white hover:bg-primary/90 hover:text-white"
                                     }
                                     onClick={() =>
                                         handleClickPropertyAdsFilter(item)
@@ -201,7 +201,7 @@ const FilterModal = ({
 
                     <Button
                         onClick={() => setIsVisibleModalFilter(false)}
-                        className="bg-[#FD9458] text-white hover:bg-[#FD9458]/95 hover:text-white"
+                        className="bg-primary text-white hover:bg-primary/95 hover:text-white"
                     >
                         Tampilkan Hasil
                     </Button>
