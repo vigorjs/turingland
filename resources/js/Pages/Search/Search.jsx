@@ -11,7 +11,7 @@ export default function SearchPage() {
 
     return (
         <GuestLayout>
-            <div className="px-3 md:px-6 lg:px-[150px]">
+            <div className="px-3 md:px-6 lg:px-[150px] mb-12 mt-28">
                 <SearchBar />
                 <h2 className="text-2xl font-bold mb-2">
                     Menampilkan hasil pencarian “Pakubuwono Residence”
