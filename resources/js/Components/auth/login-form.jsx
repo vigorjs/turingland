@@ -68,7 +68,7 @@ export function LoginForm({ imageUrl }) {
 
     return (
         <Card className="overflow-hidden">
-            <CardContent className="grid p-0 md:grid-cols-2">
+            <CardContent className="grid p-0">
                 <form onSubmit={submit} className="p-6 md:p-8">
                     <div className="flex flex-col gap-6">
                         <div className="flex flex-col items-center text-center">
@@ -209,17 +209,6 @@ export function LoginForm({ imageUrl }) {
                         </div>
                     </div>
                 </form>
-                <div className="relative hidden md:block">
-                    <img
-                        src={
-                            imageUrl
-                                ? imageUrl
-                                : "https://via.placeholder.com/400x600"
-                        }
-                        alt="Image"
-                        className="absolute inset-0 h-full w-full object-cover "
-                    />
-                </div>
             </CardContent>
         </Card>
     );

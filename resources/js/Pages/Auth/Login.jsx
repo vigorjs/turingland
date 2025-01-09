@@ -1,13 +1,14 @@
+import ApplicationLogo from "@/Components/ApplicationLogo";
 import { LoginForm } from "@/Components/auth/login-form";
-import UserAuthForm from "@/Components/auth/UserAuthForm";
+import { ThemeToggle } from "@/Components/ThemeToggle";
 import GuestLayout from "@/Layouts/GuestLayout";
-import { cn } from "@/lib/utils";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 
 export default function Login({
     status,
     canResetPassword,
     className,
+    imageBackground,
     ...props
 }) {
     return (
@@ -20,21 +21,29 @@ export default function Login({
                 </div>
             )}
 
-            {/* <UserAuthForm /> */}
-            <div className="flex min-h-[90vh] flex-col items-center justify-center bg-muted dark:bg-background ">
-                <div className="w-full max-w-sm md:max-w-3xl">
-                    <div
-                        className={cn("flex flex-col gap-6", className)}
-                        {...props}
-                    >
-                        <LoginForm imageUrl={"https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=768&q=80"} />
-
-                        <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-primary">
-                            By clicking continue, you agree to our{" "}
-                            <a href="#">Terms of Service</a> and{" "}
-                            <a href="#">Privacy Policy</a>.
+            <div className="w-full h-screen lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px] bg-muted">
+                <div className="flex items-center justify-center">
+                    <div className="mx-auto grid w-[350px] gap-3">
+                        <div className="flex flex-col justify-center items-center">
+                            <ApplicationLogo className="h-20 w-20 fill-current text-gray-500" />
+                            <ThemeToggle />
                         </div>
+
+                        <LoginForm />
                     </div>
+                </div>
+                <div className="hidden bg-muted lg:block">
+                    <img
+                        src={
+                            imageBackground
+                                ? imageBackground
+                                : "https://placehold.co/1920x1080?text=Your+Brand+Here"
+                        }
+                        alt="Image"
+                        width="1920"
+                        height="1080"
+                        className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+                    />
                 </div>
             </div>
         </GuestLayout>
