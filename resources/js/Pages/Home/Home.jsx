@@ -39,7 +39,7 @@ export default function Home() {
             img: "https://via.placeholder.com/150",
             name: "Tommy",
             role: "Penyewa ",
-            text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nobis.",
+            text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nobis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nobisLorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nobisLorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nobis",
         },
         {
             id: 3,
@@ -203,7 +203,7 @@ export default function Home() {
 
                     {/* TESTIMONIAL SECTION */}
                     <div className="py-12">
-                        <h2 className="text-xl sm:text-2xl font-bold mb-8 text-left text-gray-800">
+                        <h2 className="text-xl sm:text-2xl font-bold mb-8 text-left text-foreground">
                             Kata Mereka Tentang TuringLand
                         </h2>
                         <Carousel
@@ -224,32 +224,13 @@ export default function Home() {
                                                 name={testimonial.name}
                                                 role={testimonial.role}
                                                 text={testimonial.text}
-                                                className="bg-white rounded-lg shadow-lg"
-                                            >
-                                                <div className="flex items-start gap-4 p-4">
-                                                    <img
-                                                        src={testimonial.img}
-                                                        alt={testimonial.name}
-                                                        className="w-16 h-16 rounded-full object-cover border-2 border-gray-200"
-                                                    />
-                                                    <div>
-                                                        <h4 className="text-lg font-bold text-gray-800">
-                                                            {testimonial.name}
-                                                        </h4>
-                                                        <p className="text-sm text-gray-500 mb-2">
-                                                            {testimonial.role}
-                                                        </p>
-                                                        <p className="text-sm text-gray-600">
-                                                            {testimonial.text}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </TestimonialCard>
+                                                className="bg-card rounded-lg shadow-lg"
+                                            />
                                         </div>
                                     </CarouselItem>
                                 ))}
                             </CarouselContent>
-                            <div className="absolute bottom-0 w-full bg-black flex justify-center items-center">
+                            <div className="absolute bottom-0 w-full bg-background flex justify-center items-center">
                                 <CarouselPrevious className="absolute left-0 bottom-0" />
                                 <CarouselNext className="absolute right-0 bottom-0" />
                             </div>
