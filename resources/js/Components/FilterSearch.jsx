@@ -19,7 +19,7 @@ export const FilterSearch = () => {
           isSimpleSearch ? "-mt-36" : "-mt-[216px]"
         }`}
       >
-        <div className="shadow-xl bg-white/85 w-full h-full rounded-2xl">
+        <div className="shadow-xl bg-white/85 dark:bg-muted w-full h-full rounded-2xl">
           <div className="p-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
               {isSimpleSearch ? (
@@ -42,10 +42,10 @@ export const FilterSearch = () => {
             Lokasi
           </Label>
           <Select>
-            <SelectTrigger className="bg-[#EDEDED] border border-[#C6C6C6] w-full">
+            <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6] w-full ">
               <SelectValue placeholder="Select Location" />
             </SelectTrigger>
-            <SelectContent className="z-50 bg-white">
+            <SelectContent className="z-50 bg-white dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
               <SelectItem value="light">Light</SelectItem>
               <SelectItem value="dark">Dark</SelectItem>
               <SelectItem value="system">System</SelectItem>
@@ -57,10 +57,10 @@ export const FilterSearch = () => {
             Tipe Property
           </Label>
           <Select>
-            <SelectTrigger className="bg-[#EDEDED] border border-[#C6C6C6] w-full">
+            <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6] w-full">
               <SelectValue placeholder="Select Type" />
             </SelectTrigger>
-            <SelectContent className="z-50">
+            <SelectContent className="z-50 bg-white dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
               <SelectItem value="light">Light</SelectItem>
               <SelectItem value="dark">Dark</SelectItem>
               <SelectItem value="system">System</SelectItem>
@@ -72,10 +72,10 @@ export const FilterSearch = () => {
             Rentang Harga
           </Label>
           <Select>
-            <SelectTrigger className="bg-[#EDEDED] border border-[#C6C6C6] w-full">
+            <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6] w-full">
               <SelectValue placeholder="Select Range" />
             </SelectTrigger>
-            <SelectContent className="z-50">
+            <SelectContent className="z-50 bg-white dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
               <SelectItem value="light">Light</SelectItem>
               <SelectItem value="dark">Dark</SelectItem>
               <SelectItem value="system">System</SelectItem>
@@ -132,10 +132,10 @@ const AdvanceFilterSearch = ({ setIsSimpleSearch }) => {
                     Lokasi
                 </Label>
                 <Select>
-                    <SelectTrigger className="bg-[#EDEDED] border border-[#C6C6C6]">
+                    <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6]">
                         <SelectValue placeholder="Select Location" />
                     </SelectTrigger>
-                    <SelectContent className="z-50">
+                    <SelectContent className="z-50 dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
                         <SelectItem value="light">Light</SelectItem>
                         <SelectItem value="dark">Dark</SelectItem>
                         <SelectItem value="system">System</SelectItem>
@@ -147,10 +147,10 @@ const AdvanceFilterSearch = ({ setIsSimpleSearch }) => {
                     Tipe Property
                 </Label>
                 <Select>
-                    <SelectTrigger className="bg-[#EDEDED] border border-[#C6C6C6]">
+                    <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6]">
                         <SelectValue placeholder="Select Type" />
                     </SelectTrigger>
-                    <SelectContent className="z-50">
+                    <SelectContent className="z-50 dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
                         <SelectItem value="light">Light</SelectItem>
                         <SelectItem value="dark">Dark</SelectItem>
                         <SelectItem value="system">System</SelectItem>
@@ -165,7 +165,7 @@ const AdvanceFilterSearch = ({ setIsSimpleSearch }) => {
                     Harga Min
                 </Label>
                 <Input
-                    className="bg-[#EDEDED] border border-[#C6C6C6]"
+                    className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6]"
                     type="text"
                     id="harga-min"
                     onChange={handleMinPriceChange}
@@ -180,7 +180,7 @@ const AdvanceFilterSearch = ({ setIsSimpleSearch }) => {
                     Harga Max
                 </Label>
                 <Input
-                    className="bg-[#EDEDED] border border-[#C6C6C6]"
+                    className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6]"
                     type="text"
                     id="harga-max"
                     onChange={handleMaxPriceChange}
@@ -192,10 +192,10 @@ const AdvanceFilterSearch = ({ setIsSimpleSearch }) => {
                     Area
                 </Label>
                 <Select>
-                    <SelectTrigger className="bg-[#EDEDED] border border-[#C6C6C6]">
+                    <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6]">
                         <SelectValue placeholder="Select Area" />
                     </SelectTrigger>
-                    <SelectContent className="z-50">
+                    <SelectContent className="z-50 dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
                         <SelectItem value="light">Light</SelectItem>
                         <SelectItem value="dark">Dark</SelectItem>
                         <SelectItem value="system">System</SelectItem>
@@ -207,10 +207,10 @@ const AdvanceFilterSearch = ({ setIsSimpleSearch }) => {
                     Developer
                 </Label>
                 <Select>
-                    <SelectTrigger className="bg-[#EDEDED] border border-[#C6C6C6]">
+                    <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6]">
                         <SelectValue placeholder="Select Developer" />
                     </SelectTrigger>
-                    <SelectContent className="z-50">
+                    <SelectContent className="z-50 dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
                         <SelectItem value="light">Light</SelectItem>
                         <SelectItem value="dark">Dark</SelectItem>
                         <SelectItem value="system">System</SelectItem>
@@ -222,12 +222,12 @@ const AdvanceFilterSearch = ({ setIsSimpleSearch }) => {
                     Tipe Iklan
                 </Label>
                 <Select>
-                    <SelectTrigger className="bg-[#EDEDED] border border-[#C6C6C6]">
+                    <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6]">
                         <SelectValue placeholder="Select Type" />
                     </SelectTrigger>
                     <SelectContent
                         style={{ zIndex: 9999 }}
-                        className="z-50 bg-white"
+                        className="z-50 dark:bg-[#3f3f3f] dark:text-[#8B8B8B]"
                     >
                         <SelectItem value="light">Light</SelectItem>
                         <SelectItem value="dark">Dark</SelectItem>
