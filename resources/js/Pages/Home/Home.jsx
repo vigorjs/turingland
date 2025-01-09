@@ -10,6 +10,7 @@ import {
 } from "@/Components/ui/carousel";
 import GuestLayout from "@/Layouts/GuestLayout";
 import Autoplay from "embla-carousel-autoplay";
+import { QuoteIcon } from "lucide-react";
 import React from "react";
 
 export default function Home() {
@@ -73,21 +74,21 @@ export default function Home() {
                         {arr.length > 0
                             ? arr.map((_, index) => (
                                   <CarouselItem key={index}> */}
-                                      <div
-                                          className="relative w-full h-[60vh] bg-cover bg-center bg-fixed border border-gray-400"
-                                        //   style={{
-                                        //       backgroundImage: `url(${img})`,
-                                        //   }}
-                                      >
-                                            <img src={img} className="w-full h-full object-cover" />
-                                          <div className="w-full min-h-full bg-black/10 absolute top-0" />
-                                      </div>
-                                  {/* </CarouselItem>
+                <div
+                    className="relative w-full h-[60vh] bg-cover bg-center bg-fixed border border-gray-400"
+                    //   style={{
+                    //       backgroundImage: `url(${img})`,
+                    //   }}
+                >
+                    <img src={img} className="w-full h-full object-cover" />
+                    <div className="w-full min-h-full bg-black/10 absolute top-0" />
+                </div>
+                {/* </CarouselItem>
                               ))
                             : null}
                     </CarouselContent> */}
-                    {/* FILTRE */}
-                    <FilterSearch />
+                {/* FILTRE */}
+                <FilterSearch />
                 {/* </Carousel> */}
                 <div className="px-3 md:px-6 lg:px-[150px]">
                     {/* ADS SECTION */}
@@ -95,11 +96,11 @@ export default function Home() {
                         className="mt-24 mb-4"
                         plugins={[
                             Autoplay({
-                                delay: 4500,
+                                delay:5000,
                             }),
                         ]}
                         opts={{
-                            align: "start",
+                            align: "center",
                             loop: true,
                         }}
                     >
@@ -108,14 +109,12 @@ export default function Home() {
                                 ? arr.map((_, index) => (
                                       <CarouselItem
                                           key={`ads-section-${index}`}
-                                          className="md:basis-1/1 lg:basis-1/2"
+                                        //   className="md:basis-1/1 lg:basis-1/2"
+                                          className="basis-auto"
                                       >
-                                          <div
-                                              className="relative rounded-2xl h-[279px] bg-center bg-cover"
-                                              style={{
-                                                  backgroundImage: `url(${img2})`,
-                                              }}
-                                          >
+                                          <div>
+                                            <img src={img2} alt="" className="h-[259px] sm:h-[279px] object-contain rounded-2xl" />
+                                          </div>
                                               {/* <div className="w-full h-full bg-black/30 absolute top-0 rounded-2xl flex justify-center items-center">
                                               <div className="w-4/5 mx-auto">
                                                   <h2 className="text-white text-4xl sm:text-5xl font-bold mb-3">
@@ -131,7 +130,6 @@ export default function Home() {
                                                   </p>
                                               </div>
                                           </div> */}
-                                          </div>
                                       </CarouselItem>
                                   ))
                                 : null}
@@ -154,13 +152,12 @@ export default function Home() {
                             opts={{
                                 align: "start",
                             }}
-
                         >
                             <CarouselContent
-                                className="flex space-x-1 sm:space-x-5"
+                                className="flex space-x-1 sm:space-x-5 pb-8"
                                 // [&::-webkit-scrollbar]:w-1
                                 // [&::-webkit-scrollbar-track]:bg-gray-100
-                                // [&::-webkit-scrollbar-thumb]:bg-[#FD9458]
+                                // [&::-webkit-scrollbar-thumb]:bg-primary
                                 // [&::-webkit-scrollbar-thumb]:rounded-full
                             >
                                 {arr.length > 0
@@ -203,6 +200,10 @@ export default function Home() {
                                       ))
                                     : null}
                             </CarouselContent>
+                            <div className="absolute bottom-0 w-full bg-black flex justify-center items-center">
+                                <CarouselPrevious className="absolute left-0 bottom-0" />
+                                <CarouselNext className="absolute right-0 bottom-0" />
+                            </div>
                         </Carousel>
                     </div>
 
@@ -215,9 +216,9 @@ export default function Home() {
                             opts={{
                                 align: "start",
                             }}
-                            className="w-full"
+                            className="w-full relative pb-6"
                         >
-                            <CarouselContent className="flex gap-4">
+                            <CarouselContent className="flex gap-3">
                                 {testimonials.map((testimonial, index) => (
                                     <CarouselItem
                                         key={index}
@@ -254,6 +255,10 @@ export default function Home() {
                                     </CarouselItem>
                                 ))}
                             </CarouselContent>
+                            <div className="absolute bottom-0 w-full bg-black flex justify-center items-center">
+                                <CarouselPrevious className="absolute left-0 bottom-0" />
+                                <CarouselNext className="absolute right-0 bottom-0" />
+                            </div>
                         </Carousel>
                     </div>
                 </div>

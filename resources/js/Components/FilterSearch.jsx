@@ -94,12 +94,12 @@ const SimpleFilterSearch = ({ setIsSimpleSearch }) => {
                     className="text-[#5B5B5B] font-normal"
                     htmlFor="email"
                 ></Label>
-                <Button className="bg-[#FD9458] hover:bg-[#FD9458]/90 text-white px-6 py-2 rounded-lg">
+                <Button className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-lg">
                     Search
                 </Button>
             </div>
             <button onClick={() => setIsSimpleSearch(false)}>
-                <p className="text-left text-[#FD9458]">Pencarian Lanjutan</p>
+                <p className="text-left text-primary">Pencarian Lanjutan</p>
             </button>
         </>
     );
@@ -252,13 +252,13 @@ const AdvanceFilterSearch = ({ setIsSimpleSearch }) => {
                     className="text-[#5B5B5B] font-normal"
                     htmlFor="email"
                 ></Label>
-                <Button className="bg-[#FD9458] hover:bg-[#FD9458]/90 text-white px-6 py-2 rounded-lg">
+                <Button className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-lg">
                     Search
                 </Button>
             </div>
 
             <button onClick={() => setIsSimpleSearch(true)}>
-                <p className="text-left text-[#FD9458]">Pencarian Mudah</p>
+                <p className="text-left text-primary">Pencarian Mudah</p>
             </button>
         </>
     );
