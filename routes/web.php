@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminSettingController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
 
 // Route::get('/', function () {
 //     return Inertia::render('Welcome', [
@@ -28,8 +30,8 @@ Route::get('/admin-page-two', function () {
     return Inertia::render("Admin/AdminPageTwo");
 });
 
-Route::get('/admin-page-three', function () {
-    return Inertia::render("Admin/AdminPageThree");
+Route::get('/admin-setting', function () {
+    return Inertia::render("Admin/AdminSetting");
 });
 
 
@@ -44,3 +46,6 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::post('/admin/settings/logo', [AdminSettingController::class, 'updateLogo']);
+

@@ -7,7 +7,7 @@ const Sidebar = () => {
     const navigationLinks = [
         { name: 'Nama Menu One', href: '/admin-page-one', icon: <FaHome /> },
         { name: 'Nama Menu Two', href: '/admin-page-two', icon: <FaFileAlt /> },
-        { name: 'Nama Menu Three', href: '/admin-page-three', icon: <FaCog /> },
+        { name: 'Website Setting', href: '/admin-setting', icon: <FaCog /> },
     ];
 
     return (
