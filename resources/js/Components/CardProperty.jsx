@@ -1,18 +1,20 @@
 export const CardProperty = ({ children, img, isFullWhenMobile = false }) => {
     const twClass = isFullWhenMobile
-        ? "relative w-full aspect-square h-auto sm:w-[287.73px] sm:h-[287.73px] rounded-xl"
-        : "relative w-[287.73px] h-[287.73px] rounded-xl";
+        ? "relative w-full aspect-square h-full rounded-2xl"
+        : "relative w-full h-full rounded-2xl";
 
     return (
         <div className={twClass}>
             <img
                 src={img}
                 alt={img}
-                className="w-full h-full object-cover rounded-xl"
+                className="w-full h-full object-cover rounded-2xl"
             />
 
             <div className="absolute bottom-0 p-1.5 w-full">
-                <div className="bg-white w-full rounded-xl p-2">{children}</div>
+                <div className="bg-white dark:bg-[#282828] w-full rounded-xl py-3 px-4 gap-1">
+                    {children}
+                </div>
             </div>
         </div>
     );

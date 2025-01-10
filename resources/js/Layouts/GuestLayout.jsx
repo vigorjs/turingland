@@ -3,7 +3,7 @@ import Header from "@/Components/Header";
 
 export default function GuestLayout({ children }) {
     return (
-        <div className="flex min-h-screen flex-col">
+        <div className="flex min-h-screen flex-col transition-all duration-300 ease-in-out">
             <Header />
 
             {/* Main Content */}

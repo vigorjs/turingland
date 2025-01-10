@@ -2,6 +2,7 @@ import { CardProperty } from "@/Components/CardProperty";
 import { CategoriesSection } from "@/Components/CategoriesSection";
 import { FilterSearch } from "@/Components/FilterSearch";
 import { TestimonialCard } from "@/Components/TestimonialCard";
+import { Badge } from "@/Components/ui/badge";
 import { Button } from "@/Components/ui/button";
 import {
     Carousel,
@@ -13,7 +14,13 @@ import {
 import GuestLayout from "@/Layouts/GuestLayout";
 import { Head } from "@inertiajs/react";
 import Autoplay from "embla-carousel-autoplay";
-import { QuoteIcon } from "lucide-react";
+import {
+    BathIcon,
+    BedDoubleIcon,
+    CarFrontIcon,
+    MapPinIcon,
+    QuoteIcon,
+} from "lucide-react";
 import React from "react";
 
 export default function Home() {
@@ -84,7 +91,7 @@ export default function Home() {
             img: "/assets/tanah.png",
             name: "Tanah",
         },
-    ]
+    ];
 
     return (
         <GuestLayout>
@@ -105,12 +112,7 @@ export default function Home() {
                         {arr.length > 0
                             ? arr.map((_, index) => (
                                   <CarouselItem key={index}> */}
-                <div
-                    className="relative w-full h-[50vh] bg-cover bg-center bg-fixed border border-gray-400"
-                    //   style={{
-                    //       backgroundImage: `url(${img})`,
-                    //   }}
-                >
+                <div className="relative w-full h-[50vh] bg-cover bg-center bg-fixed border border-gray-400">
                     <img src={img} className="w-full h-full object-cover" />
                     <div className="w-full min-h-full dark:bg-black/10 absolute top-0" />
                 </div>
@@ -118,6 +120,7 @@ export default function Home() {
                               ))
                             : null}
                     </CarouselContent> */}
+
                 {/* FILTRE */}
                 <FilterSearch />
 
@@ -160,8 +163,118 @@ export default function Home() {
                         </CarouselContent>
                     </Carousel>
 
+                    {/* NEW LAUNCH PROPERTIES */}
+                    <div className="mt-16 mb-4 ">
+                        <div className="mb-4 flex justify-between items-center">
+                            <div>
+                                <div className="flex gap-2">
+                                    <h2 className="text-xl sm:text-2xl font-bold">
+                                        Rekomendasi Properti Terbaru
+                                    </h2>
+                                    <span>
+                                        <Badge
+                                            className={
+                                                "text-sm font-extralight rounded-xl"
+                                            }
+                                        >
+                                            Baru !
+                                        </Badge>
+                                    </span>
+                                </div>
+                                <p className="text-base">
+                                    Cek rekomendasi properti terbaru kami
+                                </p>
+                            </div>
+                            <Button
+                                variant={"outline"}
+                                className="hidden md:mr-0 md:block lg:mr-40"
+                            >
+                                Lihat Selengkapnya
+                            </Button>
+                        </div>
+
+                        {/* CARD */}
+                        <Carousel
+                            opts={{
+                                align: "start",
+                            }}
+                        >
+                            <CarouselContent>
+                                {arr.length > 0
+                                    ? arr.map((_, index) => (
+                                          <CarouselItem
+                                              className="flex-shrink-0 basis-auto w-[350px] h-[355px]"
+                                              key={index}
+                                          >
+                                              <CardProperty
+                                                  img={img3}
+                                                  key={`properties-card-${index}`}
+                                              >
+                                                  <div className="flex flex-row justify-between items-center w-full">
+                                                      <div>
+                                                          <h2 className="font-bold text-foreground">
+                                                              Fauzan Properties
+                                                          </h2>
+                                                          <div className="flex justify-start items-center gap-1">
+                                                              <p className="text-xs text-neutral-600">
+                                                                  <MapPinIcon
+                                                                      className="text-muted"
+                                                                      fill="#FD9458"
+                                                                      size={
+                                                                          "16px"
+                                                                      }
+                                                                  />
+                                                              </p>
+                                                              <p className="text-xs text-muted-foreground">
+                                                                  Jl. Kebon
+                                                                  Jeruk, Jakarta
+                                                              </p>
+                                                          </div>
+
+                                                          <div className="flex justify-start items-center gap-3.5 mt-1">
+                                                              <p className="text-xs">
+                                                                  LT: 40&sup2;
+                                                              </p>
+                                                              <p className="text-xs">
+                                                                  LB: 40&sup2;
+                                                              </p>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                                  <hr className="mt-2 mb-3 dark:border-white" />
+                                                  <div className="flex justify-between">
+                                                      <p className="text-xs dark:text-primary font-semibold">
+                                                          Rp 200 juta
+                                                      </p>
+                                                      <div className="flex gap-5">
+                                                          <div className="flex items-center gap-x-1 text-xs">
+                                                              <BedDoubleIcon className="w-4 h-4" />{" "}
+                                                              : 3
+                                                          </div>
+                                                          <div className="flex items-center gap-x-1 text-xs">
+                                                              <BathIcon className="w-4 h-4" />{" "}
+                                                              : 2
+                                                          </div>
+                                                          <div className="flex items-center gap-x-1 text-xs">
+                                                              <CarFrontIcon className="w-4 h-4" />{" "}
+                                                              : 2
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </CardProperty>
+                                          </CarouselItem>
+                                      ))
+                                    : null}
+                            </CarouselContent>
+                            <div className="absolute -top-11 right-20  justify-center items-center hidden lg:flex">
+                                <CarouselPrevious className="" />
+                                <CarouselNext className="" />
+                            </div>
+                        </Carousel>
+                    </div>
+
                     {/* RECCOMENDATION PROPERTIES */}
-                    <div className="mt-16 mb-4">
+                    <div className="mt-16 mb-4 ">
                         <div className="mb-4 flex justify-between items-center">
                             <div>
                                 <h2 className="text-xl sm:text-2xl font-bold">
@@ -185,42 +298,68 @@ export default function Home() {
                                 align: "start",
                             }}
                         >
-                            <CarouselContent className="flex space-x-1 sm:space-x-5 pb-8">
+                            <CarouselContent>
                                 {arr.length > 0
                                     ? arr.map((_, index) => (
                                           <CarouselItem
-                                              className="flex-shrink-0 basis-auto"
+                                              className="flex-shrink-0 basis-auto w-[350px] h-[355px]"
                                               key={index}
                                           >
                                               <CardProperty
                                                   img={img3}
                                                   key={`properties-card-${index}`}
                                               >
-                                                  <h2 className="text-base font-bold">
-                                                      Fauzan Properties
-                                                  </h2>
-                                                  <div className="flex justify-start items-center gap-2">
-                                                      <p className="text-xs text-neutral-600">
-                                                          I
-                                                      </p>
-                                                      <p className="text-xs text-neutral-600">
-                                                          Jl. Kebon Jeruk,
-                                                          Jakarta
-                                                      </p>
-                                                  </div>
+                                                  <div className="flex flex-row justify-between items-center w-full">
+                                                      <div>
+                                                          <h2 className="font-bold text-foreground">
+                                                              Fauzan Properties
+                                                          </h2>
+                                                          <div className="flex justify-start items-center gap-1">
+                                                              <p className="text-xs text-neutral-600">
+                                                                  <MapPinIcon
+                                                                      className="text-muted"
+                                                                      fill="#FD9458"
+                                                                      size={
+                                                                          "16px"
+                                                                      }
+                                                                  />
+                                                              </p>
+                                                              <p className="text-xs text-muted-foreground">
+                                                                  Jl. Kebon
+                                                                  Jeruk, Jakarta
+                                                              </p>
+                                                          </div>
 
-                                                  <div className="flex justify-start items-center gap-3.5 mt-1">
-                                                      <p className="text-xs">
-                                                          LT: 40&sup2;
-                                                      </p>
-                                                      <p className="text-xs">
-                                                          LB: 40&sup2;
-                                                      </p>
+                                                          <div className="flex justify-start items-center gap-3.5 mt-1">
+                                                              <p className="text-xs">
+                                                                  LT: 40&sup2;
+                                                              </p>
+                                                              <p className="text-xs">
+                                                                  LB: 40&sup2;
+                                                              </p>
+                                                          </div>
+                                                      </div>
                                                   </div>
-                                                  <hr className="my-1" />
-                                                  <p className="text-xs font-semibold">
-                                                      Rp 200 juta
-                                                  </p>
+                                                  <hr className="mt-2 mb-3 dark:border-white" />
+                                                  <div className="flex justify-between">
+                                                      <p className="text-xs dark:text-primary font-semibold">
+                                                          Rp 200 juta
+                                                      </p>
+                                                      <div className="flex gap-5">
+                                                          <div className="flex items-center gap-x-1 text-xs">
+                                                              <BedDoubleIcon className="w-4 h-4" />{" "}
+                                                              : 3
+                                                          </div>
+                                                          <div className="flex items-center gap-x-1 text-xs">
+                                                              <BathIcon className="w-4 h-4" />{" "}
+                                                              : 2
+                                                          </div>
+                                                          <div className="flex items-center gap-x-1 text-xs">
+                                                              <CarFrontIcon className="w-4 h-4" />{" "}
+                                                              : 2
+                                                          </div>
+                                                      </div>
+                                                  </div>
                                               </CardProperty>
                                           </CarouselItem>
                                       ))
@@ -256,7 +395,7 @@ export default function Home() {
                                                 name={testimonial.name}
                                                 role={testimonial.role}
                                                 text={testimonial.text}
-                                                className="bg-card rounded-lg shadow-lg"
+                                                className="rounded-lg shadow-lg transition-all duration-300 ease-in-out dark:shadow-slate-950 dark:bg-muted"
                                             />
                                         </div>
                                     </CarouselItem>
