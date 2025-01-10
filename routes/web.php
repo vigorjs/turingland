@@ -20,22 +20,47 @@ Route::get('/search', function () {
     return Inertia::render("Search/Search");
 });
 
-Route::get('/admin-page-one', function () {
-    return Inertia::render("Admin/AdminPageOne");
+Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function (){
+    Route::get('', function () {
+        return Inertia::render("Admin/AdminPageOne");
+    })->name('dashboard');
+
+    Route::get('/property', function () {
+        return Inertia::render("Admin/AdminPageTwo");
+    })->name('dashboard.property');
+
+    Route::get('/area', function () {
+        return Inertia::render("Admin/AdminPageThree");
+    })->name('dashboard.area');
+
+    Route::get('/category', function () {
+        return Inertia::render("Admin/AdminPageTwo");
+    })->name('dashboard.category');
+
+    Route::get('/developer', function () {
+        return Inertia::render("Admin/AdminPageThree");
+    })->name('dashboard.developer');
+
+    Route::get('/banner', function () {
+        return Inertia::render("Admin/AdminPageTwo");
+    })->name('dashboard.banner');
+
+    Route::get('/testimony', function () {
+        return Inertia::render("Admin/AdminPageThree");
+    })->name('dashboard.testimony');
+
+    Route::get('/web-preferences', function () {
+        return Inertia::render("Admin/AdminPageTwo");
+    })->name('dashboard.web-preferences');
+
+    Route::get('/agent', function () {
+        return Inertia::render("Admin/AdminPageThree");
+    })->name('dashboard.agent');
+
+    Route::get('/customer', function () {
+        return Inertia::render("Admin/AdminPageThree");
+    })->name('dashboard.customer');
 });
-
-Route::get('/admin-page-two', function () {
-    return Inertia::render("Admin/AdminPageTwo");
-});
-
-Route::get('/admin-page-three', function () {
-    return Inertia::render("Admin/AdminPageThree");
-});
-
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

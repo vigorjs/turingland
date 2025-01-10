@@ -1,7 +1,6 @@
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import { LoginForm } from "@/Components/auth/login-form";
 import AuthLayout from "@/Layouts/AuthLayout";
-import GuestLayout from "@/Layouts/GuestLayout";
 import { Head } from "@inertiajs/react";
 
 export default function Login({
