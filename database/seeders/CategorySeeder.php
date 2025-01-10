@@ -13,7 +13,7 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        $categories = ['Rumah', 'Apartemen', 'Tanah', 'Ruko', 'Villa', 'Kost'];
+        $categories = ['House', 'Apartment', 'Land', 'Warehouse', 'Kiosk', 'Villa', 'Residential', 'Shophouse', 'Business Loft', 'Kavling Lot', 'Hotel'];
         foreach ($categories as $category) {
             Category::create(['name' => $category]);
         }

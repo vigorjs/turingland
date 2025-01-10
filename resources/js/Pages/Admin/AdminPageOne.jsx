@@ -1,4 +1,4 @@
-import AdminLayout from '@/Layouts/AdminLayout';
+import AdminLayout from "@/Layouts/AdminLayout";
 
 export default function AdminPageOne() {
     return (

@@ -1,6 +1,4 @@
 import { navigationLinks } from "@/const/NavigationLink";
-import { useTheme } from "@/hooks/useTheme";
-import { Link } from "@inertiajs/react";
 import {
     FaInstagram,
     FaTiktok,
@@ -8,36 +6,19 @@ import {
     FaTwitter,
     FaFacebook,
 } from "react-icons/fa";
+import ApplicationLogo from "./ApplicationLogo";
 
 const Footer = () => {
-    const { theme } = useTheme();
     return (
         <>
             {/* Footer */}
             <footer className="bg-[#222222] text-white py-12">
-                <div className="container mx-auto flex flex-col md:flex-row md:justify-between md:items-start px-6 lg:px-32">
+                <div className="container mx-auto flex flex-col md:flex-row flex-wrap gap-4 md:justify-between md:items-start px-6 lg:px-32">
                     {/* Left Side: Logo and Address */}
                     <div className="flex flex-col items-start mb-8 md:mb-0 md:w-1/3">
                         <div className="flex items-center mb-4">
                             {/* Logo */}
-                            <Link
-                                href="/"
-                                className="flex items-center hover:opacity-90 transition-opacity"
-                            >
-                                {theme === "dark" ? (
-                                    <img
-                                        src="/assets/turinglandlogodark.png"
-                                        alt="Application Logo"
-                                        className="h-auto w-auto"
-                                    />
-                                ) : (
-                                    <img
-                                        src="/assets/turinglandlogo.png"
-                                        alt="Application Logo"
-                                        className="h-auto w-auto"
-                                    />
-                                )}
-                            </Link>
+                            <ApplicationLogo />
                         </div>
                         <div className="text-left">
                             <p className="text-[#A5A5A5] font-poppins text-sm leading-6">

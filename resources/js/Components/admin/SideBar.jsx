@@ -1,48 +1,259 @@
-import { Link, usePage } from '@inertiajs/react';
-import { FaHome, FaFileAlt, FaCog } from 'react-icons/fa'; // Import ikon dari React Icons
+import { Link, usePage, router } from "@inertiajs/react";
+import { LogOutIcon } from "lucide-react";
+import { useEffect, useState } from "react";
+import { FaHome, FaFileAlt, FaCog, FaBars } from "react-icons/fa";
 
-const Sidebar = () => {
-    const { url } = usePage(); // Mendapatkan URL saat ini untuk menentukan menu yang aktif
+const Sidebar = ({ isCollapsed }) => {
+    const { url } = usePage();
+    const [isMobileOpen, setIsMobileOpen] = useState(isCollapsed);
 
-    const navigationLinks = [
-        { name: 'Nama Menu One', href: '/admin-page-one', icon: <FaHome /> },
-        { name: 'Nama Menu Two', href: '/admin-page-two', icon: <FaFileAlt /> },
-        { name: 'Website Setting', href: '/admin-setting', icon: <FaCog /> },
-    ];
+    const handleLogout = (e) => {
+        e.preventDefault();
+        router.post(route("logout"));
+    };
+
+    const toggleMobileSidebar = () => {
+        setIsMobileOpen(!isMobileOpen);
+    };
 
     return (
         <div
-            className="bg-[#222222] text-white rounded-2xl px-6 py-8 flex flex-col shadow-lg"
-            style={{
-                width: '270px',
-                margin: '8px', // Memberikan jarak di sekeliling sidebar
-            }}
+            className={`bg-[#222222] text-white rounded-none md:rounded-2xl px-4 py-6 flex flex-col shadow-lg transition-all duration-300 ${
+                isMobileOpen ? "w-[80px]" : "w-[270px]"
+            }`}
         >
             {/* Logo */}
-            <div className="mb-10">
-                <img src="/assets/turinglandlogo.png" alt="Turingland Yawn" className="h-12" />
+            <div
+                className={`mb-5 flex justify-center items-center flex-col gap-3`}
+            >
+                <img
+                    src="/assets/turinglandlogo.png"
+                    alt="Turingland Yawn"
+                    className={`transition-all duration-300 object-contain ${
+                        isMobileOpen ? "h-8" : "h-12"
+                    }`}
+                />
+                <button
+                    className="bg-[#222222] text-white p-2 rounded-full px-4"
+                    onClick={toggleMobileSidebar}
+                >
+                    <FaBars size={20} />
+                </button>
             </div>
 
-            {/* Menu Title */}
-            <h2 className="text-[#979797] text-[14px] uppercase mb-4">Menu</h2>
-
             {/* Navigation Links */}
-            <nav className="flex flex-col space-y-2">
-                {navigationLinks.map((link) => (
+
+            <div className="flex flex-1 flex-col justify-between">
+                <nav className="flex flex-col space-y-2">
+                    {/* Menu */}
+                    {!isMobileOpen && (
+                        <h2 className="text-[#979797] text-[14px] uppercase">
+                            Menu
+                        </h2>
+                    )}
                     <Link
-                        key={link.name}
-                        href={link.href}
+                        href={route("dashboard")}
                         className={`flex items-center gap-3 px-4 py-2 rounded-md transition ${
-                            url === link.href
-                                ? 'bg-white text-[#222222]'
-                                : 'text-white hover:bg-gray-700'
+                            url === "/dashboard"
+                                ? "bg-white text-[#222222]"
+                                : "text-white hover:bg-gray-700"
                         }`}
                     >
-                        <span className="text-xl">{link.icon}</span>
-                        <span className="font-bold text-[15px]">{link.name}</span>
+                        <span className="text-xl">
+                            <FaHome />
+                        </span>
+                        {!isMobileOpen && (
+                            <span className="font-bold text-[15px]">
+                                Dashboard
+                            </span>
+                        )}
                     </Link>
-                ))}
-            </nav>
+                    {/* Property Management */}
+                    {!isMobileOpen && (
+                        <h2 className="text-[#979797] text-[14px] uppercase mb-4">
+                            Property Management
+                        </h2>
+                    )}
+                    <Link
+                        href={route("dashboard.property")}
+                        className={`flex items-center gap-3 px-4 py-2 rounded-md transition ${
+                            url === "/dashboard/property"
+                                ? "bg-white text-[#222222]"
+                                : "text-white hover:bg-gray-700"
+                        }`}
+                    >
+                        <span className="text-xl">
+                            <FaFileAlt />
+                        </span>
+                        {!isMobileOpen && (
+                            <span className="font-bold text-[15px]">
+                                Property
+                            </span>
+                        )}
+                    </Link>
+                    <Link
+                        href={route("dashboard.category")}
+                        className={`flex items-center gap-3 px-4 py-2 rounded-md transition ${
+                            url === "/dashboard/category"
+                                ? "bg-white text-[#222222]"
+                                : "text-white hover:bg-gray-700"
+                        }`}
+                    >
+                        <span className="text-xl">
+                            <FaFileAlt />
+                        </span>
+                        {!isMobileOpen && (
+                            <span className="font-bold text-[15px]">
+                                Category
+                            </span>
+                        )}
+                    </Link>
+                    <Link
+                        href={route("dashboard.developer")}
+                        className={`flex items-center gap-3 px-4 py-2 rounded-md transition ${
+                            url === "/dashboard/developer"
+                                ? "bg-white text-[#222222]"
+                                : "text-white hover:bg-gray-700"
+                        }`}
+                    >
+                        <span className="text-xl">
+                            <FaCog />
+                        </span>
+                        {!isMobileOpen && (
+                            <span className="font-bold text-[15px]">
+                                Developer
+                            </span>
+                        )}
+                    </Link>
+                    <Link
+                        href={route("dashboard.area")}
+                        className={`flex items-center gap-3 px-4 py-2 rounded-md transition ${
+                            url === "/dashboard/area"
+                                ? "bg-white text-[#222222]"
+                                : "text-white hover:bg-gray-700"
+                        }`}
+                    >
+                        <span className="text-xl">
+                            <FaCog />
+                        </span>
+                        {!isMobileOpen && (
+                            <span className="font-bold text-[15px]">Area</span>
+                        )}
+                    </Link>
+
+                    {/* CMS */}
+                    {!isMobileOpen && (
+                        <h2 className="text-[#979797] text-[14px] uppercase mb-4">
+                            CMS
+                        </h2>
+                    )}
+                    <Link
+                        href={route("dashboard.banner")}
+                        className={`flex items-center gap-3 px-4 py-2 rounded-md transition ${
+                            url === "/dashboard/banner"
+                                ? "bg-white text-[#222222]"
+                                : "text-white hover:bg-gray-700"
+                        }`}
+                    >
+                        <span className="text-xl">
+                            <FaFileAlt />
+                        </span>
+                        {!isMobileOpen && (
+                            <span className="font-bold text-[15px]">
+                                Banner
+                            </span>
+                        )}
+                    </Link>
+                    <Link
+                        href={route("dashboard.testimony")}
+                        className={`flex items-center gap-3 px-4 py-2 rounded-md transition ${
+                            url === "/dashboard/testimony"
+                                ? "bg-white text-[#222222]"
+                                : "text-white hover:bg-gray-700"
+                        }`}
+                    >
+                        <span className="text-xl">
+                            <FaFileAlt />
+                        </span>
+                        {!isMobileOpen && (
+                            <span className="font-bold text-[15px]">
+                                Testimony
+                            </span>
+                        )}
+                    </Link>
+                    <Link
+                        href={route("dashboard.web-preferences")}
+                        className={`flex items-center gap-3 px-4 py-2 rounded-md transition ${
+                            url === "/dashboard/web-preferences"
+                                ? "bg-white text-[#222222]"
+                                : "text-white hover:bg-gray-700"
+                        }`}
+                    >
+                        <span className="text-xl">
+                            <FaCog />
+                        </span>
+                        {!isMobileOpen && (
+                            <span className="font-bold text-[15px]">
+                                Web Preferences
+                            </span>
+                        )}
+                    </Link>
+
+                    {/* User Management */}
+                    {!isMobileOpen && (
+                        <h2 className="text-[#979797] text-[14px] uppercase mb-4">
+                            User Management
+                        </h2>
+                    )}
+                    <Link
+                        href={route("dashboard.agent")}
+                        className={`flex items-center gap-3 px-4 py-2 rounded-md transition ${
+                            url === "/dashboard/agent"
+                                ? "bg-white text-[#222222]"
+                                : "text-white hover:bg-gray-700"
+                        }`}
+                    >
+                        <span className="text-xl">
+                            <FaFileAlt />
+                        </span>
+                        {!isMobileOpen && (
+                            <span className="font-bold text-[15px]">Agent</span>
+                        )}
+                    </Link>
+                    <Link
+                        href={route("dashboard.customer")}
+                        className={`flex items-center gap-3 px-4 py-2 rounded-md transition ${
+                            url === "/dashboard/customer"
+                                ? "bg-white text-[#222222]"
+                                : "text-white hover:bg-gray-700"
+                        }`}
+                    >
+                        <span className="text-xl">
+                            <FaFileAlt />
+                        </span>
+                        {!isMobileOpen && (
+                            <span className="font-bold text-[15px]">
+                                Customer
+                            </span>
+                        )}
+                    </Link>
+                </nav>
+
+                {/* Logout Button */}
+                <button
+                    onClick={handleLogout}
+                    className={`flex items-center gap-3 px-4 py-2 rounded-md transition mt-4 ${
+                        isMobileOpen
+                            ? "justify-center"
+                            : "justify-start hover:bg-gray-700"
+                    }`}
+                >
+                    <span className="text-xl">{<LogOutIcon />}</span>
+                    {!isMobileOpen && (
+                        <span className="font-bold text-[15px]">Logout</span>
+                    )}
+                </button>
+            </div>
         </div>
     );
 };

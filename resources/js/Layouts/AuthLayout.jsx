@@ -1,10 +1,10 @@
 import Footer from "@/Components/Footer";
 import Header from "@/Components/Header";
 
-export default function GuestLayout({ children }) {
+export default function AuthLayout({ children }) {
     return (
-        <div className="flex min-h-screen flex-col transition-all duration-300 ease-in-out">
-            <Header />
+        <div className="flex min-h-screen flex-col">
+            <Header variant="sticky" />
 
             {/* Main Content */}
             {children}

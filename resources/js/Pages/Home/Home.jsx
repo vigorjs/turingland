@@ -1,6 +1,9 @@
 import { CardProperty } from "@/Components/CardProperty";
+import { CategoriesSection } from "@/Components/CategoriesSection";
 import { FilterSearch } from "@/Components/FilterSearch";
 import { TestimonialCard } from "@/Components/TestimonialCard";
+import { Badge } from "@/Components/ui/badge";
+import { Button } from "@/Components/ui/button";
 import {
     Carousel,
     CarouselContent,
@@ -9,8 +12,15 @@ import {
     CarouselPrevious,
 } from "@/Components/ui/carousel";
 import GuestLayout from "@/Layouts/GuestLayout";
+import { Head } from "@inertiajs/react";
 import Autoplay from "embla-carousel-autoplay";
-import { QuoteIcon } from "lucide-react";
+import {
+    BathIcon,
+    BedDoubleIcon,
+    CarFrontIcon,
+    MapPinIcon,
+    QuoteIcon,
+} from "lucide-react";
 import React from "react";
 
 export default function Home() {
@@ -38,7 +48,7 @@ export default function Home() {
             img: "https://via.placeholder.com/150",
             name: "Tommy",
             role: "Penyewa ",
-            text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nobis.",
+            text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nobis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nobisLorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nobisLorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nobis",
         },
         {
             id: 3,
@@ -56,8 +66,36 @@ export default function Home() {
         },
     ];
 
+    const categories = [
+        {
+            img: "/assets/apartemen.png",
+            name: "Apartment",
+        },
+        {
+            img: "/assets/villa.png",
+            name: "Villa",
+        },
+        {
+            img: "/assets/kost.png",
+            name: "Kost",
+        },
+        {
+            img: "/assets/ruko.png",
+            name: "Ruko",
+        },
+        {
+            img: "/assets/rumah.png",
+            name: "Rumah",
+        },
+        {
+            img: "/assets/tanah.png",
+            name: "Tanah",
+        },
+    ];
+
     return (
         <GuestLayout>
+            <Head title="Tempat Jual Beli Rumah Apartement" />
             <div>
                 {/* HERO SECTION */}
                 {/* <Carousel
@@ -74,77 +112,85 @@ export default function Home() {
                         {arr.length > 0
                             ? arr.map((_, index) => (
                                   <CarouselItem key={index}> */}
-                <div
-                    className="relative w-full h-[60vh] bg-cover bg-center bg-fixed border border-gray-400"
-                    //   style={{
-                    //       backgroundImage: `url(${img})`,
-                    //   }}
-                >
+                <div className="relative w-full h-[50vh] bg-cover bg-center bg-fixed border border-gray-400">
                     <img src={img} className="w-full h-full object-cover" />
-                    <div className="w-full min-h-full bg-black/10 absolute top-0" />
+                    <div className="w-full min-h-full dark:bg-black/10 absolute top-0" />
                 </div>
                 {/* </CarouselItem>
                               ))
                             : null}
                     </CarouselContent> */}
+
                 {/* FILTRE */}
                 <FilterSearch />
+
+                <CategoriesSection categories={categories} />
+
                 {/* </Carousel> */}
-                <div className="px-3 md:px-6 lg:px-[150px]">
+                <div className="px-3 sm:px-4 md:px-6 lg:px-[150px]">
                     {/* ADS SECTION */}
                     <Carousel
-                        className="mt-24 mb-4"
+                        className="mb-4"
                         plugins={[
                             Autoplay({
-                                delay:5000,
+                                delay: 2500,
                             }),
                         ]}
                         opts={{
-                            align: "center",
+                            align: "start",
                             loop: true,
                         }}
                     >
-                        <CarouselContent className="">
-                            {arr.length > 0
-                                ? arr.map((_, index) => (
-                                      <CarouselItem
-                                          key={`ads-section-${index}`}
-                                        //   className="md:basis-1/1 lg:basis-1/2"
-                                          className="basis-auto"
-                                      >
-                                          <div>
-                                            <img src={img2} alt="" className="h-[259px] sm:h-[279px] object-contain rounded-2xl" />
-                                          </div>
-                                              {/* <div className="w-full h-full bg-black/30 absolute top-0 rounded-2xl flex justify-center items-center">
-                                              <div className="w-4/5 mx-auto">
-                                                  <h2 className="text-white text-4xl sm:text-5xl font-bold mb-3">
-                                                      Fauzan Properties
-                                                  </h2>
-                                                  <p className="text-white text-base sm:text-xl">
-                                                      Lorem ipsum dolor sit amet
-                                                      consectetur, adipisicing
-                                                      elit. Asperiores animi,
-                                                      laboriosam aspernatur est
-                                                      modi hic nulla
-                                                      reprehenderit et
-                                                  </p>
-                                              </div>
-                                          </div> */}
-                                      </CarouselItem>
-                                  ))
-                                : null}
+                        <CarouselContent>
+                            {arr.length > 0 ? (
+                                arr.map((_, index) => (
+                                    <CarouselItem
+                                        key={`ads-section-${index}`}
+                                        className="flex-shrink-0 basis-1/1 md:basis-1/2 max-h-[40vh]"
+                                    >
+                                        <img
+                                            src={img}
+                                            alt={`Carousel item ${index}`}
+                                            className="object-contain md:rounded-2xl rounded-none w-auto h-full"
+                                        />
+                                    </CarouselItem>
+                                ))
+                            ) : (
+                                <p className="text-center text-gray-500">
+                                    No items available for the carousel.
+                                </p>
+                            )}
                         </CarouselContent>
                     </Carousel>
 
-                    {/* RECCOMENDATION PROPERTIES */}
-                    <div className="mt-16 mb-4">
-                        <div className="mb-3">
-                            <h2 className="text-xl sm:text-2xl font-bold">
-                                Rekomendasi Properti Terpopuler
-                            </h2>
-                            <p className="text-base">
-                                Cek rekomendasi properti terpopuler kami
-                            </p>
+                    {/* NEW LAUNCH PROPERTIES */}
+                    <div className="mt-16 mb-4 ">
+                        <div className="mb-4 flex justify-between items-center">
+                            <div>
+                                <div className="flex gap-2">
+                                    <h2 className="text-xl sm:text-2xl font-bold">
+                                        Rekomendasi Properti Terbaru
+                                    </h2>
+                                    <span>
+                                        <Badge
+                                            className={
+                                                "text-sm font-extralight rounded-xl"
+                                            }
+                                        >
+                                            Baru !
+                                        </Badge>
+                                    </span>
+                                </div>
+                                <p className="text-base">
+                                    Cek rekomendasi properti terbaru kami
+                                </p>
+                            </div>
+                            <Button
+                                variant={"outline"}
+                                className="hidden md:mr-0 md:block lg:mr-40"
+                            >
+                                Lihat Selengkapnya
+                            </Button>
                         </div>
 
                         {/* CARD */}
@@ -153,63 +199,182 @@ export default function Home() {
                                 align: "start",
                             }}
                         >
-                            <CarouselContent
-                                className="flex space-x-1 sm:space-x-5 pb-8"
-                                // [&::-webkit-scrollbar]:w-1
-                                // [&::-webkit-scrollbar-track]:bg-gray-100
-                                // [&::-webkit-scrollbar-thumb]:bg-primary
-                                // [&::-webkit-scrollbar-thumb]:rounded-full
-                            >
+                            <CarouselContent>
                                 {arr.length > 0
                                     ? arr.map((_, index) => (
                                           <CarouselItem
-                                              className="flex-shrink-0 basis-auto"
+                                              className="flex-shrink-0 basis-auto w-[350px] h-[355px]"
                                               key={index}
                                           >
                                               <CardProperty
                                                   img={img3}
                                                   key={`properties-card-${index}`}
                                               >
-                                                  <h2 className="text-base font-bold">
-                                                      Fauzan Properties
-                                                  </h2>
-                                                  <div className="flex justify-start items-center gap-2">
-                                                      <p className="text-xs text-neutral-600">
-                                                          I
-                                                      </p>
-                                                      <p className="text-xs text-neutral-600">
-                                                          Jl. Kebon Jeruk,
-                                                          Jakarta
-                                                      </p>
-                                                  </div>
+                                                  <div className="flex flex-row justify-between items-center w-full">
+                                                      <div>
+                                                          <h2 className="font-bold text-foreground">
+                                                              Fauzan Properties
+                                                          </h2>
+                                                          <div className="flex justify-start items-center gap-1">
+                                                              <p className="text-xs text-neutral-600">
+                                                                  <MapPinIcon
+                                                                      className="text-muted"
+                                                                      fill="#FD9458"
+                                                                      size={
+                                                                          "16px"
+                                                                      }
+                                                                  />
+                                                              </p>
+                                                              <p className="text-xs text-muted-foreground">
+                                                                  Jl. Kebon
+                                                                  Jeruk, Jakarta
+                                                              </p>
+                                                          </div>
 
-                                                  <div className="flex justify-start items-center gap-3.5 mt-1">
-                                                      <p className="text-xs">
-                                                          LT: 40&sup2;
-                                                      </p>
-                                                      <p className="text-xs">
-                                                          LB: 40&sup2;
-                                                      </p>
+                                                          <div className="flex justify-start items-center gap-3.5 mt-1">
+                                                              <p className="text-xs">
+                                                                  LT: 40&sup2;
+                                                              </p>
+                                                              <p className="text-xs">
+                                                                  LB: 40&sup2;
+                                                              </p>
+                                                          </div>
+                                                      </div>
                                                   </div>
-                                                  <hr className="my-1" />
-                                                  <p className="text-xs font-semibold">
-                                                      Rp 200 juta
-                                                  </p>
+                                                  <hr className="mt-2 mb-3 dark:border-white" />
+                                                  <div className="flex justify-between">
+                                                      <p className="text-xs dark:text-primary font-semibold">
+                                                          Rp 200 juta
+                                                      </p>
+                                                      <div className="flex gap-5">
+                                                          <div className="flex items-center gap-x-1 text-xs">
+                                                              <BedDoubleIcon className="w-4 h-4" />{" "}
+                                                              : 3
+                                                          </div>
+                                                          <div className="flex items-center gap-x-1 text-xs">
+                                                              <BathIcon className="w-4 h-4" />{" "}
+                                                              : 2
+                                                          </div>
+                                                          <div className="flex items-center gap-x-1 text-xs">
+                                                              <CarFrontIcon className="w-4 h-4" />{" "}
+                                                              : 2
+                                                          </div>
+                                                      </div>
+                                                  </div>
                                               </CardProperty>
                                           </CarouselItem>
                                       ))
                                     : null}
                             </CarouselContent>
-                            <div className="absolute bottom-0 w-full bg-black flex justify-center items-center">
-                                <CarouselPrevious className="absolute left-0 bottom-0" />
-                                <CarouselNext className="absolute right-0 bottom-0" />
+                            <div className="absolute -top-11 right-20  justify-center items-center hidden lg:flex">
+                                <CarouselPrevious className="" />
+                                <CarouselNext className="" />
+                            </div>
+                        </Carousel>
+                    </div>
+
+                    {/* RECCOMENDATION PROPERTIES */}
+                    <div className="mt-16 mb-4 ">
+                        <div className="mb-4 flex justify-between items-center">
+                            <div>
+                                <h2 className="text-xl sm:text-2xl font-bold">
+                                    Rekomendasi Properti Terpopuler
+                                </h2>
+                                <p className="text-base">
+                                    Cek rekomendasi properti terpopuler kami
+                                </p>
+                            </div>
+                            <Button
+                                variant={"outline"}
+                                className="hidden md:mr-0 md:block lg:mr-40"
+                            >
+                                Lihat Selengkapnya
+                            </Button>
+                        </div>
+
+                        {/* CARD */}
+                        <Carousel
+                            opts={{
+                                align: "start",
+                            }}
+                        >
+                            <CarouselContent>
+                                {arr.length > 0
+                                    ? arr.map((_, index) => (
+                                          <CarouselItem
+                                              className="flex-shrink-0 basis-auto w-[350px] h-[355px]"
+                                              key={index}
+                                          >
+                                              <CardProperty
+                                                  img={img3}
+                                                  key={`properties-card-${index}`}
+                                              >
+                                                  <div className="flex flex-row justify-between items-center w-full">
+                                                      <div>
+                                                          <h2 className="font-bold text-foreground">
+                                                              Fauzan Properties
+                                                          </h2>
+                                                          <div className="flex justify-start items-center gap-1">
+                                                              <p className="text-xs text-neutral-600">
+                                                                  <MapPinIcon
+                                                                      className="text-muted"
+                                                                      fill="#FD9458"
+                                                                      size={
+                                                                          "16px"
+                                                                      }
+                                                                  />
+                                                              </p>
+                                                              <p className="text-xs text-muted-foreground">
+                                                                  Jl. Kebon
+                                                                  Jeruk, Jakarta
+                                                              </p>
+                                                          </div>
+
+                                                          <div className="flex justify-start items-center gap-3.5 mt-1">
+                                                              <p className="text-xs">
+                                                                  LT: 40&sup2;
+                                                              </p>
+                                                              <p className="text-xs">
+                                                                  LB: 40&sup2;
+                                                              </p>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                                  <hr className="mt-2 mb-3 dark:border-white" />
+                                                  <div className="flex justify-between">
+                                                      <p className="text-xs dark:text-primary font-semibold">
+                                                          Rp 200 juta
+                                                      </p>
+                                                      <div className="flex gap-5">
+                                                          <div className="flex items-center gap-x-1 text-xs">
+                                                              <BedDoubleIcon className="w-4 h-4" />{" "}
+                                                              : 3
+                                                          </div>
+                                                          <div className="flex items-center gap-x-1 text-xs">
+                                                              <BathIcon className="w-4 h-4" />{" "}
+                                                              : 2
+                                                          </div>
+                                                          <div className="flex items-center gap-x-1 text-xs">
+                                                              <CarFrontIcon className="w-4 h-4" />{" "}
+                                                              : 2
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </CardProperty>
+                                          </CarouselItem>
+                                      ))
+                                    : null}
+                            </CarouselContent>
+                            <div className="absolute -top-11 right-20  justify-center items-center hidden lg:flex">
+                                <CarouselPrevious className="" />
+                                <CarouselNext className="" />
                             </div>
                         </Carousel>
                     </div>
 
                     {/* TESTIMONIAL SECTION */}
                     <div className="py-12">
-                        <h2 className="text-xl sm:text-2xl font-bold mb-8 text-left text-gray-800">
+                        <h2 className="text-xl sm:text-2xl font-bold mb-8 text-left text-foreground">
                             Kata Mereka Tentang TuringLand
                         </h2>
                         <Carousel
@@ -230,32 +395,13 @@ export default function Home() {
                                                 name={testimonial.name}
                                                 role={testimonial.role}
                                                 text={testimonial.text}
-                                                className="bg-white rounded-lg shadow-lg"
-                                            >
-                                                <div className="flex items-start gap-4 p-4">
-                                                    <img
-                                                        src={testimonial.img}
-                                                        alt={testimonial.name}
-                                                        className="w-16 h-16 rounded-full object-cover border-2 border-gray-200"
-                                                    />
-                                                    <div>
-                                                        <h4 className="text-lg font-bold text-gray-800">
-                                                            {testimonial.name}
-                                                        </h4>
-                                                        <p className="text-sm text-gray-500 mb-2">
-                                                            {testimonial.role}
-                                                        </p>
-                                                        <p className="text-sm text-gray-600">
-                                                            {testimonial.text}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </TestimonialCard>
+                                                className="rounded-lg shadow-lg transition-all duration-300 ease-in-out dark:shadow-slate-950 dark:bg-muted"
+                                            />
                                         </div>
                                     </CarouselItem>
                                 ))}
                             </CarouselContent>
-                            <div className="absolute bottom-0 w-full bg-black flex justify-center items-center">
+                            <div className="absolute bottom-0 w-full bg-background flex justify-center items-center">
                                 <CarouselPrevious className="absolute left-0 bottom-0" />
                                 <CarouselNext className="absolute right-0 bottom-0" />
                             </div>
