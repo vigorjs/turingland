@@ -140,6 +140,21 @@ const Sidebar = ({ isCollapsed }) => {
                             <span className="font-bold text-[15px]">Area</span>
                         )}
                     </Link>
+                    <Link
+                        href={route("dashboard.location")}
+                        className={`flex items-center gap-3 px-4 py-2 rounded-md transition ${
+                            url === "/dashboard/location"
+                                ? "bg-white text-[#222222]"
+                                : "text-white hover:bg-gray-700"
+                        }`}
+                    >
+                        <span className="text-xl">
+                            <FaCog />
+                        </span>
+                        {!isMobileOpen && (
+                            <span className="font-bold text-[15px]">Location</span>
+                        )}
+                    </Link>
 
                     {/* CMS */}
                     {!isMobileOpen && (
