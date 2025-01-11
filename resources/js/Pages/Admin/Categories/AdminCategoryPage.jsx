@@ -3,8 +3,10 @@ import Modal from "@/Components/Modal";
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
+import { toast } from "@/hooks/use-toast";
 import AdminLayout from "@/Layouts/AdminLayout";
-import { X } from "lucide-react";
+import { router, useForm } from "@inertiajs/react";
+import { LoaderIcon, X } from "lucide-react";
 import { useState } from "react";
 
 export default function AdminCategoryPage({ categories }) {
@@ -25,8 +27,26 @@ export default function AdminCategoryPage({ categories }) {
     };
 
     const handleDeleteCategory = () => {
-        setIsOpenDeleteModal(false);
-        setCategory(null);
+        router.delete(route("category.destroy", category.id), {
+            onSuccess: () => {
+                toast({
+                    title: "Kategori berhasil dihapus!",
+                    variant: "default",
+                });
+            },
+            onError: (err) => {
+                toast({
+                    title: "Kategori gagal dihapus!",
+                    description: err,
+                    variant: "destructive",
+                });
+                console.log("ERR: ", err);
+            },
+            onFinish: () => {
+                setIsOpenDeleteModal(false);
+                setCategory(null);
+            },
+        });
     };
 
     return (
@@ -284,6 +304,7 @@ export default function AdminCategoryPage({ categories }) {
 
             <ModalCategoryForm
                 category={category}
+                setCategory={setCategory}
                 isOpenModal={isOpenModal}
                 setIsOpenModal={setIsOpenModal}
             />
@@ -299,28 +320,111 @@ export default function AdminCategoryPage({ categories }) {
     );
 }
 
-function ModalCategoryForm({ category, isOpenModal, setIsOpenModal }) {
+function ModalCategoryForm({ category, setCategory, isOpenModal, setIsOpenModal }) {
+    const [loading, setLoading] = useState(false);
+
+    const { data, setData, post, put, reset, errors } = useForm({
+        name: category?.name ?? "",
+        icon: null,
+    });
+
+    console.log("ERR: ", errors);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        setLoading(true);
+
+        if (!category) {
+            post(route("category.store"), {
+                onError: (errors) => {
+                    setLoading(false);
+                    toast({
+                        title: "Kategori gagal dibuat!",
+                        description: errors?.name || errors?.icon,
+                        variant: "destructive",
+                    });
+                    console.log("err: ", errors);
+                },
+                onSuccess: () => {
+                    toast({
+                        title: `Kategori berhasil ${
+                            category ? "diupdate" : "dibuat"
+                        }!`,
+                        // description: "Kategori berhasil dibuat",
+                        variant: "default",
+                    });
+                    setLoading(true);
+                    setIsOpenModal(false);
+                    reset("name", "icon");
+                },
+                onFinish: () => {
+                    setLoading(false);
+                },
+            });
+        } else {
+            put(route("category.update", category.id), {
+                onError: (errors) => {
+                    setLoading(false);
+                    toast({
+                        title: "Kategori gagal dibuat!",
+                        description: errors?.name || errors?.icon,
+                        variant: "destructive",
+                    });
+                    console.log("err: ", errors);
+                },
+                onSuccess: () => {
+                    toast({
+                        title: `Kategori berhasil ${
+                            category ? "diupdate" : "dibuat"
+                        }!`,
+                        // description: "Kategori berhasil dibuat",
+                        variant: "default",
+                    });
+                    setLoading(true);
+                    setIsOpenModal(false);
+                    reset("name", "icon");
+                },
+                onFinish: () => {
+                    setLoading(false);
+                },
+            });
+        }
+    };
+
+
+    const handleCloseModal = () => {
+        setCategory(null);
+        reset("name", "icon");
+        setIsOpenModal(false);
+    }
+
     return (
-        <Modal show={isOpenModal} onClose={() => setIsOpenModal(false)}>
+        <Modal show={isOpenModal} onClose={handleCloseModal}>
             <div className="p-3.5 flex justify-between items-center">
                 <h1 className="text-xl font-medium">
                     {!category ? "Tambah " : "Edit "} Kategori
                 </h1>
-                <button onClick={() => setIsOpenModal(false)}>
+                <button onClick={handleCloseModal}>
                     <X />
                 </button>
             </div>
 
             <hr />
 
-            <div className="p-3.5 flex flex-col gap-5">
+            <form
+                onSubmit={handleSubmit}
+                enctype="multipart/form-data"
+                className="p-3.5 flex flex-col gap-5"
+            >
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="nama">Nama</Label>
                     <Input
-                        value={category?.name ?? ""}
                         type="text"
                         id="nama"
                         placeholder="Masukkan nama kategori..."
+                        value={data?.name ?? ""}
+                        onChange={(e) => setData("name", e.target.value)}
                     />
                 </div>
                 <div className="grid w-full items-center gap-1.5">
@@ -329,15 +433,22 @@ function ModalCategoryForm({ category, isOpenModal, setIsOpenModal }) {
                         type="file"
                         id="icon"
                         placeholder="Masukkan icon kategori..."
+                        // onChange={(e) => setData("icon", e.target.files?.[0] || null)}
+                        onChange={(e) => setData("icon", e.target.files[0])}
                     />
                 </div>
                 <Button
-                    onClick={() => setIsOpenModal(false)}
+                    type="submit"
+                    disabled={loading || !data.name}
+                    // onClick={() => setIsOpenModal(false)}
                     className="bg-primary text-white hover:bg-primary/95 hover:text-white"
                 >
+                    {loading && (
+                        <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />
+                    )}
                     {!category ? "Tambah " : "Edit "}
                 </Button>
-            </div>
+            </form>
         </Modal>
     );
 }
