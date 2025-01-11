@@ -2,10 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\Category\CategoryService;
 use Illuminate\Http\Request;
 
 class AdminCategoryController extends Controller
 {
+    protected $categoryService;
+
+    public function __construct(CategoryService $categoryService)
+    {
+        $this->categoryService = $categoryService;
+    }
+
+
     /**
      * Display a listing of the resource.
      */
@@ -27,7 +36,9 @@ class AdminCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->categoryService->createCategory($request);
+
+        return redirect()->back();
     }
 
     /**
@@ -49,16 +60,20 @@ class AdminCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $this->categoryService->updateCategory($request, $id);
+
+        return redirect()->back();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $this->categoryService->deleteCategory($id);
+
+        return redirect()->back();
     }
 }

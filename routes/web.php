@@ -53,6 +53,10 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
         ]);
     })->name('dashboard.category');
 
+    Route::post("/category", [AdminCategoryController::class, "store"])->name("category.store");
+    Route::put("/category/{id}", [AdminCategoryController::class, "update"])->name("category.update");
+    Route::delete("/category/{id}", [AdminCategoryController::class, "destroy"])->name("category.destroy");
+
     // Route::resource("/category", AdminCategoryController::class);
 
     Route::get('/developer', function () {
