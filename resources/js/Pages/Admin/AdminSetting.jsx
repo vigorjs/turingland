@@ -8,9 +8,12 @@ const AdminSettings = () => {
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
-        setLogo(file);
-        setPreview(URL.createObjectURL(file));
+        if (file) {
+            setLogo(file); // Update the logo state
+            setPreview(URL.createObjectURL(file)); // Set the preview
+        }
     };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,10 +23,14 @@ const AdminSettings = () => {
         }
 
         const formData = new FormData();
-        formData.append("logo", logo);
+        formData.append("key", "logo_url");
+        formData.append("value", logo);  // Ensure you are passing the file here
 
         try {
-            const response = await axios.post("/admin/settings/logo", formData, {
+            const response = await axios({
+                method: "post",
+                url: route("web-preferences.post"),  // Check that this route is correct
+                data: formData,
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
@@ -34,6 +41,7 @@ const AdminSettings = () => {
             alert("Gagal mengunggah logo.");
         }
     };
+
 
     return (
         <AdminLayout>
