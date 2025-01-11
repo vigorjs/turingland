@@ -3,9 +3,13 @@
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminSettingController;
+use App\Http\Controllers\WebPreferencesController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+require __DIR__.'/auth.php';
+
 
 // Route::get('/', function () {
 //     return Inertia::render('Welcome', [
@@ -65,10 +69,12 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
         return Inertia::render("Admin/AdminPageThree");
     })->name('dashboard.testimony');
 
+    //Web Pref
     Route::get('/web-preferences', function () {
-        return Inertia::render("Admin/AdminPageTwo");
+        return Inertia::render("Admin/AdminSetting");
     })->name('dashboard.web-preferences');
 
+    //AGENT
     Route::get('/agent', function () {
         return Inertia::render("Admin/AdminPageThree");
     })->name('dashboard.agent');
@@ -84,4 +90,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+Route::get('web-preferences/{key}', [WebPreferencesController::class, 'getWebPreference']);
+Route::post('web-preferences', [WebPreferencesController::class, 'updateWebPreference'])->name("web-preferences.post");
+
+
