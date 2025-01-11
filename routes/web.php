@@ -42,7 +42,7 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
     })->name('dashboard.developer');
 
     Route::get('/banner', function () {
-        return Inertia::render("Admin/AdminPageTwo");
+        return Inertia::render("Admin/Banner");
     })->name('dashboard.banner');
 
     Route::get('/testimony', function () {
