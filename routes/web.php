@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminSettingController;
@@ -34,15 +35,30 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
     })->name('dashboard.property');
 
     Route::get('/area', function () {
-        return Inertia::render("Admin/AdminPageThree");
+        return Inertia::render("Admin/Areas/AdminAreaPage", [
+            'areas' => \App\Models\Area::all()
+        ]);
     })->name('dashboard.area');
 
+    Route::get('/location', function () {
+        return Inertia::render("Admin/Locations/AdminLocationPage", [
+            'areas' => \App\Models\Area::all(),
+            'locations' => \App\Models\Location::with('area')->get()
+        ]);
+    })->name('dashboard.location');
+
     Route::get('/category', function () {
-        return Inertia::render("Admin/AdminPageTwo");
+        return Inertia::render("Admin/Categories/AdminCategoryPage", [
+            'categories' => \App\Models\Category::all()
+        ]);
     })->name('dashboard.category');
 
+    // Route::resource("/category", AdminCategoryController::class);
+
     Route::get('/developer', function () {
-        return Inertia::render("Admin/AdminPageThree");
+        return Inertia::render("Admin/Developers/AdminDeveloperPage", [
+            'developers' => \App\Models\Developer::all(),
+        ]);
     })->name('dashboard.developer');
 
     Route::get('/banner', function () {
