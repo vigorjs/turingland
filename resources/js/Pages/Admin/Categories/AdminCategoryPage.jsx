@@ -330,7 +330,7 @@ function ModalCategoryForm({
 }) {
     const [loading, setLoading] = useState(false);
 
-    const { data, setData, post, put, reset, errors } = useForm({
+    const { data, setData, post, reset, errors } = useForm({
         name: category?.name ?? "",
         icon: null,
         _method: category ? "PUT" : "POST"
@@ -362,7 +362,6 @@ function ModalCategoryForm({
                         // description: "Kategori berhasil dibuat",
                         variant: "default",
                     });
-                    setLoading(true);
                     setIsOpenModal(false);
                     reset("name", "icon");
                 },
@@ -389,7 +388,6 @@ function ModalCategoryForm({
                         // description: "Kategori berhasil dibuat",
                         variant: "default",
                     });
-                    setLoading(true);
                     setIsOpenModal(false);
                     reset("name", "icon");
                 },

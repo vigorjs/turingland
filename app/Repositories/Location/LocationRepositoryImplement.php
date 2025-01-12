@@ -4,6 +4,7 @@ namespace App\Repositories\Location;
 
 use LaravelEasyRepository\Implementations\Eloquent;
 use App\Models\Location;
+use Illuminate\Http\Request;
 
 class LocationRepositoryImplement extends Eloquent implements LocationRepository{
 
@@ -19,5 +20,29 @@ class LocationRepositoryImplement extends Eloquent implements LocationRepository
         $this->model = $model;
     }
 
+    public function getAllLocations($request)
+    {
+        return $this->model->all();
+    }
+
+    public function showLocation($id)
+    {
+        return $this->model->where("id", $id)->with("area")->first();
+    }
+
+    public function createLocation($data)
+    {
+        return $this->model->create($data);
+    }
+
+    public function updateLocation($data, $id)
+    {
+        return $this->model->where('id', $id)->update($data);
+    }
+
+    public function deleteLocation($id)
+    {
+        return $this->model->where('id', $id)->delete();
+    }
     // Write something awesome :)
 }

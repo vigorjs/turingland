@@ -5,8 +5,10 @@ import Modal from "@/Components/Modal";
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
+import { toast } from "@/hooks/use-toast";
 import AdminLayout from "@/Layouts/AdminLayout";
-import { X } from "lucide-react";
+import { router, useForm } from "@inertiajs/react";
+import { LoaderIcon, X } from "lucide-react";
 import { useState, useEffect } from "react";
 
 export default function AdminAreaPage({ areas }) {
@@ -25,8 +27,26 @@ export default function AdminAreaPage({ areas }) {
     };
 
     const handleDeleteArea = () => {
-        setIsOpenDeleteModal(false);
-        setArea(null);
+        router.delete(route("area.destroy", area.id), {
+            onSuccess: () => {
+                toast({
+                    title: "Area berhasil dihapus!",
+                    variant: "default",
+                });
+            },
+            onError: (err) => {
+                toast({
+                    title: "Area gagal dihapus!",
+                    description: err,
+                    variant: "destructive",
+                });
+                console.log("ERR: ", err);
+            },
+            onFinish: () => {
+                setIsOpenDeleteModal(false);
+                setArea(null);
+            },
+        });
     };
 
     return (
@@ -267,11 +287,13 @@ export default function AdminAreaPage({ areas }) {
                 </div>
             </div>
 
-            <ModalAreaForm
-                area={area}
-                isOpenModal={isOpenModal}
-                setIsOpenModal={setIsOpenModal}
-            />
+            {isOpenModal && (
+                <ModalAreaForm
+                    area={area}
+                    isOpenModal={isOpenModal}
+                    setIsOpenModal={setIsOpenModal}
+                />
+            )}
 
             <AlertConfirmModal
                 isOpen={isOpenDeleteModal}
@@ -285,11 +307,81 @@ export default function AdminAreaPage({ areas }) {
 }
 
 function ModalAreaForm({ area, isOpenModal, setIsOpenModal }) {
-    const [isActive, setIsActive] = useState(area?.is_active);
+    const [isActive, setIsActive] = useState(area?.is_active ?? false);
+    const [loading, setLoading] = useState(false);
+
+    const { data, setData, post, put, reset } = useForm({
+        name: area?.name ?? "",
+        description: area?.description ?? "",
+        is_active: isActive,
+        // _method: area ? "PUT" : "POST",
+    });
 
     useEffect(() => {
-        setIsActive(area?.is_active);
-    }, [area]);
+        setData("is_active", isActive);
+    }, [isActive]);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        setLoading(true);
+
+        if(!area) {
+            post(route("area.store"), {
+                onError: (errors) => {
+                    setLoading(false);
+                    toast({
+                        title: "Area gagal dibuat!",
+                        description: errors?.name || errors?.icon,
+                        variant: "destructive",
+                    });
+                    console.log("err: ", errors);
+                },
+                onSuccess: () => {
+                    toast({
+                        title: `Area berhasil ${
+                            area ? "diupdate" : "dibuat"
+                        }!`,
+                        // description: "Area berhasil dibuat",
+                        variant: "default",
+                    });
+                    setIsOpenModal(false);
+                    setIsActive(false)
+                    reset("name", "description");
+                },
+                onFinish: () => {
+                    setLoading(false);
+                },
+            });
+        } else {
+            put(route("area.update", area.id), {
+                onError: (errors) => {
+                    setLoading(false);
+                    toast({
+                        title: "Area gagal diupdate!",
+                        description: errors?.name || errors?.icon,
+                        variant: "destructive",
+                    });
+                    console.log("err: ", errors);
+                },
+                onSuccess: () => {
+                    toast({
+                        title: `Area berhasil ${
+                            area ? "diupdate" : "dibuat"
+                        }!`,
+                        // description: "Area berhasil dibuat",
+                        variant: "default",
+                    });
+                    setIsOpenModal(false);
+                    setIsActive(false)
+                    reset("name", "description");
+                },
+                onFinish: () => {
+                    setLoading(false);
+                },
+            });
+        }
+    };
 
     return (
         <Modal show={isOpenModal} onClose={() => setIsOpenModal(false)}>
@@ -304,11 +396,12 @@ function ModalAreaForm({ area, isOpenModal, setIsOpenModal }) {
 
             <hr />
 
-            <div className="p-3.5 flex flex-col gap-5">
+            <form onSubmit={handleSubmit} className="p-3.5 flex flex-col gap-5">
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="nama">Nama</Label>
                     <Input
-                        value={area?.name ?? ""}
+                        value={data.name}
+                        onChange={(e) => setData("name", e.target.value)}
                         type="text"
                         id="nama"
                         placeholder="Masukkan nama Area..."
@@ -317,7 +410,8 @@ function ModalAreaForm({ area, isOpenModal, setIsOpenModal }) {
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="icon">Deskripsi</Label>
                     <Input
-                        value={area?.description ?? ""}
+                        value={data.description}
+                        onChange={(e) => setData("description", e.target.value)}
                         type="text"
                         id="icon"
                         placeholder="Masukkan icon Area..."
@@ -331,12 +425,17 @@ function ModalAreaForm({ area, isOpenModal, setIsOpenModal }) {
                     />
                 </div>
                 <Button
-                    onClick={() => setIsOpenModal(false)}
+                    // onClick={() => setIsOpenModal(false)}
+                    disabled={loading || !data.name}
+                    type="submit"
                     className="bg-primary text-white hover:bg-primary/95 hover:text-white"
                 >
+                    {loading && (
+                        <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />
+                    )}
                     {!area ? "Tambah " : "Edit "}
                 </Button>
-            </div>
+            </form>
         </Modal>
     );
 }

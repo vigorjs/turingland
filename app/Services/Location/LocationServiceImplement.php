@@ -4,6 +4,7 @@ namespace App\Services\Location;
 
 use LaravelEasyRepository\ServiceApi;
 use App\Repositories\Location\LocationRepository;
+use Illuminate\Http\Request;
 
 class LocationServiceImplement extends ServiceApi implements LocationService{
 
@@ -28,6 +29,42 @@ class LocationServiceImplement extends ServiceApi implements LocationService{
     public function __construct(LocationRepository $mainRepository)
     {
       $this->mainRepository = $mainRepository;
+    }
+
+
+    public function getAllLocations(Request $request)
+    {
+        return $this->mainRepository->getAllLocations($request);
+    }
+
+    public function showLocation($id)
+    {
+        return $this->mainRepository->showLocation($id);
+    }
+
+    public function createLocation(Request $request)
+    {
+        $request->validate([
+            "name" => "required",
+            "area_id" => "required"
+        ]);
+
+        return $this->mainRepository->createLocation($request->all());
+    }
+
+    public function updateLocation(Request $request, $id)
+    {
+        $request->validate([
+            "name" => "required",
+            "area_id" => "required"
+        ]);
+
+        return $this->mainRepository->updateLocation($request->all(), $id);
+    }
+
+    public function deleteLocation($id)
+    {
+        return $this->mainRepository->deleteLocation($id);
     }
 
     // Define your custom methods :)

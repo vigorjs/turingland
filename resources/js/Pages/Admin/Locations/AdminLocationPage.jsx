@@ -12,8 +12,10 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/Components/ui/select";
+import { toast } from "@/hooks/use-toast";
 import AdminLayout from "@/Layouts/AdminLayout";
-import { X } from "lucide-react";
+import { router, useForm } from "@inertiajs/react";
+import { LoaderIcon, X } from "lucide-react";
 import { useState, useEffect } from "react";
 
 export default function AdminLocationPage({ locations, areas }) {
@@ -32,8 +34,26 @@ export default function AdminLocationPage({ locations, areas }) {
     };
 
     const handleDeletelocation = () => {
-        setIsOpenDeleteModal(false);
-        setLocation(null);
+        router.delete(route("location.destroy", location.id), {
+            onSuccess: () => {
+                toast({
+                    title: "Lokasi berhasil dihapus!",
+                    variant: "default",
+                });
+            },
+            onError: (err) => {
+                toast({
+                    title: "Lokasi gagal dihapus!",
+                    description: err,
+                    variant: "destructive",
+                });
+                console.log("ERR: ", err);
+            },
+            onFinish: () => {
+                setIsOpenDeleteModal(false);
+                setLocation(null);
+            },
+        });
     };
 
     return (
@@ -286,12 +306,14 @@ export default function AdminLocationPage({ locations, areas }) {
                 </div>
             </div>
 
-            <ModalLocationForm
-                location={location}
-                areas={areas}
-                isOpenModal={isOpenModal}
-                setIsOpenModal={setIsOpenModal}
-            />
+            {isOpenModal && (
+                <ModalLocationForm
+                    location={location}
+                    areas={areas}
+                    isOpenModal={isOpenModal}
+                    setIsOpenModal={setIsOpenModal}
+                />
+            )}
 
             <AlertConfirmModal
                 isOpen={isOpenDeleteModal}
@@ -305,11 +327,95 @@ export default function AdminLocationPage({ locations, areas }) {
 }
 
 function ModalLocationForm({ location, areas, isOpenModal, setIsOpenModal }) {
-    const [isActive, setIsActive] = useState(location?.is_active);
+    const [isActive, setIsActive] = useState(location?.is_active ?? false);
+    const [areaId, setAreaId] = useState(location?.area_id.toString());
+    const [loading, setLoading] = useState(false);
+
+    const { data, setData, post, put, reset } = useForm({
+        name: location?.name ?? "",
+        description: location?.description ?? "",
+        area_id: areaId,
+        is_active: isActive,
+        // _method: location ? "PUT" : "POST",
+    });
 
     useEffect(() => {
-        setIsActive(location?.is_active);
-    }, [location]);
+        setData("is_active", isActive);
+    }, [isActive]);
+
+    useEffect(() => {
+        setData("area_id", areaId);
+    }, [areaId]);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        setLoading(true);
+
+        if (!location) {
+            post(route("location.store"), {
+                onError: (errors) => {
+                    setLoading(false);
+                    toast({
+                        title: "Lokasi gagal dibuat!",
+                        description:
+                            errors?.name ||
+                            errors?.description ||
+                            errors?.area_id ||
+                            errors?.is_active,
+                        variant: "destructive",
+                    });
+                    console.log("err: ", errors);
+                },
+                onSuccess: () => {
+                    toast({
+                        title: `Lokasi berhasil ${
+                            location ? "diupdate" : "dibuat"
+                        }!`,
+                        // description: "location berhasil dibuat",
+                        variant: "default",
+                    });
+                    setIsOpenModal(false);
+                    setIsActive(false);
+                    reset("name", "description");
+                },
+                onFinish: () => {
+                    setLoading(false);
+                },
+            });
+        } else {
+            put(route("location.update", location.id), {
+                onError: (errors) => {
+                    setLoading(false);
+                    toast({
+                        title: "Lokasi gagal diupdate!",
+                        description:
+                            errors?.name ||
+                            errors?.description ||
+                            errors?.area_id ||
+                            errors?.is_active,
+                        variant: "destructive",
+                    });
+                    console.log("err: ", errors);
+                },
+                onSuccess: () => {
+                    toast({
+                        title: `Lokasi berhasil ${
+                            location ? "diupdate" : "dibuat"
+                        }!`,
+                        // description: "Area berhasil dibuat",
+                        variant: "default",
+                    });
+                    setIsOpenModal(false);
+                    setIsActive(false);
+                    reset("name", "description");
+                },
+                onFinish: () => {
+                    setLoading(false);
+                },
+            });
+        }
+    };
 
     return (
         <Modal show={isOpenModal}>
@@ -324,11 +430,12 @@ function ModalLocationForm({ location, areas, isOpenModal, setIsOpenModal }) {
 
             <hr />
 
-            <div className="p-3.5 flex flex-col gap-5">
+            <form onSubmit={handleSubmit} className="p-3.5 flex flex-col gap-5">
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="nama">Nama</Label>
                     <Input
-                        value={location?.name ?? ""}
+                        value={data.name}
+                        onChange={(e) => setData("name", e.target.value)}
                         type="text"
                         id="nama"
                         placeholder="Masukkan nama location..."
@@ -337,7 +444,8 @@ function ModalLocationForm({ location, areas, isOpenModal, setIsOpenModal }) {
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="icon">Deskripsi</Label>
                     <Input
-                        value={location?.description ?? ""}
+                        value={data.description}
+                        onChange={(e) => setData("description", e.target.value)}
                         type="text"
                         id="icon"
                         placeholder="Masukkan icon location..."
@@ -350,7 +458,10 @@ function ModalLocationForm({ location, areas, isOpenModal, setIsOpenModal }) {
                     >
                         Area
                     </Label>
-                    <Select>
+                    <Select
+                        value={areaId}
+                        onValueChange={(value) => setAreaId(value)}
+                    >
                         <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6] w-full ">
                             <SelectValue placeholder="Pilih Lokasi" />
                         </SelectTrigger>
@@ -360,6 +471,7 @@ function ModalLocationForm({ location, areas, isOpenModal, setIsOpenModal }) {
                                       <SelectItem
                                           key={`area-${area.id}-${index}`}
                                           value={`${area.id}`}
+                                        //   selected={areaId == `${area.id}`}
                                       >
                                           {area.name}
                                       </SelectItem>
@@ -376,12 +488,17 @@ function ModalLocationForm({ location, areas, isOpenModal, setIsOpenModal }) {
                     />
                 </div>
                 <Button
-                    onClick={() => setIsOpenModal(false)}
+                    // onClick={() => setIsOpenModal(false)}
+                    type="submit"
+                    disabled={loading || !data.name || areaId === null}
                     className="bg-primary text-white hover:bg-primary/95 hover:text-white"
                 >
+                    {loading && (
+                        <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />
+                    )}
                     {!location ? "Tambah " : "Edit "}
                 </Button>
-            </div>
+            </form>
         </Modal>
     );
 }

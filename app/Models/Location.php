@@ -11,7 +11,8 @@ class Location extends Model
     protected $fillable = [
         'name',
         'description',
-        'is_active'
+        'is_active',
+        'area_id'
     ];
 
     protected $casts = [
