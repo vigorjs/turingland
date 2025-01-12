@@ -31,7 +31,7 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
     })->name('dashboard');
 
     Route::get('/property', function () {
-        return Inertia::render("Admin/AdminPageTwo");
+        return Inertia::render("Admin/Properties/AdminPropertyPage");
     })->name('dashboard.property');
 
     Route::get('/area', function () {
