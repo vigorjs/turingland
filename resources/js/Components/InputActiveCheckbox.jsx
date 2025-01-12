@@ -4,6 +4,7 @@ export default function InputActiveCheckbox({ isActive, setIsActive }) {
     return (
         <div className="flex justify-between items-center gap-2.5">
             <Button
+                type="button"
                 onClick={() => setIsActive(true)}
                 className={`w-1/2 ${
                     isActive ? "bg-green-100" : "bg-white"
@@ -12,6 +13,7 @@ export default function InputActiveCheckbox({ isActive, setIsActive }) {
                 Aktif
             </Button>
             <Button
+                type="button"
                 onClick={() => setIsActive(false)}
                 className={`w-1/2 ${
                     !isActive ? "bg-red-100" : "bg-white"

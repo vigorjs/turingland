@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\AdminAreaController;
 use App\Http\Controllers\AdminCategoryController;
+use App\Http\Controllers\AdminDeveloperController;
+use App\Http\Controllers\AdminLocationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminSettingController;
@@ -39,6 +42,9 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
             'areas' => \App\Models\Area::all()
         ]);
     })->name('dashboard.area');
+    Route::post("/area", [AdminAreaController::class, "store"])->name("area.store");
+    Route::put("/area/{id}", [AdminAreaController::class, "update"])->name("area.update");
+    Route::delete("/area/{id}", [AdminAreaController::class, "destroy"])->name("area.destroy");
 
     Route::get('/location', function () {
         return Inertia::render("Admin/Locations/AdminLocationPage", [
@@ -46,6 +52,9 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
             'locations' => \App\Models\Location::with('area')->get()
         ]);
     })->name('dashboard.location');
+    Route::post("/location", [AdminLocationController::class, "store"])->name("location.store");
+    Route::put("/location/{id}", [AdminLocationController::class, "update"])->name("location.update");
+    Route::delete("/location/{id}", [AdminLocationController::class, "destroy"])->name("location.destroy");
 
     Route::get('/category', function () {
         return Inertia::render("Admin/Categories/AdminCategoryPage", [
@@ -64,6 +73,10 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
             'developers' => \App\Models\Developer::all(),
         ]);
     })->name('dashboard.developer');
+    Route::post("/developer", [AdminDeveloperController::class, "store"])->name('developer.store');
+    Route::put("/developer/{id}", [AdminDeveloperController::class, "update"])->name('developer.update');
+    Route::delete("/developer/{id}", [AdminDeveloperController::class, "destroy"])->name('developer.destroy');
+
 
     Route::get('/banner', function () {
         return Inertia::render("Admin/AdminPageTwo");

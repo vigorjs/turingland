@@ -19,5 +19,30 @@ class AreaRepositoryImplement extends Eloquent implements AreaRepository{
         $this->model = $model;
     }
 
+    public function getAllAreas($request)
+    {
+        return $this->model->all();
+    }
+
+    public function showArea($id)
+    {
+        return $this->model->find($id);
+    }
+
+    public function createArea($data)
+    {
+        return $this->model->create($data);
+    }
+
+    public function updateArea($data, $id)
+    {
+        return $this->model->where('id', $id)->update($data);
+    }
+
+    public function deleteArea($id)
+    {
+        return $this->model->where('id', $id)->delete();
+    }
+
     // Write something awesome :)
 }

@@ -5,8 +5,10 @@ import Modal from "@/Components/Modal";
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
+import { toast } from "@/hooks/use-toast";
 import AdminLayout from "@/Layouts/AdminLayout";
-import { X } from "lucide-react";
+import { router, useForm } from "@inertiajs/react";
+import { LoaderIcon, X } from "lucide-react";
 import { useState, useEffect } from "react";
 
 export default function AdminDeveloperPage({ developers }) {
@@ -25,8 +27,26 @@ export default function AdminDeveloperPage({ developers }) {
     };
 
     const handleDeleteDeveloper = () => {
-        setIsOpenDeleteModal(false);
-        setDeveloper(null);
+        router.delete(route("developer.destroy", developer.id), {
+            onSuccess: () => {
+                toast({
+                    title: "Developer berhasil dihapus!",
+                    variant: "default",
+                });
+            },
+            onError: (err) => {
+                toast({
+                    title: "Developer gagal dihapus!",
+                    description: err,
+                    variant: "destructive",
+                });
+                console.log("ERR: ", err);
+            },
+            onFinish: () => {
+                setIsOpenDeleteModal(false);
+                setDeveloper(null);
+            },
+        });
     };
 
     return (
@@ -98,8 +118,14 @@ export default function AdminDeveloperPage({ developers }) {
                                                   <td className="px-5 py-3.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900 ">
                                                       <div className="w-10 flex items-center gap-3">
                                                           <img
-                                                              src="/assets/kost.png"
-                                                              alt="Floyd image"
+                                                              src={
+                                                                  developer.logo
+                                                                      ? `/storage/${developer.logo}`
+                                                                      : "/assets/kost.png"
+                                                              }
+                                                              alt={
+                                                                  developer.name
+                                                              }
                                                           />
                                                           <div className="data">
                                                               <p className="font-normal text-sm text-gray-900">
@@ -282,11 +308,13 @@ export default function AdminDeveloperPage({ developers }) {
                 </div>
             </div>
 
-            <ModalDeveloperForm
-                developer={developer}
-                isOpenModal={isOpenModal}
-                setIsOpenModal={setIsOpenModal}
-            />
+            {isOpenModal && (
+                <ModalDeveloperForm
+                    developer={developer}
+                    isOpenModal={isOpenModal}
+                    setIsOpenModal={setIsOpenModal}
+                />
+            )}
 
             <AlertConfirmModal
                 isOpen={isOpenDeleteModal}
@@ -300,11 +328,88 @@ export default function AdminDeveloperPage({ developers }) {
 }
 
 function ModalDeveloperForm({ developer, isOpenModal, setIsOpenModal }) {
-    const [isActive, setIsActive] = useState(developer?.is_active);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isActive, setIsActive] = useState(developer?.is_active ?? false);
+
+    const { data, setData, post, reset } = useForm({
+        name: developer?.name ?? "",
+        description: developer?.description ?? "",
+        logo: null,
+        is_active: isActive,
+        _method: developer ? "PUT" : "POST",
+    });
 
     useEffect(() => {
-        setIsActive(developer?.is_active);
-    }, [developer]);
+        setData("is_active", isActive);
+    }, [isActive]);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+        if (!developer) {
+            post(route("developer.store"), {
+                onError: (errors) => {
+                    setIsLoading(false);
+                    toast({
+                        title: "Developer gagal dibuat!",
+                        description: errors?.name || errors?.icon,
+                        variant: "destructive",
+                    });
+                    console.log("err: ", errors);
+                },
+                onSuccess: () => {
+                    toast({
+                        title: `Developer berhasil ${
+                            developer ? "diupdate" : "dibuat"
+                        }!`,
+                        // description: "Kategori berhasil dibuat",
+                        variant: "default",
+                    });
+                    setIsLoading(true);
+                    setIsOpenModal(false);
+                    reset("name", "description", "logo");
+                    setIsActive(false);
+                },
+                onFinish: () => {
+                    setIsLoading(false);
+                },
+            });
+        } else {
+            console.log("LALALA: ", data.name);
+
+            post(route("developer.update", developer.id), {
+                onError: (errors) => {
+                    setIsLoading(false);
+                    toast({
+                        title: "Developer gagal diupdate!",
+                        description: errors?.name || errors?.icon,
+                        variant: "destructive",
+                    });
+                    console.log("err: ", errors);
+                },
+                onSuccess: () => {
+                    toast({
+                        title: `Developer berhasil ${
+                            developer ? "diupdate" : "dibuat"
+                        }!`,
+                        // description: "Kategori berhasil dibuat",
+                        variant: "default",
+                    });
+                    setIsLoading(true);
+                    setIsOpenModal(false);
+                    reset("name", "description", "logo");
+                    setIsActive(false);
+                },
+                onFinish: () => {
+                    setIsLoading(false);
+                },
+            });
+        }
+    };
+
+    // useEffect(() => {
+    //     setIsActive(developer?.is_active);
+    // }, [developer]);
 
     return (
         <Modal show={isOpenModal} onClose={() => setIsOpenModal(false)}>
@@ -319,11 +424,16 @@ function ModalDeveloperForm({ developer, isOpenModal, setIsOpenModal }) {
 
             <hr />
 
-            <div className="p-3.5 flex flex-col gap-5">
+            <form
+                onSubmit={handleSubmit}
+                enctype="multipart/form-data"
+                className="p-3.5 flex flex-col gap-5"
+            >
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="nama">Nama</Label>
                     <Input
-                        value={developer?.name ?? ""}
+                        value={data.name}
+                        onChange={(e) => setData("name", e.target.value)}
                         type="text"
                         id="nama"
                         placeholder="Masukkan nama developer..."
@@ -332,7 +442,8 @@ function ModalDeveloperForm({ developer, isOpenModal, setIsOpenModal }) {
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="icon">Deskripsi</Label>
                     <Input
-                        value={developer?.description ?? ""}
+                        value={data.description}
+                        onChange={(e) => setData("description", e.target.value)}
                         type="text"
                         id="icon"
                         placeholder="Masukkan icon developer..."
@@ -340,7 +451,11 @@ function ModalDeveloperForm({ developer, isOpenModal, setIsOpenModal }) {
                 </div>
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="logo">Logo</Label>
-                    <Input type="file" id="logo" />
+                    <Input
+                        onChange={(e) => setData("logo", e.target.files[0])}
+                        type="file"
+                        id="logo"
+                    />
                 </div>
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="is_active">Aktif</Label>
@@ -350,12 +465,17 @@ function ModalDeveloperForm({ developer, isOpenModal, setIsOpenModal }) {
                     />
                 </div>
                 <Button
-                    onClick={() => setIsOpenModal(false)}
+                    // onClick={() => setIsOpenModal(false)}
+                    disabled={isLoading || !data.name}
+                    type="submit"
                     className="bg-primary text-white hover:bg-primary/95 hover:text-white"
                 >
+                    {isLoading && (
+                        <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />
+                    )}
                     {!developer ? "Tambah " : "Edit "}
                 </Button>
-            </div>
+            </form>
         </Modal>
     );
 }
