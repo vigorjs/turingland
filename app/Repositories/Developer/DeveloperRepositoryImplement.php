@@ -19,5 +19,25 @@ class DeveloperRepositoryImplement extends Eloquent implements DeveloperReposito
         $this->model = $model;
     }
 
+    public function model()
+    {
+        return $this->model;
+    }
+
+    public function createDeveloper($data)
+    {
+        return $this->model->create($data);
+    }
+
+    public function updateDeveloper($data, $id)
+    {
+        return $this->model->where('id', $id)->update($data);
+    }
+
+    public function deleteCategory($id)
+    {
+        return $this->model->where('id', $id)->delete();
+    }
+
     // Write something awesome :)
 }

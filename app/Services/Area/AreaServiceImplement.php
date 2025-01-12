@@ -4,6 +4,7 @@ namespace App\Services\Area;
 
 use LaravelEasyRepository\ServiceApi;
 use App\Repositories\Area\AreaRepository;
+use Illuminate\Http\Request;
 
 class AreaServiceImplement extends ServiceApi implements AreaService{
 
@@ -28,6 +29,39 @@ class AreaServiceImplement extends ServiceApi implements AreaService{
     public function __construct(AreaRepository $mainRepository)
     {
       $this->mainRepository = $mainRepository;
+    }
+
+    public function getAllAreas($request)
+    {
+        return $this->mainRepository->all();
+    }
+
+    public function showArea($id)
+    {
+        return $this->mainRepository->find($id);
+    }
+
+    public function createArea(Request $request)
+    {
+        $request->validate([
+            "name" => "required"
+        ]);
+
+        return $this->mainRepository->createArea($request->all());
+    }
+
+    public function updateArea(Request $request, $id)
+    {
+        $request->validate([
+            "name" => "required"
+        ]);
+
+        return $this->mainRepository->updateArea($request->all(), $id);
+    }
+
+    public function deleteArea($id)
+    {
+        return $this->mainRepository->deleteArea($id);
     }
 
     // Define your custom methods :)
