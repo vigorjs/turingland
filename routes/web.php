@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminCategoryController;
+use App\Http\Controllers\AdminDeveloperController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminSettingController;
@@ -64,6 +65,10 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
             'developers' => \App\Models\Developer::all(),
         ]);
     })->name('dashboard.developer');
+    Route::post("/developer", [AdminDeveloperController::class, "store"])->name('developer.store');
+    Route::put("/developer/{id}", [AdminDeveloperController::class, "update"])->name('developer.update');
+    Route::delete("/developer/{id}", [AdminDeveloperController::class, "destroy"])->name('developer.destroy');
+
 
     Route::get('/banner', function () {
         return Inertia::render("Admin/AdminPageTwo");

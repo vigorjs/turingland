@@ -108,8 +108,8 @@ export default function AdminCategoryPage({ categories }) {
                                                   <td className=" px-5 py-3">
                                                       <div className="w-10 flex items-center gap-3">
                                                           <img
-                                                              src="/assets/kost.png"
-                                                              alt="Floyd image"
+                                                              src={category.icon ? `/storage/${category.icon}` : "/assets/kost.png"}
+                                                              alt={category.name}
                                                           />
                                                           <div className="data">
                                                               <p className="font-normal text-sm text-gray-900">
@@ -302,12 +302,14 @@ export default function AdminCategoryPage({ categories }) {
                 </div>
             </div>
 
-            <ModalCategoryForm
-                category={category}
-                setCategory={setCategory}
-                isOpenModal={isOpenModal}
-                setIsOpenModal={setIsOpenModal}
-            />
+            {isOpenModal && (
+                <ModalCategoryForm
+                    category={category}
+                    setCategory={setCategory}
+                    isOpenModal={isOpenModal}
+                    setIsOpenModal={setIsOpenModal}
+                />
+            )}
 
             <AlertConfirmModal
                 isOpen={isOpenDeleteModal}
@@ -320,12 +322,18 @@ export default function AdminCategoryPage({ categories }) {
     );
 }
 
-function ModalCategoryForm({ category, setCategory, isOpenModal, setIsOpenModal }) {
+function ModalCategoryForm({
+    category,
+    setCategory,
+    isOpenModal,
+    setIsOpenModal,
+}) {
     const [loading, setLoading] = useState(false);
 
     const { data, setData, post, put, reset, errors } = useForm({
         name: category?.name ?? "",
         icon: null,
+        _method: category ? "PUT" : "POST"
     });
 
     console.log("ERR: ", errors);
@@ -363,7 +371,7 @@ function ModalCategoryForm({ category, setCategory, isOpenModal, setIsOpenModal 
                 },
             });
         } else {
-            put(route("category.update", category.id), {
+            post(route("category.update", category.id), {
                 onError: (errors) => {
                     setLoading(false);
                     toast({
@@ -392,12 +400,11 @@ function ModalCategoryForm({ category, setCategory, isOpenModal, setIsOpenModal 
         }
     };
 
-
     const handleCloseModal = () => {
         setCategory(null);
         reset("name", "icon");
         setIsOpenModal(false);
-    }
+    };
 
     return (
         <Modal show={isOpenModal} onClose={handleCloseModal}>

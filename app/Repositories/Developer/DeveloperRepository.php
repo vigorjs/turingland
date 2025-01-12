@@ -6,5 +6,10 @@ use LaravelEasyRepository\Repository;
 
 interface DeveloperRepository extends Repository{
 
+    public function model();
+    public function createDeveloper($data);
+    public function updateDeveloper($data, $id);
+    public function deleteCategory($id);
+
     // Write something awesome :)
 }
