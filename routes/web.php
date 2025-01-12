@@ -74,6 +74,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+//Web Pref
 Route::get('web-preferences/{key}', [WebPreferencesController::class, 'getWebPreference']);
 Route::post('web-preferences', [WebPreferencesController::class, 'updateWebPreference'])->name("web-preferences.post");
 
