@@ -108,7 +108,7 @@ Route::middleware('auth')->group(function () {
 });
 
 //Web Pref
-Route::get('web-preferences/{key}', [WebPreferencesController::class, 'getWebPreference']);
+Route::get('web-preferences/{key}', [WebPreferencesController::class, 'getWebPreference'])->name('web-preferences.get');
 Route::post('web-preferences', [WebPreferencesController::class, 'updateWebPreference'])->name("web-preferences.post");
 
 
