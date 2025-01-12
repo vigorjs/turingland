@@ -1,35 +1,40 @@
 <?php
 
-namespace App\Repositories\Developer;
+namespace App\Repositories\Category;
 
 use LaravelEasyRepository\Implementations\Eloquent;
-use App\Models\Developer;
+use App\Models\Category;
 
-class DeveloperRepositoryImplement extends Eloquent implements DeveloperRepository{
+class CategoryRepositoryImplement extends Eloquent implements CategoryRepository{
 
     /**
     * Model class to be used in this repository for the common methods inside Eloquent
     * Don't remove or change $this->model variable name
     * @property Model|mixed $model;
     */
-    protected Developer $model;
+    protected Category $model;
 
-    public function __construct(Developer $model)
+    public function __construct(Category $model)
     {
         $this->model = $model;
     }
 
-    public function model()
+    public function getAllCategories()
     {
-        return $this->model;
+        return $this->model->all();
     }
 
-    public function createDeveloper($data)
+    public function createCategory($data)
     {
         return $this->model->create($data);
     }
 
-    public function updateDeveloper($data, $id)
+    public function showCategory($id)
+    {
+        return $this->model->where('id', $id)->with('properties')->first();
+    }
+
+    public function updateCategory($data, $id)
     {
         return $this->model->where('id', $id)->update($data);
     }
@@ -38,6 +43,5 @@ class DeveloperRepositoryImplement extends Eloquent implements DeveloperReposito
     {
         return $this->model->where('id', $id)->delete();
     }
-
     // Write something awesome :)
 }
