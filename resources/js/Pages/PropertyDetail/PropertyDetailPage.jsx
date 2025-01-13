@@ -52,10 +52,13 @@ export default function PropertyDetailPage({ property }) {
                             <CarouselContent>
                                 {otherImages.map((img) => (
                                     <CarouselItem className="basis-auto">
+                                        <button onClick={() => setIsOpenModal(true)}>
+
                                         <img
                                             src={img}
                                             className="w-[100px] sm:w-40 rounded-xl"
-                                        />
+                                            />
+                                            </button>
                                     </CarouselItem>
                                 ))}
                             </CarouselContent>
