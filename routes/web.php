@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminAreaController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminDeveloperController;
 use App\Http\Controllers\AdminLocationController;
+use App\Http\Controllers\AdminBannerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminSettingController;
@@ -79,8 +80,14 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
 
 
     Route::get('/banner', function () {
-        return Inertia::render("Admin/Banner/Banner");
+        return Inertia::render("Admin/Banner/AdminBannerPage", [
+            'banners' => \App\Models\Banner::paginate(8)
+        ]);
     })->name('dashboard.banner');
+
+    Route::post("/banner", [AdminBannerController::class, "store"])->name("banner.store");
+    Route::put("/banner/{id}", [AdminBannerController::class, "update"])->name("banner.update");
+    Route::delete("/banner/{id}", [AdminBannerController::class, "destroy"])->name("banner.destroy");
 
     Route::get('/testimony', function () {
         return Inertia::render("Admin/AdminPageOne");
