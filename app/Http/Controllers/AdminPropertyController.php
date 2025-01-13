@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PropertyCreateRequest;
 use App\Models\Property;
+use App\Models\PropertyImage;
 use App\Services\Area\AreaService;
 use App\Services\Developer\DeveloperService;
 use App\Services\Property\PropertyService;
+use App\Services\PropertyImage\PropertyImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class AdminPropertyController extends Controller
@@ -16,12 +20,19 @@ class AdminPropertyController extends Controller
     private $propertyService;
     private $developerService;
     private $areaService;
+    private $propertyImageService;
 
-    public function __construct(PropertyService $propertyService, DeveloperService $developerService, AreaService $areaService)
+    public function __construct(
+        PropertyService $propertyService, 
+        DeveloperService $developerService, 
+        AreaService $areaService,
+        PropertyImageService $propertyImageService
+        )
     {
         $this->propertyService = $propertyService;
         $this->developerService = $developerService;
         $this->areaService = $areaService;
+        $this->propertyImageService = $propertyImageService;
     }
 
     /**
@@ -32,17 +43,14 @@ class AdminPropertyController extends Controller
     {
         $properties = $this->propertyService->getAllProperty();
 
-        // dd($developers);
-        // dd($areas);
-        // dd($properties);
-
         return Inertia::render("Admin/Properties/AdminPropertyPage", [
             'properties' => $properties,
 
         ]);
     }
 
-    public function create(){
+    public function create()
+    {
         $developers = $this->developerService->getAllDevelopers();
         $areas = $this->areaService->getAllAreas();
 
@@ -54,38 +62,46 @@ class AdminPropertyController extends Controller
 
     public function store(PropertyCreateRequest $request)
     {
-
-        $user = Auth::user();
-        // $property = $this->propertyService->create($request);
-        $request["user_id"] = $user->id;
-        // dd($request->request);
-        $property = Property::create($request->request->all());
-
-        if ($request->hasFile('property_images')) {
-
-            dd("test123");
-
-            foreach ($request->property_images as $imageData) {
-                $path = $imageData['file']->store('properties', 'public');
+        // Debug untuk melihat data yang masuk
+        Log::info('Request all:', $request->all());
+        Log::info('Files:', $request->allFiles());
+    
+        // Create property
+        $property = $this->propertyService->create(array_merge(
+            $request->except('property_images'),
+            ['user_id' => Auth::id()]
+        ));
+    
+        if ($request->property_images) {
+            // dd($property->getData());
+            foreach ($request->property_images as $index => $imageData) {
+                if (!isset($imageData['file']) || !$imageData['file'] instanceof \Illuminate\Http\UploadedFile) {
+                    continue;
+                }
+    
+                $file = $imageData['file'];
                 
-                $property->images()->create([
-                    'path' => $path,
-                    'caption' => $imageData['caption'] ?? null,
+                // Generate unique filename
+                $filename = uniqid() . '_' . time() . '.' . $file->getClientOriginalExtension();
+                
+                // Store file
+                $path = $file->storeAs('properties', $filename, 'public');
+    
+                $this->propertyImageService->create([
+                    'property_id' => $property->getData()->id,
+                    'image_path' => $path,
+                    'is_primary' => $index === 0,
+                    'order' => $index
                 ]);
             }
         }
-        return Inertia::render("Admin/Properties/AdminPropertyPage")->with('success', 'Property created successfully');
+    
+        return redirect()->route('dashboard.property');
     }
 
-    public function edit(){
+    public function edit() {}
 
-    }
+    public function update() {}
 
-    public function update(){
-
-    }
-
-    public function delete(){
-
-    }
+    public function delete() {}
 }

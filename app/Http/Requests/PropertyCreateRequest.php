@@ -38,7 +38,8 @@ class PropertyCreateRequest extends FormRequest
             'certificate_type' => 'nullable|string|max:255',
             'year_built' => 'nullable|integer|digits:4|min:1800|max:' . date('Y'),
             'is_featured' => 'nullable',
-            'property_images.*' => 'sometimes|nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'property_images' => 'nullable|array',
+            'property_images.*.file' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ];
     }
 }
