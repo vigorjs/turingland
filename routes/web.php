@@ -30,7 +30,7 @@ Route::get('/search', function () {
 
 Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function (){
     Route::get('', function () {
-        return Inertia::render("Admin/AdminPageOne");
+        return Inertia::render("Admin/Dashboards/AdminDashboardPage");
     })->name('dashboard');
 
     Route::get('/property', function () {
