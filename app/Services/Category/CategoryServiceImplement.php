@@ -58,7 +58,7 @@ class CategoryServiceImplement extends ServiceApi implements CategoryService{
             $file = $request->file('icon');
             $ext = $file->getClientOriginalExtension();
             $fileName = time() . '-' . $data->name . '.' . $ext;
-            $path = $file->storeAs('categories', $fileName);
+            $path = $file->storeAs('categories', $fileName, "public");
             $data->icon = $path;
         }
 
@@ -91,7 +91,7 @@ class CategoryServiceImplement extends ServiceApi implements CategoryService{
             $file = $request->file('icon');
             $ext = $file->getClientOriginalExtension();
             $fileName = time() . '-' . $data->name . '.' . $ext;
-            $path = $file->storeAs('categories', $fileName);
+            $path = $file->storeAs('categories', $fileName, "public");
             $data->icon = $path;
         }
 

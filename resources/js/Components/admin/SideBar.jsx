@@ -2,6 +2,7 @@ import { Link, usePage, router } from "@inertiajs/react";
 import { LogOutIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { FaHome, FaFileAlt, FaCog, FaBars } from "react-icons/fa";
+import ApplicationLogo from "../ApplicationLogo";
 
 const Sidebar = ({ isCollapsed }) => {
     const { url } = usePage();
@@ -18,7 +19,7 @@ const Sidebar = ({ isCollapsed }) => {
 
     return (
         <div
-            className={`bg-[#222222] text-white rounded-none md:rounded-2xl px-4 py-6 flex flex-col shadow-lg transition-all duration-300 ${
+            className={`bg-[#222222] text-white rounded-none md:rounded-2xl px-4 py-6 h-full flex flex-col shadow-lg transition-all duration-300 ${
                 isMobileOpen ? "w-[80px]" : "w-[270px]"
             }`}
         >
@@ -26,13 +27,7 @@ const Sidebar = ({ isCollapsed }) => {
             <div
                 className={`mb-5 flex justify-center items-center flex-col gap-3`}
             >
-                <img
-                    src="/assets/turinglandlogo.png"
-                    alt="Turingland Yawn"
-                    className={`transition-all duration-300 object-contain ${
-                        isMobileOpen ? "h-8" : "h-12"
-                    }`}
-                />
+                <ApplicationLogo />
                 <button
                     className="bg-[#222222] text-white p-2 rounded-full px-4"
                     onClick={toggleMobileSidebar}
@@ -152,7 +147,9 @@ const Sidebar = ({ isCollapsed }) => {
                             <FaCog />
                         </span>
                         {!isMobileOpen && (
-                            <span className="font-bold text-[15px]">Location</span>
+                            <span className="font-bold text-[15px]">
+                                Location
+                            </span>
                         )}
                     </Link>
 
