@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminAreaController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminDeveloperController;
 use App\Http\Controllers\AdminLocationController;
+use App\Http\Controllers\AdminPropertyController;
 use App\Http\Controllers\AdminBannerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -34,9 +35,16 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
         return Inertia::render("Admin/Dashboards/AdminDashboardPage");
     })->name('dashboard');
 
-    Route::get('/property', function () {
-        return Inertia::render("Admin/AdminPageTwo");
-    })->name('dashboard.property');
+    // Route::get('/property', function () {
+    //     return Inertia::render("Admin/Properties/AdminPropertyPage");
+    // })->name('dashboard.property');
+
+    Route::get('/property', [AdminPropertyController::class, 'index'])->name('dashboard.property');
+    Route::get('/property/create', [AdminPropertyController::class, 'create'])->name('dashboard.property.create');
+    Route::post('/property', [AdminPropertyController::class, 'store'])->name('dashboard.property.store');
+    Route::get('/property/{id}', [AdminPropertyController::class, 'edit'])->name('dashboard.property.edit');
+    Route::put('/property/{id}', [AdminPropertyController::class, 'update'])->name('dashboard.property.update');
+    Route::delete('/property/{id}', [AdminPropertyController::class, 'delete'])->name('dashboard.property.delete');
 
     Route::get('/area', function () {
         return Inertia::render("Admin/Areas/AdminAreaPage", [

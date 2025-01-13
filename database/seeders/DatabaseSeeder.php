@@ -15,26 +15,11 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RoleAndPermissionSeeder::class,
+            UserSeeder::class,
             CategorySeeder::class,
+            AreaSeeder::class,
+            DeveloperSeeder::class,
+            PropertySeeder::class
         ]);
-
-        $admin = \App\Models\User::factory()->create([
-            'name' => 'Admin User',
-            'email' => 'admin@example.com',
-            'password' => 'password123'
-        ]);
-        $admin->assignRole('admin');
-
-        $agent = \App\Models\User::factory()->create([
-            'name' => 'Agent User',
-            'email' => 'agent@example.com',
-            'password' => 'password123',
-            'wa_number' => '082243019049',
-        ]);
-        $agent->assignRole('agent');
-
-        \App\Models\User::factory(10)->create()->each(function ($user) {
-            $user->assignRole('customer');
-        });
     }
 }

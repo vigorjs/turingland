@@ -37,29 +37,29 @@ export default function AdminDashboardPage() {
         {
             logo: "assets/kost.png",
             name: "Sinarmas",
-            joinDate: "Senin, 13 Desember 2024"
+            joinDate: "Senin, 13 Desember 2024",
         },
         {
             logo: "assets/kost.png",
             name: "Sinarmas",
-            joinDate: "Senin, 13 Desember 2024"
+            joinDate: "Senin, 13 Desember 2024",
         },
         {
             logo: "assets/kost.png",
             name: "Sinarmas",
-            joinDate: "Senin, 13 Desember 2024"
+            joinDate: "Senin, 13 Desember 2024",
         },
         {
             logo: "assets/kost.png",
             name: "Sinarmas",
-            joinDate: "Senin, 13 Desember 2024"
+            joinDate: "Senin, 13 Desember 2024",
         },
         {
             logo: "assets/kost.png",
             name: "Sinarmas",
-            joinDate: "Senin, 13 Desember 2024"
+            joinDate: "Senin, 13 Desember 2024",
         },
-    ]
+    ];
 
     return (
         <AdminLayout>
@@ -102,31 +102,32 @@ export default function AdminDashboardPage() {
                             </p>
                         </div>
                         <div class="flex flex-col divide-y divide w-full px-4 sm:px-6">
-                            {
-                                developers.map((item, index) => (
-                                    <div key={`current-developer-${index}`} class="flex flex-row">
-                                <div class="flex items-center p-4 cursor-pointer select-none">
-                                    <div class="flex flex-col items-center justify-center w-10 h-10 mr-4">
-                                        <a href="#" class="relative block">
-                                            <img
-                                                alt="profil"
-                                                src={item.logo}
-                                                class="mx-auto object-cover rounded h-10 w-10 "
-                                            />
-                                        </a>
-                                    </div>
-                                    <div class="pl-1 mr-16">
-                                        <div class="font-medium dark:text-white">
-                                            {item.name}
+                            {developers.map((item, index) => (
+                                <div
+                                    key={`current-developer-${index}`}
+                                    class="flex flex-row"
+                                >
+                                    <div class="flex items-center p-4 cursor-pointer select-none">
+                                        <div class="flex flex-col items-center justify-center w-10 h-10 mr-4">
+                                            <a href="#" class="relative block">
+                                                <img
+                                                    alt="profil"
+                                                    src={item.logo}
+                                                    class="mx-auto object-cover rounded h-10 w-10 "
+                                                />
+                                            </a>
                                         </div>
-                                        <div class="text-sm text-gray-600 dark:text-gray-200">
-                                            {item.joinDate}
+                                        <div class="pl-1 mr-16">
+                                            <div class="font-medium dark:text-white">
+                                                {item.name}
+                                            </div>
+                                            <div class="text-sm text-gray-600 dark:text-gray-200">
+                                                {item.joinDate}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                                ))
-                            }
+                            ))}
                         </div>
                     </div>
                 </div>

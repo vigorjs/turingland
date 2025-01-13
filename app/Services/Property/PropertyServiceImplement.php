@@ -31,4 +31,12 @@ class PropertyServiceImplement extends ServiceApi implements PropertyService{
     }
 
     // Define your custom methods :)
+    public function getAllProperty(){
+      return $this->mainRepository->getAllProperty();
+    }
+
+    public function createProperty($request){
+      return $this->mainRepository->create($request);
+    }
+
 }

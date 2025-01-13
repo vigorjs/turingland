@@ -19,7 +19,7 @@ class AreaRepositoryImplement extends Eloquent implements AreaRepository{
         $this->model = $model;
     }
 
-    public function getAllAreas($request)
+    public function getAllAreas()
     {
         return $this->model->all();
     }
