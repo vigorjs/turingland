@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminAreaController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminDeveloperController;
 use App\Http\Controllers\AdminLocationController;
+use App\Http\Controllers\AdminPropertyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminSettingController;
@@ -33,9 +34,12 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
         return Inertia::render("Admin/AdminPageOne");
     })->name('dashboard');
 
-    Route::get('/property', function () {
-        return Inertia::render("Admin/Properties/AdminPropertyPage");
-    })->name('dashboard.property');
+    // Route::get('/property', function () {
+    //     return Inertia::render("Admin/Properties/AdminPropertyPage");
+    // })->name('dashboard.property');
+
+    Route::get('/property', [AdminPropertyController::class, 'index'])->name('dashboard.property');
+    Route::post('/property', [AdminPropertyController::class, 'store'])->name('dashboard.property.store');
 
     Route::get('/area', function () {
         return Inertia::render("Admin/Areas/AdminAreaPage", [

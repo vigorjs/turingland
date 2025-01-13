@@ -7,7 +7,7 @@ use LaravelEasyRepository\BaseService;
 
 interface AreaService extends BaseService{
 
-    public function getAllAreas($request);
+    public function getAllAreas();
     public function showArea($id);
     public function createArea(Request $request);
     public function updateArea(Request $request, $id);

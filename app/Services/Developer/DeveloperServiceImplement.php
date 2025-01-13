@@ -34,9 +34,9 @@ class DeveloperServiceImplement extends ServiceApi implements DeveloperService{
     }
 
 
-    public function getAllDevelopers(Request $request)
+    public function getAllDevelopers()
     {
-        return $this->mainRepository->all();
+        return $this->mainRepository->getAllDeveloper();
     }
 
     public function showDeveloper($id)
