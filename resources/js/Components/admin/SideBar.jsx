@@ -1,7 +1,7 @@
 import { Link, usePage, router } from "@inertiajs/react";
 import { LogOutIcon } from "lucide-react";
 import { useEffect, useState } from "react";
-import { FaHome, FaFileAlt, FaCog, FaBars } from "react-icons/fa";
+import { FaHome, FaFileAlt, FaCog, FaBars, FaRegBuilding, FaBuilding } from "react-icons/fa";
 import ApplicationLogo from "../ApplicationLogo";
 
 const Sidebar = ({ isCollapsed }) => {
@@ -77,8 +77,8 @@ const Sidebar = ({ isCollapsed }) => {
                                 : "text-white hover:bg-gray-700"
                         }`}
                     >
-                        <span className="text-xl">
-                            <FaFileAlt />
+                        <span className="text-xl fill-white">
+                            <FaBuilding />
                         </span>
                         {!isMobileOpen && (
                             <span className="font-bold text-[15px]">

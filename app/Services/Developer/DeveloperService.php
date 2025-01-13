@@ -7,7 +7,7 @@ use LaravelEasyRepository\BaseService;
 
 interface DeveloperService extends BaseService{
 
-    public function getAllDevelopers(Request $request);
+    public function getAllDevelopers();
     public function showDeveloper($id);
     public function storeDeveloper(Request $request);
     public function updateDeveloper(Request $request, $id);

@@ -31,7 +31,7 @@ class AreaServiceImplement extends ServiceApi implements AreaService{
       $this->mainRepository = $mainRepository;
     }
 
-    public function getAllAreas($request)
+    public function getAllAreas()
     {
         return $this->mainRepository->all();
     }

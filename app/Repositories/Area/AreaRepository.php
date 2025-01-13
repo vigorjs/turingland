@@ -6,7 +6,7 @@ use LaravelEasyRepository\Repository;
 
 interface AreaRepository extends Repository{
 
-    public function getAllAreas($request);
+    public function getAllAreas();
     public function showArea($id);
     public function createArea($data);
     public function updateArea($data, $id);
