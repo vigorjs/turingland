@@ -1,6 +1,7 @@
 import AdminProfile from "@/Components/admin/AdminProfile";
 import AdminSearchBar from "@/Components/admin/AdminSearchBar";
 import Sidebar from "@/Components/admin/SideBar";
+import { Head } from "@inertiajs/react";
 import { useState, useEffect } from "react";
 
 export default function AdminLayout({ children }) {
@@ -9,7 +10,6 @@ export default function AdminLayout({ children }) {
     const name = "Admin1";
     const email = "Adminone@turingland.com";
 
-    // State untuk mendeteksi ukuran layar
     const [isSmallScreen, setIsSmallScreen] = useState(false);
 
     useEffect(() => {
@@ -23,34 +23,38 @@ export default function AdminLayout({ children }) {
     }, []);
 
     return (
-        <div className="flex min-h-screen bg-white">
-            {/* Sidebar */}
-            <div className="flex pl-0 pt-0 pb-0 md:pl-4 md:pt-4 md:pb-4">
+        <div className="min-h-screen flex">
+            <Head title="Dashboard" />
+
+            {/* Sidebar - fixed height */}
+            <div className="h-screen sticky top-0 pl-0 pt-0 pb-0 md:pl-4 md:pt-4 md:pb-4">
                 <Sidebar isCollapsed={isSmallScreen} />
             </div>
 
-            {/* Content Area */}
-            <div className="flex-1 flex flex-col pt-6 px-3">
-                {/* Header (SearchBar + Profile Admin) */}
-                <div className="flex items-center justify-between mb-4 w-full">
-                    {/* SearchBar */}
-                    <div className="flex-1 max-w-full">
-                        <AdminSearchBar />
+            {/* Content Area - scrollable */}
+            <div className="flex-1 min-h-screen overflow-y-auto">
+                <div className="flex flex-col pt-6 px-3">
+                    {/* Header (SearchBar + Profile Admin) */}
+                    <div className="flex items-center justify-between mb-4 w-full">
+                        {/* SearchBar */}
+                        <div className="flex-1 max-w-full">
+                            <AdminSearchBar />
+                        </div>
+
+                        {/* Profile Admin */}
+                        <div className="ml-4">
+                            <AdminProfile
+                                imgSrc={img}
+                                name={name}
+                                email={email}
+                                isCollapsed={isSmallScreen}
+                            />
+                        </div>
                     </div>
 
-                    {/* Profile Admin */}
-                    <div className="ml-4">
-                        <AdminProfile
-                            imgSrc={img}
-                            name={name}
-                            email={email}
-                            isCollapsed={isSmallScreen}
-                        />
-                    </div>
+                    {/* Main Content (children) */}
+                    <div className="flex-1">{children}</div>
                 </div>
-
-                {/* Main Content (children) */}
-                <div className="flex-1">{children}</div>
             </div>
         </div>
     );

@@ -38,28 +38,28 @@ export default function Home() {
     const testimonials = [
         {
             id: 1,
-            img: "https://via.placeholder.com/150",
+            img: "https://avatar.iran.liara.run/public",
             name: "Saydova",
             role: "Investor Kripto",
             text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, ex.",
         },
         {
             id: 2,
-            img: "https://via.placeholder.com/150",
+            img: "https://avatar.iran.liara.run/public",
             name: "Tommy",
             role: "Penyewa ",
             text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nobis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nobisLorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nobisLorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nobis",
         },
         {
             id: 3,
-            img: "https://via.placeholder.com/150",
+            img: "https://avatar.iran.liara.run/public",
             name: "Jake Doe",
             role: "Pembeli",
             text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim, voluptate.",
         },
         {
             id: 4,
-            img: "https://via.placeholder.com/150",
+            img: "https://avatar.iran.liara.run/public",
             name: "Attahlah",
             role: "Investor",
             text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim, voluptate.",

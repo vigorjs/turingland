@@ -31,7 +31,7 @@ Route::get('/search', function () {
 
 Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function (){
     Route::get('', function () {
-        return Inertia::render("Admin/AdminPageOne");
+        return Inertia::render("Admin/Dashboards/AdminDashboardPage");
     })->name('dashboard');
 
     // Route::get('/property', function () {
@@ -53,7 +53,7 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
     Route::get('/location', function () {
         return Inertia::render("Admin/Locations/AdminLocationPage", [
             'areas' => \App\Models\Area::all(),
-            'locations' => \App\Models\Location::with('area')->get()
+            'locations' => \App\Models\Location::with('area')->paginate(8)
         ]);
     })->name('dashboard.location');
     Route::post("/location", [AdminLocationController::class, "store"])->name("location.store");
@@ -62,7 +62,7 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
 
     Route::get('/category', function () {
         return Inertia::render("Admin/Categories/AdminCategoryPage", [
-            'categories' => \App\Models\Category::all()
+            'categories' => \App\Models\Category::paginate(8)
         ]);
     })->name('dashboard.category');
 
@@ -74,7 +74,7 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
 
     Route::get('/developer', function () {
         return Inertia::render("Admin/Developers/AdminDeveloperPage", [
-            'developers' => \App\Models\Developer::all(),
+            'developers' => \App\Models\Developer::paginate(8),
         ]);
     })->name('dashboard.developer');
     Route::post("/developer", [AdminDeveloperController::class, "store"])->name('developer.store');
@@ -83,25 +83,25 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
 
 
     Route::get('/banner', function () {
-        return Inertia::render("Admin/AdminPageTwo");
+        return Inertia::render("Admin/Banner/Banner");
     })->name('dashboard.banner');
 
     Route::get('/testimony', function () {
-        return Inertia::render("Admin/AdminPageThree");
+        return Inertia::render("Admin/AdminPageOne");
     })->name('dashboard.testimony');
 
     //Web Pref
     Route::get('/web-preferences', function () {
-        return Inertia::render("Admin/AdminSetting");
+        return Inertia::render("Admin/WebPreferences/WebPreferences");
     })->name('dashboard.web-preferences');
 
     //AGENT
     Route::get('/agent', function () {
-        return Inertia::render("Admin/AdminPageThree");
+        return Inertia::render("Admin/AdminPageOne");
     })->name('dashboard.agent');
 
     Route::get('/customer', function () {
-        return Inertia::render("Admin/AdminPageThree");
+        return Inertia::render("Admin/AdminPageOne");
     })->name('dashboard.customer');
 });
 
@@ -111,7 +111,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('web-preferences/{key}', [WebPreferencesController::class, 'getWebPreference']);
+//Web Pref
+Route::get('web-preferences/{key}', [WebPreferencesController::class, 'getWebPreference'])->name('web-preferences.get');
 Route::post('web-preferences', [WebPreferencesController::class, 'updateWebPreference'])->name("web-preferences.post");
 
 

@@ -4,6 +4,7 @@ import { HiOutlineSpeakerphone } from "react-icons/hi";
 import { Button } from "./ui/button";
 import { ThemeToggle } from "./ThemeToggle";
 import ApplicationLogo from "./ApplicationLogo";
+import { Link } from "@inertiajs/react";
 
 const Header = ({ variant }) => {
     const [hoveredMenu, setHoveredMenu] = useState(null);
@@ -125,7 +126,7 @@ const Header = ({ variant }) => {
                                                                         (
                                                                             city
                                                                         ) => (
-                                                                            <a
+                                                                            <Link
                                                                                 key={
                                                                                     city
                                                                                 }
@@ -135,7 +136,7 @@ const Header = ({ variant }) => {
                                                                                 {
                                                                                     city
                                                                                 }
-                                                                            </a>
+                                                                            </Link>
                                                                         )
                                                                     )}
                                                                 </div>
@@ -211,7 +212,7 @@ const Header = ({ variant }) => {
                                                             <div className="space-y-2">
                                                                 {subItem.cities.map(
                                                                     (city) => (
-                                                                        <a
+                                                                        <Link
                                                                             key={
                                                                                 city
                                                                             }
@@ -221,7 +222,7 @@ const Header = ({ variant }) => {
                                                                             {
                                                                                 city
                                                                             }
-                                                                        </a>
+                                                                        </Link>
                                                                     )
                                                                 )}
                                                             </div>

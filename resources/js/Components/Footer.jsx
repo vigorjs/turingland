@@ -7,6 +7,7 @@ import {
     FaFacebook,
 } from "react-icons/fa";
 import ApplicationLogo from "./ApplicationLogo";
+import { Link } from "@inertiajs/react";
 
 const Footer = () => {
     return (
@@ -51,13 +52,13 @@ const Footer = () => {
                                 </p>
                                 <div className="flex flex-col space-y-2">
                                     {navigationLinks.map((link, index) => (
-                                        <a
+                                        <Link
                                             key={index}
                                             href={link.href}
                                             className="text-[#A5A5A5] font-inter text-sm leading-6 hover:underline"
                                         >
                                             {link.name}
-                                        </a>
+                                        </Link>
                                     ))}
                                 </div>
                             </div>
@@ -69,7 +70,7 @@ const Footer = () => {
                                 Follow Us
                             </p>
                             <div className="flex space-x-4">
-                                <a
+                                <Link
                                     href="https://www.instagram.com"
                                     target="_blank"
                                     rel="noopener noreferrer"
@@ -78,8 +79,8 @@ const Footer = () => {
                                         className="text-[#A5A5A5] hover:text-white"
                                         size={23}
                                     />
-                                </a>
-                                <a
+                                </Link>
+                                <Link
                                     href="https://www.tiktok.com"
                                     target="_blank"
                                     rel="noopener noreferrer"
@@ -88,8 +89,8 @@ const Footer = () => {
                                         className="text-[#A5A5A5] hover:text-white"
                                         size={23}
                                     />
-                                </a>
-                                <a
+                                </Link>
+                                <Link
                                     href="https://www.youtube.com"
                                     target="_blank"
                                     rel="noopener noreferrer"
@@ -98,8 +99,8 @@ const Footer = () => {
                                         className="text-[#A5A5A5] hover:text-white"
                                         size={23}
                                     />
-                                </a>
-                                <a
+                                </Link>
+                                <Link
                                     href="https://twitter.com"
                                     target="_blank"
                                     rel="noopener noreferrer"
@@ -108,8 +109,8 @@ const Footer = () => {
                                         className="text-[#A5A5A5] hover:text-white"
                                         size={23}
                                     />
-                                </a>
-                                <a
+                                </Link>
+                                <Link
                                     href="https://www.facebook.com"
                                     target="_blank"
                                     rel="noopener noreferrer"
@@ -118,7 +119,7 @@ const Footer = () => {
                                         className="text-[#A5A5A5] hover:text-white"
                                         size={23}
                                     />
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>
