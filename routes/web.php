@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminPropertyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminSettingController;
+use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\WebPreferencesController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -23,8 +24,8 @@ require __DIR__.'/auth.php';
 //         'phpVersion' => PHP_VERSION,
 //     ]);
 // });
-Route::get("/", [HomeController::class, 'index']);
-
+Route::get("/", [HomeController::class, 'index'])->name('homepage');
+Route::get('/properti/{id}', [PropertyController::class, 'show'])->name('property.show');
 Route::get('/search', function () {
     return Inertia::render("Search/Search");
 });
