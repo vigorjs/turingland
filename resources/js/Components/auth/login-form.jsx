@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useForm, Link } from "@inertiajs/react";
+import { useForm, Link, router } from "@inertiajs/react";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { Card, CardContent } from "../ui/card";
@@ -64,6 +64,22 @@ export function LoginForm({ imageUrl }) {
             },
             onFinish: () => setIsLoading(false),
         });
+    };
+
+    const handleSocialLogin = async (provider) => {
+        setIsLoading(true);
+        try {
+            // Redirect ke URL Socialite di backend Laravel
+            router.get(`/auth/${provider}/redirect`);
+        } catch (error) {
+            setIsLoading(false);
+            toast({
+                title: "Login Failed",
+                description:
+                    "Unable to initiate social login. Please try again.",
+                variant: "destructive",
+            });
+        }
     };
 
     return (
@@ -183,12 +199,13 @@ export function LoginForm({ imageUrl }) {
                                 variant="orange"
                                 className="w-full"
                                 disabled={isLoading}
+                                onClick={() => handleSocialLogin("google")}
                             >
                                 {isLoading ? (
                                     <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />
                                 ) : (
                                     <FaGoogle
-                                        className=" h-4 w-4"
+                                        className="h-4 w-4"
                                         color="white"
                                     />
                                 )}

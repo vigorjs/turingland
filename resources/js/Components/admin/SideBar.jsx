@@ -19,7 +19,7 @@ const Sidebar = ({ isCollapsed }) => {
 
     return (
         <div
-            className={`bg-[#222222] text-white rounded-none md:rounded-2xl px-4 py-6 h-full flex flex-col shadow-lg transition-all duration-300 ${
+            className={`bg-[#222222] text-white rounded-none md:rounded-2xl px-4 py-6 min-h-full flex flex-col shadow-lg transition-all duration-300 ${
                 isMobileOpen ? "w-[80px]" : "w-[270px]"
             }`}
         >
