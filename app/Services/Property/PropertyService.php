@@ -10,4 +10,5 @@ interface PropertyService extends BaseService{
     // Write something awesome :)
     public function getAllProperty();
     public function createProperty($request);
+    public function getPropertyById($id);
 }
