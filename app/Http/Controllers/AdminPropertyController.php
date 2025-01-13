@@ -99,7 +99,19 @@ class AdminPropertyController extends Controller
         return redirect()->route('dashboard.property');
     }
 
-    public function edit() {}
+    public function edit($id) {
+        $property = $this->propertyService->getPropertyById($id);
+        // dd($property);
+
+        $developers = $this->developerService->getAllDevelopers();
+        $areas = $this->areaService->getAllAreas();
+
+        return Inertia::render("Admin/Properties/AdminEditPropertyPage", [
+            'property' => $property[0],
+            'developers' => $developers,
+            'areas' => $areas
+        ]);
+    }
 
     public function update() {}
 

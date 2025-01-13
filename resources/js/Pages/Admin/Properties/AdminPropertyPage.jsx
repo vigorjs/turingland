@@ -7,9 +7,29 @@ import React, { useState } from "react";
 import { FaEye, FaHome, FaPlus } from "react-icons/fa";
 
 function AdminPropertyPage({ properties, developers, areas }) {
+    const handleView = (id) => {
+        router.visit(route("#", id));
+    };
+
+    const handleEdit = (id) => {
+        router.visit(route("dashboard.property.edit", id));
+    };
+
+    const handleDelete = (id) => {
+        if (confirm("Are you sure you want to delete this property?")) {
+            router.delete(route("dashboard.property.destroy", id), {
+                preserveScroll: true,
+                preserveState: true,
+            });
+        }
+    };
+
     return (
         <AdminLayout>
-            <Button onClick={() => router.visit(route('dashboard.property.create'))} className="text-white mb-3.5">
+            <Button
+                onClick={() => router.visit(route("dashboard.property.create"))}
+                className="text-white mb-3.5"
+            >
                 <FaPlus /> Tambah Property
             </Button>
 
@@ -121,11 +141,15 @@ function AdminPropertyPage({ properties, developers, areas }) {
                                                           }
                                                           className="p-2  rounded-full bg-white group transition-all duration-500 hover:bg-slate-600 flex item-center"
                                                       >
-                                                          <FaEye size={24} color="#5d6878" className=" group-hover:fill-white " />
+                                                          <FaEye
+                                                              size={24}
+                                                              color="#5d6878"
+                                                              className=" group-hover:fill-white "
+                                                          />
                                                       </button>
                                                       <button
                                                           onClick={() =>
-                                                              console.log()
+                                                            handleEdit(property.id)
                                                           }
                                                           className="p-2  rounded-full bg-white group transition-all duration-500 hover:bg-indigo-600 flex item-center"
                                                       >
