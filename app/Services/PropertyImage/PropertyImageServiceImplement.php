@@ -31,4 +31,8 @@ class PropertyImageServiceImplement extends ServiceApi implements PropertyImageS
     }
 
     // Define your custom methods :)
+    public function createImage($image)
+    {
+      return $this->mainRepository->createImage($image);
+    }
 }

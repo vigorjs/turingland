@@ -7,4 +7,5 @@ use LaravelEasyRepository\Repository;
 interface PropertyImageRepository extends Repository{
 
     // Write something awesome :)
+    public function createImage($images);
 }

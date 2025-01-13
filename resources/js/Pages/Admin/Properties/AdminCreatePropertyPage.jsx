@@ -18,8 +18,9 @@ import { router } from '@inertiajs/react';
 
 function AdminCreatePropertyPage({ developers, areas }) {
   const [uploadedImages, setUploadedImages] = useState([]);
-  
-  const { control, handleSubmit, setValue } = useForm({
+  const [errors, setErrors] = useState({});
+
+  const { control, handleSubmit, setValue, formState: { errors: formErrors } } = useForm({
     defaultValues: {
       title: "",
       description: "",
@@ -43,16 +44,21 @@ function AdminCreatePropertyPage({ developers, areas }) {
 
   const handleImageUpload = (e) => {
     if (e.target.files) {
-      const newFiles = Array.from(e.target.files).map(file => ({
-        file,
-        preview: URL.createObjectURL(file),
-        caption: ""
-      }));
-      
-      setUploadedImages(prev => [...prev, ...newFiles]);
-      setValue('property_images', [...uploadedImages, ...newFiles].map(img => img.file));
+        const newFiles = Array.from(e.target.files).map(file => ({
+            file,
+            preview: URL.createObjectURL(file),
+            caption: ""
+        }));
+        
+        // Simpan gambar baru dan update state
+        const updatedImages = [...uploadedImages, ...newFiles];
+        setUploadedImages(updatedImages);
+        
+        // Update form value dengan array file
+        setValue('property_images', updatedImages);
     }
-  };
+};
+
 
   const removeImage = (index) => {
     URL.revokeObjectURL(uploadedImages[index].preview);
@@ -71,22 +77,45 @@ function AdminCreatePropertyPage({ developers, areas }) {
   const onSubmit = (values) => {
     const formData = new FormData();
     
-    // Add form values to FormData
+    // Add non-file form values
     Object.entries(values).forEach(([key, value]) => {
-      if (key !== 'property_images') {
-        formData.append(key, value);
-      }
+        if (key !== 'property_images') {
+            formData.append(key, value);
+        }
     });
 
-    // Add images and captions
+    // Add images dengan struktur yang benar
     uploadedImages.forEach((image, index) => {
-      formData.append(`property_images[${index}][file]`, image.file);
-      formData.append(`property_images[${index}][caption]`, image.caption);
+        formData.append(`property_images[${index}][file]`, image.file);
+        if (image.caption) {
+            formData.append(`property_images[${index}][caption]`, image.caption);
+        }
     });
 
-    // Handle form submission
-    router.post(route('dashboard.property.store'), formData);
-    console.log(values);
+    // Debug: cek isi formData
+    for (let pair of formData.entries()) {
+        console.log(pair[0], pair[1]);
+    }
+
+    router.post(route('dashboard.property.store'), formData, {
+        forceFormData: true,
+        preserveState: true,
+        preserveScroll: true,
+        onSuccess: () => {
+          setErrors({});
+          console.log('Upload success');
+        },
+        onError: (errors) => {
+            setErrors(errors);
+            console.log('Upload errors:', errors);
+        }
+    });
+  };
+
+  const ErrorMessage = ({ name }) => {
+    return errors[name] ? (
+      <p className="text-red-500 text-sm mt-1">{errors[name]}</p>
+    ) : null;
   };
 
   return (
@@ -106,9 +135,11 @@ function AdminCreatePropertyPage({ developers, areas }) {
                     name="title"
                     control={control}
                     render={({ field }) => (
-                      <Input id="title" placeholder="Enter property title" {...field} />
+                      <Input id="title" placeholder="Enter property title" {...field} className={errors.title ? 'border-red-500' : ''} />
                     )}
+                    
                   />
+                  <ErrorMessage name="title" />
                 </div>
 
                 <div className="space-y-2">
@@ -120,11 +151,12 @@ function AdminCreatePropertyPage({ developers, areas }) {
                       <Textarea
                         id="description"
                         placeholder="Enter property description"
-                        className="h-32"
+                        className={`h-32 ${errors.description ? 'border-red-500' : ''}`}
                         {...field}
                       />
                     )}
                   />
+                  <ErrorMessage name="description" />
                 </div>
               </div>
 
@@ -136,7 +168,7 @@ function AdminCreatePropertyPage({ developers, areas }) {
                   control={control}
                   render={({ field }) => (
                     <Select onValueChange={field.onChange} value={field.value}>
-                      <SelectTrigger>
+                      <SelectTrigger className={errors.developer_id ? 'border-red-500' : ''}>
                         <SelectValue placeholder="Select developer" />
                       </SelectTrigger>
                       <SelectContent>
@@ -149,6 +181,7 @@ function AdminCreatePropertyPage({ developers, areas }) {
                     </Select>
                   )}
                 />
+                <ErrorMessage name="developer_id" />
               </div>
 
               {/* Area Select */}
@@ -159,7 +192,7 @@ function AdminCreatePropertyPage({ developers, areas }) {
                   control={control}
                   render={({ field }) => (
                     <Select onValueChange={field.onChange} value={field.value}>
-                      <SelectTrigger>
+                      <SelectTrigger className={errors.area_id ? 'border-red-500' : ''}>
                         <SelectValue placeholder="Select area" />
                       </SelectTrigger>
                       <SelectContent>
@@ -172,6 +205,7 @@ function AdminCreatePropertyPage({ developers, areas }) {
                     </Select>
                   )}
                 />
+                <ErrorMessage name="area_id" />
               </div>
 
               {/* Property Details */}
@@ -187,9 +221,11 @@ function AdminCreatePropertyPage({ developers, areas }) {
                         type="number"
                         {...field}
                         onChange={e => field.onChange(parseInt(e.target.value))}
+                        className={errors.bedroom_count ? 'border-red-500' : ''}
                       />
                     )}
                   />
+                  <ErrorMessage name="bedroom_count" />
                 </div>
 
                 <div className="space-y-2">
@@ -203,9 +239,11 @@ function AdminCreatePropertyPage({ developers, areas }) {
                         type="number"
                         {...field}
                         onChange={e => field.onChange(parseInt(e.target.value))}
+                        className={errors.bathroom_count ? 'border-red-500' : ''}
                       />
                     )}
                   />
+                  <ErrorMessage name="bathroom_count" />
                 </div>
 
                 <div className="space-y-2">
@@ -219,9 +257,11 @@ function AdminCreatePropertyPage({ developers, areas }) {
                         type="number"
                         {...field}
                         onChange={e => field.onChange(parseInt(e.target.value))}
+                        className={errors.carport_count ? 'border-red-500' : ''}
                       />
                     )}
                   />
+                  <ErrorMessage name="carport_count" />
                 </div>
               </div>
 
@@ -238,9 +278,11 @@ function AdminCreatePropertyPage({ developers, areas }) {
                         step="0.01"
                         {...field}
                         onChange={e => field.onChange(parseFloat(e.target.value))}
+                        className={errors.land_area ? 'border-red-500' : ''}
                       />
                     )}
                   />
+                  <ErrorMessage name="land_area" />
                 </div>
 
                 <div className="space-y-2">
@@ -255,9 +297,11 @@ function AdminCreatePropertyPage({ developers, areas }) {
                         step="0.01"
                         {...field}
                         onChange={e => field.onChange(parseFloat(e.target.value))}
+                        className={errors.building_area ? 'border-red-500' : ''}
                       />
                     )}
                   />
+                  <ErrorMessage name="building_area" />
                 </div>
               </div>
             </div>
@@ -273,7 +317,7 @@ function AdminCreatePropertyPage({ developers, areas }) {
                     control={control}
                     render={({ field }) => (
                       <Select onValueChange={field.onChange} value={field.value}>
-                        <SelectTrigger>
+                        <SelectTrigger className={errors.type ? 'border-red-500' : ''}>
                           <SelectValue placeholder="Select type" />
                         </SelectTrigger>
                         <SelectContent>
@@ -283,6 +327,7 @@ function AdminCreatePropertyPage({ developers, areas }) {
                       </Select>
                     )}
                   />
+                  <ErrorMessage name="type" />
                 </div>
 
                 <div className="space-y-2">
@@ -319,9 +364,11 @@ function AdminCreatePropertyPage({ developers, areas }) {
                       step="0.01"
                       {...field}
                       onChange={e => field.onChange(parseFloat(e.target.value))}
+                      className={errors.price ? 'border-red-500' : ''}
                     />
                   )}
                 />
+                <ErrorMessage name="price" />
               </div>
 
               <div className="space-y-2">
@@ -333,11 +380,12 @@ function AdminCreatePropertyPage({ developers, areas }) {
                     <Textarea
                       id="address"
                       placeholder="Enter property address"
-                      className="h-24"
+                      className={`h-24 ${errors.address ? 'border-red-500' : ''}`}
                       {...field}
                     />
                   )}
                 />
+                <ErrorMessage name="address" />
               </div>
 
               <div className="flex items-center space-x-2">
@@ -364,8 +412,9 @@ function AdminCreatePropertyPage({ developers, areas }) {
                   multiple
                   accept="image/*"
                   onChange={handleImageUpload}
-                  className="mb-4"
+                  className={`mb-4 ${errors.property_images ? 'border-red-500' : ''}`}
                 />
+                <ErrorMessage name="property_images" />
 
                 <div className="grid grid-cols-2 gap-4">
                   {uploadedImages.map((image, index) => (
