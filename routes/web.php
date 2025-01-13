@@ -39,7 +39,11 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
     // })->name('dashboard.property');
 
     Route::get('/property', [AdminPropertyController::class, 'index'])->name('dashboard.property');
+    Route::get('/property/create', [AdminPropertyController::class, 'create'])->name('dashboard.property.create');
     Route::post('/property', [AdminPropertyController::class, 'store'])->name('dashboard.property.store');
+    Route::get('/property/{id}', [AdminPropertyController::class, 'edit'])->name('dashboard.property.edit');
+    Route::put('/property/{id}', [AdminPropertyController::class, 'update'])->name('dashboard.property.update');
+    Route::delete('/property/{id}', [AdminPropertyController::class, 'delete'])->name('dashboard.property.delete');
 
     Route::get('/area', function () {
         return Inertia::render("Admin/Areas/AdminAreaPage", [

@@ -2,18 +2,14 @@ import ActiveBadge from "@/Components/ActiveBadge";
 import PropertyStatusBadge from "@/Components/PropertyStatusBadge";
 import { Button } from "@/Components/ui/button";
 import AdminLayout from "@/Layouts/AdminLayout";
+import { router } from "@inertiajs/react";
 import React, { useState } from "react";
 import { FaEye, FaHome, FaPlus } from "react-icons/fa";
 
 function AdminPropertyPage({ properties, developers, areas }) {
-    const [isOpenDetailModal, setIsOpenDetailModal] = useState(false);
-    const [isOpenCreateModal, setIsOpenCreateModal] = useState(false);
-    const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
-
-
     return (
         <AdminLayout>
-            <Button onClick={() => {}} className="text-white mb-3.5">
+            <Button onClick={() => router.visit(route('dashboard.property.create'))} className="text-white mb-3.5">
                 <FaPlus /> Tambah Property
             </Button>
 
