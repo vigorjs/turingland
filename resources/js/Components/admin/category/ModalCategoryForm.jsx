@@ -14,7 +14,7 @@ function ModalCategoryForm({
     setIsOpenModal,
 }) {
     const [loading, setLoading] = useState(false);
-
+    const [image, setImage] = useState(category?.icon ? `/storage/${category?.icon}` :  null);
     const { data, setData, post, reset, errors } = useForm({
         name: category?.name ?? "",
         icon: null,
@@ -89,6 +89,11 @@ function ModalCategoryForm({
         setIsOpenModal(false);
     };
 
+    const handleImageDelete = () => {
+        setImage(null)
+        setData('icon', null)
+    }
+
     return (
         <Modal show={isOpenModal} onClose={handleCloseModal}>
             <div className="p-3.5 flex justify-between items-center">
@@ -122,10 +127,18 @@ function ModalCategoryForm({
                     <Input
                         type="file"
                         id="icon"
+                        accept="image/*"
                         placeholder="Masukkan icon kategori..."
                         // onChange={(e) => setData("icon", e.target.files?.[0] || null)}
-                        onChange={(e) => setData("icon", e.target.files[0])}
+                        onChange={(e) => {
+                            setData("icon", e.target.files[0])
+                            setImage(URL.createObjectURL(e.target.files[0]))
+                        }}
                     />
+                </div>
+                <div className={`${!image && 'hidden'} w-full`}>
+                    <img src={image} alt="Image preview" className="w-32 shadow" />
+                    {!category && <button type="button" onClick={handleImageDelete} className="text-primary font-bold text-sm mt-2">Hapus foto?</button>}
                 </div>
                 <Button
                     type="submit"
