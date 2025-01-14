@@ -51,6 +51,14 @@ class AdminPropertyController extends Controller
         ]);
     }
 
+    public function detail($id){
+        $property = $this->propertyService->getPropertyById($id);
+
+        return Inertia::render("Admin/Properties/AdminDetailPropertyPage", [
+            'property' => $property[0]
+        ]);
+    }
+
     public function create()
     {
         $developers = $this->developerService->getAllDevelopers();
@@ -175,5 +183,9 @@ class AdminPropertyController extends Controller
         return redirect()->route('dashboard.property');
     }
 
-    public function delete() {}
+    public function delete($id) {
+        $this->propertyService->delete($id);
+
+        return redirect()->back();
+    }
 }

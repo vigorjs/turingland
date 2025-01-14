@@ -42,8 +42,9 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
 
     Route::get('/property', [AdminPropertyController::class, 'index'])->name('dashboard.property');
     Route::get('/property/create', [AdminPropertyController::class, 'create'])->name('dashboard.property.create');
+    Route::get('/property/{id}', [AdminPropertyController::class, 'detail'])->name('dashboard.property.detail');
     Route::post('/property', [AdminPropertyController::class, 'store'])->name('dashboard.property.store');
-    Route::get('/property/{id}', [AdminPropertyController::class, 'edit'])->name('dashboard.property.edit');
+    Route::get('/property/{id}/edit', [AdminPropertyController::class, 'edit'])->name('dashboard.property.edit');
     Route::put('/property/{id}', [AdminPropertyController::class, 'update'])->name('dashboard.property.update');
     Route::delete('/property/{id}', [AdminPropertyController::class, 'delete'])->name('dashboard.property.delete');
 

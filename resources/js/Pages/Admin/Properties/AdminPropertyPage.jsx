@@ -1,27 +1,52 @@
 import ActiveBadge from "@/Components/ActiveBadge";
+import AlertConfirmModal from "@/Components/AlertConfirmModal";
 import PropertyStatusBadge from "@/Components/PropertyStatusBadge";
 import { Button } from "@/Components/ui/button";
+import { toast } from "@/hooks/use-toast";
 import AdminLayout from "@/Layouts/AdminLayout";
 import { router } from "@inertiajs/react";
 import React, { useState } from "react";
 import { FaEye, FaHome, FaPlus } from "react-icons/fa";
 
 function AdminPropertyPage({ properties, developers, areas }) {
-    const handleView = (id) => {
-        router.visit(route("#", id));
+    const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
+    const [property, setProperty] = useState(null);
+
+    const handleDetail= (id) => {
+        router.visit(route("dashboard.property.detail", id));
     };
 
     const handleEdit = (id) => {
         router.visit(route("dashboard.property.edit", id));
     };
 
-    const handleDelete = (id) => {
-        if (confirm("Are you sure you want to delete this property?")) {
-            router.delete(route("dashboard.property.destroy", id), {
-                preserveScroll: true,
-                preserveState: true,
-            });
-        }
+    
+    const handleOpenDeleteModal = (property) => {
+        setProperty(property);
+        setIsOpenDeleteModal(true);
+    };
+
+    const handleDeleteProperty = () => {
+        router.delete(route("dashboard.property.delete", property.id), {
+            onSuccess: () => {
+                toast({
+                    title: "Property Succesfully deleted!",
+                    variant: "default",
+                });
+            },
+            onError: (err) => {
+                toast({
+                    title: "Delete Failed Sucessfully!",
+                    description: err,
+                    variant: "destructive",
+                });
+                console.log("ERR: ", err);
+            },
+            onFinish: () => {
+                setIsOpenDeleteModal(false);
+                setProperty(null);
+            },
+        });
     };
 
     return (
@@ -135,9 +160,7 @@ function AdminPropertyPage({ properties, developers, areas }) {
                                                   <td className="flex p-5 items-center gap-0.5">
                                                       <button
                                                           onClick={() =>
-                                                              console.log(
-                                                                  "edit"
-                                                              )
+                                                              handleDetail(property.id)
                                                           }
                                                           className="p-2  rounded-full bg-white group transition-all duration-500 hover:bg-slate-600 flex item-center"
                                                       >
@@ -170,7 +193,7 @@ function AdminPropertyPage({ properties, developers, areas }) {
                                                       </button>
                                                       <button
                                                           onClick={() =>
-                                                              console.log()
+                                                              handleOpenDeleteModal(property)
                                                           }
                                                           className="p-2 rounded-full bg-white group transition-all duration-500 hover:bg-red-600 flex item-center"
                                                       >
@@ -281,6 +304,14 @@ function AdminPropertyPage({ properties, developers, areas }) {
                     </div>
                 </div>
             </div>
+
+            <AlertConfirmModal
+                isOpen={isOpenDeleteModal}
+                setIsOpen={setIsOpenDeleteModal}
+                title="Delete Property"
+                message="Are you sure to delete this property?"
+                onClick={handleDeleteProperty}
+            />
         </AdminLayout>
     );
 }
