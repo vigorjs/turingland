@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminDeveloperController;
 use App\Http\Controllers\AdminLocationController;
 use App\Http\Controllers\AdminPropertyController;
 use App\Http\Controllers\AdminBannerController;
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminSettingController;
@@ -32,9 +33,7 @@ Route::get('/search', function () {
 });
 
 Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function (){
-    Route::get('', function () {
-        return Inertia::render("Admin/Dashboards/AdminDashboardPage");
-    })->name('dashboard');
+    Route::get('', [AdminDashboardController::class, 'index'])->name('dashboard');
 
     // Route::get('/property', function () {
     //     return Inertia::render("Admin/Properties/AdminPropertyPage");
