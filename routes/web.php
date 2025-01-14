@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminDeveloperController;
 use App\Http\Controllers\AdminLocationController;
 use App\Http\Controllers\AdminPropertyController;
 use App\Http\Controllers\AdminBannerController;
+use App\Http\Controllers\AdminTestimonyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminSettingController;
@@ -98,8 +99,14 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
     Route::delete("/banner/{id}", [AdminBannerController::class, "destroy"])->name("banner.destroy");
 
     Route::get('/testimony', function () {
-        return Inertia::render("Admin/AdminPageOne");
+        return Inertia::render("Admin/Testimonies/AdminTestimonyPage", [
+            'testimonies' => \App\Models\Testimony::paginate(8)
+        ]);
     })->name('dashboard.testimony');
+
+    Route::post("/testimony", [AdminTestimonyController::class, "store"])->name("testimony.store");
+    Route::put("/testimony/{id}", [AdminTestimonyController::class, "update"])->name("testimony.update");
+    Route::delete("/testimony/{id}", [AdminTestimonyController::class, "destroy"])->name("testimony.destroy");
 
     //Web Pref
     Route::get('/web-preferences', function () {
