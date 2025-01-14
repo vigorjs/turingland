@@ -19,7 +19,9 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             AreaSeeder::class,
             DeveloperSeeder::class,
-            PropertySeeder::class
+            PropertySeeder::class,
+            TestimonySeeder::class,
+            BannerSeeder::class
         ]);
     }
 }
