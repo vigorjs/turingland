@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { useForm, Controller } from "react-hook-form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import { Input } from '@/Components/ui/input';
+import { Button } from "@/Components/ui/button";
+import { Textarea } from "@/Components/ui/textarea";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/Components/ui/select";
 import AdminLayout from '@/Layouts/AdminLayout';
-import { Checkbox } from "@/components/ui/checkbox";
+import { Checkbox } from "@/Components/ui/checkbox";
 import { X } from "lucide-react";
-import { Label } from "@/components/ui/label";
+import { Label } from "@/Components/ui/label";
 import { router } from '@inertiajs/react';
 
 function AdminCreatePropertyPage({ developers, areas }) {
@@ -49,11 +49,11 @@ function AdminCreatePropertyPage({ developers, areas }) {
             preview: URL.createObjectURL(file),
             caption: ""
         }));
-        
+
         // Simpan gambar baru dan update state
         const updatedImages = [...uploadedImages, ...newFiles];
         setUploadedImages(updatedImages);
-        
+
         // Update form value dengan array file
         setValue('property_images', updatedImages);
     }
@@ -62,7 +62,7 @@ function AdminCreatePropertyPage({ developers, areas }) {
 
   const removeImage = (index) => {
     URL.revokeObjectURL(uploadedImages[index].preview);
-    
+
     const newUploadedImages = uploadedImages.filter((_, i) => i !== index);
     setUploadedImages(newUploadedImages);
     setValue('property_images', newUploadedImages.map(img => img.file));
@@ -76,7 +76,7 @@ function AdminCreatePropertyPage({ developers, areas }) {
 
   const onSubmit = (values) => {
     const formData = new FormData();
-    
+
     // Add non-file form values
     Object.entries(values).forEach(([key, value]) => {
         if (key !== 'property_images') {
@@ -122,7 +122,7 @@ function AdminCreatePropertyPage({ developers, areas }) {
     <AdminLayout>
       <div className="max-w-7xl mx-auto p-6">
         <h1 className="text-2xl font-bold mb-6">Create New Property</h1>
-        
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Left Column */}
@@ -137,7 +137,7 @@ function AdminCreatePropertyPage({ developers, areas }) {
                     render={({ field }) => (
                       <Input id="title" placeholder="Enter property title" {...field} className={errors.title ? 'border-red-500' : ''} />
                     )}
-                    
+
                   />
                   <ErrorMessage name="title" />
                 </div>
@@ -428,13 +428,13 @@ function AdminCreatePropertyPage({ developers, areas }) {
                         <button
                           type="button"
                           onClick={() => removeImage(index)}
-                          className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full 
+                          className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full
                                    opacity-0 group-hover:opacity-100 transition-opacity"
                         >
                           <X className="w-4 h-4" />
                         </button>
                       </div>
-                      
+
                       <Input
                         type="text"
                         placeholder="Add caption"

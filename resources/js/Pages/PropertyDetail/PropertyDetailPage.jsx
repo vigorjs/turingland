@@ -1,3 +1,4 @@
+import { CardProperty } from "@/Components/CardProperty";
 import Modal from "@/Components/Modal";
 import { Button } from "@/Components/ui/button";
 import {
@@ -9,6 +10,7 @@ import {
 } from "@/Components/ui/carousel";
 import GuestLayout from "@/Layouts/GuestLayout";
 import { Head } from "@inertiajs/react";
+import Autoplay from "embla-carousel-autoplay";
 import {
     BathIcon,
     BedDoubleIcon,
@@ -16,6 +18,7 @@ import {
     ChevronDown,
     ChevronUp,
     MapPin,
+    MapPinIcon,
     User,
 } from "lucide-react";
 import React, { useState } from "react";
@@ -27,12 +30,16 @@ export default function PropertyDetailPage({ property }) {
 
     console.log("PROPERTY: ", property);
 
+    const img = `https://ecatalog.sinarmasland.com/_next/image?url=https%3A%2F%2Fecatalog.sinarmasland.com%2Fassets%2Fsite-setting-files%2F1%2Fhomepage-background-banner-desktop-677b6f397dc74.jpg&w=3840&q=75`;
+
     const img1 =
         "https://s3-alpha-sig.figma.com/img/db80/4347/cb68839c79ca58a9b46777e9c9c07cc0?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=nXWoIhqAUTi-at1criMJPC8l-xudGFynTTWb9Y-EQ3SJVxbjtvcOe0gMCLVH-t9DqTyNiL-Yzev8ZoIv8rUhxICHbXB8rkLeNKxj7EQ62uTTgu9cxyvbWTE~QRaByjGG1cJ6vcaSQ6MXKBL0oqfIGiBf0VqSA6UKFh5uufI7P4FLQmWmiBmecXFnhZ2A5p2FkQ5Vc~d9jsWCoMVMpC711S6lfNymccRCkodcG15Mx22s-p2ydCVU06b5TyCZg7x1tG2lcqPcdyaX07KFBNHfmAp9N23KdaCvnBgsmBAeg76eEDgO9y7B4xcEcerX559xGjDraUB~HpMhDXtZGXxetg__";
 
     const imagePrimary = img1;
     const otherImages = [img1, img1, img1, img1, img1];
     const allImages = [imagePrimary, ...otherImages];
+
+    const arr = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
 
     return (
         <GuestLayout>
@@ -47,29 +54,30 @@ export default function PropertyDetailPage({ property }) {
                         className="w-full h-80 sm:h-[420px] object-cover rounded-2xl shadow-lg"
                     />
                 </button>
-                    <div className="relative flex justify-center items-center -mt-10 sm:-mt-16">
-                        <Carousel className="bg-white sm:gap-4 w-auto max-w-xs sm:max-w-xl p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl shadow-md">
-                            <CarouselContent>
-                                {otherImages.map((img) => (
-                                    <CarouselItem className="basis-auto">
-                                        <button onClick={() => setIsOpenModal(true)}>
-
+                <div className="relative flex justify-center items-center -mt-10 sm:-mt-16">
+                    <Carousel className="bg-white sm:gap-4 w-auto max-w-xs sm:max-w-xl p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl shadow-md">
+                        <CarouselContent>
+                            {otherImages.map((img) => (
+                                <CarouselItem className="basis-auto">
+                                    <button
+                                        onClick={() => setIsOpenModal(true)}
+                                    >
                                         <img
                                             src={img}
                                             className="w-[100px] sm:w-40 rounded-xl"
-                                            />
-                                            </button>
-                                    </CarouselItem>
-                                ))}
-                            </CarouselContent>
-                            <div className="absolute -bottom-6 right-14 flex justify-center items-center">
-                                <div className="mx-auto w-full ">
+                                        />
+                                    </button>
+                                </CarouselItem>
+                            ))}
+                        </CarouselContent>
+                        <div className="absolute -bottom-6 right-14 flex justify-center items-center">
+                            <div className="mx-auto w-full ">
                                 <CarouselPrevious className="" />
                                 <CarouselNext className="" />
-                                </div>
                             </div>
-                        </Carousel>
-                    </div>
+                        </div>
+                    </Carousel>
+                </div>
 
                 {/* DETAIL */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-0 mt-16 md:mt-20">
@@ -330,6 +338,137 @@ export default function PropertyDetailPage({ property }) {
                         </div>
                     </div>
                 </div>
+
+                {/* RECCOMENDATION PROPERTIES */}
+                <div className="mt-16 mb-12">
+                    <div className="mb-4 flex justify-between items-center">
+                        <div>
+                            <h2 className="text-xl sm:text-2xl font-bold">
+                                Rekomendasi Properti Terpopuler
+                            </h2>
+                            <p className="text-base">
+                                Cek rekomendasi properti terpopuler kami
+                            </p>
+                        </div>
+                        <Button
+                            variant={"outline"}
+                            className="hidden md:mr-0 md:block lg:mr-40"
+                        >
+                            Lihat Selengkapnya
+                        </Button>
+                    </div>
+
+                    {/* CARD */}
+                    <Carousel
+                        opts={{
+                            align: "start",
+                        }}
+                    >
+                        <CarouselContent>
+                            {arr.length > 0
+                                ? arr.map((_, index) => (
+                                      <CarouselItem
+                                          className="flex-shrink-0 basis-auto w-[350px] h-[355px]"
+                                          key={index}
+                                      >
+                                          <CardProperty
+                                              img={img1}
+                                              key={`properties-card-${index}`}
+                                          >
+                                              <div className="flex flex-row justify-between items-center w-full">
+                                                  <div>
+                                                      <h2 className="font-bold text-foreground">
+                                                          Fauzan Properties
+                                                      </h2>
+                                                      <div className="flex justify-start items-center gap-1">
+                                                          <p className="text-xs text-neutral-600">
+                                                              <MapPinIcon
+                                                                  className="text-muted"
+                                                                  fill="#FD9458"
+                                                                  size={"16px"}
+                                                              />
+                                                          </p>
+                                                          <p className="text-xs text-muted-foreground">
+                                                              Jl. Kebon Jeruk,
+                                                              Jakarta
+                                                          </p>
+                                                      </div>
+
+                                                      <div className="flex justify-start items-center gap-3.5 mt-1">
+                                                          <p className="text-xs">
+                                                              LT: 40&sup2;
+                                                          </p>
+                                                          <p className="text-xs">
+                                                              LB: 40&sup2;
+                                                          </p>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                              <hr className="mt-2 mb-3 dark:border-white" />
+                                              <div className="flex justify-between">
+                                                  <p className="text-xs dark:text-primary font-semibold">
+                                                      Rp 200 juta
+                                                  </p>
+                                                  <div className="flex gap-5">
+                                                      <div className="flex items-center gap-x-1 text-xs">
+                                                          <BedDoubleIcon className="w-4 h-4" />{" "}
+                                                          : 3
+                                                      </div>
+                                                      <div className="flex items-center gap-x-1 text-xs">
+                                                          <BathIcon className="w-4 h-4" />{" "}
+                                                          : 2
+                                                      </div>
+                                                      <div className="flex items-center gap-x-1 text-xs">
+                                                          <CarFrontIcon className="w-4 h-4" />{" "}
+                                                          : 2
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </CardProperty>
+                                      </CarouselItem>
+                                  ))
+                                : null}
+                        </CarouselContent>
+                        <div className="absolute -top-11 right-20  justify-center items-center hidden lg:flex">
+                            <CarouselPrevious className="" />
+                            <CarouselNext className="" />
+                        </div>
+                    </Carousel>
+                </div>
+
+                <Carousel
+                    className="mb-4"
+                    plugins={[
+                        Autoplay({
+                            delay: 2500,
+                        }),
+                    ]}
+                    opts={{
+                        align: "start",
+                        loop: true,
+                    }}
+                >
+                    <CarouselContent>
+                        {arr.length > 0 ? (
+                            arr.map((_, index) => (
+                                <CarouselItem
+                                    key={`ads-section-${index}`}
+                                    className="flex-shrink-0 basis-1/1 md:basis-1/2 max-h-[40vh]"
+                                >
+                                    <img
+                                        src={img}
+                                        alt={`Carousel item ${index}`}
+                                        className="object-contain md:rounded-2xl rounded-none w-auto h-full"
+                                    />
+                                </CarouselItem>
+                            ))
+                        ) : (
+                            <p className="text-center text-gray-500">
+                                No items available for the carousel.
+                            </p>
+                        )}
+                    </CarouselContent>
+                </Carousel>
             </div>
 
             <ModalImages
