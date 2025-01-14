@@ -49,6 +49,13 @@ function AdminPropertyPage({ properties, developers, areas }) {
         });
     };
 
+    const formatPrice = (price) => {
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR'
+        }).format(price);
+    };
+
     return (
         <AdminLayout>
             <Button
@@ -143,7 +150,7 @@ function AdminPropertyPage({ properties, developers, areas }) {
                                                       {property.area?.name}
                                                   </td>
                                                   <td className="px-5 py-3.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900 ">
-                                                      {property.price}
+                                                      {formatPrice(property.price)}
                                                   </td>
                                                   <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
                                                       <PropertyStatusBadge
