@@ -39,4 +39,8 @@ class PropertyServiceImplement extends ServiceApi implements PropertyService{
       return $this->mainRepository->create($request);
     }
 
+    public function getPropertyById($id){
+      return $this->mainRepository->getPropertyById($id);
+    }
+
 }

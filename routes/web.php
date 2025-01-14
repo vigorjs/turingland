@@ -6,10 +6,12 @@ use App\Http\Controllers\AdminDeveloperController;
 use App\Http\Controllers\AdminLocationController;
 use App\Http\Controllers\AdminPropertyController;
 use App\Http\Controllers\AdminBannerController;
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminTestimonyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminSettingController;
+use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\WebPreferencesController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -25,16 +27,14 @@ require __DIR__.'/auth.php';
 //         'phpVersion' => PHP_VERSION,
 //     ]);
 // });
-Route::get("/", [HomeController::class, 'index']);
-
+Route::get("/", [HomeController::class, 'index'])->name('homepage');
+Route::get('/properti/{id}', [PropertyController::class, 'show'])->name('property.show');
 Route::get('/search', function () {
     return Inertia::render("Search/Search");
 });
 
 Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function (){
-    Route::get('', function () {
-        return Inertia::render("Admin/Dashboards/AdminDashboardPage");
-    })->name('dashboard');
+    Route::get('', [AdminDashboardController::class, 'index'])->name('dashboard');
 
     // Route::get('/property', function () {
     //     return Inertia::render("Admin/Properties/AdminPropertyPage");
@@ -42,8 +42,9 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
 
     Route::get('/property', [AdminPropertyController::class, 'index'])->name('dashboard.property');
     Route::get('/property/create', [AdminPropertyController::class, 'create'])->name('dashboard.property.create');
+    Route::get('/property/{id}', [AdminPropertyController::class, 'detail'])->name('dashboard.property.detail');
     Route::post('/property', [AdminPropertyController::class, 'store'])->name('dashboard.property.store');
-    Route::get('/property/{id}', [AdminPropertyController::class, 'edit'])->name('dashboard.property.edit');
+    Route::get('/property/{id}/edit', [AdminPropertyController::class, 'edit'])->name('dashboard.property.edit');
     Route::put('/property/{id}', [AdminPropertyController::class, 'update'])->name('dashboard.property.update');
     Route::delete('/property/{id}', [AdminPropertyController::class, 'delete'])->name('dashboard.property.delete');
 

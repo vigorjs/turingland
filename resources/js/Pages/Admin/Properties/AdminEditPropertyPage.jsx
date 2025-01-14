@@ -1,128 +1,148 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm, Controller } from "react-hook-form";
-import { Input } from '@/Components/ui/input';
-import { Button } from "@/Components/ui/button";
-import { Textarea } from "@/Components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/Components/ui/select";
+} from "@/components/ui/select";
 import AdminLayout from '@/Layouts/AdminLayout';
-import { Checkbox } from "@/Components/ui/checkbox";
+import { Checkbox } from "@/components/ui/checkbox";
 import { X } from "lucide-react";
-import { Label } from "@/Components/ui/label";
+import { Label } from "@/components/ui/label";
 import { router } from '@inertiajs/react';
 
-function AdminCreatePropertyPage({ developers, areas }) {
-  const [uploadedImages, setUploadedImages] = useState([]);
-  const [errors, setErrors] = useState({});
-
-  const { control, handleSubmit, setValue, formState: { errors: formErrors } } = useForm({
-    defaultValues: {
-      title: "",
-      description: "",
-      developer_id: "",
-      area_id: "",
-      bathroom_count: 0,
-      bedroom_count: 0,
-      carport_count: 0,
-      land_area: 0,
-      building_area: 0,
-      price: 0,
-      type: "sale",
-      status: "active",
-      address: "",
-      certificate_type: "",
-      year_built: new Date().getFullYear(),
-      is_featured: false,
-      property_images: [],
-    },
-  });
-
-  const handleImageUpload = (e) => {
-    if (e.target.files) {
-        const newFiles = Array.from(e.target.files).map(file => ({
-            file,
-            preview: URL.createObjectURL(file),
-            caption: ""
+function AdminEditPropertyPage({ property, developers, areas }) {
+    const [uploadedImages, setUploadedImages] = useState([]);
+    const [errors, setErrors] = useState({});
+  
+    // Initialize form with existing property data
+    const { control, handleSubmit, setValue, formState: { errors: formErrors } } = useForm({
+      defaultValues: {
+        title: property.title,
+        description: property.description,
+        developer_id: property.developer_id.toString(),
+        area_id: property.area_id.toString(),
+        bathroom_count: property.bathroom_count,
+        bedroom_count: property.bedroom_count,
+        carport_count: property.carport_count,
+        land_area: property.land_area,
+        building_area: property.building_area,
+        price: property.price,
+        type: property.type,
+        status: property.status,
+        address: property.address,
+        certificate_type: property.certificate_type,
+        year_built: property.year_built,
+        is_featured: property.is_featured,
+        property_images: [],
+      },
+    });
+      
+    // Initialize existing images
+    useEffect(() => {
+      if (property.images) {
+        const existingImages = property.images.map(image => ({
+          id: image.id,
+          file: null,
+          preview: image.image_path,
+          caption: image.caption || "",
+          isExisting: true
         }));
-
-        // Simpan gambar baru dan update state
+        setUploadedImages(existingImages);
+      }
+    }, [property]);
+  
+    const handleImageUpload = (e) => {
+      if (e.target.files) {
+        const newFiles = Array.from(e.target.files).map(file => ({
+          file,
+          preview: URL.createObjectURL(file),
+          caption: "",
+          isExisting: false
+        }));
+        
         const updatedImages = [...uploadedImages, ...newFiles];
         setUploadedImages(updatedImages);
-
-        // Update form value dengan array file
         setValue('property_images', updatedImages);
-    }
-};
-
-
-  const removeImage = (index) => {
-    URL.revokeObjectURL(uploadedImages[index].preview);
-
-    const newUploadedImages = uploadedImages.filter((_, i) => i !== index);
-    setUploadedImages(newUploadedImages);
-    setValue('property_images', newUploadedImages.map(img => img.file));
-  };
-
-  const updateImageCaption = (index, caption) => {
-    const newUploadedImages = [...uploadedImages];
-    newUploadedImages[index].caption = caption;
-    setUploadedImages(newUploadedImages);
-  };
-
-  const onSubmit = (values) => {
-    const formData = new FormData();
-
-    // Add non-file form values
-    Object.entries(values).forEach(([key, value]) => {
+      }
+    };
+  
+    const removeImage = (index) => {
+      const imageToRemove = uploadedImages[index];
+      
+      if (!imageToRemove.isExisting) {
+        URL.revokeObjectURL(imageToRemove.preview);
+      }
+      
+      const newUploadedImages = uploadedImages.filter((_, i) => i !== index);
+      setUploadedImages(newUploadedImages);
+      setValue('property_images', newUploadedImages);
+    };
+  
+    const updateImageCaption = (index, caption) => {
+      const newUploadedImages = [...uploadedImages];
+      newUploadedImages[index].caption = caption;
+      setUploadedImages(newUploadedImages);
+    };
+  
+    const onSubmit = (values) => {
+      const formData = new FormData();
+      
+      // Add non-file form values
+      Object.entries(values).forEach(([key, value]) => {
         if (key !== 'property_images') {
-            formData.append(key, value);
+          formData.append(key, value);
         }
-    });
-
-    // Add images dengan struktur yang benar
-    uploadedImages.forEach((image, index) => {
-        formData.append(`property_images[${index}][file]`, image.file);
-        if (image.caption) {
-            formData.append(`property_images[${index}][caption]`, image.caption);
-        }
-    });
-
-    // Debug: cek isi formData
-    for (let pair of formData.entries()) {
-        console.log(pair[0], pair[1]);
-    }
-
-    router.post(route('dashboard.property.store'), formData, {
+      });
+  
+      // Add new images
+      const newImages = uploadedImages.filter(img => !img.isExisting);
+      newImages.forEach((image, index) => {
+        formData.append(`new_images[${index}][file]`, image.file);
+        formData.append(`new_images[${index}][caption]`, image.caption);
+      });
+  
+      // Add existing images data
+      const existingImages = uploadedImages.filter(img => img.isExisting);
+      existingImages.forEach((image, index) => {
+        formData.append(`existing_images[${index}][id]`, image.id);
+        formData.append(`existing_images[${index}][caption]`, image.caption);
+      });
+  
+      // Add method for Laravel to recognize PUT request
+      formData.append('_method', 'PUT');
+  
+      router.post(route('dashboard.property.update', property.id), formData, {
         forceFormData: true,
         preserveState: true,
         preserveScroll: true,
         onSuccess: () => {
           setErrors({});
-          console.log('Upload success');
+          console.log('Update success');
         },
         onError: (errors) => {
-            setErrors(errors);
-            console.log('Upload errors:', errors);
+          setErrors(errors);
+          console.log('Update errors:', errors);
         }
-    });
-  };
-
-  const ErrorMessage = ({ name }) => {
-    return errors[name] ? (
-      <p className="text-red-500 text-sm mt-1">{errors[name]}</p>
-    ) : null;
-  };
-
+      });
+    };
+  
+    const ErrorMessage = ({ name }) => {
+      return errors[name] ? (
+        <p className="text-red-500 text-sm mt-1">{errors[name]}</p>
+      ) : null;
+    };
+  
   return (
     <AdminLayout>
       <div className="max-w-7xl mx-auto p-6">
-        <h1 className="text-2xl font-bold mb-6">Create New Property</h1>
-
+        <h1 className="text-2xl font-bold mb-6">Edit Property</h1>
+        
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Left Column */}
@@ -137,7 +157,6 @@ function AdminCreatePropertyPage({ developers, areas }) {
                     render={({ field }) => (
                       <Input id="title" placeholder="Enter property title" {...field} className={errors.title ? 'border-red-500' : ''} />
                     )}
-
                   />
                   <ErrorMessage name="title" />
                 </div>
@@ -403,8 +422,8 @@ function AdminCreatePropertyPage({ developers, areas }) {
                 <Label htmlFor="is_featured">Featured Property</Label>
               </div>
 
-              {/* Image Upload Section */}
-              <div className="space-y-4">
+            {/* Image Upload Section */}
+            <div className="space-y-4">
                 <Label htmlFor="images">Upload Images</Label>
                 <Input
                   id="images"
@@ -428,13 +447,13 @@ function AdminCreatePropertyPage({ developers, areas }) {
                         <button
                           type="button"
                           onClick={() => removeImage(index)}
-                          className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full
+                          className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full 
                                    opacity-0 group-hover:opacity-100 transition-opacity"
                         >
                           <X className="w-4 h-4" />
                         </button>
                       </div>
-
+                      
                       <Input
                         type="text"
                         placeholder="Add caption"
@@ -450,12 +469,12 @@ function AdminCreatePropertyPage({ developers, areas }) {
           </div>
 
           <div className="flex justify-center">
-            <Button type="submit" className="w-48">Create Property</Button>
+            <Button type="submit" className="w-48">Update Property</Button>
           </div>
         </form>
       </div>
     </AdminLayout>
-  );
+  )
 }
 
-export default AdminCreatePropertyPage;
+export default AdminEditPropertyPage

@@ -1,10 +1,12 @@
+import { Link } from "@inertiajs/react";
+
 export const CardProperty = ({ children, img, isFullWhenMobile = false }) => {
     const twClass = isFullWhenMobile
         ? "relative w-full aspect-square h-full rounded-2xl"
         : "relative w-full h-full rounded-2xl";
 
     return (
-        <div className={twClass}>
+        <Link href={route('property.show', 1)} className={twClass}>
             <img
                 src={img}
                 alt={img}
@@ -16,6 +18,6 @@ export const CardProperty = ({ children, img, isFullWhenMobile = false }) => {
                     {children}
                 </div>
             </div>
-        </div>
+        </Link>
     );
 };

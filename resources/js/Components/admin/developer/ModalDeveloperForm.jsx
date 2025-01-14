@@ -10,6 +10,9 @@ import { useForm } from "@inertiajs/react";
 
 function ModalDeveloperForm({ developer, isOpenModal, setIsOpenModal }) {
     const [isLoading, setIsLoading] = useState(false);
+    const [image, setImage] = useState(
+        developer?.logo ? `/storage/${developer?.logo}` : null
+    );
     const [isActive, setIsActive] = useState(developer?.is_active ?? false);
 
     const { data, setData, post, reset } = useForm({
@@ -33,7 +36,7 @@ function ModalDeveloperForm({ developer, isOpenModal, setIsOpenModal }) {
                     setIsLoading(false);
                     toast({
                         title: "Developer gagal dibuat!",
-                        description: errors?.name || errors?.icon,
+                        description: errors?.name || errors?.logo,
                         variant: "destructive",
                     });
                     console.log("err: ", errors);
@@ -63,7 +66,7 @@ function ModalDeveloperForm({ developer, isOpenModal, setIsOpenModal }) {
                     setIsLoading(false);
                     toast({
                         title: "Developer gagal diupdate!",
-                        description: errors?.name || errors?.icon,
+                        description: errors?.name || errors?.logo,
                         variant: "destructive",
                     });
                     console.log("err: ", errors);
@@ -86,6 +89,11 @@ function ModalDeveloperForm({ developer, isOpenModal, setIsOpenModal }) {
                 },
             });
         }
+    };
+
+    const handleImageDelete = () => {
+        setImage(null);
+        setData("logo", null);
     };
 
     // useEffect(() => {
@@ -121,23 +129,45 @@ function ModalDeveloperForm({ developer, isOpenModal, setIsOpenModal }) {
                     />
                 </div>
                 <div className="grid w-full items-center gap-1.5">
-                    <Label htmlFor="icon">Deskripsi</Label>
+                    <Label htmlFor="deskripsi">Deskripsi</Label>
                     <Input
                         value={data.description}
                         onChange={(e) => setData("description", e.target.value)}
                         type="text"
-                        id="icon"
-                        placeholder="Masukkan icon developer..."
+                        id="deskripsi"
+                        placeholder="Masukkan deskripsi developer..."
                     />
                 </div>
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="logo">Logo</Label>
                     <Input
-                        onChange={(e) => setData("logo", e.target.files[0])}
+                        onChange={(e) => {
+                            setData("logo", e.target.files[0]);
+                            setImage(URL.createObjectURL(e.target.files[0]));
+                        }}
                         type="file"
                         id="logo"
+                        accept="image/*"
                     />
                 </div>
+
+                <div className={`${!image && "hidden"} w-full`}>
+                    <img
+                        src={image}
+                        alt="Image preview"
+                        className="w-32 shadow"
+                    />
+                    {!developer && (
+                        <button
+                            type="button"
+                            onClick={handleImageDelete}
+                            className="text-primary font-bold text-sm mt-2"
+                        >
+                            Hapus foto?
+                        </button>
+                    )}
+                </div>
+
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="is_active">Aktif</Label>
                     <InputActiveCheckbox

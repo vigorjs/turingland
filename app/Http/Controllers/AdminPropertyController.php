@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PropertyCreateRequest;
+use App\Http\Requests\PropertyUpdateRequest;
 use App\Models\Property;
 use App\Models\PropertyImage;
 use App\Services\Area\AreaService;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class AdminPropertyController extends Controller
@@ -49,6 +51,14 @@ class AdminPropertyController extends Controller
         ]);
     }
 
+    public function detail($id){
+        $property = $this->propertyService->getPropertyById($id);
+
+        return Inertia::render("Admin/Properties/AdminDetailPropertyPage", [
+            'property' => $property[0]
+        ]);
+    }
+
     public function create()
     {
         $developers = $this->developerService->getAllDevelopers();
@@ -62,11 +72,9 @@ class AdminPropertyController extends Controller
 
     public function store(PropertyCreateRequest $request)
     {
-        // Debug untuk melihat data yang masuk
         Log::info('Request all:', $request->all());
         Log::info('Files:', $request->allFiles());
     
-        // Create property
         $property = $this->propertyService->create(array_merge(
             $request->except('property_images'),
             ['user_id' => Auth::id()]
@@ -81,10 +89,8 @@ class AdminPropertyController extends Controller
     
                 $file = $imageData['file'];
                 
-                // Generate unique filename
                 $filename = uniqid() . '_' . time() . '.' . $file->getClientOriginalExtension();
                 
-                // Store file
                 $path = $file->storeAs('properties', $filename, 'public');
     
                 $this->propertyImageService->create([
@@ -99,9 +105,87 @@ class AdminPropertyController extends Controller
         return redirect()->route('dashboard.property');
     }
 
-    public function edit() {}
+    public function edit($id) {
+        $property = $this->propertyService->getPropertyById($id);
+        // dd($property);
 
-    public function update() {}
+        $developers = $this->developerService->getAllDevelopers();
+        $areas = $this->areaService->getAllAreas();
 
-    public function delete() {}
+        return Inertia::render("Admin/Properties/AdminEditPropertyPage", [
+            'property' => $property[0],
+            'developers' => $developers,
+            'areas' => $areas
+        ]);
+    }
+
+    public function update(PropertyUpdateRequest $request, $id)
+    {
+        Log::info('Update Request:', $request->all());
+        Log::info('Update Files:', $request->allFiles());
+    
+        // 1. Update property basic information
+        $property = $this->propertyService->update(
+            $id,
+            array_merge(
+                $request->except(['property_images', 'new_images', 'existing_images']),
+                ['user_id' => Auth::id()]
+            )
+        );
+    
+        // 2. Handle existing images if any
+        if ($request->has('existing_images')) {
+            $existingImageIds = collect($request->existing_images)->pluck('id')->toArray();
+            
+            // Get all current images
+            $currentImages = $this->propertyImageService->getImagesByPropertyId($id);
+            
+            // Delete images that are no longer in the existingImageIds array
+            foreach ($currentImages as $image) {
+                if (!in_array($image->id, $existingImageIds)) {
+                    // Delete from storage
+                    if (Storage::disk('public')->exists($image->image_path)) {
+                        Storage::disk('public')->delete($image->image_path);
+                    }
+                    // Delete from database
+                    $this->propertyImageService->deleteImage($image->id);
+                }
+            }
+        }
+    
+        // 3. Handle new images
+        if ($request->has('new_images')) {
+            $currentImagesCount = $this->propertyImageService->getImagesByPropertyId($id)->count();
+            
+            foreach ($request->new_images as $index => $imageData) {
+                if (!isset($imageData['file']) || !$imageData['file'] instanceof \Illuminate\Http\UploadedFile) {
+                    continue;
+                }
+    
+                $file = $imageData['file'];
+                
+                // Generate unique filename
+                $filename = uniqid() . '_' . time() . '.' . $file->getClientOriginalExtension();
+                
+                // Store file
+                $path = $file->storeAs('properties', $filename, 'public');
+    
+                // Create new image record
+                $this->propertyImageService->create([
+                    'property_id' => $id,
+                    'image_path' => $path,
+                    'is_primary' => $currentImagesCount === 0 && $index === 0,
+                    'order' => $currentImagesCount + $index
+                ]);
+            }
+        }
+    
+        return redirect()->route('dashboard.property');
+    }
+
+    public function delete($id) {
+        $this->propertyService->delete($id);
+
+        return redirect()->back();
+    }
 }
