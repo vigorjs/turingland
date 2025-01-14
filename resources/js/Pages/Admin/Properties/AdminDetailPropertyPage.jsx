@@ -68,7 +68,7 @@ const AdminDetailPropertyPage = ({ property }) => {
                                     />
                                 )}
                             </div>
-                            <div className="grid grid-cols-4 gap-2 h-96 overflow-y-auto">
+                            <div className="p-1 grid grid-cols-4 gap-2 h-96 overflow-y-scroll auto-rows-min">
                                 {property.images?.map((image) => (
                                     <img
                                         key={image.id}
