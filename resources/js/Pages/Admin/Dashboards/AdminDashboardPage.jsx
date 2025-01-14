@@ -9,27 +9,29 @@ import { Head } from "@inertiajs/react";
 import { Users } from "lucide-react";
 import React from "react";
 
-export default function AdminDashboardPage() {
+export default function AdminDashboardPage({ totalUser, totalDeveloper, totalAgent, totalProperty, latestDevelopers }) {
+    console.log(latestDevelopers);
+    
     const cardCounting = [
         {
             icon: <Users className="text-2xl w-6 h-6 text-white" />,
             name: "Users",
-            total: 12,
+            total: totalUser,
         },
         {
             icon: <Users className="text-2xl w-6 h-6 text-white" />,
             name: "Developers",
-            total: 69,
+            total: totalDeveloper,
         },
         {
             icon: <Users className="text-2xl w-6 h-6 text-white" />,
             name: "Agent",
-            total: 8,
+            total: totalAgent,
         },
         {
             icon: <Users className="text-2xl w-6 h-6 text-white" />,
             name: "Properti",
-            total: 137,
+            total: totalProperty,
         },
     ];
 
@@ -102,7 +104,7 @@ export default function AdminDashboardPage() {
                             </p>
                         </div>
                         <div class="flex flex-col divide-y divide w-full px-4 sm:px-6">
-                            {developers.map((item, index) => (
+                            {latestDevelopers.map((item, index) => (
                                 <div
                                     key={`current-developer-${index}`}
                                     class="flex flex-row"
@@ -122,7 +124,7 @@ export default function AdminDashboardPage() {
                                                 {item.name}
                                             </div>
                                             <div class="text-sm text-gray-600 dark:text-gray-200">
-                                                {item.joinDate}
+                                                {item.created_at}
                                             </div>
                                         </div>
                                     </div>
