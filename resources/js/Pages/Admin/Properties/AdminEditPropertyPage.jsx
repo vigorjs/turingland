@@ -39,13 +39,10 @@ function AdminEditPropertyPage({ property, developers, areas }) {
         certificate_type: property.certificate_type,
         year_built: property.year_built,
         is_featured: property.is_featured,
-        property_images: property.images,
+        property_images: [],
       },
     });
-
-    console.log(property.images);
-    
-  
+      
     // Initialize existing images
     useEffect(() => {
       if (property.images) {

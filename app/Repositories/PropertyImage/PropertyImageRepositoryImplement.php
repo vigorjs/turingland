@@ -26,4 +26,20 @@ class PropertyImageRepositoryImplement extends Eloquent implements PropertyImage
     {
         $this->model->create($image);
     }
+
+    public function getImagesByPropertyId($propertyId)
+    {
+        return $this->model->where('property_id', $propertyId)
+                           ->orderBy('order')
+                           ->get();
+    }
+    public function updateImage($id, array $data)
+    {
+        return $this->model->where('id', $id)->update($data);
+    }
+
+    public function deleteImage($id)
+    {
+        return $this->model->where('id', $id)->delete();
+    }
 }
