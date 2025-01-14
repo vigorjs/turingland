@@ -107,6 +107,13 @@ export default function AdminTestimonyPage({ testimonies }) {
                                             {" "}
                                             Status{" "}
                                         </th>
+                                        <th
+                                            scope="col"
+                                            className="px-6 py-4 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize"
+                                        >
+                                            {" "}
+                                            Aksi{" "}
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-300">
