@@ -6,8 +6,9 @@ import AdminLayout from "@/Layouts/AdminLayout";
 import { Link, router } from "@inertiajs/react";
 import { useState } from "react";
 import ModalAreaForm from "../../../Components/admin/area/ModalAreaForm";
+import Pagination from "@/Components/Pagination";
 
-export default function AdminAreaPage({ areas }) {
+export default function AdminAreaPage({ areas, auth }) {
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
     const [area, setArea] = useState(null);
@@ -46,7 +47,7 @@ export default function AdminAreaPage({ areas }) {
     };
 
     return (
-        <AdminLayout>
+        <AdminLayout auth={auth}>
             <Button
                 onClick={() => {
                     setIsOpenModal(true);
@@ -102,8 +103,8 @@ export default function AdminAreaPage({ areas }) {
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-300 ">
-                                    {areas.length > 0
-                                        ? areas.map((area, index) => (
+                                    {areas.data.length > 0
+                                        ? areas.data.map((area, index) => (
                                               <tr
                                                   key={`area-${index}-${area.id}`}
                                                   className="bg-white transition-all duration-500 hover:bg-gray-50"
@@ -197,88 +198,14 @@ export default function AdminAreaPage({ areas }) {
                                 </tbody>
                             </table>
                         </div>
-                        <nav
-                            className="flex items-center justify-center py-4 "
-                            aria-label="Table navigation"
-                        >
-                            <ul className="flex items-center justify-center text-sm h-auto gap-12">
-                                <li>
-                                    <Link
-                                        href="javascript:;"
-                                        className="flex items-center justify-center gap-2 px-3 h-8 ml-0 text-gray-500 bg-white font-medium text-base leading-7  hover:text-gray-700 "
-                                    >
-                                        <svg
-                                            width="21"
-                                            height="20"
-                                            viewBox="0 0 21 20"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                d="M13.0002 14.9999L8 9.99967L13.0032 4.99652"
-                                                stroke="black"
-                                                strokeWidth="1.6"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                            ></path>
-                                        </svg>{" "}
-                                        Back{" "}
-                                    </Link>
-                                </li>
-                                <li>
-                                    <ul className="flex items-center justify-center gap-4">
-                                        <li>
-                                            <Link
-                                                href="javascript:;"
-                                                className="font-normal text-base leading-7 text-gray-500 py-2.5 px-4 rounded-full bg-white transition-all duration-500 hover:bg-primary hover:text-white"
-                                            >
-                                                1
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link
-                                                href="javascript:;"
-                                                className="font-normal text-base leading-7 text-gray-500 py-2.5 px-4 rounded-full bg-white transition-all duration-500 hover:bg-primary hover:text-white"
-                                            >
-                                                2
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link
-                                                href="javascript:;"
-                                                className="font-normal text-base leading-7 text-gray-500 py-2.5 px-4 rounded-full bg-white transition-all duration-500 hover:bg-primary hover:text-white"
-                                            >
-                                                3
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <Link
-                                        href="javascript:;"
-                                        className="flex items-center justify-center gap-2 px-3 h-8 ml-0 text-gray-500 bg-white font-medium text-base leading-7  hover:text-gray-700 "
-                                    >
-                                        {" "}
-                                        next{" "}
-                                        <svg
-                                            width="21"
-                                            height="20"
-                                            viewBox="0 0 21 20"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                d="M8.00295 4.99646L13.0032 9.99666L8 14.9998"
-                                                stroke="black"
-                                                strokeWidth="1.6"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                            ></path>
-                                        </svg>
-                                    </Link>
-                                </li>
-                            </ul>
-                        </nav>
+                        {/* PAGINATION  */}
+                        <Pagination
+                            first_page_url={areas.first_page_url}
+                            last_page_url={areas.last_page_url}
+                            links={areas.links}
+                            next_page_url={areas.next_page_url}
+                            prev_page_url={areas.prev_page_url}
+                        />
                     </div>
                 </div>
             </div>

@@ -25,8 +25,8 @@ class AdminPropertyController extends Controller
     private $propertyImageService;
 
     public function __construct(
-        PropertyService $propertyService, 
-        DeveloperService $developerService, 
+        PropertyService $propertyService,
+        DeveloperService $developerService,
         AreaService $areaService,
         PropertyImageService $propertyImageService
         )
@@ -79,7 +79,7 @@ class AdminPropertyController extends Controller
             ),
             $request->property_images
         );
-    
+
         return redirect()->route('dashboard.property');
     }
 
@@ -108,7 +108,7 @@ class AdminPropertyController extends Controller
             $request->new_images,
             $request->existing_images
         );
-    
+
         return redirect()->route('dashboard.property');
     }
 

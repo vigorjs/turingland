@@ -6,8 +6,9 @@ import AdminLayout from "@/Layouts/AdminLayout";
 import { Link, router } from "@inertiajs/react";
 import { useState } from "react";
 import ModalDeveloperForm from "../../../Components/admin/developer/ModalDeveloperForm";
+import Pagination from "@/Components/Pagination";
 
-export default function AdminDeveloperPage({ developers }) {
+export default function AdminDeveloperPage({ developers, auth }) {
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
     const [developer, setDeveloper] = useState(null);
@@ -46,7 +47,7 @@ export default function AdminDeveloperPage({ developers }) {
     };
 
     return (
-        <AdminLayout>
+        <AdminLayout auth={auth}>
             <Button
                 onClick={() => {
                     setIsOpenModal(true);
@@ -193,23 +194,6 @@ export default function AdminDeveloperPage({ developers }) {
                                                                   ></path>
                                                               </svg>
                                                           </button>
-                                                          {/* <button className="p-2 rounded-full bg-white group transition-all duration-500 hover:bg-black flex item-center">
-                                                                  <svg
-                                                                      width="20"
-                                                                      height="20"
-                                                                      viewBox="0 0 20 20"
-                                                                      fill="none"
-                                                                      xmlns="http://www.w3.org/2000/svg"
-                                                                  >
-                                                                      <path
-                                                                          className="stroke-black group-hover:stroke-white"
-                                                                          d="M10.0161 14.9897V15.0397M10.0161 9.97598V10.026M10.0161 4.96231V5.01231"
-                                                                          stroke="black"
-                                                                          strokeWidth="2.5"
-                                                                          strokeLinecap="round"
-                                                                      ></path>
-                                                                  </svg>
-                                                              </button> */}
                                                       </td>
                                                   </tr>
                                               )
@@ -218,88 +202,14 @@ export default function AdminDeveloperPage({ developers }) {
                                 </tbody>
                             </table>
                         </div>
-                        <nav
-                            className="flex items-center justify-center py-4 "
-                            aria-label="Table navigation"
-                        >
-                            <ul className="flex items-center justify-center text-sm h-auto gap-12">
-                                <li>
-                                    <Link
-                                        href="javascript:;"
-                                        className="flex items-center justify-center gap-2 px-3 h-8 ml-0 text-gray-500 bg-white font-medium text-base leading-7  hover:text-gray-700 "
-                                    >
-                                        <svg
-                                            width="21"
-                                            height="20"
-                                            viewBox="0 0 21 20"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                d="M13.0002 14.9999L8 9.99967L13.0032 4.99652"
-                                                stroke="black"
-                                                strokeWidth="1.6"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                            ></path>
-                                        </svg>{" "}
-                                        Back{" "}
-                                    </Link>
-                                </li>
-                                <li>
-                                    <ul className="flex items-center justify-center gap-4">
-                                        <li>
-                                            <Link
-                                                href="javascript:;"
-                                                className="font-normal text-base leading-7 text-gray-500 py-2.5 px-4 rounded-full bg-white transition-all duration-500 hover:bg-primary hover:text-white"
-                                            >
-                                                1
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link
-                                                href="javascript:;"
-                                                className="font-normal text-base leading-7 text-gray-500 py-2.5 px-4 rounded-full bg-white transition-all duration-500 hover:bg-primary hover:text-white"
-                                            >
-                                                2
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link
-                                                href="javascript:;"
-                                                className="font-normal text-base leading-7 text-gray-500 py-2.5 px-4 rounded-full bg-white transition-all duration-500 hover:bg-primary hover:text-white"
-                                            >
-                                                3
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <Link
-                                        href="javascript:;"
-                                        className="flex items-center justify-center gap-2 px-3 h-8 ml-0 text-gray-500 bg-white font-medium text-base leading-7  hover:text-gray-700 "
-                                    >
-                                        {" "}
-                                        next{" "}
-                                        <svg
-                                            width="21"
-                                            height="20"
-                                            viewBox="0 0 21 20"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                d="M8.00295 4.99646L13.0032 9.99666L8 14.9998"
-                                                stroke="black"
-                                                strokeWidth="1.6"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                            ></path>
-                                        </svg>
-                                    </Link>
-                                </li>
-                            </ul>
-                        </nav>
+                        {/* PAGINATION  */}
+                        <Pagination
+                            first_page_url={developers.first_page_url}
+                            last_page_url={developers.last_page_url}
+                            links={developers.links}
+                            next_page_url={developers.next_page_url}
+                            prev_page_url={developers.prev_page_url}
+                        />
                     </div>
                 </div>
             </div>

@@ -48,12 +48,20 @@ function ModalTestimonyForm({
                 },
                 onSuccess: () => {
                     toast({
-                        title: `Testimoni berhasil ${testimony ? "diupdate" : "dibuat"}!`,
+                        title: `Testimoni berhasil ${
+                            testimony ? "diupdate" : "dibuat"
+                        }!`,
                         variant: "default",
                     });
                     setLoading(false);
                     setIsOpenModal(false);
-                    reset("client_name", "client_avatar", "content", "rating", "is_active");
+                    reset(
+                        "client_name",
+                        "client_avatar",
+                        "content",
+                        "rating",
+                        "is_active"
+                    );
                     setIsActive(false);
                 },
                 onFinish: () => {
@@ -65,7 +73,7 @@ function ModalTestimonyForm({
                 onError: (errors) => {
                     setLoading(false);
                     toast({
-                        title: "Testimoni gagal diupdate!",
+                        title: "Testimoni update Failed!",
                         description: errors?.client_name || errors?.content,
                         variant: "destructive",
                     });
@@ -73,12 +81,20 @@ function ModalTestimonyForm({
                 },
                 onSuccess: () => {
                     toast({
-                        title: `Testimoni berhasil ${testimony ? "diupdate" : "dibuat"}!`,
+                        title: `Testimoni berhasil ${
+                            testimony ? "diupdate" : "dibuat"
+                        }!`,
                         variant: "default",
                     });
                     setLoading(false);
                     setIsOpenModal(false);
-                    reset("client_name", "client_avatar", "content", "rating", "is_active");
+                    reset(
+                        "client_name",
+                        "client_avatar",
+                        "content",
+                        "rating",
+                        "is_active"
+                    );
                     setIsActive(false);
                 },
                 onFinish: () => {
@@ -122,7 +138,9 @@ function ModalTestimonyForm({
                         onChange={(e) => setData("client_name", e.target.value)}
                     />
                     {errors.client_name && (
-                        <span className="text-red-600 text-sm">{errors.client_name}</span>
+                        <span className="text-red-600 text-sm">
+                            {errors.client_name}
+                        </span>
                     )}
                 </div>
 
@@ -130,7 +148,9 @@ function ModalTestimonyForm({
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="client_avatar">Client Avatar</Label>
                     <Input
-                        onChange={(e) => setData("client_avatar", e.target.files[0])}
+                        onChange={(e) =>
+                            setData("client_avatar", e.target.files[0])
+                        }
                         type="file"
                         id="client_avatar"
                     />
@@ -146,7 +166,9 @@ function ModalTestimonyForm({
                         placeholder="Enter testimony content..."
                     />
                     {errors.content && (
-                        <span className="text-red-600 text-sm">{errors.content}</span>
+                        <span className="text-red-600 text-sm">
+                            {errors.content}
+                        </span>
                     )}
                 </div>
 
@@ -162,7 +184,9 @@ function ModalTestimonyForm({
                         onChange={(e) => setData("rating", e.target.value)}
                     />
                     {errors.rating && (
-                        <span className="text-red-600 text-sm">{errors.rating}</span>
+                        <span className="text-red-600 text-sm">
+                            {errors.rating}
+                        </span>
                     )}
                 </div>
 
@@ -171,7 +195,9 @@ function ModalTestimonyForm({
                     <Checkbox
                         id="is_active"
                         checked={data?.is_active ?? false}
-                        onCheckedChange={(checked) => setData("is_active", checked)}
+                        onCheckedChange={(checked) =>
+                            setData("is_active", checked)
+                        }
                     />
                     <Label htmlFor="is_active">Is Active</Label>
                 </div>
@@ -189,6 +215,6 @@ function ModalTestimonyForm({
             </form>
         </Modal>
     );
-};
+}
 
-export default ModalTestimonyForm
+export default ModalTestimonyForm;

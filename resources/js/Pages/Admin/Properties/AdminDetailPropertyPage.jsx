@@ -1,40 +1,41 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { 
-    Bath, 
-    Bed, 
-    Car, 
-    Home, 
-    MapPin, 
+import React, { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
+import { Badge } from "@/Components/ui/badge";
+import { Separator } from "@/Components/ui/separator";
+import {
+    Bath,
+    Bed,
+    Car,
+    Home,
+    MapPin,
     Calendar,
     FileText,
-    Square
+    Square,
 } from "lucide-react";
-import AdminLayout from '@/Layouts/AdminLayout';
+import AdminLayout from "@/Layouts/AdminLayout";
 
-const AdminDetailPropertyPage = ({ property }) => {
+const AdminDetailPropertyPage = ({ property, auth }) => {
     const [selectedImage, setSelectedImage] = useState(
-        property?.images?.find(img => img.is_primary)?.image_path || 
-        property?.images?.[0]?.image_path || ''
+        property?.images?.find((img) => img.is_primary)?.image_path ||
+            property?.images?.[0]?.image_path ||
+            ""
     );
 
     const formatPrice = (price) => {
-        return new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR'
+        return new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
         }).format(price);
     };
 
     const getStatusColor = (status) => {
         const colors = {
-            active: 'bg-green-500',
-            sold: 'bg-red-500',
-            rented: 'bg-blue-500',
-            inactive: 'bg-gray-500'
+            active: "bg-green-500",
+            sold: "bg-red-500",
+            rented: "bg-blue-500",
+            inactive: "bg-gray-500",
         };
-        return colors[status] || 'bg-gray-500';
+        return colors[status] || "bg-gray-500";
     };
 
     if (!property) {
@@ -42,7 +43,7 @@ const AdminDetailPropertyPage = ({ property }) => {
     }
 
     return (
-        <AdminLayout>
+        <AdminLayout auth={auth}>
             <div className="container mx-auto p-2">
                 <Card className="w-full">
                     <CardHeader>
@@ -50,7 +51,11 @@ const AdminDetailPropertyPage = ({ property }) => {
                             <CardTitle className="text-2xl font-bold">
                                 {property.title}
                             </CardTitle>
-                            <Badge className={`${getStatusColor(property.status)} text-white`}>
+                            <Badge
+                                className={`${getStatusColor(
+                                    property.status
+                                )} text-white`}
+                            >
                                 {property.status}
                             </Badge>
                         </div>
@@ -75,9 +80,13 @@ const AdminDetailPropertyPage = ({ property }) => {
                                         src={image.image_path}
                                         alt="Property"
                                         className={`w-full h-24 object-cover rounded cursor-pointer ${
-                                            selectedImage === image.image_path ? 'ring-2 ring-primary' : ''
+                                            selectedImage === image.image_path
+                                                ? "ring-2 ring-primary"
+                                                : ""
                                         }`}
-                                        onClick={() => setSelectedImage(image.image_path)}
+                                        onClick={() =>
+                                            setSelectedImage(image.image_path)
+                                        }
                                     />
                                 ))}
                             </div>
@@ -86,19 +95,27 @@ const AdminDetailPropertyPage = ({ property }) => {
                         {/* Property Details */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="space-y-4">
-                                <h3 className="text-xl font-semibold">Details</h3>
+                                <h3 className="text-xl font-semibold">
+                                    Details
+                                </h3>
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="flex items-center gap-2">
                                         <Bed className="w-5 h-5" />
-                                        <span>{property.bedroom_count} Bedrooms</span>
+                                        <span>
+                                            {property.bedroom_count} Bedrooms
+                                        </span>
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <Bath className="w-5 h-5" />
-                                        <span>{property.bathroom_count} Bathrooms</span>
+                                        <span>
+                                            {property.bathroom_count} Bathrooms
+                                        </span>
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <Car className="w-5 h-5" />
-                                        <span>{property.carport_count} Carports</span>
+                                        <span>
+                                            {property.carport_count} Carports
+                                        </span>
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <Square className="w-5 h-5" />
@@ -106,42 +123,59 @@ const AdminDetailPropertyPage = ({ property }) => {
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <Home className="w-5 h-5" />
-                                        <span>LB: {property.building_area} m²</span>
+                                        <span>
+                                            LB: {property.building_area} m²
+                                        </span>
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <FileText className="w-5 h-5" />
-                                        <span>{property.certificate_type || 'N/A'}</span>
+                                        <span>
+                                            {property.certificate_type || "N/A"}
+                                        </span>
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <Calendar className="w-5 h-5" />
-                                        <span>Built: {property.year_built || 'N/A'}</span>
+                                        <span>
+                                            Built:{" "}
+                                            {property.year_built || "N/A"}
+                                        </span>
                                     </div>
                                 </div>
 
                                 <Separator />
 
                                 <div className="space-y-2">
-                                    <h3 className="text-xl font-semibold">Price</h3>
+                                    <h3 className="text-xl font-semibold">
+                                        Price
+                                    </h3>
                                     <p className="text-2xl font-bold text-primary">
                                         {formatPrice(property.price)}
-                                        {property.type === 'rent' && '/month'}
+                                        {property.type === "rent" && "/month"}
                                     </p>
                                 </div>
                             </div>
 
                             <div className="space-y-4">
                                 <div className="space-y-2">
-                                    <h3 className="text-xl font-semibold">Description</h3>
-                                    <p className="text-gray-600">{property.description}</p>
+                                    <h3 className="text-xl font-semibold">
+                                        Description
+                                    </h3>
+                                    <p className="text-gray-600">
+                                        {property.description}
+                                    </p>
                                 </div>
 
                                 <Separator />
 
                                 <div className="space-y-2">
-                                    <h3 className="text-xl font-semibold">Location</h3>
+                                    <h3 className="text-xl font-semibold">
+                                        Location
+                                    </h3>
                                     <div className="flex items-start gap-2">
                                         <MapPin className="w-5 h-5 mt-1" />
-                                        <p className="text-gray-600">{property.address}</p>
+                                        <p className="text-gray-600">
+                                            {property.address}
+                                        </p>
                                     </div>
                                 </div>
                             </div>

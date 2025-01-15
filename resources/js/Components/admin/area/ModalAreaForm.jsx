@@ -58,7 +58,7 @@ function ModalAreaForm({ area, isOpenModal, setIsOpenModal }) {
                 onError: (errors) => {
                     setLoading(false);
                     toast({
-                        title: "Area gagal diupdate!",
+                        title: "Area update Failed!",
                         description: errors?.name || errors?.icon,
                         variant: "destructive",
                     });

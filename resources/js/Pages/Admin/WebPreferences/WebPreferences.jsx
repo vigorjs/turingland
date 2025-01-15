@@ -4,7 +4,7 @@ import AdminLayout from "@/Layouts/AdminLayout"; // Import layout
 import UpdateImageForm from "@/Components/admin/admin_web_preferences/form";
 import { useToast } from "@/hooks/use-toast";
 
-const WebPreferences = () => {
+const WebPreferences = (auth) => {
     const [logo, setLogo] = useState(null);
     const [hero, setHero] = useState(null);
     const [logoDark, setLogoDark] = useState(null);
@@ -123,7 +123,7 @@ const WebPreferences = () => {
     );
 
     return (
-        <AdminLayout>
+        <AdminLayout auth={auth}>
             <div className="p-6 bg-white rounded-lg shadow-md h-full">
                 <h1 className="text-2xl font-semibold mb-6 text-black">
                     Website Setting

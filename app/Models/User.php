@@ -72,4 +72,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Socialite::class);
     }
+
+    public function getHasPasswordAttribute()
+{
+    return !is_null($this->password);
+}
+
 }

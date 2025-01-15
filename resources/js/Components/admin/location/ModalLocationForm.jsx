@@ -77,7 +77,7 @@ function ModalLocationForm({ location, areas, isOpenModal, setIsOpenModal }) {
                 onError: (errors) => {
                     setLoading(false);
                     toast({
-                        title: "Lokasi gagal diupdate!",
+                        title: "Lokasi update Failed!",
                         description:
                             errors?.name ||
                             errors?.description ||

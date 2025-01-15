@@ -1,42 +1,86 @@
 <?php
 
-// namespace Database\Seeders;
+namespace Database\Seeders;
 
-// use App\Http\Controllers\WebPreferencesController;
-// use Illuminate\Database\Seeder;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Log;
+use App\Services\WebPreferences\WebPreferencesService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
-// class WebPreferencesSeeder extends Seeder
-// {
-//     /**
-//      * Run the database seeds.
-//      */
-//     public function run(): void
-//     {
-//         $webPreferences = [
-//             [
-//                 "key" => "logo_url",
-//                 "value" => "/assets/turinglandlogo.png"
-//             ],
-//             [
-//                 "key" => "logo_url_dark",
-//                 "value" => "/assets/turinglandlogodark.png"
-//             ],
-//             [
-//                 "key" => "hero_url",
-//                 "value" => "https://ecatalog.sinarmasland.com/_next/image?url=https%3A%2F%2Fecatalog.sinarmasland.com%2Fassets%2Fsite-setting-files%2F1%2Fhomepage-background-banner-desktop-677b6f397dc74.jpg&w=3840&q=75"
-//             ],
-//             [
-//                 "key" => "img_login_url",
-//                 "value" => "https://s3-alpha-sig.figma.com/img/db80/4347/cb68839c79ca58a9b46777e9c9c07cc0?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=nXWoIhqAUTi-at1criMJPC8l-xudGFynTTWb9Y-EQ3SJVxbjtvcOe0gMCLVH-t9DqTyNiL-Yzev8ZoIv8rUhxICHbXB8rkLeNKxj7EQ62uTTgu9cxyvbWTE~QRaByjGG1cJ6vcaSQ6MXKBL0oqfIGiBf0VqSA6UKFh5uufI7P4FLQmWmiBmecXFnhZ2A5p2FkQ5Vc~d9jsWCoMVMpC711S6lfNymccRCkodcG15Mx22s-p2ydCVU06b5TyCZg7x1tG2lcqPcdyaX07KFBNHfmAp9N23KdaCvnBgsmBAeg76eEDgO9y7B4xcEcerX559xGjDraUB~HpMhDXtZGXxetg__"
-//             ],
-//             [
-//                 "key" => "img_register_url",
-//                 "value" => "https://s3-alpha-sig.figma.com/img/db80/4347/cb68839c79ca58a9b46777e9c9c07cc0?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=nXWoIhqAUTi-at1criMJPC8l-xudGFynTTWb9Y-EQ3SJVxbjtvcOe0gMCLVH-t9DqTyNiL-Yzev8ZoIv8rUhxICHbXB8rkLeNKxj7EQ62uTTgu9cxyvbWTE~QRaByjGG1cJ6vcaSQ6MXKBL0oqfIGiBf0VqSA6UKFh5uufI7P4FLQmWmiBmecXFnhZ2A5p2FkQ5Vc~d9jsWCoMVMpC711S6lfNymccRCkodcG15Mx22s-p2ydCVU06b5TyCZg7x1tG2lcqPcdyaX07KFBNHfmAp9N23KdaCvnBgsmBAeg76eEDgO9y7B4xcEcerX559xGjDraUB~HpMhDXtZGXxetg__"
-//             ],
-//         ];
+class WebPreferencesSeeder extends Seeder
+{
+    protected WebPreferencesService $webPreferencesService;
 
-//         foreach ($webPreferences as $web) {
-//             WebPreferencesController::updateWebPreference($web);
-//         }
-//     }
-// }
+    public function __construct(WebPreferencesService $webPreferencesService)
+    {
+        $this->webPreferencesService = $webPreferencesService;
+    }
+
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $webPreferences = [
+            [
+                'key' => 'logo_url',
+                'file' => 'assets/turinglandlogo.png',
+            ],
+            [
+                'key' => 'logo_dark_url',
+                'file' => 'assets/turinglandlogodark.png',
+            ],
+            [
+                'key' => 'hero_url',
+                'file' => 'assets/hero-banner.webp',
+            ],
+            [
+                'key' => 'img_login_url',
+                'file' => 'assets/login-image.png',
+            ],
+            [
+                'key' => 'img_register_url',
+                'file' => 'assets/login-image.png',
+            ],
+        ];
+
+        foreach ($webPreferences as $preference) {
+            try {
+                $filePath = public_path($preference['file']);
+
+                if (file_exists($filePath)) {
+                    $fileName = basename($preference['file']);
+                    $targetPath = 'web-preferences/' . $fileName;
+
+                    // Copy file to storage/public if needed
+                    Storage::disk('public')->put($targetPath, file_get_contents($filePath));
+
+                    // Panggil service untuk menyimpan atau memperbarui preference
+                    $this->webPreferencesService->updateWebPreference(
+                        new Request([
+                            'key' => $preference['key'],
+                            'value' => $targetPath,
+                        ])
+                    );
+
+                    Log::info("Web preference seeded successfully", [
+                        'key' => $preference['key'],
+                        'file' => $targetPath,
+                    ]);
+                } else {
+                    Log::warning("File not found for web preference", [
+                        'key' => $preference['key'],
+                        'file' => $filePath,
+                    ]);
+                }
+            } catch (\Exception $e) {
+                Log::error("Error seeding web preference", [
+                    'key' => $preference['key'],
+                    'file' => $preference['file'],
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
+    }
+}

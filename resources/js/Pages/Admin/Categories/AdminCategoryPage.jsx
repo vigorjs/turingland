@@ -7,7 +7,7 @@ import { useState } from "react";
 import ModalCategoryForm from "../../../Components/admin/category/ModalCategoryForm";
 import Pagination from "@/Components/Pagination";
 
-export default function AdminCategoryPage({ categories }) {
+export default function AdminCategoryPage({ categories, auth }) {
     console.log(categories);
 
     const [isOpenModal, setIsOpenModal] = useState(false);
@@ -48,7 +48,7 @@ export default function AdminCategoryPage({ categories }) {
     };
 
     return (
-        <AdminLayout>
+        <AdminLayout auth={auth}>
             <Button
                 onClick={() => {
                     setIsOpenModal(true);

@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             PropertySeeder::class,
             TestimonySeeder::class,
             BannerSeeder::class,
-            // WebPreferencesSeeder::class
+            WebPreferencesSeeder::class
         ]);
     }
 }

@@ -8,7 +8,7 @@ import ModalBannerForm from "../../../Components/admin/banner/ModalBannerForm";
 import ActiveBadge from "@/Components/ActiveBadge";
 import Pagination from "@/Components/Pagination";
 
-export default function AdminBannerPage({ banners }) {
+export default function AdminBannerPage({ banners, auth }) {
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
     const [banner, setBanner] = useState(null);
@@ -47,7 +47,7 @@ export default function AdminBannerPage({ banners }) {
     };
 
     return (
-        <AdminLayout>
+        <AdminLayout auth={auth}>
             <Button
                 onClick={() => {
                     setIsOpenModal(true);
@@ -178,13 +178,13 @@ export default function AdminBannerPage({ banners }) {
                                                   </td>
                                                   <td className="px-6 py-4">
                                                       <div className="data">
-                                                          <p className="font-normal text-sm text-gray-900">
+                                                          <div className="font-normal text-sm text-gray-900">
                                                               <ActiveBadge
                                                                   isActive={
                                                                       banner.is_active
                                                                   }
                                                               />
-                                                          </p>
+                                                          </div>
                                                       </div>
                                                   </td>
                                                   <td className="flex p-5 items-center gap-0.5">

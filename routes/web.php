@@ -36,12 +36,15 @@ Route::get('/search', function () {
 });
 
 Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function (){
+    // DASHBOARD
     Route::get('', [AdminDashboardController::class, 'index'])->name('dashboard');
 
-    // Route::get('/property', function () {
-    //     return Inertia::render("Admin/Properties/AdminPropertyPage");
-    // })->name('dashboard.property');
+    // PROFILE
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    // PROPERTI
     Route::get('/property', [AdminPropertyController::class, 'index'])->name('dashboard.property');
     Route::get('/property/create', [AdminPropertyController::class, 'create'])->name('dashboard.property.create');
     Route::get('/property/{id}', [AdminPropertyController::class, 'detail'])->name('dashboard.property.detail');
@@ -50,15 +53,17 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
     Route::put('/property/{id}', [AdminPropertyController::class, 'update'])->name('dashboard.property.update');
     Route::delete('/property/{id}', [AdminPropertyController::class, 'delete'])->name('dashboard.property.delete');
 
+    // AREA
     Route::get('/area', function () {
         return Inertia::render("Admin/Areas/AdminAreaPage", [
-            'areas' => \App\Models\Area::all()
+            'areas' => \App\Models\Area::paginate(8)
         ]);
     })->name('dashboard.area');
     Route::post("/area", [AdminAreaController::class, "store"])->name("area.store");
     Route::put("/area/{id}", [AdminAreaController::class, "update"])->name("area.update");
     Route::delete("/area/{id}", [AdminAreaController::class, "destroy"])->name("area.destroy");
 
+    // LOCATION
     Route::get('/location', function () {
         return Inertia::render("Admin/Locations/AdminLocationPage", [
             'areas' => \App\Models\Area::all(),
@@ -69,18 +74,17 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
     Route::put("/location/{id}", [AdminLocationController::class, "update"])->name("location.update");
     Route::delete("/location/{id}", [AdminLocationController::class, "destroy"])->name("location.destroy");
 
+    // CATEGORY
     Route::get('/category', function () {
         return Inertia::render("Admin/Categories/AdminCategoryPage", [
             'categories' => \App\Models\Category::paginate(8)
         ]);
     })->name('dashboard.category');
-
     Route::post("/category", [AdminCategoryController::class, "store"])->name("category.store");
     Route::put("/category/{id}", [AdminCategoryController::class, "update"])->name("category.update");
     Route::delete("/category/{id}", [AdminCategoryController::class, "destroy"])->name("category.destroy");
 
-    // Route::resource("/category", AdminCategoryController::class);
-
+    //DEVELOPER
     Route::get('/developer', function () {
         return Inertia::render("Admin/Developers/AdminDeveloperPage", [
             'developers' => \App\Models\Developer::paginate(8),
@@ -90,23 +94,22 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
     Route::put("/developer/{id}", [AdminDeveloperController::class, "update"])->name('developer.update');
     Route::delete("/developer/{id}", [AdminDeveloperController::class, "destroy"])->name('developer.destroy');
 
-
+    // BANNER
     Route::get('/banner', function () {
         return Inertia::render("Admin/Banner/AdminBannerPage", [
             'banners' => \App\Models\Banner::paginate(8)
         ]);
     })->name('dashboard.banner');
-
     Route::post("/banner", [AdminBannerController::class, "store"])->name("banner.store");
     Route::put("/banner/{id}", [AdminBannerController::class, "update"])->name("banner.update");
     Route::delete("/banner/{id}", [AdminBannerController::class, "destroy"])->name("banner.destroy");
 
+    //TESTIMONY
     Route::get('/testimony', function () {
         return Inertia::render("Admin/Testimonies/AdminTestimonyPage", [
             'testimonies' => \App\Models\Testimony::paginate(8)
         ]);
     })->name('dashboard.testimony');
-
     Route::post("/testimony", [AdminTestimonyController::class, "store"])->name("testimony.store");
     Route::put("/testimony/{id}", [AdminTestimonyController::class, "update"])->name("testimony.update");
     Route::delete("/testimony/{id}", [AdminTestimonyController::class, "destroy"])->name("testimony.destroy");
@@ -121,17 +124,12 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
     Route::post('/agent', [AgentController::class, "store"])->name('dashboard.agent.store');
     Route::put('/agent/{id}', [AgentController::class, "update"])->name('dashboard.agent.update');
 
+    //CUSTOMER
     Route::get('/customer', function () {
         return Inertia::render("Admin/Customer/AdminCustomerPage", [
             'customers' => User::role('customer')->with('roles')->paginate(8)
         ]);
     })->name('dashboard.customer');
-});
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 //Web Pref

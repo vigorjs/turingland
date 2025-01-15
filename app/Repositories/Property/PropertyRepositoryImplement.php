@@ -21,7 +21,7 @@ class PropertyRepositoryImplement extends Eloquent implements PropertyRepository
 
     // Write something awesome :)
     public function getAllProperty(){
-        return $this->model->with(['developer', 'area'])->get();
+        return $this->model->with(['developer', 'area'])->paginate(8);
     }
 
     public function getPropertyById($id){

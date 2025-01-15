@@ -16,15 +16,21 @@ class ProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => [ 'string', 'max:255'],
             'email' => [
-                'required',
+                // 'required',
                 'string',
                 'lowercase',
                 'email',
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
+            'wa_number' => [
+                $this->user()->hasRole('agent') ? 'required' : 'nullable',
+                'string',
+                'max:15'
+            ],
+            'photo' => $this->hasFile('photo') ? 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048' : 'nullable',
         ];
     }
 }

@@ -65,7 +65,7 @@ function ModalDeveloperForm({ developer, isOpenModal, setIsOpenModal }) {
                 onError: (errors) => {
                     setIsLoading(false);
                     toast({
-                        title: "Developer gagal diupdate!",
+                        title: "Developer update Failed!",
                         description: errors?.name || errors?.logo,
                         variant: "destructive",
                     });

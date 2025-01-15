@@ -8,7 +8,7 @@ import ModalTestimonyForm from "../../../Components/admin/testimony/ModalTestimo
 import ActiveBadge from "@/Components/ActiveBadge";
 import Pagination from "@/Components/Pagination";
 
-export default function AdminTestimonyPage({ testimonies }) {
+export default function AdminTestimonyPage({ testimonies, auth }) {
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
     const [testimony, setTestimony] = useState(null);
@@ -47,7 +47,7 @@ export default function AdminTestimonyPage({ testimonies }) {
     };
 
     return (
-        <AdminLayout>
+        <AdminLayout auth={auth}>
             <Button
                 onClick={() => {
                     setIsOpenModal(true);
@@ -171,13 +171,13 @@ export default function AdminTestimonyPage({ testimonies }) {
                                                       </td>
                                                       <td className="px-6 py-4">
                                                           <div className="data">
-                                                              <p className="font-normal text-sm text-gray-900">
+                                                              <div className="font-normal text-sm text-gray-900">
                                                                   <ActiveBadge
                                                                       isActive={
                                                                           testimony.is_active
                                                                       }
                                                                   />
-                                                              </p>
+                                                              </div>
                                                           </div>
                                                       </td>
                                                       <td className="flex p-5 items-center gap-0.5">

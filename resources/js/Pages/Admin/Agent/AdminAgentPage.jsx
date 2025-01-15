@@ -19,7 +19,7 @@ import { useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { HiSortAscending, HiSortDescending } from "react-icons/hi";
 
-export default function AdminAgentPage({ agents }) {
+export default function AdminAgentPage({ agents, auth }) {
     console.log(agents);
 
     const [isOpenModal, setIsOpenModal] = useState(false);
@@ -103,7 +103,7 @@ export default function AdminAgentPage({ agents }) {
     };
 
     return (
-        <AdminLayout>
+        <AdminLayout auth={auth}>
             <Button
                 onClick={() => {
                     setIsOpenModal(true);

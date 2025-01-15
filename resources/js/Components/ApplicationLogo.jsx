@@ -37,7 +37,7 @@ export default function ApplicationLogo(props, className) {
                             : "/assets/turinglandlogo.png"
                     }
                     alt="Application Logo"
-                    className="h-12 w-auto"
+                    className="h-auto w-auto"
                 />
             ) : (
                 <img
