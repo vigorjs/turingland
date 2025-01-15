@@ -34,7 +34,7 @@ export default function ApplicationLogo(props, className) {
                     src={
                         currentLogo
                             ? `/storage/${currentLogo}`
-                            : "/assets/turinglandlogodark.png"
+                            : "/assets/turinglandlogo.png"
                     }
                     alt="Application Logo"
                     className="h-12 w-auto"
@@ -44,7 +44,7 @@ export default function ApplicationLogo(props, className) {
                     src={
                         currentLogoDark
                             ? `/storage/${currentLogoDark}`
-                            : "/assets/turinglandlogo.png"
+                            : "/assets/turinglandlogodark.png"
                     }
                     alt="Application Logo"
                     className="h-12 w-auto"

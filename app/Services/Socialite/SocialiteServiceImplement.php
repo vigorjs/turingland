@@ -72,6 +72,7 @@ class SocialiteServiceImplement extends ServiceApi implements SocialiteService{
                 'provider_token' => $socialUser->token,
                 'provider_refresh_token' => $socialUser->refreshToken,
             ]);
+            $user->assignRole('customer');
 
             return $user;
         }

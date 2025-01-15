@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useForm, Link } from "@inertiajs/react";
+import { useForm, Link, router } from "@inertiajs/react";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { Card, CardContent } from "../ui/card";
@@ -66,9 +66,20 @@ export function RegisterForm({ imageUrl }) {
         });
     };
 
-    const handleGoogleSignup = () => {
-        // Tambahkan logika untuk sign up dengan Google
-        window.location.href = route("auth.google");
+    const handleSocialLogin = async (provider) => {
+        setIsLoading(true);
+        try {
+            // Redirect ke URL Socialite di backend Laravel
+            router.get(`/auth/${provider}/redirect`);
+        } catch (error) {
+            setIsLoading(false);
+            toast({
+                title: "Login Failed",
+                description:
+                    "Unable to initiate social login. Please try again.",
+                variant: "destructive",
+            });
+        }
     };
 
     return (
@@ -213,15 +224,16 @@ export function RegisterForm({ imageUrl }) {
                             <Button
                                 variant="orange"
                                 className="w-full"
-                                onClick={handleGoogleSignup}
                                 disabled={isLoading}
+                                onClick={() => handleSocialLogin("google")}
                             >
                                 {isLoading ? (
                                     <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />
                                 ) : (
-                                    <FaGoogle
-                                        className=" h-4 w-4"
-                                        color="white"
+                                    <img
+                                        src="/assets/googleicon.png" // Path ke ikon Google
+                                        alt="Google Icon"
+                                        className="h-7 w-7"
                                     />
                                 )}
                             </Button>

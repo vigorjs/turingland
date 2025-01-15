@@ -1,40 +1,16 @@
-export default function PropertyStatusBadge({ status }) {
+export default function AgentStatusBadge({ status }) {
     const STATUS_STYLES = {
-        active: {
+        1: {
             bg: "bg-emerald-50",
             text: "text-emerald-600",
             dot: "#059669",
             label: "Active",
         },
-        sold: {
-            bg: "bg-blue-50",
-            text: "text-blue-600",
-            dot: "#2563eb",
-            label: "Terjual",
-        },
-        rented: {
-            bg: "bg-yellow-50",
-            text: "text-yellow-600",
-            dot: "#ca8a04",
-            label: "Disewakan",
-        },
-        inactive: {
+        0: {
             bg: "bg-red-50",
             text: "text-red-600",
             dot: "#dc2626",
             label: "Inactive",
-        },
-        rent: {
-            bg: "bg-yellow-50",
-            text: "text-yellow-600",
-            dot: "#ca8a04",
-            label: "Rent",
-        },
-        sale: {
-            bg: "bg-emerald-50",
-            text: "text-emerald-600",
-            dot: "#059669",
-            label: "Sale",
         },
     };
 

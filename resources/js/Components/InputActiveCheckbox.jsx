@@ -10,7 +10,7 @@ export default function InputActiveCheckbox({ isActive, setIsActive }) {
                     isActive ? "bg-green-100" : "bg-white"
                 } border border-green-500 text-green-500 hover:bg-green-100 hover:text-green-500`}
             >
-                Aktif
+                Active
             </Button>
             <Button
                 type="button"
@@ -19,7 +19,7 @@ export default function InputActiveCheckbox({ isActive, setIsActive }) {
                     !isActive ? "bg-red-100" : "bg-white"
                 } border border-red-500 text-red-500 hover:bg-red-100 hover:text-red-500`}
             >
-                Tidak Aktif
+                Inactive
             </Button>
         </div>
     );

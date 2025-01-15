@@ -43,7 +43,10 @@ const SimpleFilterSearch = ({ setIsSimpleSearch }) => {
     return (
         <>
             <div className="grid w-full items-center gap-1.5">
-                <Label className="text-[#5B5B5B] font-normal" htmlFor="email">
+                <Label
+                    className="dark:text-white text-[#5B5B5B] font-normal"
+                    htmlFor="email"
+                >
                     Lokasi
                 </Label>
                 <Select>
@@ -58,7 +61,10 @@ const SimpleFilterSearch = ({ setIsSimpleSearch }) => {
                 </Select>
             </div>
             <div className="grid w-full items-center gap-1.5">
-                <Label className="text-[#5B5B5B] font-normal" htmlFor="email">
+                <Label
+                    className="dark:text-white text-[#5B5B5B] font-normal"
+                    htmlFor="email"
+                >
                     Tipe Properti
                 </Label>
                 <Select>
@@ -73,7 +79,10 @@ const SimpleFilterSearch = ({ setIsSimpleSearch }) => {
                 </Select>
             </div>
             <div className="grid w-full items-center gap-1.5">
-                <Label className="text-[#5B5B5B] font-normal" htmlFor="email">
+                <Label
+                    className="dark:text-white text-[#5B5B5B] font-normal"
+                    htmlFor="email"
+                >
                     Rentang Harga
                 </Label>
                 <Select>
@@ -134,7 +143,10 @@ const AdvanceFilterSearch = ({ setIsSimpleSearch }) => {
     return (
         <>
             <div className="grid w-full max-w-sm items-center gap-1.5">
-                <Label className="text-[#5B5B5B] font-normal" htmlFor="email">
+                <Label
+                    className="dark:text-white text-[#5B5B5B] font-normal"
+                    htmlFor="email"
+                >
                     Lokasi
                 </Label>
                 <Select>
@@ -149,7 +161,10 @@ const AdvanceFilterSearch = ({ setIsSimpleSearch }) => {
                 </Select>
             </div>
             <div className="grid w-full max-w-sm items-center gap-1.5">
-                <Label className="text-[#5B5B5B] font-normal" htmlFor="email">
+                <Label
+                    className="dark:text-white text-[#5B5B5B] font-normal"
+                    htmlFor="email"
+                >
                     Tipe Properti
                 </Label>
                 <Select>
@@ -165,7 +180,7 @@ const AdvanceFilterSearch = ({ setIsSimpleSearch }) => {
             </div>
             <div className="grid w-full max-w-sm items-center gap-1.5">
                 <Label
-                    className="text-[#5B5B5B] font-normal"
+                    className="text-[#5B5B5B] dark:text-white font-normal"
                     htmlFor="harga-min"
                 >
                     Harga Min
@@ -180,7 +195,7 @@ const AdvanceFilterSearch = ({ setIsSimpleSearch }) => {
             </div>
             <div className="grid w-full max-w-sm items-center gap-1.5">
                 <Label
-                    className="text-[#5B5B5B] font-normal"
+                    className="text-[#5B5B5B] dark:text-white font-normal"
                     htmlFor="harga-max"
                 >
                     Harga Max
@@ -194,7 +209,10 @@ const AdvanceFilterSearch = ({ setIsSimpleSearch }) => {
                 />
             </div>
             <div className="grid w-full max-w-sm items-center gap-1.5">
-                <Label className="text-[#5B5B5B] font-normal" htmlFor="email">
+                <Label
+                    className="dark:text-white text-[#5B5B5B] font-normal"
+                    htmlFor="email"
+                >
                     Area
                 </Label>
                 <Select>
@@ -209,7 +227,10 @@ const AdvanceFilterSearch = ({ setIsSimpleSearch }) => {
                 </Select>
             </div>
             <div className="grid w-full max-w-sm items-center gap-1.5">
-                <Label className="text-[#5B5B5B] font-normal" htmlFor="email">
+                <Label
+                    className="dark:text-white text-[#5B5B5B] font-normal"
+                    htmlFor="email"
+                >
                     Developer
                 </Label>
                 <Select>
@@ -224,7 +245,10 @@ const AdvanceFilterSearch = ({ setIsSimpleSearch }) => {
                 </Select>
             </div>
             <div className="grid w-full max-w-sm items-center gap-1.5">
-                <Label className="text-[#5B5B5B] font-normal" htmlFor="email">
+                <Label
+                    className="dark:text-white text-[#5B5B5B] font-normal"
+                    htmlFor="email"
+                >
                     Tipe Iklan
                 </Label>
                 <Select>
@@ -243,7 +267,7 @@ const AdvanceFilterSearch = ({ setIsSimpleSearch }) => {
             </div>
             <div className="grid w-full max-w-sm items-end">
                 <Label
-                    className="text-[#5B5B5B] font-normal"
+                    className="text-[#5B5B5B] dark:text-white font-normal"
                     htmlFor="email"
                 ></Label>
                 <Button className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-lg">

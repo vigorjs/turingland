@@ -104,7 +104,7 @@ export default function AdminLocationPage({ locations, areas }) {
                                             className="px-5 py-2.5 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize"
                                         >
                                             {" "}
-                                            Aksi{" "}
+                                            Action{" "}
                                         </th>
                                     </tr>
                                 </thead>

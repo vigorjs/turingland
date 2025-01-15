@@ -19,13 +19,14 @@ class UserSeeder extends Seeder
         ]);
         $admin->assignRole('admin');
 
-        $agent = \App\Models\User::factory()->create([
-            'name' => 'Agent User',
-            'email' => 'agent@example.com',
-            'password' => 'password123',
-            'wa_number' => '082243019049',
-        ]);
-        $agent->assignRole('agent');
+        \App\Models\User::factory(5)->create([
+            'is_agent_active' => true,
+        ])->each(function ($agent) {
+            $agent->assignRole('agent');
+        });
+        \App\Models\User::factory(5)->create()->each(function ($user) {
+            $user->assignRole('agent');
+        });
 
         \App\Models\User::factory(10)->create()->each(function ($user) {
             $user->assignRole('customer');

@@ -169,7 +169,7 @@ function ModalDeveloperForm({ developer, isOpenModal, setIsOpenModal }) {
                 </div>
 
                 <div className="grid w-full items-center gap-1.5">
-                    <Label htmlFor="is_active">Aktif</Label>
+                    <Label htmlFor="is_active">Active</Label>
                     <InputActiveCheckbox
                         isActive={isActive}
                         setIsActive={setIsActive}

@@ -23,7 +23,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'wa_number'
+        'wa_number',
+        'photo',
+        'is_agent_active'
     ];
 
     /**

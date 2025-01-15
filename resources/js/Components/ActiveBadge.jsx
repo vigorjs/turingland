@@ -24,7 +24,7 @@ export default function ActiveBadge({ isActive }) {
                     isActive ? "text-emerald-600" : "text-red-600"
                 }`}
             >
-                {isActive ? "Aktif" : "Tidak Aktif"}
+                {isActive ? "Active" : "Inactive"}
             </span>
         </div>
     );

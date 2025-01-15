@@ -9,9 +9,15 @@ import { Head } from "@inertiajs/react";
 import { Users } from "lucide-react";
 import React from "react";
 
-export default function AdminDashboardPage({ totalUser, totalDeveloper, totalAgent, totalProperty, latestDevelopers }) {
+export default function AdminDashboardPage({
+    totalUser,
+    totalDeveloper,
+    totalAgent,
+    totalProperty,
+    latestDevelopers,
+}) {
     console.log(latestDevelopers);
-    
+
     const cardCounting = [
         {
             icon: <Users className="text-2xl w-6 h-6 text-white" />,
@@ -94,36 +100,43 @@ export default function AdminDashboardPage({ totalUser, totalDeveloper, totalAge
                     <AdminDeveloperChart />
                 </div>
                 <div className="w-full lg:w-1/3">
-                    <div class="flex flex-col items-center justify-center w-full mx-auto bg-white rounded-lg shadow dark:bg-gray-800">
-                        <div class="w-full px-4 py-5 border-b sm:px-6">
-                            <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">
+                    <div className="flex flex-col items-center justify-center w-full mx-auto bg-white rounded-lg shadow dark:bg-gray-800">
+                        <div className="w-full px-4 py-5 border-b sm:px-6">
+                            <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-white">
                                 Developer Terbaru
                             </h3>
-                            <p class="max-w-2xl mt-1 text-sm text-gray-500 dark:text-gray-200">
+                            <p className="max-w-2xl mt-1 text-sm text-gray-500 dark:text-gray-200">
                                 List developer yang terbaru gabung
                             </p>
                         </div>
-                        <div class="flex flex-col divide-y divide w-full px-4 sm:px-6">
+                        <div className="flex flex-col divide-y divide w-full px-4 sm:px-6">
                             {latestDevelopers.map((item, index) => (
                                 <div
                                     key={`current-developer-${index}`}
-                                    class="flex flex-row"
+                                    className="flex flex-row"
                                 >
-                                    <div class="flex items-center p-4 cursor-pointer select-none">
-                                        <div class="flex flex-col items-center justify-center w-10 h-10 mr-4">
-                                            <a href="#" class="relative block">
+                                    <div className="flex items-center p-4 cursor-pointer select-none">
+                                        <div className="flex flex-col items-center justify-center w-10 h-10 mr-4">
+                                            <a
+                                                href="#"
+                                                className="relative block"
+                                            >
                                                 <img
                                                     alt="profil"
-                                                    src={item.logo}
-                                                    class="mx-auto object-cover rounded h-10 w-10 "
+                                                    src={
+                                                        item.logo
+                                                            ? item.logo
+                                                            : "https://avatar.iran.liara.run/public"
+                                                    }
+                                                    className="mx-auto object-cover rounded h-10 w-10 "
                                                 />
                                             </a>
                                         </div>
-                                        <div class="pl-1 mr-16">
-                                            <div class="font-medium dark:text-white">
+                                        <div className="pl-1 mr-16">
+                                            <div className="font-medium dark:text-white">
                                                 {item.name}
                                             </div>
-                                            <div class="text-sm text-gray-600 dark:text-gray-200">
+                                            <div className="text-sm text-gray-600 dark:text-gray-200">
                                                 {item.created_at}
                                             </div>
                                         </div>

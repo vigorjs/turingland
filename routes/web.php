@@ -11,8 +11,10 @@ use App\Http\Controllers\AdminTestimonyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminSettingController;
+use App\Http\Controllers\AgentController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\WebPreferencesController;
+use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -115,12 +117,14 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
     })->name('dashboard.web-preferences');
 
     //AGENT
-    Route::get('/agent', function () {
-        return Inertia::render("Admin/AdminPageOne");
-    })->name('dashboard.agent');
+    Route::get('/agent', [AgentController::class, "index"])->name('dashboard.agent');
+    Route::post('/agent', [AgentController::class, "store"])->name('dashboard.agent.store');
+    Route::put('/agent/{id}', [AgentController::class, "update"])->name('dashboard.agent.update');
 
     Route::get('/customer', function () {
-        return Inertia::render("Admin/AdminPageOne");
+        return Inertia::render("Admin/Customer/AdminCustomerPage", [
+            'customers' => User::role('customer')->with('roles')->paginate(8)
+        ]);
     })->name('dashboard.customer');
 });
 
