@@ -1,4 +1,6 @@
+import { X } from "lucide-react";
 import Modal from "../Modal";
+import { Button } from "../ui/button";
 
 const FilterModal = ({
     orderAdsFilter,

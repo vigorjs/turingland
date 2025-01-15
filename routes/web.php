@@ -13,6 +13,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminSettingController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebPreferencesController;
 use App\Models\User;
 use Illuminate\Foundation\Application;
@@ -36,6 +37,7 @@ Route::get('/search', function () {
 });
 
 Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function (){
+    Route::get('users/export/', [UserController::class, 'export']);
     Route::get('', [AdminDashboardController::class, 'index'])->name('dashboard');
 
     // Route::get('/property', function () {
@@ -49,6 +51,7 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
     Route::get('/property/{id}/edit', [AdminPropertyController::class, 'edit'])->name('dashboard.property.edit');
     Route::put('/property/{id}', [AdminPropertyController::class, 'update'])->name('dashboard.property.update');
     Route::delete('/property/{id}', [AdminPropertyController::class, 'delete'])->name('dashboard.property.delete');
+    Route::get('/property/file/exports', [AdminPropertyController::class, 'export'])->name('dashboard.property.export');
 
     Route::get('/area', function () {
         return Inertia::render("Admin/Areas/AdminAreaPage", [

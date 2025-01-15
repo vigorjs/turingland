@@ -19,6 +19,8 @@ class AdminDashboardController extends Controller
         orderBy('created_at', 'desc')
         ->take(5)
         ->get();
+
+        $latestAgents = User::role('agent')->orderBy('created_at', 'desc')->take(5)->get();
             
 
         return Inertia::render("Admin/Dashboards/AdminDashboardPage", [
@@ -26,7 +28,8 @@ class AdminDashboardController extends Controller
             'totalDeveloper' => $totalDeveloper,
             'totalAgent' => $totalAgent,
             'totalProperty' => $totalProperty,
-            'latestDevelopers' => $latestDevelopers
+            'latestDevelopers' => $latestDevelopers,
+            'latestAgents' => $latestAgents
         ]);
     }
 }
