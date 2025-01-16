@@ -1,4 +1,4 @@
-import { LucideSettings2, X } from "lucide-react";
+import { LucideSettings2, Search, X } from "lucide-react";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import FilterModal from "./FilterModal";
@@ -40,17 +40,17 @@ const SearchBar = () => {
     return (
         <>
             <div className="flex flex-col gap-4 mb-6 px-0">
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 w-full">
                     <input
                         type="text"
                         placeholder="Rumah Fauzan Property"
-                        className="flex-1 px-4 py-2 border border-[#C6C6C6] bg-[#EDEDED] rounded-lg"
+                        className="flex-1 px-4 py-2 border border-[#C6C6C6] bg-[#EDEDED] rounded-lg w-2/3"
                     />
                     <Button
                         size="lg"
                         className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-lg"
                     >
-                        Search
+                        <Search/> <span className="hidden sm:block">Search</span>
                     </Button>
                 </div>
                 <div className="flex flex-wrap gap-1.5 mb-2">
