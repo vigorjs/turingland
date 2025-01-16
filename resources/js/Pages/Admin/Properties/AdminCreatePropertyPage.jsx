@@ -16,7 +16,7 @@ import { X } from "lucide-react";
 import { Label } from "@/Components/ui/label";
 import { router } from "@inertiajs/react";
 
-function AdminCreatePropertyPage({ developers, areas }) {
+function AdminCreatePropertyPage({ developers, areas, auth }) {
     const [uploadedImages, setUploadedImages] = useState([]);
     const [errors, setErrors] = useState({});
 
