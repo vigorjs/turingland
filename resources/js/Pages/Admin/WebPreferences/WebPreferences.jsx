@@ -4,7 +4,7 @@ import AdminLayout from "@/Layouts/AdminLayout"; // Import layout
 import UpdateImageForm from "@/Components/admin/admin_web_preferences/form";
 import { useToast } from "@/hooks/use-toast";
 
-const WebPreferences = (auth) => {
+const WebPreferences = ({ auth }) => {
     const [logo, setLogo] = useState(null);
     const [hero, setHero] = useState(null);
     const [logoDark, setLogoDark] = useState(null);

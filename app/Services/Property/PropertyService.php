@@ -8,7 +8,7 @@ use LaravelEasyRepository\BaseService;
 interface PropertyService extends BaseService{
 
     // Write something awesome :)
-    public function getAllProperty();
+    public function getAllProperty($filters);
     public function createProperty($request);
     public function getPropertyById($id);
     public function createPropertyWithImages($data, $propertyImages = null);

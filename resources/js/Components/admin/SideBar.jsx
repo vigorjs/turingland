@@ -91,7 +91,7 @@ const sidebarLinks = [
     },
 ];
 
-const Sidebar = ({ isCollapsed }) => {
+const Sidebar = ({ isCollapsed, user }) => {
     const { url } = usePage();
     const [isMobileOpen, setIsMobileOpen] = useState(isCollapsed);
 
@@ -106,9 +106,38 @@ const Sidebar = ({ isCollapsed }) => {
 
     const isActive = (namedRoute) => url === `/${namedRoute}`;
 
+    // Define role-based access
+    const roleAccess = {
+        admin: [
+            "Dashboard",
+            "Property",
+            "Category",
+            "Developer",
+            "Area",
+            "Location",
+            "Banner",
+            "Testimony",
+            "Web Preferences",
+            "Agent",
+            "Customer",
+        ],
+        agent: ["Dashboard", "Property"],
+        customer: [], // No access
+    };
+
+    // Filter sidebar links based on user role
+    const filteredSidebarLinks = sidebarLinks
+        .map(({ section, links }) => ({
+            section,
+            links: links.filter(({ name }) =>
+                roleAccess[user.role]?.includes(name)
+            ),
+        }))
+        .filter(({ links }) => links.length > 0); // Remove empty sections
+
     return (
         <div
-            className={`bg-[#222222] text-white rounded-none md:rounded-2xl px-4 py-6 h-svh md:h-full flex flex-col shadow-lg transition-all duration-300 ${
+            className={`bg-[#222222] text-white rounded-none md:rounded-2xl px-4 py-6 h-svh flex flex-col shadow-lg transition-all duration-300 ${
                 isMobileOpen ? "w-[80px]" : "w-[270px]"
             }`}
         >
@@ -125,7 +154,7 @@ const Sidebar = ({ isCollapsed }) => {
 
             {/* Navigation */}
             <div className="flex-1 flex flex-col justify-between">
-                {sidebarLinks.map(({ section, links }) => (
+                {filteredSidebarLinks.map(({ section, links }) => (
                     <div key={section} className="mb-4">
                         {!isMobileOpen && (
                             <h2 className="text-[#979797] text-[14px] uppercase mb-2">

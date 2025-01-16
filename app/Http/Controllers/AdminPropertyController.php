@@ -41,13 +41,21 @@ class AdminPropertyController extends Controller
      * get all properties
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $properties = $this->propertyService->getAllProperty();
+        // Validasi query string
+        $filters = $request->validate([
+            'title' => 'nullable|string|max:255',
+            'area_id' => 'nullable|integer',
+            'price_min' => 'nullable|numeric',
+            'price_max' => 'nullable|numeric',
+        ]);
+
+        // Ambil data properti dengan filter
+        $properties = $this->propertyService->getAllProperty($filters);
 
         return Inertia::render("Admin/Properties/AdminPropertyPage", [
             'properties' => $properties,
-
         ]);
     }
 
@@ -116,5 +124,9 @@ class AdminPropertyController extends Controller
         $this->propertyService->delete($id);
 
         return redirect()->back();
+    }
+
+    public function export(Request $request) {
+        dd($request);
     }
 }

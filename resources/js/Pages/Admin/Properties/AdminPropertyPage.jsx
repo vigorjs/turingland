@@ -1,5 +1,6 @@
 import ActiveBadge from "@/Components/ActiveBadge";
 import AlertConfirmModal from "@/Components/AlertConfirmModal";
+import ExcelFilterModal from "@/Components/ExcelFilterModal";
 import Pagination from "@/Components/Pagination";
 import PropertyStatusBadge from "@/Components/PropertyStatusBadge";
 import { Button } from "@/Components/ui/button";
@@ -7,11 +8,13 @@ import { toast } from "@/hooks/use-toast";
 import AdminLayout from "@/Layouts/AdminLayout";
 import { Link, router } from "@inertiajs/react";
 import React, { useState } from "react";
-import { FaEye, FaHome, FaPlus } from "react-icons/fa";
+import { FaEye, FaHome, FaPlus, FaRegFileExcel } from "react-icons/fa";
 
 function AdminPropertyPage({ properties, developers, areas, auth }) {
     const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
+    const [isOpenExcelModal, setIsOpenExcelModal] = useState(false);
     const [property, setProperty] = useState(null);
+    console.log(properties);
 
     const handleDetail = (id) => {
         router.visit(route("dashboard.property.detail", id));
@@ -24,6 +27,29 @@ function AdminPropertyPage({ properties, developers, areas, auth }) {
     const handleOpenDeleteModal = (property) => {
         setProperty(property);
         setIsOpenDeleteModal(true);
+    };
+
+    const handleOpenExcelModal = () => {
+        setIsOpenExcelModal(true);
+    };
+
+    const handleExportExcel = (filters) => {
+        router.get(route("dashboard.property.export"), filters, {
+            onSuccess: () => {
+                toast({
+                    title: "Export Successful",
+                    description: "Excel file is being downloaded.",
+                    variant: "default",
+                });
+            },
+            onError: (err) => {
+                toast({
+                    title: "Export Failed",
+                    description: err.message || "Something went wrong.",
+                    variant: "destructive",
+                });
+            },
+        });
     };
 
     const handleDeleteProperty = () => {
@@ -58,12 +84,23 @@ function AdminPropertyPage({ properties, developers, areas, auth }) {
 
     return (
         <AdminLayout auth={auth}>
-            <Button
-                onClick={() => router.visit(route("dashboard.property.create"))}
-                className="text-white mb-3.5"
-            >
-                <FaPlus /> Tambah Property
-            </Button>
+            <div className="flex gap-2">
+                <Button
+                    onClick={() =>
+                        router.visit(route("dashboard.property.create"))
+                    }
+                    className="text-white mb-3.5"
+                >
+                    <FaPlus /> Tambah Property
+                </Button>
+
+                <Button
+                    onClick={handleOpenExcelModal}
+                    className="text-white mb-3.5 bg-green-500 hover:bg-green-600"
+                >
+                    <FaRegFileExcel /> Export Excel
+                </Button>
+            </div>
 
             <div className="flex flex-col">
                 <div className="overflow-x-auto pb-4">
@@ -259,6 +296,12 @@ function AdminPropertyPage({ properties, developers, areas, auth }) {
                 title="Delete Property"
                 message="Are you sure to delete this property?"
                 onClick={handleDeleteProperty}
+            />
+
+            <ExcelFilterModal
+                isOpen={isOpenExcelModal}
+                setIsOpen={setIsOpenExcelModal}
+                onFilterSubmit={handleExportExcel}
             />
         </AdminLayout>
     );

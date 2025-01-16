@@ -4,6 +4,7 @@ namespace App\Repositories\Property;
 
 use LaravelEasyRepository\Implementations\Eloquent;
 use App\Models\Property;
+use Illuminate\Support\Arr;
 
 class PropertyRepositoryImplement extends Eloquent implements PropertyRepository{
 
@@ -20,8 +21,14 @@ class PropertyRepositoryImplement extends Eloquent implements PropertyRepository
     }
 
     // Write something awesome :)
-    public function getAllProperty(){
-        return $this->model->with(['developer', 'area'])->paginate(8);
+    public function getAllProperty($filters){
+        // dd($filters);
+
+        return $this->model
+        ->with(['developer', 'area'])
+        ->filter($filters)
+        ->paginate(8);
+        // return $this->model->with(['developer', 'area'])->get();
     }
 
     public function getPropertyById($id){

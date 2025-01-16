@@ -51,7 +51,7 @@ class SocialiteServiceImplement extends ServiceApi implements SocialiteService{
         $authUser = $this->store($socialUser, $provider);
 
         $this->auth::login($authUser);
-        return to_route('dashboard');
+        return to_route('homepage');
     }
 
     private function store($socialUser, $provider) {

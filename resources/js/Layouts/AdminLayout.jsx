@@ -30,7 +30,7 @@ export default function AdminLayout({ children, auth }) {
 
             {/* Sidebar - fixed height */}
             <div className="h-full sticky top-0 pl-0 pt-0 pb-0 md:pl-4 md:pt-4 md:pb-4">
-                <Sidebar isCollapsed={isSmallScreen} />
+                <Sidebar isCollapsed={isSmallScreen} user={auth.user} />
             </div>
 
             {/* Content Area - scrollable */}
