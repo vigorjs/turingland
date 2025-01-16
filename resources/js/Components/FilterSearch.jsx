@@ -10,9 +10,11 @@ import {
     SelectValue,
 } from "./ui/select";
 import { SearchIcon } from "lucide-react";
+import { router, usePage } from "@inertiajs/react";
 
 export const FilterSearch = () => {
     const [isSimpleSearch, setIsSimpleSearch] = useState(true);
+    const { areas, developers, categories } = usePage().props;
 
     return (
         <div
@@ -26,10 +28,15 @@ export const FilterSearch = () => {
                         {isSimpleSearch ? (
                             <SimpleFilterSearch
                                 setIsSimpleSearch={setIsSimpleSearch}
+                                areas={areas}
+                                categories={categories}
                             />
                         ) : (
                             <AdvanceFilterSearch
                                 setIsSimpleSearch={setIsSimpleSearch}
+                                areas={areas}
+                                developers={developers}
+                                categories={categories}
                             />
                         )}
                     </div>
@@ -39,73 +46,123 @@ export const FilterSearch = () => {
     );
 };
 
-const SimpleFilterSearch = ({ setIsSimpleSearch }) => {
+const SimpleFilterSearch = ({ setIsSimpleSearch, areas, categories }) => {
+    const [filters, setFilters] = useState({
+        area_id: "",
+        category_id: "", // Updated from type to category_id
+        price_min: "",
+        price_max: "",
+    });
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        router.get("/search", filters);
+    };
+
+    const handlePriceRangeChange = (value) => {
+        const ranges = {
+            "10-100": { min: 10000000, max: 100000000 },
+            "100-500": { min: 100000000, max: 500000000 },
+            "500-1000": { min: 500000000, max: 1000000000 },
+        };
+
+        if (ranges[value]) {
+            setFilters((prev) => ({
+                ...prev,
+                price_min: ranges[value].min,
+                price_max: ranges[value].max,
+            }));
+        }
+    };
+
     return (
-        <>
+        <form onSubmit={handleSubmit}>
             <div className="grid w-full items-center gap-1.5">
-                <Label
-                    className="dark:text-white text-[#5B5B5B] font-normal"
-                    htmlFor="email"
-                >
+                <Label className="dark:text-white text-[#5B5B5B] font-normal">
                     Lokasi
                 </Label>
-                <Select>
-                    <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6] w-full ">
+                <Select
+                    onValueChange={(value) =>
+                        setFilters((prev) => ({ ...prev, area_id: value }))
+                    }
+                >
+                    <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6] w-full">
                         <SelectValue placeholder="Pilih Lokasi" />
                     </SelectTrigger>
                     <SelectContent className="z-50 bg-white dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
-                        <SelectItem value="light">Light</SelectItem>
-                        <SelectItem value="dark">Dark</SelectItem>
-                        <SelectItem value="system">System</SelectItem>
+                        {areas.map((area) => (
+                            <SelectItem
+                                key={area.id}
+                                value={area.id.toString()}
+                            >
+                                {area.name}
+                            </SelectItem>
+                        ))}
                     </SelectContent>
                 </Select>
             </div>
+
             <div className="grid w-full items-center gap-1.5">
-                <Label
-                    className="dark:text-white text-[#5B5B5B] font-normal"
-                    htmlFor="email"
-                >
-                    Tipe Properti
+                <Label className="dark:text-white text-[#5B5B5B] font-normal">
+                    Kategori
                 </Label>
-                <Select>
+                <Select
+                    onValueChange={(value) =>
+                        setFilters((prev) => ({ ...prev, category_id: value }))
+                    }
+                >
                     <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6] w-full">
-                        <SelectValue placeholder="Pilih Tipe Properti" />
+                        <SelectValue placeholder="Pilih Kategori" />
                     </SelectTrigger>
                     <SelectContent className="z-50 bg-white dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
-                        <SelectItem value="light">Light</SelectItem>
-                        <SelectItem value="dark">Dark</SelectItem>
-                        <SelectItem value="system">System</SelectItem>
+                        {categories.map((category) => (
+                            <SelectItem
+                                key={category.id}
+                                value={category.id.toString()}
+                            >
+                                {category.name}
+                            </SelectItem>
+                        ))}
                     </SelectContent>
                 </Select>
             </div>
+
+            {/* Rest of the form remains the same */}
             <div className="grid w-full items-center gap-1.5">
-                <Label
-                    className="dark:text-white text-[#5B5B5B] font-normal"
-                    htmlFor="email"
-                >
+                <Label className="dark:text-white text-[#5B5B5B] font-normal">
                     Rentang Harga
                 </Label>
-                <Select>
+                <Select onValueChange={handlePriceRangeChange}>
                     <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6] w-full">
-                        <SelectValue placeholder="Rp. 10Jt - Rp. 100Jt" />
+                        <SelectValue placeholder="Pilih Rentang Harga" />
                     </SelectTrigger>
                     <SelectContent className="z-50 bg-white dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
-                        <SelectItem value="light">Light</SelectItem>
-                        <SelectItem value="dark">Dark</SelectItem>
-                        <SelectItem value="system">System</SelectItem>
+                        <SelectItem value="10-100">
+                            Rp 10Jt - Rp 100Jt
+                        </SelectItem>
+                        <SelectItem value="100-500">
+                            Rp 100Jt - Rp 500Jt
+                        </SelectItem>
+                        <SelectItem value="500-1000">
+                            Rp 500Jt - Rp 1M
+                        </SelectItem>
                     </SelectContent>
                 </Select>
             </div>
+
             <div className="grid w-full items-end">
-                <Button className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-lg w-full">
+                <Button
+                    type="submit"
+                    className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-lg w-full"
+                >
                     <SearchIcon />
                     Cari
                 </Button>
             </div>
-            <button onClick={() => setIsSimpleSearch(false)}>
+            <button type="button" onClick={() => setIsSimpleSearch(false)}>
                 <p className="text-left text-primary">Pencarian Lanjutan</p>
             </button>
-        </>
+        </form>
     );
 };
 const AdvanceFilterSearch = ({ setIsSimpleSearch }) => {
