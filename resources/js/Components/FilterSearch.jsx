@@ -22,7 +22,7 @@ export const FilterSearch = () => {
         >
             <div className="bg-white/85 dark:bg-muted w-full h-full sm:rounded-2xl transition-all duration-300 ease-in-out">
                 <div className="p-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div>
                         {isSimpleSearch ? (
                             <SimpleFilterSearch
                                 setIsSimpleSearch={setIsSimpleSearch}
@@ -41,7 +41,7 @@ export const FilterSearch = () => {
 
 const SimpleFilterSearch = ({ setIsSimpleSearch }) => {
     return (
-        <>
+        <form className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="grid w-full items-center gap-1.5">
                 <Label
                     className="dark:text-white text-[#5B5B5B] font-normal"
@@ -105,7 +105,7 @@ const SimpleFilterSearch = ({ setIsSimpleSearch }) => {
             <button onClick={() => setIsSimpleSearch(false)}>
                 <p className="text-left text-primary">Pencarian Lanjutan</p>
             </button>
-        </>
+        </form>
     );
 };
 const AdvanceFilterSearch = ({ setIsSimpleSearch }) => {
@@ -141,7 +141,7 @@ const AdvanceFilterSearch = ({ setIsSimpleSearch }) => {
     };
 
     return (
-        <>
+        <form className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="grid w-full max-w-sm items-center gap-1.5">
                 <Label
                     className="dark:text-white text-[#5B5B5B] font-normal"
@@ -279,6 +279,6 @@ const AdvanceFilterSearch = ({ setIsSimpleSearch }) => {
             <button onClick={() => setIsSimpleSearch(true)}>
                 <p className="text-left text-primary">Pencarian Mudah</p>
             </button>
-        </>
+        </form>
     );
 };
