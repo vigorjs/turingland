@@ -121,7 +121,7 @@ const Sidebar = ({ isCollapsed, user }) => {
             "Agent",
             "Customer",
         ],
-        agent: ["Dashboard", "Property"],
+        agent: ["Property"],
         customer: [], // No access
     };
 

@@ -34,21 +34,18 @@ function AdminPropertyPage({ properties, developers, areas, auth }) {
     };
 
     const handleExportExcel = (filters) => {
-        router.get(route("dashboard.property.export"), filters, {
-            onSuccess: () => {
-                toast({
-                    title: "Export Successful",
-                    description: "Excel file is being downloaded.",
-                    variant: "default",
-                });
-            },
-            onError: (err) => {
-                toast({
-                    title: "Export Failed",
-                    description: err.message || "Something went wrong.",
-                    variant: "destructive",
-                });
-            },
+        // Buat URL dengan query params
+        const queryString = new URLSearchParams(filters).toString();
+        const exportUrl = `${route("dashboard.property.export")}?${queryString}`;
+        
+        // Gunakan window.location untuk download
+        window.location.href = exportUrl;
+        
+        // Tampilkan toast
+        toast({
+            title: "Export Successful",
+            description: "Excel file is being downloaded.",
+            variant: "default",
         });
     };
 
