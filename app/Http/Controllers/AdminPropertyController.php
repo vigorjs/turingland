@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PropertyExport;
 use App\Http\Requests\PropertyCreateRequest;
 use App\Http\Requests\PropertyUpdateRequest;
 use App\Models\Property;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminPropertyController extends Controller
 {
@@ -29,8 +31,7 @@ class AdminPropertyController extends Controller
         DeveloperService $developerService,
         AreaService $areaService,
         PropertyImageService $propertyImageService
-        )
-    {
+    ) {
         $this->propertyService = $propertyService;
         $this->developerService = $developerService;
         $this->areaService = $areaService;
@@ -59,7 +60,8 @@ class AdminPropertyController extends Controller
         ]);
     }
 
-    public function detail($id){
+    public function detail($id)
+    {
         $property = $this->propertyService->getPropertyById($id);
 
         return Inertia::render("Admin/Properties/AdminDetailPropertyPage", [
@@ -91,7 +93,8 @@ class AdminPropertyController extends Controller
         return redirect()->route('dashboard.property');
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
         $property = $this->propertyService->getPropertyById($id);
         // dd($property);
 
@@ -120,13 +123,36 @@ class AdminPropertyController extends Controller
         return redirect()->route('dashboard.property');
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $this->propertyService->delete($id);
 
         return redirect()->back();
     }
 
-    public function export(Request $request) {
-        dd($request);
+    public function export(Request $request)
+    {
+        // dd($request);
+        $filters = $request->only([
+            'title',
+            'area_id',
+            'price_min',
+            'price_max',
+            'developer_id',
+            'type',
+            'status',
+            'bathroom_count',
+            'bedroom_count',
+            'carport_count',
+            'land_area_min',
+            'land_area_max',
+            'building_area_min',
+            'building_area_max',
+            'year_built',
+            'is_featured'
+        ]);
+        // dd($filters);
+
+        return Excel::download(new PropertyExport($filters), 'properties.xlsx');
     }
 }

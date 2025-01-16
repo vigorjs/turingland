@@ -16,7 +16,7 @@ import { Label } from "@/Components/ui/label";
 import { router } from "@inertiajs/react";
 import { Input } from "@/Components/ui/input";
 
-function AdminEditPropertyPage({ property, developers, areas }) {
+function AdminEditPropertyPage({ property, developers, areas, auth }) {
     const [uploadedImages, setUploadedImages] = useState([]);
     const [errors, setErrors] = useState({});
 
