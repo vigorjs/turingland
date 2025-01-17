@@ -165,9 +165,33 @@ const SimpleFilterSearch = ({ setIsSimpleSearch, areas, categories }) => {
         </form>
     );
 };
-const AdvanceFilterSearch = ({ setIsSimpleSearch }) => {
+const AdvanceFilterSearch = ({ setIsSimpleSearch, areas, categories, developers }) => {
     const [minPrice, setMinPrice] = useState("");
     const [maxPrice, setMaxPrice] = useState("");
+    const [filters, setFilters] = useState({
+        area_id: '',
+        category_id: '',
+        price_min: '',
+        price_max: '',
+        developer_id: '',
+        status: '',
+        land_area_min: '',
+        land_area_max: '',
+        building_area_min: '',
+        building_area_max: '',
+        year_built: ''
+    });
+
+    const propertyStatus = [
+        { id: 'for_sale', name: 'Dijual' },
+        { id: 'for_rent', name: 'Disewa' },
+        { id: 'sold', name: 'Terjual' },
+    ];
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        router.get('/search', filters);
+    };
 
     const formatPrice = (value) => {
         // Remove non-digit characters
@@ -198,73 +222,66 @@ const AdvanceFilterSearch = ({ setIsSimpleSearch }) => {
     };
 
     return (
-        <form className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="grid w-full max-w-sm items-center gap-1.5">
-                <Label
-                    className="dark:text-white text-[#5B5B5B] font-normal"
-                    htmlFor="email"
-                >
+        <form className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4" onSubmit={handleSubmit}>
+            <div className="grid w-full items-center gap-1.5">
+                <Label className="dark:text-white text-[#5B5B5B] font-normal">
                     Lokasi
                 </Label>
-                <Select>
+                <Select onValueChange={(value) => setFilters(prev => ({ ...prev, area_id: value }))}>
                     <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6]">
                         <SelectValue placeholder="Pilih Lokasi" />
                     </SelectTrigger>
-                    <SelectContent className="z-50 dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
-                        <SelectItem value="light">Light</SelectItem>
-                        <SelectItem value="dark">Dark</SelectItem>
-                        <SelectItem value="system">System</SelectItem>
+                    <SelectContent className="z-50 bg-white dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
+                        {areas.map((area) => (
+                            <SelectItem key={area.id} value={area.id.toString()}>
+                                {area.name}
+                            </SelectItem>
+                        ))}
                     </SelectContent>
                 </Select>
             </div>
-            <div className="grid w-full max-w-sm items-center gap-1.5">
-                <Label
-                    className="dark:text-white text-[#5B5B5B] font-normal"
-                    htmlFor="email"
-                >
-                    Tipe Properti
+            <div className="grid w-full items-center gap-1.5">
+                <Label className="dark:text-white text-[#5B5B5B] font-normal">
+                    Tipe Property
                 </Label>
-                <Select>
+                <Select onValueChange={(value) => setFilters(prev => ({ ...prev, category_id: value }))}>
                     <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6]">
-                        <SelectValue placeholder="Pilih Tipe Properti" />
+                        <SelectValue placeholder="Tipe Property" />
                     </SelectTrigger>
-                    <SelectContent className="z-50 dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
-                        <SelectItem value="light">Light</SelectItem>
-                        <SelectItem value="dark">Dark</SelectItem>
-                        <SelectItem value="system">System</SelectItem>
+                    <SelectContent className="z-50 bg-white dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
+                        {categories.map((category) => (
+                            <SelectItem key={category.id} value={category.id.toString()}>
+                                {category.name}
+                            </SelectItem>
+                        ))}
                     </SelectContent>
                 </Select>
             </div>
-            <div className="grid w-full max-w-sm items-center gap-1.5">
-                <Label
-                    className="text-[#5B5B5B] dark:text-white font-normal"
-                    htmlFor="harga-min"
-                >
+
+            <div className="grid w-full items-center gap-1.5">
+                <Label className="text-[#5B5B5B] dark:text-white font-normal">
                     Harga Min
                 </Label>
                 <Input
                     className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6]"
                     type="text"
-                    id="harga-min"
-                    onChange={handleMinPriceChange}
+                    onChange={(e) => setFilters(prev => ({ ...prev, price_min: formatPrice(e.target.value) }))}
                     placeholder="Rp 0"
                 />
             </div>
-            <div className="grid w-full max-w-sm items-center gap-1.5">
-                <Label
-                    className="text-[#5B5B5B] dark:text-white font-normal"
-                    htmlFor="harga-max"
-                >
+
+            <div className="grid w-full items-center gap-1.5">
+                <Label className="text-[#5B5B5B] dark:text-white font-normal">
                     Harga Max
                 </Label>
                 <Input
                     className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6]"
                     type="text"
-                    id="harga-max"
-                    onChange={handleMaxPriceChange}
+                    onChange={(e) => setFilters(prev => ({ ...prev, price_max: formatPrice(e.target.value) }))}
                     placeholder="Rp 0"
                 />
             </div>
+
             <div className="grid w-full max-w-sm items-center gap-1.5">
                 <Label
                     className="dark:text-white text-[#5B5B5B] font-normal"
@@ -283,24 +300,25 @@ const AdvanceFilterSearch = ({ setIsSimpleSearch }) => {
                     </SelectContent>
                 </Select>
             </div>
-            <div className="grid w-full max-w-sm items-center gap-1.5">
-                <Label
-                    className="dark:text-white text-[#5B5B5B] font-normal"
-                    htmlFor="email"
-                >
+
+            <div className="grid w-full items-center gap-1.5">
+                <Label className="dark:text-white text-[#5B5B5B] font-normal">
                     Developer
                 </Label>
-                <Select>
+                <Select onValueChange={(value) => setFilters(prev => ({ ...prev, developer_id: value }))}>
                     <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6]">
                         <SelectValue placeholder="Pilih Developer" />
                     </SelectTrigger>
-                    <SelectContent className="z-50 dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
-                        <SelectItem value="light">Light</SelectItem>
-                        <SelectItem value="dark">Dark</SelectItem>
-                        <SelectItem value="system">System</SelectItem>
+                    <SelectContent className="z-50 bg-white dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
+                        {developers.map((developer) => (
+                            <SelectItem key={developer.id} value={developer.id.toString()}>
+                                {developer.name}
+                            </SelectItem>
+                        ))}
                     </SelectContent>
                 </Select>
             </div>
+
             <div className="grid w-full max-w-sm items-center gap-1.5">
                 <Label
                     className="dark:text-white text-[#5B5B5B] font-normal"
