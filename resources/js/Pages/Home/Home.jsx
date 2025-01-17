@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 import React from "react";
 
-export default function Home() {
+export default function Home({ areas, developers, categories}) {
     const img =
         "https://ecatalog.sinarmasland.com/_next/image?url=https%3A%2F%2Fecatalog.sinarmasland.com%2Fassets%2Fsite-setting-files%2F1%2Fhomepage-background-banner-desktop-677b6f397dc74.jpg&w=3840&q=75";
 
@@ -66,32 +66,32 @@ export default function Home() {
         },
     ];
 
-    const categories = [
-        {
-            img: "/assets/apartemen.png",
-            name: "Apartment",
-        },
-        {
-            img: "/assets/villa.png",
-            name: "Villa",
-        },
-        {
-            img: "/assets/kost.png",
-            name: "Kost",
-        },
-        {
-            img: "/assets/ruko.png",
-            name: "Ruko",
-        },
-        {
-            img: "/assets/rumah.png",
-            name: "Rumah",
-        },
-        {
-            img: "/assets/tanah.png",
-            name: "Tanah",
-        },
-    ];
+    // const categories = [
+    //     {
+    //         img: "/assets/apartemen.png",
+    //         name: "Apartment",
+    //     },
+    //     {
+    //         img: "/assets/villa.png",
+    //         name: "Villa",
+    //     },
+    //     {
+    //         img: "/assets/kost.png",
+    //         name: "Kost",
+    //     },
+    //     {
+    //         img: "/assets/ruko.png",
+    //         name: "Ruko",
+    //     },
+    //     {
+    //         img: "/assets/rumah.png",
+    //         name: "Rumah",
+    //     },
+    //     {
+    //         img: "/assets/tanah.png",
+    //         name: "Tanah",
+    //     },
+    // ];
 
     return (
         <GuestLayout>
