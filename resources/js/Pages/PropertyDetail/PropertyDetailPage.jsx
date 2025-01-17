@@ -24,7 +24,7 @@ import {
 import React, { useState } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 
-export default function PropertyDetailPage({ property }) {
+export default function PropertyDetailPage({ property, auth }) {
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [isInfoLess, setIsInfoLess] = useState(true);
 
@@ -42,7 +42,7 @@ export default function PropertyDetailPage({ property }) {
     const arr = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
 
     return (
-        <GuestLayout>
+        <GuestLayout auth={auth}>
             <Head title="Property Detail" />
 
             <div className="min-h-screen px-3 sm:px-4 md:px-6 lg:px-[150px] py-6">

@@ -2,18 +2,20 @@ import { CardProperty } from "@/Components/CardProperty";
 import CardPropertySearch from "@/Components/search/CardPropertySearch";
 import SearchBar from "@/Components/search/SearchBar";
 import GuestLayout from "@/Layouts/GuestLayout";
+import { Head } from "@inertiajs/react";
 import React from "react";
 
-export default function SearchPage({ properties }) {
+export default function SearchPage({ properties, auth }) {
     const img3 =
         "https://s3-alpha-sig.figma.com/img/db80/4347/cb68839c79ca58a9b46777e9c9c07cc0?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=nXWoIhqAUTi-at1criMJPC8l-xudGFynTTWb9Y-EQ3SJVxbjtvcOe0gMCLVH-t9DqTyNiL-Yzev8ZoIv8rUhxICHbXB8rkLeNKxj7EQ62uTTgu9cxyvbWTE~QRaByjGG1cJ6vcaSQ6MXKBL0oqfIGiBf0VqSA6UKFh5uufI7P4FLQmWmiBmecXFnhZ2A5p2FkQ5Vc~d9jsWCoMVMpC711S6lfNymccRCkodcG15Mx22s-p2ydCVU06b5TyCZg7x1tG2lcqPcdyaX07KFBNHfmAp9N23KdaCvnBgsmBAeg76eEDgO9y7B4xcEcerX559xGjDraUB~HpMhDXtZGXxetg__";
 
     const arr = [{}, {}];
     // const arr = [{}];
     console.log(properties.data.length);
-    
+
     return (
-        <GuestLayout>
+        <GuestLayout auth={auth}>
+            <Head title="Cari rumah" />
             {/* <div className="px-3 md:px-6 lg:px-[150px] mb-12 mt-28"> */}
             <div className="px-3 md:px-6 lg:px-[150px] my-12">
                 <SearchBar />

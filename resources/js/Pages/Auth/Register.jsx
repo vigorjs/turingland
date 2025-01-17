@@ -8,10 +8,11 @@ export default function Register({
     canResetPassword,
     className,
     imageBackground,
+    auth,
     ...props
 }) {
     return (
-        <AuthLayout>
+        <AuthLayout auth={auth}>
             <Head title="Register" />
             {status && (
                 <div className="mb-4 font-medium text-sm text-green-600">
