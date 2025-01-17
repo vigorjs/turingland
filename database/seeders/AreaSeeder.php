@@ -15,16 +15,20 @@ class AreaSeeder extends Seeder
     {
         $areas = [
             [
-                "name" => "Jakarta Barat"
+                "name" => "Jakarta Barat",
+                "description" => "Wilayah Jakarta yang terkenal dengan kawasan bisnis, pusat perbelanjaan, dan kawasan bersejarah seperti Kota Tua."
             ],
             [
-                "name" => "Jakarta Timur"
+                "name" => "Jakarta Timur",
+                "description" => "Wilayah Jakarta yang memiliki banyak area permukiman, kawasan industri, serta Taman Mini Indonesia Indah."
             ],
             [
-                "name" => "Jakarta Selatan"
+                "name" => "Jakarta Selatan",
+                "description" => "Wilayah Jakarta yang dikenal dengan pusat bisnis modern, kafe, dan kawasan permukiman elit."
             ],
             [
-                "name" => "Jakarta Utara"
+                "name" => "Jakarta Utara",
+                "description" => "Wilayah Jakarta yang mencakup kawasan pelabuhan, kawasan wisata Ancol, dan pusat perdagangan."
             ],
         ];
 

@@ -271,7 +271,7 @@ export default function AdminBannerPage({ banners, auth }) {
                                                         src={
                                                             banner.image_path
                                                                 ? `/storage/${banner.image_path}`
-                                                                : "/assets/kost.png"
+                                                                : "/assets/hero-banner.webp"
                                                         }
                                                         alt={
                                                             banner.title
