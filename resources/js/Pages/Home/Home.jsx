@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 import React from "react";
 
-export default function Home({ auth, areas, developers, categories}) {
+export default function Home({ auth, categories}) {
     const img =
         "https://ecatalog.sinarmasland.com/_next/image?url=https%3A%2F%2Fecatalog.sinarmasland.com%2Fassets%2Fsite-setting-files%2F1%2Fhomepage-background-banner-desktop-677b6f397dc74.jpg&w=3840&q=75";
 

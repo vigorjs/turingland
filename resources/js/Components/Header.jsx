@@ -19,7 +19,7 @@ const Header = ({ variant, auth, areas, categories }) => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [variants, setVariants] = useState(variant);
 
-    
+
     console.log("auth: ", auth);
 
     const handleScroll = () => {
@@ -81,6 +81,7 @@ const Header = ({ variant, auth, areas, categories }) => {
     console.log("buyAreaMenu: ", buyAreaMenu);
 
     const menuItems = [
+        { title: "Home", url: '/' },
         {
             title: "Dijual",
             subItems: buyAreaMenu,
@@ -90,7 +91,6 @@ const Header = ({ variant, auth, areas, categories }) => {
             subItems: rentAreaMenu,
         },
         { title: "Cari rumah", url: "/search" },
-        // { title: "Properti Baru" },
         // { title: "KPR" },
         // { title: "Panduan" },
     ];
