@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\PropertyExport;
 use App\Http\Requests\PropertyCreateRequest;
 use App\Http\Requests\PropertyUpdateRequest;
+use App\Models\Category;
 use App\Models\Property;
 use App\Models\PropertyImage;
 use App\Services\Area\AreaService;
@@ -77,7 +78,8 @@ class AdminPropertyController extends Controller
     {
         $developers = $this->developerService->getAllDevelopers();
         $areas = $this->areaService->getAllAreas();
-        $categories = $this->categoryService->all()->getData();
+        // $categories = $this->categoryService->all()->getData();
+        $categories = Category::all();
 
         return Inertia::render("Admin/Properties/AdminCreatePropertyPage", [
             'developers' => $developers,
@@ -106,16 +108,19 @@ class AdminPropertyController extends Controller
 
         $developers = $this->developerService->getAllDevelopers();
         $areas = $this->areaService->getAllAreas();
+        $categories = $this->categoryService->all()->getData();
 
         return Inertia::render("Admin/Properties/AdminEditPropertyPage", [
             'property' => $property[0],
             'developers' => $developers,
-            'areas' => $areas
+            'areas' => $areas,
+            'categories' => $categories
         ]);
     }
 
     public function update(PropertyUpdateRequest $request, $id)
     {
+        // dd($request);
         $this->propertyService->updatePropertyWithImages(
             $id,
             array_merge(

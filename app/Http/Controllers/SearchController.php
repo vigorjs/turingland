@@ -12,10 +12,11 @@ class SearchController extends Controller
     {
         $properties = Property::query()
             ->filter($request->all())
+            ->with('developer')
             ->paginate(12)
             ->withQueryString();
 
-        dd($properties);
+        // dd($properties);
 
         return Inertia::render('Search/Search', [
             'properties' => $properties,

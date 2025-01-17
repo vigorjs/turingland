@@ -32,7 +32,7 @@ function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
             description: "",
             developer_id: "",
             area_id: "",
-            category_ids: [],
+            category_ids: [1, 2],
             bathroom_count: 0,
             bedroom_count: 0,
             carport_count: 0,
@@ -88,7 +88,12 @@ function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
 
         // Add non-file form values
         Object.entries(values).forEach(([key, value]) => {
-            if (key !== "property_images") {
+            if (key === "category_ids") {
+                // Kirim sebagai multiple entries untuk array
+                value.forEach((categoryId, index) => {
+                    formData.append(`category_ids[]`, categoryId);
+                });
+            } else if (key !== "property_images") {
                 formData.append(key, value);
             }
         });
@@ -129,6 +134,15 @@ function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
             <p className="text-red-500 text-sm mt-1">{errors[name]}</p>
         ) : null;
     };
+
+    const arrObjCategories = categories.map((item) => {
+        return {
+            label: item.name, value: item.id
+        }
+    })
+
+    console.log("arrObjCategories: ", arrObjCategories);
+    
 
     return (
         <AdminLayout auth={auth}>
@@ -242,11 +256,12 @@ function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
                                                 )
                                             )
                                             .filter(Boolean); // Remove any undefined values
-
+                                            console.log("selectedCategories: ", selectedCategories);
+                                            
                                         return (
                                             <MultiSelect
                                                 selected={selectedCategories}
-                                                options={categories}
+                                                options={arrObjCategories}
                                                 onChange={(selected) => {
                                                     // Convert back to array of IDs for form value
                                                     const selectedIds =
