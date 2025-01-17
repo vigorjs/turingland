@@ -10,7 +10,7 @@ import { BathIcon, BedDoubleIcon, CarFrontIcon, PhoneCall } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { Button } from "../ui/button";
 
-export default function CardPropertySearch() {
+export default function CardPropertySearch( {property} ) {
     const img = `https://ecatalog.sinarmasland.com/_next/image?url=https%3A%2F%2Fecatalog.sinarmasland.com%2Fassets%2Fsite-setting-files%2F1%2Fhomepage-background-banner-desktop-677b6f397dc74.jpg&w=3840&q=75`;
 
     const img1 =
@@ -20,6 +20,8 @@ export default function CardPropertySearch() {
     const otherImages = [img1, img1, img1, img1, img1];
     const allImages = [imagePrimary, ...otherImages];
 
+    console.log("card", property);
+    
     return (
         <div className="shadow-md rounded-2xl">
             <Carousel>
@@ -56,7 +58,7 @@ export default function CardPropertySearch() {
             {/* DETAIL PROPERTY */}
             <div className="p-3.5">
                 <h1 className="text-primary text-lg font-extrabold mb-1">
-                    Rp 69 Juta per tahun{" "}
+                    Rp {property.price}
                     <span className="bg-primary/15 text-primary px-2 py-1 font-semibold rounded-full text-xs">
                         Disewa
                     </span>
@@ -64,22 +66,22 @@ export default function CardPropertySearch() {
 
                 <div className="flex flex-wrap justify-start items-center gap-2 my-3">
                     <button className="flex items-center gap-x-1 text-xs px-2.5 py-1 shadow rounded-full">
-                        <BedDoubleIcon className="w-3.5 h-3.5" /> : 3
+                        <BedDoubleIcon className="w-3.5 h-3.5" /> : {property.bedroom_count}
                     </button>
                     <button className="flex items-center gap-x-1 text-xs px-2.5 py-1 shadow rounded-full">
-                        <BathIcon className="w-3.5 h-3.5" /> : 2
+                        <BathIcon className="w-3.5 h-3.5" /> : {property.bathroom_count}
                     </button>
                     <button className="flex items-center gap-x-1 text-xs px-2.5 py-1 shadow rounded-full">
-                        <CarFrontIcon className="w-3.5 h-3.5" /> : 2
+                        <CarFrontIcon className="w-3.5 h-3.5" /> : {property.carport_count}
                     </button>
                 </div>
 
                 <div>
                     <h1 className="text-neutral-700 text-sm font-semibold">
-                        Rumah Fauzan {"<3"} Doffa
+                        {property.title}
                     </h1>
                     <p className="text-neutral-600 text-sm">
-                        Studio Taman Anggrek Residence
+                        {property.description}
                     </p>
                     <p className="text-neutral-600 text-xs overflow-hidden whitespace-nowrap text-ellipsis mt-1">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -107,7 +109,7 @@ export default function CardPropertySearch() {
                                         Diperbarui 2 jam yang lalu
                                     </p>
                                     <p className="text-sm text-neutral-600 overflow-hidden whitespace-nowrap text-ellipsis">
-                                        Fauzan Properties
+                                        {property.developer.name} Properties
                                     </p>
                                 </div>
                             </div>

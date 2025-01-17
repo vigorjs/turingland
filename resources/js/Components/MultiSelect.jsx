@@ -37,6 +37,8 @@ const MultiSelect = ({
         onChange(newSelected);
     };
 
+    console.log("safeOptions:", safeOptions);
+console.log("safeSelected:", safeSelected);
     return (
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
