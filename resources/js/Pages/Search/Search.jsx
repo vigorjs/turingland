@@ -2,6 +2,7 @@ import { CardProperty } from "@/Components/CardProperty";
 import CardPropertySearch from "@/Components/search/CardPropertySearch";
 import SearchBar from "@/Components/search/SearchBar";
 import GuestLayout from "@/Layouts/GuestLayout";
+import { Head } from "@inertiajs/react";
 import React from "react";
 
 export default function SearchPage({ properties }) {
@@ -11,9 +12,10 @@ export default function SearchPage({ properties }) {
     const arr = [{}, {}];
     // const arr = [{}];
     console.log(properties.data.length);
-    
+
     return (
         <GuestLayout>
+            <Head title="Cari rumah" />
             {/* <div className="px-3 md:px-6 lg:px-[150px] mb-12 mt-28"> */}
             <div className="px-3 md:px-6 lg:px-[150px] my-12">
                 <SearchBar />
