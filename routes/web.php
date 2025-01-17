@@ -12,6 +12,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebPreferencesController;
 use App\Models\User;
@@ -21,9 +22,7 @@ require __DIR__.'/auth.php';
 
 Route::get("/", [HomeController::class, 'index'])->name('homepage');
 Route::get('/property/{id}', [PropertyController::class, 'show'])->name('property.show');
-Route::get('/search', function () {
-    return Inertia::render("Search/Search");
-});
+Route::get('/search', [SearchController::class, 'index'])->name('search.property');
 
 Route::get('/api/header-data', function() {
     return response()->json([

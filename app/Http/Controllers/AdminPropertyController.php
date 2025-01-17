@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Exports\PropertyExport;
 use App\Http\Requests\PropertyCreateRequest;
 use App\Http\Requests\PropertyUpdateRequest;
+use App\Models\Category;
 use App\Models\Property;
 use App\Models\PropertyImage;
 use App\Services\Area\AreaService;
+use App\Services\Category\CategoryService;
 use App\Services\Developer\DeveloperService;
 use App\Services\Property\PropertyService;
 use App\Services\PropertyImage\PropertyImageService;
@@ -25,17 +27,20 @@ class AdminPropertyController extends Controller
     private $developerService;
     private $areaService;
     private $propertyImageService;
+    private $categoryService;
 
     public function __construct(
         PropertyService $propertyService,
         DeveloperService $developerService,
         AreaService $areaService,
-        PropertyImageService $propertyImageService
+        PropertyImageService $propertyImageService,
+        CategoryService $categoryService
     ) {
         $this->propertyService = $propertyService;
         $this->developerService = $developerService;
         $this->areaService = $areaService;
         $this->propertyImageService = $propertyImageService;
+        $this->categoryService = $categoryService;
     }
 
     /**
@@ -73,10 +78,13 @@ class AdminPropertyController extends Controller
     {
         $developers = $this->developerService->getAllDevelopers();
         $areas = $this->areaService->getAllAreas();
+        // $categories = $this->categoryService->all()->getData();
+        $categories = Category::all();
 
         return Inertia::render("Admin/Properties/AdminCreatePropertyPage", [
             'developers' => $developers,
-            'areas' => $areas
+            'areas' => $areas,
+            'categories' => $categories
         ]);
     }
 
@@ -100,16 +108,19 @@ class AdminPropertyController extends Controller
 
         $developers = $this->developerService->getAllDevelopers();
         $areas = $this->areaService->getAllAreas();
+        $categories = $this->categoryService->all()->getData();
 
         return Inertia::render("Admin/Properties/AdminEditPropertyPage", [
             'property' => $property[0],
             'developers' => $developers,
-            'areas' => $areas
+            'areas' => $areas,
+            'categories' => $categories
         ]);
     }
 
     public function update(PropertyUpdateRequest $request, $id)
     {
+        // dd($request);
         $this->propertyService->updatePropertyWithImages(
             $id,
             array_merge(
