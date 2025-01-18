@@ -65,7 +65,7 @@ class Property extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'property_category');
+        return $this->belongsToMany(Category::class, 'property_categories');
     }
 
     public function scopeFilter(Builder $query, $filters)
@@ -74,9 +74,13 @@ class Property extends Model
             $query->where('title', 'like', '%' . $filters['title'] . '%');
         }
 
+        // Filter by category menggunakan whereHas
         if (!empty($filters['category_id'])) {
-            $query->where('category_id', $filters['category_id']);
+            $query->whereHas('categories', function ($query) use ($filters) {
+                $query->where('categories.id', $filters['category_id']);
+            });
         }
+
 
         if (!empty($filters['area_id'])) {
             $query->where('area_id', $filters['area_id']);

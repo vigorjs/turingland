@@ -13,7 +13,7 @@ class Category extends Model
 
     public function properties()
     {
-        return $this->belongsToMany(Property::class, 'property_category');
+        return $this->belongsToMany(Property::class, 'property_categories');
     }
 }
 
