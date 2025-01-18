@@ -16,7 +16,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
+            $table->string('wa_number')->unique()->nullable();
+            $table->string('photo')->nullable()->default("https://avatar.iran.liara.run/public");
+            $table->boolean('is_agent_active')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

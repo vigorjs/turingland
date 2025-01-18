@@ -1,18 +1,40 @@
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import { Link } from '@inertiajs/react';
+import Footer from "@/Components/Footer";
+import Header from "@/Components/Header";
+import { useEffect, useState } from "react";
 
-export default function GuestLayout({ children }) {
+export default function GuestLayout({ children, auth }) {
+    // console.log("ini props dari auth di komponen guestLayout : ", auth);
+
+    const [categories, setCategories] = useState([]);
+
+    const [areas, setAreas] = useState([]);
+
+    const getDataHeader = async () => {
+        try {
+            const response = await fetch("/api/header-data");
+            const data = await response.json();
+
+            setAreas(data.areas);
+            setCategories(data.categories);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
+    useEffect(() => {
+        (async () => {
+            await getDataHeader();
+        })();
+    }, []);
+
     return (
-        <div className="flex min-h-screen flex-col items-center bg-gray-100 pt-6 sm:justify-center sm:pt-0">
-            <div>
-                <Link href="/">
-                    <ApplicationLogo className="h-20 w-20 fill-current text-gray-500" />
-                </Link>
-            </div>
+        <div className="flex min-h-screen flex-col transition-all duration-300 ease-in-out">
+            <Header auth={auth} areas={areas} categories={categories} />
 
-            <div className="mt-6 w-full overflow-hidden bg-white px-6 py-4 shadow-md sm:max-w-md sm:rounded-lg">
-                {children}
-            </div>
+            {/* Main Content */}
+            {children}
+
+            <Footer areas={areas} categories={categories} />
         </div>
     );
 }
