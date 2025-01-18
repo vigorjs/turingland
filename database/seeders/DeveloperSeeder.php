@@ -15,16 +15,20 @@ class DeveloperSeeder extends Seeder
     {
         $developers = [
             [
-                "name" => "Saydova"
+                "name" => "Saydova",
+                "description" => "Developer CryptoHouse"
             ],
             [
-                "name" => "Virgro"
+                "name" => "Virgro",
+                "description" => "Semaranggggggg"
             ],
             [
-                "name" => "Atta"
+                "name" => "Atta",
+                "description" => "Developer Pembangunan Gemilang"
             ],
             [
-                "name" => "Alan"
+                "name" => "Alan",
+                "description" => "Developer Rumah Barbie Indah Kapuk"
             ],
         ];
 

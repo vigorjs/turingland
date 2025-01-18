@@ -94,7 +94,7 @@ export default function AdminCustomerPage({ customers, auth }) {
     };
 
     return (
-        <AdminLayout auth={auth}>
+        <AdminLayout auth={auth} title="Customer">
             <Button
                 onClick={() => {
                     setIsOpenModal(true);

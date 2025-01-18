@@ -1,10 +1,9 @@
 import AdminProfile from "@/Components/admin/AdminProfile";
-import AdminSearchBar from "@/Components/admin/AdminSearchBar";
 import Sidebar from "@/Components/admin/SideBar";
 import { Head } from "@inertiajs/react";
 import { useState, useEffect } from "react";
 
-export default function AdminLayout({ children, auth }) {
+export default function AdminLayout({ children, auth, title = "Dashboard" }) {
     console.log("ini props dari auth di komponen adminLayout : ", auth);
 
     const img =
@@ -26,7 +25,7 @@ export default function AdminLayout({ children, auth }) {
 
     return (
         <div className="h-full flex">
-            <Head title="Dashboard" />
+            <Head title={title} />
 
             {/* Sidebar - fixed height */}
             <div className="h-full sticky top-0 pl-0 pt-0 pb-0 md:pl-4 md:pt-4 md:pb-4">
@@ -38,9 +37,11 @@ export default function AdminLayout({ children, auth }) {
                 <div className="flex flex-col pt-6 px-3">
                     {/* Header (SearchBar + Profile Admin) */}
                     <div className="flex items-center justify-between mb-4 w-full">
-                        {/* SearchBar */}
-                        <div className="flex-1 max-w-full">
-                            <AdminSearchBar />
+
+                        <div className="flex-1 max-w-full mt-3">
+                            <h1 className="text-4xl font-extrabold text-gray-800 leading-tight">
+                                {title}
+                            </h1>
                         </div>
 
                         {/* Profile Admin */}
