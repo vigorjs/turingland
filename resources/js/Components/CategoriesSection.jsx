@@ -2,6 +2,8 @@ import { Link } from "@inertiajs/react";
 import React from "react";
 
 export const CategoriesSection = ({ categories }) => {
+    console.log(categories);
+    
     return (
         <div className="flex flex-wrap justify-center items-center gap-3 mt-56 mb-14 md:my-14">
             {categories.map((category, index) => (
@@ -14,7 +16,7 @@ export const CategoriesSection = ({ categories }) => {
                     // }}
                 >
                     <img
-                        src={category.img}
+                        src={category.icon ? `/storage/${category.icon}` : "/assets/hero-banner.webp"}
                         alt={category.name}
                         className="w-10 h-10 rounded-full"
                     />
