@@ -24,6 +24,13 @@ Route::get("/", [HomeController::class, 'index'])->name('homepage');
 Route::get('/property/{id}', [PropertyController::class, 'show'])->name('property.show');
 Route::get('/search', [SearchController::class, 'index'])->name('search.property');
 
+Route::get('/api/header-data', function() {
+    return response()->json([
+        "areas" => \App\Models\Area::orderBy('name')->get(),
+        "categories" => \App\Models\Category::orderBy('name')->get()
+    ]);;
+})->name('api.header-data');
+
 // PROFILE
 Route::get('/dashboard/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 Route::patch('/dashboard/profile', [ProfileController::class, 'update'])->name('profile.update');

@@ -8,10 +8,11 @@ export default function Login({
     canResetPassword,
     className,
     imageBackground,
+    auth,
     ...props
 }) {
     return (
-        <AuthLayout>
+        <AuthLayout auth={auth} >
             <Head title="Login" />
             {status && (
                 <div className="mb-4 font-medium text-sm text-green-600">

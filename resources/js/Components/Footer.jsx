@@ -9,7 +9,7 @@ import {
 import ApplicationLogo from "./ApplicationLogo";
 import { Link } from "@inertiajs/react";
 
-const Footer = () => {
+const Footer = ({ areas, categories }) => {
     return (
         <>
             {/* Footer */}
@@ -42,27 +42,58 @@ const Footer = () => {
 
                     {/* Center: Explore */}
                     <div className="flex flex-col md:flex-row md:gap-20 mr-20">
-                        {[...Array(3)].map((_, i) => (
-                            <div
-                                key={i}
-                                className="flex flex-col mb-8 md:mb-0 md:w-1/3"
-                            >
-                                <p className="text-white font-inter text-lg font-bold leading-6 mb-4">
-                                    Explore
-                                </p>
-                                <div className="flex flex-col space-y-2">
-                                    {navigationLinks.map((link, index) => (
+                        <div className="flex flex-col mb-8 md:mb-0 md:w-1/3">
+                            <p className="text-white font-inter text-lg font-bold leading-6 mb-4">
+                                Explore
+                            </p>
+                            <div className="flex flex-col space-y-2">
+                                {navigationLinks.map((link, index) => (
+                                    <Link
+                                        key={`footer-link-${index}`}
+                                        href={link.href}
+                                        className="text-[#A5A5A5] font-inter text-sm leading-6 hover:underline"
+                                    >
+                                        {link.name}
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col mb-8 md:mb-0 md:w-2/3">
+                            <p className="text-white font-inter text-lg font-bold leading-6 mb-4">
+                                Area
+                            </p>
+                            <div className="flex flex-col space-y-2">
+                                {areas.slice(0, 5).map((area, index) => (
+                                    <Link
+                                        key={`footer-area-${index}`}
+                                        // href={area.href}
+                                        className="text-[#A5A5A5] font-inter text-sm leading-6 hover:underline"
+                                    >
+                                        {area.name}
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col mb-8 md:mb-0 md:w-2/3">
+                            <p className="text-white font-inter text-lg font-bold leading-6 mb-4">
+                                Kategori
+                            </p>
+                            <div className="flex flex-col space-y-2">
+                                {categories
+                                    .slice(0, 5)
+                                    .map((category, index) => (
                                         <Link
-                                            key={index}
-                                            href={link.href}
+                                            key={`footer-category-${index}`}
+                                            // href={category.href}
                                             className="text-[#A5A5A5] font-inter text-sm leading-6 hover:underline"
                                         >
-                                            {link.name}
+                                            {category.name}
                                         </Link>
                                     ))}
-                                </div>
                             </div>
-                        ))}
+                        </div>
 
                         {/* Right Side: Follow Us */}
                         <div className="flex flex-col md:w-1/3">
