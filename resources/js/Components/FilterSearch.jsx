@@ -76,7 +76,10 @@ const SimpleFilterSearch = ({ setIsSimpleSearch, areas, categories }) => {
     };
 
     return (
-        <form className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4" onSubmit={handleSubmit}>
+        <form
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4"
+            onSubmit={handleSubmit}
+        >
             <div className="grid w-full items-center gap-1.5">
                 <Label className="dark:text-white text-[#5B5B5B] font-normal">
                     Lokasi
@@ -165,32 +168,35 @@ const SimpleFilterSearch = ({ setIsSimpleSearch, areas, categories }) => {
         </form>
     );
 };
-const AdvanceFilterSearch = ({ setIsSimpleSearch, areas, categories, developers }) => {
-    const [minPrice, setMinPrice] = useState("");
-    const [maxPrice, setMaxPrice] = useState("");
+const AdvanceFilterSearch = ({
+    setIsSimpleSearch,
+    areas,
+    categories,
+    developers,
+}) => {
     const [filters, setFilters] = useState({
-        area_id: '',
-        category_id: '',
-        price_min: '',
-        price_max: '',
-        developer_id: '',
-        status: '',
-        land_area_min: '',
-        land_area_max: '',
-        building_area_min: '',
-        building_area_max: '',
-        year_built: ''
+        area_id: "",
+        category_id: "",
+        price_min: "",
+        price_max: "",
+        developer_id: "",
+        status: "",
+        land_area_min: "",
+        land_area_max: "",
+        building_area_min: "",
+        building_area_max: "",
+        year_built: "",
     });
 
     const propertyStatus = [
-        { id: 'for_sale', name: 'Dijual' },
-        { id: 'for_rent', name: 'Disewa' },
-        { id: 'sold', name: 'Terjual' },
+        { id: "for_sale", name: "Dijual" },
+        { id: "for_rent", name: "Disewa" },
+        { id: "sold", name: "Terjual" },
     ];
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        router.get('/search', filters);
+        router.get("/search", filters);
     };
 
     const formatPrice = (value) => {
@@ -222,18 +228,28 @@ const AdvanceFilterSearch = ({ setIsSimpleSearch, areas, categories, developers 
     };
 
     return (
-        <form className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4" onSubmit={handleSubmit}>
+        <form
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4"
+            onSubmit={handleSubmit}
+        >
             <div className="grid w-full items-center gap-1.5">
                 <Label className="dark:text-white text-[#5B5B5B] font-normal">
                     Lokasi
                 </Label>
-                <Select onValueChange={(value) => setFilters(prev => ({ ...prev, area_id: value }))}>
+                <Select
+                    onValueChange={(value) =>
+                        setFilters((prev) => ({ ...prev, area_id: value }))
+                    }
+                >
                     <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6]">
                         <SelectValue placeholder="Pilih Lokasi" />
                     </SelectTrigger>
                     <SelectContent className="z-50 bg-white dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
                         {areas.map((area) => (
-                            <SelectItem key={area.id} value={area.id.toString()}>
+                            <SelectItem
+                                key={area.id}
+                                value={area.id.toString()}
+                            >
                                 {area.name}
                             </SelectItem>
                         ))}
@@ -244,13 +260,20 @@ const AdvanceFilterSearch = ({ setIsSimpleSearch, areas, categories, developers 
                 <Label className="dark:text-white text-[#5B5B5B] font-normal">
                     Tipe Property
                 </Label>
-                <Select onValueChange={(value) => setFilters(prev => ({ ...prev, category_id: value }))}>
+                <Select
+                    onValueChange={(value) =>
+                        setFilters((prev) => ({ ...prev, category_id: value }))
+                    }
+                >
                     <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6]">
                         <SelectValue placeholder="Tipe Property" />
                     </SelectTrigger>
                     <SelectContent className="z-50 bg-white dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
                         {categories.map((category) => (
-                            <SelectItem key={category.id} value={category.id.toString()}>
+                            <SelectItem
+                                key={category.id}
+                                value={category.id.toString()}
+                            >
                                 {category.name}
                             </SelectItem>
                         ))}
@@ -265,7 +288,12 @@ const AdvanceFilterSearch = ({ setIsSimpleSearch, areas, categories, developers 
                 <Input
                     className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6]"
                     type="text"
-                    onChange={(e) => setFilters(prev => ({ ...prev, price_min: formatPrice(e.target.value) }))}
+                    onChange={(e) =>
+                        setFilters((prev) => ({
+                            ...prev,
+                            price_min: e.target.value,
+                        }))
+                    }
                     placeholder="Rp 0"
                 />
             </div>
@@ -277,7 +305,12 @@ const AdvanceFilterSearch = ({ setIsSimpleSearch, areas, categories, developers 
                 <Input
                     className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6]"
                     type="text"
-                    onChange={(e) => setFilters(prev => ({ ...prev, price_max: formatPrice(e.target.value) }))}
+                    onChange={(e) =>
+                        setFilters((prev) => ({
+                            ...prev,
+                            price_max: e.target.value,
+                        }))
+                    }
                     placeholder="Rp 0"
                 />
             </div>
@@ -305,13 +338,20 @@ const AdvanceFilterSearch = ({ setIsSimpleSearch, areas, categories, developers 
                 <Label className="dark:text-white text-[#5B5B5B] font-normal">
                     Developer
                 </Label>
-                <Select onValueChange={(value) => setFilters(prev => ({ ...prev, developer_id: value }))}>
+                <Select
+                    onValueChange={(value) =>
+                        setFilters((prev) => ({ ...prev, developer_id: value }))
+                    }
+                >
                     <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6]">
                         <SelectValue placeholder="Pilih Developer" />
                     </SelectTrigger>
                     <SelectContent className="z-50 bg-white dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
                         {developers.map((developer) => (
-                            <SelectItem key={developer.id} value={developer.id.toString()}>
+                            <SelectItem
+                                key={developer.id}
+                                value={developer.id.toString()}
+                            >
                                 {developer.name}
                             </SelectItem>
                         ))}
