@@ -14,7 +14,9 @@ function ModalCategoryForm({
     setIsOpenModal,
 }) {
     const [loading, setLoading] = useState(false);
-    const [image, setImage] = useState(category?.icon ? `/storage/${category?.icon}` :  null);
+    const [image, setImage] = useState(
+        category?.icon ? `/storage/${category?.icon}` : null
+    );
     const { data, setData, post, reset, errors } = useForm({
         name: category?.name ?? "",
         icon: null,
@@ -90,9 +92,15 @@ function ModalCategoryForm({
     };
 
     const handleImageDelete = () => {
-        setImage(null)
-        setData('icon', null)
-    }
+        setImage(null);
+        setData("icon", null);
+    };
+
+    const ErrorMessage = ({ name }) => {
+        return errors[name] ? (
+            <p className="text-red-500 text-sm mt-1">{errors[name]}</p>
+        ) : null;
+    };
 
     return (
         <Modal show={isOpenModal} onClose={handleCloseModal}>
@@ -121,6 +129,7 @@ function ModalCategoryForm({
                         value={data?.name ?? ""}
                         onChange={(e) => setData("name", e.target.value)}
                     />
+                    <ErrorMessage name="name" />
                 </div>
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="icon">Icon / Gambar</Label>
@@ -131,14 +140,27 @@ function ModalCategoryForm({
                         placeholder="Masukkan icon kategori..."
                         // onChange={(e) => setData("icon", e.target.files?.[0] || null)}
                         onChange={(e) => {
-                            setData("icon", e.target.files[0])
-                            setImage(URL.createObjectURL(e.target.files[0]))
+                            setData("icon", e.target.files[0]);
+                            setImage(URL.createObjectURL(e.target.files[0]));
                         }}
                     />
+                    <ErrorMessage name="icon" />
                 </div>
-                <div className={`${!image && 'hidden'} w-full`}>
-                    <img src={image} alt="Image preview" className="w-32 shadow" />
-                    {!category && <button type="button" onClick={handleImageDelete} className="text-primary font-bold text-sm mt-2">Hapus foto?</button>}
+                <div className={`${!image && "hidden"} w-full`}>
+                    <img
+                        src={image}
+                        alt="Image preview"
+                        className="w-32 shadow"
+                    />
+                    {!category && (
+                        <button
+                            type="button"
+                            onClick={handleImageDelete}
+                            className="text-primary font-bold text-sm mt-2"
+                        >
+                            Hapus foto?
+                        </button>
+                    )}
                 </div>
                 <Button
                     type="submit"

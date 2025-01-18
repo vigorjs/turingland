@@ -103,7 +103,7 @@ export default function AdminAgentPage({ agents, auth }) {
     };
 
     return (
-        <AdminLayout auth={auth}>
+        <AdminLayout auth={auth} title="Agent">
             <Button
                 onClick={() => {
                     setIsOpenModal(true);
@@ -147,11 +147,10 @@ export default function AdminAgentPage({ agents, auth }) {
                                         ].map((key, index) => (
                                             <th
                                                 key={index}
-                                                className={`px-5 py-2.5 text-left whitespace-nowrap text-sm leading-6 font-semibold capitalize cursor-pointer transition-all duration-300 ease-in-out ${
-                                                    editingColumn === key
-                                                        ? ""
-                                                        : "hover:bg-gray-200 hover:scale-105 hover:text-primary"
-                                                }`}
+                                                className={`px-5 py-2.5 text-left whitespace-nowrap text-sm leading-6 font-semibold capitalize cursor-pointer transition-all duration-300 ease-in-out ${editingColumn === key
+                                                    ? ""
+                                                    : "hover:bg-gray-200 hover:scale-105 hover:text-primary"
+                                                    }`}
                                                 onClick={() =>
                                                     setEditingColumn(key)
                                                 }
@@ -170,7 +169,7 @@ export default function AdminAgentPage({ agents, auth }) {
                                                                         ...prev,
                                                                         status:
                                                                             value !=
-                                                                            "-1"
+                                                                                "-1"
                                                                                 ? value
                                                                                 : "",
                                                                     })
@@ -261,7 +260,7 @@ export default function AdminAgentPage({ agents, auth }) {
                                                 (filter.status === ""
                                                     ? true
                                                     : agent.is_agent_active.toString() ===
-                                                      filter.status)
+                                                    filter.status)
                                             );
                                         })
                                         .map((agent, index) => (

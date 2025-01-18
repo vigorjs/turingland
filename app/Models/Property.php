@@ -65,7 +65,7 @@ class Property extends Model
 
     public function categories()
     {
-    return $this->belongsToMany(Category::class, 'property_category');
+        return $this->belongsToMany(Category::class, 'property_categories');
     }
 
     public function scopeFilter(Builder $query, $filters)
@@ -73,51 +73,74 @@ class Property extends Model
         if (!empty($filters['title'])) {
             $query->where('title', 'like', '%' . $filters['title'] . '%');
         }
-    
+
+        // Filter by category menggunakan whereHas
+        if (!empty($filters['category_id'])) {
+            $query->whereHas('categories', function ($query) use ($filters) {
+                $query->where('categories.id', $filters['category_id']);
+            });
+        }
+
+
         if (!empty($filters['area_id'])) {
             $query->where('area_id', $filters['area_id']);
         }
-    
+
         if (!empty($filters['price_min']) && !empty($filters['price_max'])) {
             $query->whereBetween('price', [$filters['price_min'], $filters['price_max']]);
+        } elseif (!empty($filters['price_min'])) {
+            $query->where('price', '>=', $filters['price_min']);
+        } elseif (!empty($filters['price_max'])) {
+            $query->where('price', '<=', $filters['price_max']);
         }
-    
+
         if (!empty($filters['developer_id'])) {
             $query->where('developer_id', $filters['developer_id']);
         }
-    
+
         if (!empty($filters['type'])) {
             $query->where('type', $filters['type']);
         }
-    
+
         if (!empty($filters['status'])) {
-            $query->where('status', $filters['status']); 
+            $query->where('status', $filters['status']);
         }
-    
+
         if (!empty($filters['bathroom_count'])) {
             $query->where('bathroom_count', '>=', $filters['bathroom_count']);
         }
-    
+
         if (!empty($filters['bedroom_count'])) {
             $query->where('bedroom_count', '>=', $filters['bedroom_count']);
         }
-    
+
         if (!empty($filters['carport_count'])) {
             $query->where('carport_count', '>=', $filters['carport_count']);
         }
-    
+
+        // Filter untuk land_area
         if (!empty($filters['land_area_min']) && !empty($filters['land_area_max'])) {
             $query->whereBetween('land_area', [$filters['land_area_min'], $filters['land_area_max']]);
+        } elseif (!empty($filters['land_area_min'])) {
+            $query->where('land_area', '>=', $filters['land_area_min']);
+        } elseif (!empty($filters['land_area_max'])) {
+            $query->where('land_area', '<=', $filters['land_area_max']);
         }
-    
+
+        // Filter untuk building_area
         if (!empty($filters['building_area_min']) && !empty($filters['building_area_max'])) {
             $query->whereBetween('building_area', [$filters['building_area_min'], $filters['building_area_max']]);
+        } elseif (!empty($filters['building_area_min'])) {
+            $query->where('building_area', '>=', $filters['building_area_min']);
+        } elseif (!empty($filters['building_area_max'])) {
+            $query->where('building_area', '<=', $filters['building_area_max']);
         }
-    
+
+
         if (!empty($filters['year_built'])) {
             $query->where('year_built', $filters['year_built']);
         }
-    
+
         if (!empty($filters['is_featured'])) {
             $query->where('is_featured', filter_var($filters['is_featured'], FILTER_VALIDATE_BOOLEAN));
         }

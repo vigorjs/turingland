@@ -37,7 +37,8 @@ export default function ApplicationLogo({ className, ...props }) {
                             : "/assets/turinglandlogo.png"
                     }
                     alt="Application Logo"
-                    className="h-12 w-auto"
+                    // className="h-auto w-auto"
+                    className="w-16 sm:w-auto"
                 />
             ) : (
                 <img
@@ -47,7 +48,8 @@ export default function ApplicationLogo({ className, ...props }) {
                             : "/assets/turinglandlogodark.png"
                     }
                     alt="Application Logo"
-                    className="h-12 w-auto"
+                    // className="h-12 w-auto"
+                    className="w-16 sm:w-auto"
                 />
             )}
         </Link>

@@ -17,6 +17,7 @@ import { useState, useEffect } from "react";
 
 function ModalLocationForm({ location, areas, isOpenModal, setIsOpenModal }) {
     const [isActive, setIsActive] = useState(location?.is_active ?? false);
+    const [errors, setErrors] = useState([])
     const [areaId, setAreaId] = useState(location?.area_id.toString());
     const [loading, setLoading] = useState(false);
 
@@ -54,6 +55,7 @@ function ModalLocationForm({ location, areas, isOpenModal, setIsOpenModal }) {
                             errors?.is_active,
                         variant: "destructive",
                     });
+                    setErrors(errors)
                     console.log("err: ", errors);
                 },
                 onSuccess: () => {
@@ -85,6 +87,7 @@ function ModalLocationForm({ location, areas, isOpenModal, setIsOpenModal }) {
                             errors?.is_active,
                         variant: "destructive",
                     });
+                    setErrors(errors)
                     console.log("err: ", errors);
                 },
                 onSuccess: () => {
@@ -104,6 +107,12 @@ function ModalLocationForm({ location, areas, isOpenModal, setIsOpenModal }) {
                 },
             });
         }
+    };
+
+    const ErrorMessage = ({ name }) => {
+        return errors[name] ? (
+            <p className="text-red-500 text-sm mt-1">{errors[name]}</p>
+        ) : null;
     };
 
     return (
@@ -129,6 +138,7 @@ function ModalLocationForm({ location, areas, isOpenModal, setIsOpenModal }) {
                         id="nama"
                         placeholder="Masukkan nama location..."
                     />
+                    <ErrorMessage name="name" />
                 </div>
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="icon">Deskripsi</Label>
@@ -139,11 +149,12 @@ function ModalLocationForm({ location, areas, isOpenModal, setIsOpenModal }) {
                         id="icon"
                         placeholder="Masukkan icon location..."
                     />
+                    <ErrorMessage name="description" />
                 </div>
                 <div className="grid w-full items-center gap-1.5">
                     <Label
                         className="text-[#5B5B5B] font-normal"
-                        htmlFor="email"
+                        htmlFor="area"
                     >
                         Area
                     </Label>
@@ -168,6 +179,7 @@ function ModalLocationForm({ location, areas, isOpenModal, setIsOpenModal }) {
                                 : null}
                         </SelectContent>
                     </Select>
+                    <ErrorMessage name="area_id" />
                 </div>
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="is_active">Active</Label>
@@ -175,6 +187,7 @@ function ModalLocationForm({ location, areas, isOpenModal, setIsOpenModal }) {
                         isActive={isActive}
                         setIsActive={setIsActive}
                     />
+                    <ErrorMessage name="is_active" />
                 </div>
                 <Button
                     // onClick={() => setIsOpenModal(false)}

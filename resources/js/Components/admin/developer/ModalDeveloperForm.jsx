@@ -10,6 +10,7 @@ import { useForm } from "@inertiajs/react";
 
 function ModalDeveloperForm({ developer, isOpenModal, setIsOpenModal }) {
     const [isLoading, setIsLoading] = useState(false);
+    const [errors, setErrors] = useState([]);
     const [image, setImage] = useState(
         developer?.logo ? `/storage/${developer?.logo}` : null
     );
@@ -40,6 +41,7 @@ function ModalDeveloperForm({ developer, isOpenModal, setIsOpenModal }) {
                         variant: "destructive",
                     });
                     console.log("err: ", errors);
+                    setErrors(errors)
                 },
                 onSuccess: () => {
                     toast({
@@ -69,6 +71,7 @@ function ModalDeveloperForm({ developer, isOpenModal, setIsOpenModal }) {
                         description: errors?.name || errors?.logo,
                         variant: "destructive",
                     });
+                    setErrors(errors)
                     console.log("err: ", errors);
                 },
                 onSuccess: () => {
@@ -94,6 +97,12 @@ function ModalDeveloperForm({ developer, isOpenModal, setIsOpenModal }) {
     const handleImageDelete = () => {
         setImage(null);
         setData("logo", null);
+    };
+
+    const ErrorMessage = ({ name }) => {
+        return errors[name] ? (
+            <p className="text-red-500 text-sm mt-1">{errors[name]}</p>
+        ) : null;
     };
 
     // useEffect(() => {
@@ -127,6 +136,7 @@ function ModalDeveloperForm({ developer, isOpenModal, setIsOpenModal }) {
                         id="nama"
                         placeholder="Masukkan nama developer..."
                     />
+                    <ErrorMessage name="name" />
                 </div>
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="deskripsi">Deskripsi</Label>
@@ -137,6 +147,7 @@ function ModalDeveloperForm({ developer, isOpenModal, setIsOpenModal }) {
                         id="deskripsi"
                         placeholder="Masukkan deskripsi developer..."
                     />
+                    <ErrorMessage name="description" />
                 </div>
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="logo">Logo</Label>
@@ -149,6 +160,7 @@ function ModalDeveloperForm({ developer, isOpenModal, setIsOpenModal }) {
                         id="logo"
                         accept="image/*"
                     />
+                    <ErrorMessage name="logo" />
                 </div>
 
                 <div className={`${!image && "hidden"} w-full`}>
@@ -174,6 +186,7 @@ function ModalDeveloperForm({ developer, isOpenModal, setIsOpenModal }) {
                         isActive={isActive}
                         setIsActive={setIsActive}
                     />
+                    <ErrorMessage name="is_active" />
                 </div>
                 <Button
                     // onClick={() => setIsOpenModal(false)}

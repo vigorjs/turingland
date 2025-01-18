@@ -1,4 +1,4 @@
-import { router } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -38,11 +38,17 @@ const AdminProfile = ({ imgSrc, name, email, isCollapsed }) => {
             <DropdownMenuContent className="w-56">
                 {/* <DropdownMenuLabel>{name}</DropdownMenuLabel> */}
                 {/* <DropdownMenuSeparator /> */}
-                <DropdownMenuItem>Profile</DropdownMenuItem>
+                <DropdownMenuItem>
+                    <Link className="w-full" href={route("profile.edit")}>
+                        Profile
+                    </Link>
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                    <form onSubmit={handleLogout}>
-                        <button>Log out</button>
+                    <form onSubmit={handleLogout} className="w-full">
+                        <button className="w-full text-start" type="submit">
+                            Log out
+                        </button>
                     </form>
                 </DropdownMenuItem>
             </DropdownMenuContent>

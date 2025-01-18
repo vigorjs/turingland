@@ -37,10 +37,10 @@ function AdminPropertyPage({ properties, developers, areas, auth }) {
         // Buat URL dengan query params
         const queryString = new URLSearchParams(filters).toString();
         const exportUrl = `${route("dashboard.property.export")}?${queryString}`;
-        
+
         // Gunakan window.location untuk download
         window.location.href = exportUrl;
-        
+
         // Tampilkan toast
         toast({
             title: "Export Successful",
@@ -80,7 +80,7 @@ function AdminPropertyPage({ properties, developers, areas, auth }) {
     };
 
     return (
-        <AdminLayout auth={auth}>
+        <AdminLayout auth={auth} title="Property">
             <div className="flex gap-2">
                 <Button
                     onClick={() =>
