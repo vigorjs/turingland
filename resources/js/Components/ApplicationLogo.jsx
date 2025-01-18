@@ -2,7 +2,7 @@ import { useTheme } from "@/hooks/useTheme";
 import { Link } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 
-export default function ApplicationLogo(props, className) {
+export default function ApplicationLogo({ className, ...props }) {
     const { theme } = useTheme();
     const [currentLogo, setCurrentLogo] = useState(null);
     const [currentLogoDark, setCurrentLogoDark] = useState(null);
@@ -37,7 +37,7 @@ export default function ApplicationLogo(props, className) {
                             : "/assets/turinglandlogo.png"
                     }
                     alt="Application Logo"
-                    className="h-auto w-auto"
+                    className="h-12 w-auto"
                 />
             ) : (
                 <img
