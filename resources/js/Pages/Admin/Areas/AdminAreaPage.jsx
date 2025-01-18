@@ -203,15 +203,13 @@ export default function AdminAreaPage({ areas, auth }) {
                                     {sortedData
                                         .filter((area) => {
                                             return (
-                                                area.name
-                                                    .toLowerCase()
+                                                area.name?.toLowerCase()
                                                     .includes(
-                                                        filter.name.toLowerCase()
+                                                        filter.name?.toLowerCase()
                                                     ) &&
-                                                area.description
-                                                    .toLowerCase()
+                                                area.description?.toLowerCase()
                                                     .includes(
-                                                        filter.description.toLowerCase()
+                                                        filter.description?.toLowerCase()
                                                     ) &&
                                                 (filter.status === ""
                                                     ? true

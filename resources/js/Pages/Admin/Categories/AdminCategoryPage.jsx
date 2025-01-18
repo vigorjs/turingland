@@ -29,6 +29,8 @@ export default function AdminCategoryPage({ categories, auth }) {
         name: ""
     });
 
+    const [errors, setErrors] = useState([])
+
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [selectAll, setSelectAll] = useState(false);
 
@@ -64,6 +66,7 @@ export default function AdminCategoryPage({ categories, auth }) {
                     description: err,
                     variant: "destructive",
                 });
+                setErrors(err)
                 console.log("ERR: ", err);
             },
             onFinish: () => {
@@ -258,7 +261,7 @@ export default function AdminCategoryPage({ categories, auth }) {
                                                     <button
                                                         onClick={() =>
                                                             handleDetail(
-                                                                developer.id
+                                                                category.id
                                                             )
                                                         }
                                                         className="p-2  rounded-full bg-white group transition-all duration-500 hover:bg-slate-600 flex item-center"
@@ -272,7 +275,7 @@ export default function AdminCategoryPage({ categories, auth }) {
                                                     <button
                                                         onClick={() =>
                                                             handleOpenEditModal(
-                                                                developer
+                                                                category
                                                             )
                                                         }
                                                         className="p-2  rounded-full bg-white group transition-all duration-500 hover:bg-indigo-600 flex item-center"
@@ -295,7 +298,7 @@ export default function AdminCategoryPage({ categories, auth }) {
                                                     <button
                                                         onClick={() =>
                                                             handleOpenDeleteModal(
-                                                                developer
+                                                                category
                                                             )
                                                         }
                                                         className="p-2 rounded-full bg-white group transition-all duration-500 hover:bg-red-600 flex item-center"

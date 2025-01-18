@@ -207,15 +207,13 @@ export default function AdminDeveloperPage({ developers, auth }) {
                                     {sortedData
                                         .filter((developer) => {
                                             return (
-                                                developer.name
-                                                    .toLowerCase()
+                                                developer.name?.toLowerCase()
                                                     .includes(
                                                         filter.name.toLowerCase()
                                                     ) &&
-                                                developer.description
-                                                    .toLowerCase()
+                                                developer.description?.toLowerCase()
                                                     .includes(
-                                                        filter.description.toLowerCase()
+                                                        filter.description?.toLowerCase()
                                                     ) &&
                                                 (filter.status === ""
                                                     ? true

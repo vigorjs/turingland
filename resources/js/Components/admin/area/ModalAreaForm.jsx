@@ -10,6 +10,7 @@ import { LoaderIcon, X } from "lucide-react";
 
 function ModalAreaForm({ area, isOpenModal, setIsOpenModal }) {
     const [isActive, setIsActive] = useState(area?.is_active ?? false);
+    const [errors, setErrors] = useState([])
     const [loading, setLoading] = useState(false);
 
     const { data, setData, post, put, reset } = useForm({
@@ -38,6 +39,7 @@ function ModalAreaForm({ area, isOpenModal, setIsOpenModal }) {
                         variant: "destructive",
                     });
                     console.log("err: ", errors);
+                    setErrors(errors)
                 },
                 onSuccess: () => {
                     toast({
@@ -63,6 +65,7 @@ function ModalAreaForm({ area, isOpenModal, setIsOpenModal }) {
                         variant: "destructive",
                     });
                     console.log("err: ", errors);
+                    setErrors(errors)
                 },
                 onSuccess: () => {
                     toast({
@@ -80,6 +83,12 @@ function ModalAreaForm({ area, isOpenModal, setIsOpenModal }) {
             });
         }
     };
+
+    const ErrorMessage = ({ name }) => {
+        return errors[name] ? (
+            <p className="text-red-500 text-sm mt-1">{errors[name]}</p>
+        ) : null;
+    }
 
     return (
         <Modal show={isOpenModal} onClose={() => setIsOpenModal(false)}>
@@ -104,6 +113,7 @@ function ModalAreaForm({ area, isOpenModal, setIsOpenModal }) {
                         id="nama"
                         placeholder="Masukkan nama Area..."
                     />
+                    <ErrorMessage name="name" />
                 </div>
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="icon">Deskripsi</Label>
@@ -114,6 +124,7 @@ function ModalAreaForm({ area, isOpenModal, setIsOpenModal }) {
                         id="icon"
                         placeholder="Masukkan icon Area..."
                     />
+                    <ErrorMessage name="description" />
                 </div>
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="is_active">Active</Label>
@@ -121,6 +132,7 @@ function ModalAreaForm({ area, isOpenModal, setIsOpenModal }) {
                         isActive={isActive}
                         setIsActive={setIsActive}
                     />
+                    <ErrorMessage name="is_active" />
                 </div>
                 <Button
                     // onClick={() => setIsOpenModal(false)}
