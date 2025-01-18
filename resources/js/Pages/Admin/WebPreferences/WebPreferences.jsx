@@ -123,11 +123,8 @@ const WebPreferences = ({ auth }) => {
     );
 
     return (
-        <AdminLayout auth={auth}>
+        <AdminLayout auth={auth} title="Web Preferences">
             <div className="p-6 bg-white rounded-lg shadow-md h-full">
-                <h1 className="text-2xl font-semibold mb-6 text-black">
-                    Website Setting
-                </h1>
 
                 {/* Container untuk form-form */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

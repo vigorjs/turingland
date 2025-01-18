@@ -101,7 +101,7 @@ export default function AdminLocationPage({ locations, areas, auth }) {
     };
 
     return (
-        <AdminLayout auth={auth}>
+        <AdminLayout auth={auth} title="Location">
             <Button
                 onClick={() => {
                     setIsOpenModal(true);

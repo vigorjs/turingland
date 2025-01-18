@@ -103,7 +103,7 @@ export default function AdminTestimonyPage({ testimonies, auth }) {
     };
 
     return (
-        <AdminLayout auth={auth}>
+        <AdminLayout auth={auth} title="Testimony">
             <Button
                 onClick={() => {
                     setIsOpenModal(true);

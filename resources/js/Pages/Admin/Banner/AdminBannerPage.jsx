@@ -103,7 +103,7 @@ export default function AdminBannerPage({ banners, auth }) {
     };
 
     return (
-        <AdminLayout auth={auth}>
+        <AdminLayout auth={auth} title="Banner">
             <Button
                 onClick={() => {
                     setIsOpenModal(true);

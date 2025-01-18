@@ -100,7 +100,7 @@ export default function AdminAreaPage({ areas, auth }) {
     };
 
     return (
-        <AdminLayout auth={auth}>
+        <AdminLayout auth={auth} title="Area">
             <Button
                 onClick={() => {
                     setIsOpenModal(true);

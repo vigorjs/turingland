@@ -102,7 +102,7 @@ export default function AdminDeveloperPage({ developers, auth }) {
     };
 
     return (
-        <AdminLayout auth={auth}>
+        <AdminLayout auth={auth} title="Developer">
             <Button
                 onClick={() => {
                     setIsOpenModal(true);

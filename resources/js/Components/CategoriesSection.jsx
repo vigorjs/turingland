@@ -3,7 +3,7 @@ import React from "react";
 
 export const CategoriesSection = ({ categories }) => {
     console.log(categories);
-    
+
     return (
         <div className="flex flex-wrap justify-center items-center gap-3 mt-56 mb-14 md:my-14">
             {categories.map((category, index) => (
@@ -16,7 +16,7 @@ export const CategoriesSection = ({ categories }) => {
                     // }}
                 >
                     <img
-                        src={category.icon ? `/storage/${category.icon}` : "/assets/hero-banner.webp"}
+                        src={category.icon ? `/storage/${category.icon}` : "/assets/rumah.png"}
                         alt={category.name}
                         className="w-10 h-10 rounded-full"
                     />

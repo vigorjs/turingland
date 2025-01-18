@@ -98,7 +98,7 @@ export default function AdminCategoryPage({ categories, auth }) {
     };
 
     return (
-        <AdminLayout auth={auth}>
+        <AdminLayout auth={auth} title="Category">
             <Button
                 onClick={() => {
                     setIsOpenModal(true);
