@@ -1,4 +1,7 @@
 import AdminDeveloperChart from "@/Components/admin/AdminDeveloperChart";
+import AdminPropertyChart from "@/Components/AdminPropertyChart";
+import PropertyCategoryChart from "@/Components/PropertyCategoryChart";
+import PropertyTypeChart from "@/Components/PropertyTypeChart";
 import {
     Carousel,
     CarouselContent,
@@ -7,6 +10,7 @@ import {
 import AdminLayout from "@/Layouts/AdminLayout";
 import { Head } from "@inertiajs/react";
 import { Users } from "lucide-react";
+import moment from "moment";
 import React from "react";
 
 export default function AdminDashboardPage({
@@ -16,6 +20,9 @@ export default function AdminDashboardPage({
     totalProperty,
     latestDevelopers,
     latestAgents,
+    propertyData,
+    categoryData,
+    propertyTypeData,
     auth,
 }) {
     console.log(latestDevelopers);
@@ -40,34 +47,6 @@ export default function AdminDashboardPage({
             icon: <Users className="text-2xl w-6 h-6 text-white" />,
             name: "Properti",
             total: totalProperty,
-        },
-    ];
-
-    const developers = [
-        {
-            logo: "assets/kost.png",
-            name: "Sinarmas",
-            joinDate: "Senin, 13 Desember 2024",
-        },
-        {
-            logo: "assets/kost.png",
-            name: "Sinarmas",
-            joinDate: "Senin, 13 Desember 2024",
-        },
-        {
-            logo: "assets/kost.png",
-            name: "Sinarmas",
-            joinDate: "Senin, 13 Desember 2024",
-        },
-        {
-            logo: "assets/kost.png",
-            name: "Sinarmas",
-            joinDate: "Senin, 13 Desember 2024",
-        },
-        {
-            logo: "assets/kost.png",
-            name: "Sinarmas",
-            joinDate: "Senin, 13 Desember 2024",
         },
     ];
 
@@ -97,13 +76,36 @@ export default function AdminDashboardPage({
                 ))}
             </div>
 
-            <div className="flex flex-wrap lg:flex-nowrap justify-between items-start gap-2 py-8">
-                <div className="w-full lg:w-2/3">
-                    <AdminDeveloperChart />
+            <div className="flex flex-col lg:flex-row gap-4 py-8">
+                {/* Left Section - Charts */}
+                <div className="w-full lg:w-2/3 flex flex-col gap-6">
+                    {/* Property Chart */}
+                    <div className="w-full">
+                        <AdminPropertyChart data={propertyData} />
+                    </div>
+
+                    {/* Pie Charts - Stack on mobile, side by side on desktop */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {" "}
+                        {/* Increased gap */}
+                        <div className="w-full h-[400px]">
+                            {" "}
+                            {/* Added fixed height */}
+                            <PropertyCategoryChart data={categoryData} />
+                        </div>
+                        <div className="w-full h-[400px]">
+                            {" "}
+                            {/* Added fixed height */}
+                            <PropertyTypeChart data={propertyTypeData} />
+                        </div>
+                    </div>
                 </div>
-                <div className="w-full lg:w-1/3">
-                    <div className="flex flex-col items-center justify-center w-full mx-auto bg-white rounded-lg shadow dark:bg-gray-800">
-                        <div className="w-full px-4 py-5 border-b sm:px-6">
+
+                {/* Right Section - Latest Info */}
+                <div className="w-full lg:w-1/3 flex flex-col gap-4">
+                    {/* Latest Developers Card */}
+                    <div className="bg-white rounded-lg shadow dark:bg-gray-800">
+                        <div className="px-4 py-5 border-b sm:px-6">
                             <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-white">
                                 Developer Terbaru
                             </h3>
@@ -111,45 +113,41 @@ export default function AdminDashboardPage({
                                 List developer yang terbaru gabung
                             </p>
                         </div>
-                        <div className="flex flex-col divide-y divide w-full px-4 sm:px-6">
+                        <div className="divide-y divide-gray-200 dark:divide-gray-700">
                             {latestDevelopers.map((item, index) => (
                                 <div
                                     key={`current-developer-${index}`}
-                                    className="flex flex-row"
+                                    className="flex items-center p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                                 >
-                                    <div className="flex items-center p-4 cursor-pointer select-none">
-                                        <div className="flex flex-col items-center justify-center w-10 h-10 mr-4">
-                                            <a
-                                                href="#"
-                                                className="relative block"
-                                            >
-                                                <img
-                                                    alt="profil"
-                                                    src={
-                                                        item.logo
-                                                            ? item.logo
-                                                            : "https://avatar.iran.liara.run/public"
-                                                    }
-                                                    className="mx-auto object-cover rounded h-10 w-10 "
-                                                />
-                                            </a>
-                                        </div>
-                                        <div className="pl-1 mr-16">
-                                            <div className="font-medium dark:text-white">
-                                                {item.name}
-                                            </div>
-                                            <div className="text-sm text-gray-600 dark:text-gray-200">
-                                                {item.created_at}
-                                            </div>
-                                        </div>
+                                    <div className="flex-shrink-0 w-10 h-10 mr-4">
+                                        <img
+                                            alt="profil"
+                                            src={
+                                                item.logo
+                                                    ? item.logo
+                                                    : "https://avatar.iran.liara.run/public"
+                                            }
+                                            className="w-full h-full object-cover rounded"
+                                        />
+                                    </div>
+                                    <div className="min-w-0 flex-1">
+                                        <p className="font-medium text-gray-900 dark:text-white truncate">
+                                            {item.name}
+                                        </p>
+                                        <p className="text-sm text-gray-600 dark:text-gray-200">
+                                            {moment(item.created_at).format(
+                                                "YYYY-MM-DD"
+                                            )}
+                                        </p>
                                     </div>
                                 </div>
                             ))}
                         </div>
                     </div>
 
-                    <div className="flex flex-col items-center justify-center w-full mx-auto bg-white rounded-lg shadow dark:bg-gray-800 mt-4">
-                        <div className="w-full px-4 py-5 border-b sm:px-6">
+                    {/* Latest Agents Card */}
+                    <div className="bg-white rounded-lg shadow dark:bg-gray-800">
+                        <div className="px-4 py-5 border-b sm:px-6">
                             <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-white">
                                 Agents Terbaru
                             </h3>
@@ -157,37 +155,32 @@ export default function AdminDashboardPage({
                                 List agents yang terbaru gabung
                             </p>
                         </div>
-                        <div className="flex flex-col divide-y divide w-full px-4 sm:px-6">
+                        <div className="divide-y divide-gray-200 dark:divide-gray-700">
                             {latestAgents.map((item, index) => (
                                 <div
-                                    key={`current-developer-${index}`}
-                                    className="flex flex-row"
+                                    key={`current-agent-${index}`}
+                                    className="flex items-center p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                                 >
-                                    <div className="flex items-center p-4 cursor-pointer select-none">
-                                        <div className="flex flex-col items-center justify-center w-10 h-10 mr-4">
-                                            <a
-                                                href="#"
-                                                className="relative block"
-                                            >
-                                                <img
-                                                    alt="profil"
-                                                    src={
-                                                        item.photo
-                                                            ? item.photo
-                                                            : "https://avatar.iran.liara.run/public"
-                                                    }
-                                                    className="mx-auto object-cover rounded h-10 w-10 "
-                                                />
-                                            </a>
-                                        </div>
-                                        <div className="pl-1 mr-16">
-                                            <div className="font-medium dark:text-white">
-                                                {item.name}
-                                            </div>
-                                            <div className="text-sm text-gray-600 dark:text-gray-200">
-                                                {item.created_at}
-                                            </div>
-                                        </div>
+                                    <div className="flex-shrink-0 w-10 h-10 mr-4">
+                                        <img
+                                            alt="profil"
+                                            src={
+                                                item.photo
+                                                    ? item.photo
+                                                    : "https://avatar.iran.liara.run/public"
+                                            }
+                                            className="w-full h-full object-cover rounded"
+                                        />
+                                    </div>
+                                    <div className="min-w-0 flex-1">
+                                        <p className="font-medium text-gray-900 dark:text-white truncate">
+                                            {item.name}
+                                        </p>
+                                        <p className="text-sm text-gray-600 dark:text-gray-200">
+                                            {moment(item.created_at).format(
+                                                "YYYY-MM-DD"
+                                            )}
+                                        </p>
                                     </div>
                                 </div>
                             ))}
@@ -195,34 +188,6 @@ export default function AdminDashboardPage({
                     </div>
                 </div>
             </div>
-
-            {/* <Carousel
-                opts={{
-                    align: "center",
-                }}
-            >
-                <CarouselContent className="py-10 pl-3">
-                    {cardCounting.map((item, index) => (
-                        <CarouselItem key={`card-counting-${index}`} className="flex-shrink-0 basis-auto ">
-                            <div className="w-72 max-w-72 h-22 bg-white shadow-md border border-neutral-100 p-5 rounded-xl flex justify-between items-start gap-2 hover:scale-105 hover:shadow-lg transition-all duration-300">
-                                <div className="-mt-10  bg-primary p-3.5 rounded-lg flex justify-center items-center">
-                                    {item.icon}
-                                </div>
-
-                                <div>
-                                    <p className="text-sm text-right font-normal text-neutral-600">
-                                        {item.name}
-                                    </p>
-                                    <p className="text-2xl text-right text-neutral-700 font-bold">
-                                        {item.total}
-                                    </p>
-                                </div>
-                            </div>
-                        </CarouselItem>
-                    ))}
-                </CarouselContent>
-            </Carousel> */}
-            {/* </div> */}
         </AdminLayout>
     );
 }
