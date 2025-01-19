@@ -81,14 +81,21 @@ class Property extends Model
             $query->where('title', 'like', '%' . $filters['title'] . '%');
         }
 
-        // Filter by category menggunakan whereHas
+        // Untuk category_id
         if (!empty($filters['category_id'])) {
             $query->whereHas('categories', function ($query) use ($filters) {
                 $query->where('categories.id', $filters['category_id']);
             });
         }
 
+        // Filter berdasarkan lokasi
+        if (!empty($filters['location_id'])) {
+            $query->whereHas('area', function ($query) use ($filters) {
+                $query->where('location_id', $filters['location_id']);
+            });
+        }
 
+        // Filter berdasarkan area (jika dipilih)
         if (!empty($filters['area_id'])) {
             $query->where('area_id', (int) $filters['area_id']);
         }
