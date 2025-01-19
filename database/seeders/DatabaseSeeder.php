@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             PropertySeeder::class,
             TestimonySeeder::class,
             BannerSeeder::class,
+            PropertyCategorySeeder::class,
             WebPreferencesSeeder::class,
         ]);
     }
