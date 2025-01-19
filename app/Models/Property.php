@@ -109,7 +109,7 @@ class Property extends Model
         }
 
         if (!empty($filters['developer_id'])) {
-            $query->where('developer_id', $filters['developer_id']);
+            $query->where('developer_id', (int) $filters['developer_id']);
         }
 
         if (!empty($filters['type'])) {

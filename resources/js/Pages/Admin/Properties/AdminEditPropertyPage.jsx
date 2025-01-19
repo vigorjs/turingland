@@ -15,9 +15,15 @@ import { X } from "lucide-react";
 import { Label } from "@/Components/ui/label";
 import { router } from "@inertiajs/react";
 import { Input } from "@/Components/ui/input";
-import MultiSelect from "@/Components/MultiSelect";
+import { MultiSelect } from "react-multi-select-component";
 
-function AdminEditPropertyPage({ property, developers, areas, categories, auth }) {
+function AdminEditPropertyPage({
+    property,
+    developers,
+    areas,
+    categories,
+    auth,
+}) {
     const [uploadedImages, setUploadedImages] = useState([]);
     const [errors, setErrors] = useState({});
 
@@ -33,7 +39,7 @@ function AdminEditPropertyPage({ property, developers, areas, categories, auth }
             description: property.description,
             developer_id: property.developer_id.toString(),
             area_id: property.area_id.toString(),
-            category_ids: [1, 2],
+            category_ids: property.categories.map((category) => category.id),
             bathroom_count: property.bathroom_count,
             bedroom_count: property.bedroom_count,
             carport_count: property.carport_count,
@@ -153,11 +159,11 @@ function AdminEditPropertyPage({ property, developers, areas, categories, auth }
         ) : null;
     };
 
-    const arrObjCategories = categories.map((item) => {
-        return {
-            label: item.name, value: item.id
-        }
-    })
+    // Format options untuk react-multi-select-component
+    const categoryOptions = categories.map((category) => ({
+        label: category.name,
+        value: category.id,
+    }));
 
     return (
         <AdminLayout auth={auth}>
@@ -252,45 +258,51 @@ function AdminEditPropertyPage({ property, developers, areas, categories, auth }
                             </div>
 
                             {/* Categories Select */}
+                            {/* Categories Select */}
                             <div className="space-y-2">
                                 <Label htmlFor="category_ids">Categories</Label>
                                 <Controller
                                     name="category_ids"
                                     control={control}
                                     defaultValue={[]}
-                                    render={({ field }) => {
-                                        // Convert IDs to full category objects
-                                        const selectedCategories = (
-                                            field.value || []
-                                        )
-                                            .map((id) =>
-                                                categories.find(
-                                                    (cat) =>
-                                                        cat.id.toString() ===
-                                                        id.toString()
-                                                )
-                                            )
-                                            .filter(Boolean); // Remove any undefined values
-                                            console.log("selectedCategories: ", selectedCategories);
-                                            
-                                        return (
-                                            <MultiSelect
-                                                selected={selectedCategories}
-                                                options={arrObjCategories}
-                                                onChange={(selected) => {
-                                                    // Convert back to array of IDs for form value
-                                                    const selectedIds =
-                                                        selected.map((item) =>
-                                                            item.id.toString()
-                                                        );
-                                                    field.onChange(selectedIds);
-                                                }}
-                                                placeholder="Select categories"
-                                            />
-                                        );
-                                    }}
+                                    render={({ field }) => (
+                                        <MultiSelect
+                                            options={categoryOptions}
+                                            value={categoryOptions.filter(
+                                                (option) =>
+                                                    field.value.includes(
+                                                        option.value
+                                                    )
+                                            )}
+                                            onChange={(selected) => {
+                                                // Update form dengan array of IDs
+                                                field.onChange(
+                                                    selected.map(
+                                                        (item) => item.value
+                                                    )
+                                                );
+                                            }}
+                                            labelledBy="Select categories"
+                                            // Optional props untuk kustomisasi
+                                            hasSelectAll={true}
+                                            disableSearch={false}
+                                            className="w-full"
+                                            overrideStrings={{
+                                                selectSomeItems:
+                                                    "Select categories...",
+                                                allItemsAreSelected:
+                                                    "All categories selected",
+                                                selectAll: "Select All",
+                                                search: "Search",
+                                            }}
+                                        />
+                                    )}
                                 />
-                                <ErrorMessage name="category_ids" />
+                                {errors.category_ids && (
+                                    <p className="text-red-500 text-sm mt-1">
+                                        {errors.category_ids}
+                                    </p>
+                                )}
                             </div>
 
                             {/* Area Select */}

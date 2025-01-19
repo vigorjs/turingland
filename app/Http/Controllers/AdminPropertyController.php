@@ -100,7 +100,14 @@ class AdminPropertyController extends Controller
         $developers = $this->developerService->getAllDevelopers();
         $areas = $this->areaService->getAllAreas();
         // $categories = $this->categoryService->all()->getData();
-        $categories = Category::all();
+        $categories = Category::select('id', 'name')
+        ->get()
+        ->map(function($category) {
+            return [
+                'id' => $category->id,
+                'name' => $category->name
+            ];
+        });
 
         return Inertia::render("Admin/Properties/AdminCreatePropertyPage", [
             'developers' => $developers,
@@ -126,6 +133,7 @@ class AdminPropertyController extends Controller
     {
         $property = $this->propertyService->getPropertyById($id);
         // dd($property);
+        
 
         $developers = $this->developerService->getAllDevelopers();
         $areas = $this->areaService->getAllAreas();
