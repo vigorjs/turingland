@@ -405,7 +405,7 @@ function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-3 gap-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="land_area">
                                         Land Area (m²)
@@ -449,6 +449,37 @@ function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
                                                 id="building_area"
                                                 type="number"
                                                 step="0.01"
+                                                {...field}
+                                                onChange={(e) =>
+                                                    field.onChange(
+                                                        parseFloat(
+                                                            e.target.value
+                                                        )
+                                                    )
+                                                }
+                                                className={
+                                                    errors.building_area
+                                                        ? "border-red-500"
+                                                        : ""
+                                                }
+                                            />
+                                        )}
+                                    />
+                                    <ErrorMessage name="building_area" />
+                                </div>
+
+                                <div className="space-y-2">
+                                    <Label htmlFor="year_built">
+                                        Year Build
+                                    </Label>
+                                    <Controller
+                                        name="year_built"
+                                        control={control}
+                                        render={({ field }) => (
+                                            <Input
+                                                id="year_built"
+                                                type="number"
+                                                step="1"
                                                 {...field}
                                                 onChange={(e) =>
                                                     field.onChange(

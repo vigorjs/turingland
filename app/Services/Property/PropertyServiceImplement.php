@@ -69,6 +69,10 @@ class PropertyServiceImplement extends ServiceApi implements PropertyService
           : null;
       }
 
+      $data['year_built'] = isset($data['year_built']) && $data['year_built'] !== 'null'
+        ? (int) $data['year_built']
+        : null;
+
       $property = $this->mainRepository->create($data);
 
       if ($data['category_ids']) {
@@ -120,6 +124,10 @@ class PropertyServiceImplement extends ServiceApi implements PropertyService
           }
         }
       }
+
+      $data['year_built'] = isset($data['year_built']) && $data['year_built'] !== 'null'
+        ? (int) $data['year_built']
+        : null;
 
       $property = $this->mainRepository->update($id, $data);
 
