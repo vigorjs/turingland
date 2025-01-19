@@ -23,6 +23,7 @@ require __DIR__.'/auth.php';
 Route::get("/", [HomeController::class, 'index'])->name('homepage');
 Route::get('/property/{id}', [PropertyController::class, 'show'])->name('property.show');
 Route::get('/search', [SearchController::class, 'index'])->name('search.property');
+Route::get('/search-api', [SearchController::class, 'indexApi'])->name('search.property.api');
 
 Route::get('/api/header-data', function() {
     return response()->json([

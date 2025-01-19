@@ -9,6 +9,7 @@ import {
 import { BathIcon, BedDoubleIcon, CarFrontIcon, PhoneCall } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { Button } from "../ui/button";
+import { formatRupiah } from "@/lib/utils";
 
 export default function CardPropertySearch( {property} ) {
     const img = `https://ecatalog.sinarmasland.com/_next/image?url=https%3A%2F%2Fecatalog.sinarmasland.com%2Fassets%2Fsite-setting-files%2F1%2Fhomepage-background-banner-desktop-677b6f397dc74.jpg&w=3840&q=75`;
@@ -21,7 +22,7 @@ export default function CardPropertySearch( {property} ) {
     const allImages = [imagePrimary, ...otherImages];
 
     console.log("card", property);
-    
+
     return (
         <div className="shadow-md rounded-2xl">
             <Carousel>
@@ -58,8 +59,8 @@ export default function CardPropertySearch( {property} ) {
             {/* DETAIL PROPERTY */}
             <div className="p-3.5">
                 <h1 className="text-primary text-lg font-extrabold mb-1">
-                    Rp {property.price}
-                    <span className="bg-primary/15 text-primary px-2 py-1 font-semibold rounded-full text-xs">
+                    {formatRupiah(property.price)}
+                    <span className="ml-2 bg-primary/15 text-primary px-2 py-1 font-semibold rounded-full text-xs">
                         Disewa
                     </span>
                 </h1>

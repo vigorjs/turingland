@@ -29,8 +29,8 @@ class Area extends Model
         return $this->hasMany(Property::class);
     }
 
-    public function locations(): HasMany
-    {
-        return $this->hasMany(Location::class);
-    }
+    // public function locations(): HasMany
+    // {
+    //     return $this->hasMany(Location::class);
+    // }
 }

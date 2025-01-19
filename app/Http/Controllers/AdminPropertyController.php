@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Exports\PropertyExport;
 use App\Http\Requests\PropertyCreateRequest;
 use App\Http\Requests\PropertyUpdateRequest;
+use App\Models\Area;
 use App\Models\Category;
+use App\Models\Developer;
+use App\Models\Location;
 use App\Models\Property;
 use App\Models\PropertyImage;
 use App\Services\Area\AreaService;
@@ -53,8 +56,22 @@ class AdminPropertyController extends Controller
         $filters = $request->validate([
             'title' => 'nullable|string|max:255',
             'area_id' => 'nullable|integer',
+            'category_id' => 'nullable|integer', 
+            'developer_id' => 'nullable|integer', 
+            'location_id' => 'nullable|integer', 
             'price_min' => 'nullable|numeric',
             'price_max' => 'nullable|numeric',
+            'type' => 'nullable|string',
+            'status' => 'nullable|string',
+            'bathroom_count' => 'nullable|integer',
+            'bedroom_count' => 'nullable|integer',
+            'carport_count' => 'nullable|integer',
+            'land_area_min' => 'nullable|numeric',
+            'land_area_max' => 'nullable|numeric',
+            'building_area_min' => 'nullable|numeric',
+            'building_area_max' => 'nullable|numeric',
+            'year_built' => 'nullable|integer',
+            'is_featured' => 'nullable|boolean'
         ]);
 
         // Ambil data properti dengan filter
@@ -62,6 +79,10 @@ class AdminPropertyController extends Controller
 
         return Inertia::render("Admin/Properties/AdminPropertyPage", [
             'properties' => $properties,
+            'areas' => Area::all(),
+            'categories' => Category::all(),
+            'developers' => Developer::all(),
+            'locations' => Location::all(),
         ]);
     }
 

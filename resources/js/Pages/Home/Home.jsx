@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 import React from "react";
 
-export default function Home({ auth, categories}) {
+export default function Home({ auth, categories, testimonials, latestProperties, featuredProperties }) {
     const img =
         "https://ecatalog.sinarmasland.com/_next/image?url=https%3A%2F%2Fecatalog.sinarmasland.com%2Fassets%2Fsite-setting-files%2F1%2Fhomepage-background-banner-desktop-677b6f397dc74.jpg&w=3840&q=75";
 
@@ -35,36 +35,36 @@ export default function Home({ auth, categories}) {
 
     const arr = [{}, {}, {}, {}, {}, {}, {}, {}];
 
-    const testimonials = [
-        {
-            id: 1,
-            img: "https://avatar.iran.liara.run/public",
-            name: "Saydova",
-            role: "Investor Kripto",
-            text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, ex.",
-        },
-        {
-            id: 2,
-            img: "https://avatar.iran.liara.run/public",
-            name: "Tommy",
-            role: "Penyewa ",
-            text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nobis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nobisLorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nobisLorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nobis",
-        },
-        {
-            id: 3,
-            img: "https://avatar.iran.liara.run/public",
-            name: "Jake Doe",
-            role: "Pembeli",
-            text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim, voluptate.",
-        },
-        {
-            id: 4,
-            img: "https://avatar.iran.liara.run/public",
-            name: "Attahlah",
-            role: "Investor",
-            text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim, voluptate.",
-        },
-    ];
+    // const testimonials = [
+    //     {
+    //         id: 1,
+    //         img: "https://avatar.iran.liara.run/public",
+    //         name: "Saydova",
+    //         role: "Investor Kripto",
+    //         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, ex.",
+    //     },
+    //     {
+    //         id: 2,
+    //         img: "https://avatar.iran.liara.run/public",
+    //         name: "Tommy",
+    //         role: "Penyewa ",
+    //         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nobis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nobisLorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nobisLorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nobis",
+    //     },
+    //     {
+    //         id: 3,
+    //         img: "https://avatar.iran.liara.run/public",
+    //         name: "Jake Doe",
+    //         role: "Pembeli",
+    //         text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim, voluptate.",
+    //     },
+    //     {
+    //         id: 4,
+    //         img: "https://avatar.iran.liara.run/public",
+    //         name: "Attahlah",
+    //         role: "Investor",
+    //         text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim, voluptate.",
+    //     },
+    // ];
 
     // const categories = [
     //     {
