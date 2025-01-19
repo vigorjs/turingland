@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('certificate_type')->nullable();
             $table->year('year_built')->nullable();
             $table->boolean('is_featured')->default(false);
+            $table->date('when_sold')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
