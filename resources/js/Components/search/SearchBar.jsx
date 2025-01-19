@@ -92,9 +92,9 @@ const SearchBar = ({ categories, areas, filters, setPropertiesData }) => {
         setAreaId("")
     };
 
-    useEffect(() => {
-        handleSearchSubmit();
-    }, [orderAdsFilter]);
+    // useEffect(() => {
+    //     handleSearchSubmit();
+    // }, [orderAdsFilter]);
 
     return (
         <>
