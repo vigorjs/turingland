@@ -99,7 +99,7 @@ export default function ExcelFilterModal({ isOpen, setIsOpen, onFilterSubmit }) 
     <Modal show={isOpen} onClose={handleClose}>
       <div className="p-6">
         <h3 className="text-xl font-semibold mb-4">Export Excel Filter</h3>
-        
+
         <div className="grid grid-cols-2 gap-4 mb-4">
           {/* Title */}
           <div>
@@ -291,7 +291,7 @@ export default function ExcelFilterModal({ isOpen, setIsOpen, onFilterSubmit }) 
             <Checkbox
               id="is_featured"
               checked={filters.is_featured}
-              onCheckedChange={(checked) => 
+              onCheckedChange={(checked) =>
                 setFilters(prev => ({...prev, is_featured: checked}))
               }
             />

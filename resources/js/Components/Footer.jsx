@@ -67,7 +67,7 @@ const Footer = ({ areas, categories }) => {
                                 {areas.slice(0, 5).map((area, index) => (
                                     <Link
                                         key={`footer-area-${index}`}
-                                        // href={area.href}
+                                        href={`/search?area_id=${area.id}`}
                                         className="text-[#A5A5A5] font-inter text-sm leading-6 hover:underline"
                                     >
                                         {area.name}
@@ -86,7 +86,7 @@ const Footer = ({ areas, categories }) => {
                                     .map((category, index) => (
                                         <Link
                                             key={`footer-category-${index}`}
-                                            // href={category.href}
+                                            href={`/search?category_id=${category.id}`}
                                             className="text-[#A5A5A5] font-inter text-sm leading-6 hover:underline"
                                         >
                                             {category.name}

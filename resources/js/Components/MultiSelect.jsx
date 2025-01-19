@@ -1,37 +1,37 @@
 import React from 'react';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/Components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/Components/ui/popover";
+import { Badge } from "@/Components/ui/badge";
+import { Button } from "@/Components/ui/button";
 import { X, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const MultiSelect = ({ 
-    selected = [], 
-    options = [], 
-    onChange = () => {}, 
-    placeholder = "Select items..." 
+const MultiSelect = ({
+    selected = [],
+    options = [],
+    onChange = () => {},
+    placeholder = "Select items..."
 }) => {
     const [open, setOpen] = React.useState(false);
-    
+
     // Ensure options and selected are arrays and have the required structure
     const safeOptions = Array.isArray(options) ? options : [];
     const safeSelected = Array.isArray(selected) ? selected : [];
-    
+
     const handleSelect = (item) => {
         if (!item || !item.id) return;
-        
+
         const isSelected = safeSelected.some(selectedItem => selectedItem.id === item.id);
         const newSelected = isSelected
             ? safeSelected.filter((i) => i.id !== item.id)
             : [...safeSelected, item];
-            
+
         onChange(newSelected);
     };
 
     const handleRemove = (item, e) => {
         if (!item || !item.id) return;
-        
+
         e.stopPropagation();
         const newSelected = safeSelected.filter((i) => i.id !== item.id);
         onChange(newSelected);
