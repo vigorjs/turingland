@@ -25,13 +25,13 @@ class PropertyRepositoryImplement extends Eloquent implements PropertyRepository
         // dd($filters);
 
         return $this->model
-        ->with(['developer', 'area'])
+        ->with(['developer', 'area', 'categories'])
         ->filter($filters)
         ->paginate(8);
         // return $this->model->with(['developer', 'area'])->get();
     }
 
     public function getPropertyById($id){
-        return $this->model->where('id', $id)->with('images')->get();
+        return $this->model->where('id', $id)->with(['images', 'categories'])->get();
     }
 }
