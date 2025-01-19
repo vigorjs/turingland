@@ -7,6 +7,7 @@ import {
 import AdminLayout from "@/Layouts/AdminLayout";
 import { Head } from "@inertiajs/react";
 import { Users } from "lucide-react";
+import moment from "moment";
 import React from "react";
 
 export default function AdminDashboardPage({
@@ -40,34 +41,6 @@ export default function AdminDashboardPage({
             icon: <Users className="text-2xl w-6 h-6 text-white" />,
             name: "Properti",
             total: totalProperty,
-        },
-    ];
-
-    const developers = [
-        {
-            logo: "assets/kost.png",
-            name: "Sinarmas",
-            joinDate: "Senin, 13 Desember 2024",
-        },
-        {
-            logo: "assets/kost.png",
-            name: "Sinarmas",
-            joinDate: "Senin, 13 Desember 2024",
-        },
-        {
-            logo: "assets/kost.png",
-            name: "Sinarmas",
-            joinDate: "Senin, 13 Desember 2024",
-        },
-        {
-            logo: "assets/kost.png",
-            name: "Sinarmas",
-            joinDate: "Senin, 13 Desember 2024",
-        },
-        {
-            logo: "assets/kost.png",
-            name: "Sinarmas",
-            joinDate: "Senin, 13 Desember 2024",
         },
     ];
 
@@ -139,7 +112,7 @@ export default function AdminDashboardPage({
                                                 {item.name}
                                             </div>
                                             <div className="text-sm text-gray-600 dark:text-gray-200">
-                                                {item.created_at}
+                                                {moment(item.created_at).format('YYYY-MM-DD')}
                                             </div>
                                         </div>
                                     </div>
@@ -185,7 +158,7 @@ export default function AdminDashboardPage({
                                                 {item.name}
                                             </div>
                                             <div className="text-sm text-gray-600 dark:text-gray-200">
-                                                {item.created_at}
+                                                {moment(item.created_at).format('YYYY-MM-DD')}
                                             </div>
                                         </div>
                                     </div>
@@ -196,33 +169,6 @@ export default function AdminDashboardPage({
                 </div>
             </div>
 
-            {/* <Carousel
-                opts={{
-                    align: "center",
-                }}
-            >
-                <CarouselContent className="py-10 pl-3">
-                    {cardCounting.map((item, index) => (
-                        <CarouselItem key={`card-counting-${index}`} className="flex-shrink-0 basis-auto ">
-                            <div className="w-72 max-w-72 h-22 bg-white shadow-md border border-neutral-100 p-5 rounded-xl flex justify-between items-start gap-2 hover:scale-105 hover:shadow-lg transition-all duration-300">
-                                <div className="-mt-10  bg-primary p-3.5 rounded-lg flex justify-center items-center">
-                                    {item.icon}
-                                </div>
-
-                                <div>
-                                    <p className="text-sm text-right font-normal text-neutral-600">
-                                        {item.name}
-                                    </p>
-                                    <p className="text-2xl text-right text-neutral-700 font-bold">
-                                        {item.total}
-                                    </p>
-                                </div>
-                            </div>
-                        </CarouselItem>
-                    ))}
-                </CarouselContent>
-            </Carousel> */}
-            {/* </div> */}
         </AdminLayout>
     );
 }
