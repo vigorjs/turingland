@@ -14,7 +14,7 @@ import { router, usePage } from "@inertiajs/react";
 
 export const FilterSearch = () => {
     const [isSimpleSearch, setIsSimpleSearch] = useState(true);
-    const { areas, developers, categories } = usePage().props;
+    const { areas, developers, locations, categories } = usePage().props;
 
     return (
         <div
@@ -30,6 +30,7 @@ export const FilterSearch = () => {
                                 setIsSimpleSearch={setIsSimpleSearch}
                                 areas={areas}
                                 categories={categories}
+                                locations={locations}
                             />
                         ) : (
                             <AdvanceFilterSearch
@@ -37,6 +38,7 @@ export const FilterSearch = () => {
                                 areas={areas}
                                 developers={developers}
                                 categories={categories}
+                                locations={locations}
                             />
                         )}
                     </div>
@@ -46,7 +48,7 @@ export const FilterSearch = () => {
     );
 };
 
-const SimpleFilterSearch = ({ setIsSimpleSearch, areas, categories }) => {
+const SimpleFilterSearch = ({ setIsSimpleSearch, areas, categories, locations }) => {
     const [filters, setFilters] = useState({
         area_id: "",
         category_id: "", // Updated from type to category_id
@@ -86,19 +88,19 @@ const SimpleFilterSearch = ({ setIsSimpleSearch, areas, categories }) => {
                 </Label>
                 <Select
                     onValueChange={(value) =>
-                        setFilters((prev) => ({ ...prev, area_id: value }))
+                        setFilters((prev) => ({ ...prev, location_id: value }))
                     }
                 >
                     <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6] w-full">
                         <SelectValue placeholder="Pilih Lokasi" />
                     </SelectTrigger>
                     <SelectContent className="z-50 bg-white dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
-                        {areas.map((area) => (
+                        {locations.map((location) => (
                             <SelectItem
-                                key={area.id}
-                                value={area.id.toString()}
+                                key={location.id}
+                                value={location.id.toString()}
                             >
-                                {area.name}
+                                {location.name}
                             </SelectItem>
                         ))}
                     </SelectContent>
@@ -168,11 +170,13 @@ const SimpleFilterSearch = ({ setIsSimpleSearch, areas, categories }) => {
         </form>
     );
 };
+
 const AdvanceFilterSearch = ({
     setIsSimpleSearch,
     areas,
     categories,
     developers,
+    locations
 }) => {
     const [filters, setFilters] = useState({
         area_id: "",
@@ -180,6 +184,7 @@ const AdvanceFilterSearch = ({
         price_min: "",
         price_max: "",
         developer_id: "",
+        type: "",
         status: "",
         land_area_min: "",
         land_area_max: "",
@@ -193,6 +198,18 @@ const AdvanceFilterSearch = ({
         { id: "for_rent", name: "Disewa" },
         { id: "sold", name: "Terjual" },
     ];
+
+    const filteredAreas = filters.location_id 
+    ? areas.filter(area => area.location_id === parseInt(filters.location_id))
+    : areas;
+
+    const handleLocationChange = (locationId) => {
+        setFilters(prev => ({
+            ...prev,
+            location_id: locationId,
+            area_id: "" // Reset area ketika lokasi berubah
+        }));
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -237,20 +254,19 @@ const AdvanceFilterSearch = ({
                     Lokasi
                 </Label>
                 <Select
-                    onValueChange={(value) =>
-                        setFilters((prev) => ({ ...prev, area_id: value }))
-                    }
+                    value={filters.location_id}
+                    onValueChange={handleLocationChange}
                 >
                     <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6]">
                         <SelectValue placeholder="Pilih Lokasi" />
                     </SelectTrigger>
                     <SelectContent className="z-50 bg-white dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
-                        {areas.map((area) => (
+                        {locations.map((location) => (
                             <SelectItem
-                                key={area.id}
-                                value={area.id.toString()}
+                                key={location.id}
+                                value={location.id.toString()}
                             >
-                                {area.name}
+                                {location.name}
                             </SelectItem>
                         ))}
                     </SelectContent>
@@ -322,14 +338,23 @@ const AdvanceFilterSearch = ({
                 >
                     Area
                 </Label>
-                <Select>
+                <Select 
+                    onValueChange={(value) =>
+                        setFilters((prev) => ({ ...prev, area_id: value }))
+                    }
+                >
                     <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6]">
                         <SelectValue placeholder="Pilih Area" />
                     </SelectTrigger>
                     <SelectContent className="z-50 dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
-                        <SelectItem value="light">Light</SelectItem>
-                        <SelectItem value="dark">Dark</SelectItem>
-                        <SelectItem value="system">System</SelectItem>
+                        {areas.map((area) => (
+                            <SelectItem
+                                key={area.id}
+                                value={area.id.toString()}
+                            >
+                                {area.name}
+                            </SelectItem>
+                        ))}
                     </SelectContent>
                 </Select>
             </div>
@@ -366,7 +391,11 @@ const AdvanceFilterSearch = ({
                 >
                     Tipe Iklan
                 </Label>
-                <Select>
+                <Select
+                    onValueChange={(value) =>
+                        setFilters((prev) => ({ ...prev, type: value }))
+                    }
+                >
                     <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6]">
                         <SelectValue placeholder="Pilih Tipe Iklan" />
                     </SelectTrigger>
@@ -374,9 +403,8 @@ const AdvanceFilterSearch = ({
                         style={{ zIndex: 9999 }}
                         className="z-50 dark:bg-[#3f3f3f] dark:text-[#8B8B8B]"
                     >
-                        <SelectItem value="light">Light</SelectItem>
-                        <SelectItem value="dark">Dark</SelectItem>
-                        <SelectItem value="system">System</SelectItem>
+                        <SelectItem value="sale">Dijual</SelectItem>
+                        <SelectItem value="rent">Disewa</SelectItem>
                     </SelectContent>
                 </Select>
             </div>

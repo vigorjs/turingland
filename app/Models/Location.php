@@ -19,13 +19,13 @@ class Location extends Model
         'is_active' => 'boolean'
     ];
 
-    public function area(): BelongsTo
+    public function areas(): HasMany
     {
-        return $this->belongsTo(Area::class);
+        return $this->hasMany(Area::class);
     }
 
-    public function properties(): HasMany
-    {
-        return $this->hasMany(Property::class);
-    }
+    // public function properties(): HasMany
+    // {
+    //     return $this->hasMany(Property::class);
+    // }
 }
