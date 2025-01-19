@@ -19,7 +19,7 @@ import { useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { HiSortAscending, HiSortDescending } from "react-icons/hi";
 
-export default function AdminAreaPage({ areas, auth }) {
+export default function AdminAreaPage({ areas, locations, auth }) {
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
     const [area, setArea] = useState(null);
@@ -138,6 +138,7 @@ export default function AdminAreaPage({ areas, auth }) {
                                         </th>
                                         {[
                                             { key: "name", label: "Area" },
+                                            { key: "location", label: "Location" },
                                             { key: "description", label: "Description" },
                                             { key: "status", label: "Status" },
                                         ].map(({ key, label, isStatic }, index) => (
@@ -248,6 +249,11 @@ export default function AdminAreaPage({ areas, auth }) {
                                                 </td>
                                                 <td className="px-5 py-2.5">
                                                     <p className="font-normal text-sm text-gray-900">
+                                                        {area?.location.name}
+                                                    </p>
+                                                </td>
+                                                <td className="px-5 py-2.5">
+                                                    <p className="font-normal text-sm text-gray-900">
                                                         {area.description}
                                                     </p>
                                                 </td>
@@ -340,6 +346,7 @@ export default function AdminAreaPage({ areas, auth }) {
             {isOpenModal && (
                 <ModalAreaForm
                     area={area}
+                    locations={locations}
                     isOpenModal={isOpenModal}
                     setIsOpenModal={setIsOpenModal}
                 />

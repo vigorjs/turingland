@@ -44,7 +44,8 @@ class AreaServiceImplement extends ServiceApi implements AreaService{
     public function createArea(Request $request)
     {
         $request->validate([
-            "name" => "required"
+            "name" => "required",
+            "location_id" => "required"
         ]);
 
         return $this->mainRepository->createArea($request->all());
@@ -53,7 +54,8 @@ class AreaServiceImplement extends ServiceApi implements AreaService{
     public function updateArea(Request $request, $id)
     {
         $request->validate([
-            "name" => "required"
+            "name" => "required",
+            "location_id" => "required"
         ]);
 
         return $this->mainRepository->updateArea($request->all(), $id);

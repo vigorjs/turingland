@@ -7,14 +7,17 @@ import { toast } from "@/hooks/use-toast";
 import { useForm } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import { LoaderIcon, X } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/Components/ui/select";
 
-function ModalAreaForm({ area, isOpenModal, setIsOpenModal }) {
+function ModalAreaForm({ area, locations, isOpenModal, setIsOpenModal }) {
     const [isActive, setIsActive] = useState(area?.is_active ?? false);
+    const [locationId, setLocationId] = useState(area?.location_id?.toString());
     const [errors, setErrors] = useState([])
     const [loading, setLoading] = useState(false);
 
     const { data, setData, post, put, reset } = useForm({
         name: area?.name ?? "",
+        location_id: locationId,
         description: area?.description ?? "",
         is_active: isActive,
         // _method: area ? "PUT" : "POST",
@@ -23,6 +26,10 @@ function ModalAreaForm({ area, isOpenModal, setIsOpenModal }) {
     useEffect(() => {
         setData("is_active", isActive);
     }, [isActive]);
+
+    useEffect(() => {
+        setData("location_id", locationId);
+    }, [locationId]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -91,7 +98,7 @@ function ModalAreaForm({ area, isOpenModal, setIsOpenModal }) {
     }
 
     return (
-        <Modal show={isOpenModal} onClose={() => setIsOpenModal(false)}>
+        <Modal show={isOpenModal}>
             <div className="p-3.5 flex justify-between items-center">
                 <h1 className="text-xl font-medium">
                     {!area ? "Tambah " : "Edit "} Area
@@ -126,6 +133,38 @@ function ModalAreaForm({ area, isOpenModal, setIsOpenModal }) {
                     />
                     <ErrorMessage name="description" />
                 </div>
+
+                <div className="grid w-full items-center gap-1.5">
+                    <Label
+                        className="text-[#5B5B5B] font-normal"
+                        htmlFor="location"
+                    >
+                        Lokasi
+                    </Label>
+                    <Select
+                        value={locationId}
+                        onValueChange={(value) => setLocationId(value)}
+                    >
+                        <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6] w-full ">
+                            <SelectValue placeholder="Pilih Lokasi" />
+                        </SelectTrigger>
+                        <SelectContent className="z-50 bg-white dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
+                            {locations.length > 0
+                                ? locations.map((location, index) => (
+                                      <SelectItem
+                                          key={`location-${location.id}-${index}`}
+                                          value={`${location.id}`}
+                                          //   selected={locationId == `${location.id}`}
+                                      >
+                                          {location.name}
+                                      </SelectItem>
+                                  ))
+                                : null}
+                        </SelectContent>
+                    </Select>
+                    <ErrorMessage name="location_id" />
+                </div>
+
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="is_active">Active</Label>
                     <InputActiveCheckbox

@@ -46,7 +46,6 @@ class LocationServiceImplement extends ServiceApi implements LocationService{
     {
         $request->validate([
             "name" => "required",
-            "area_id" => "required"
         ]);
 
         return $this->mainRepository->createLocation($request->all());
@@ -56,7 +55,6 @@ class LocationServiceImplement extends ServiceApi implements LocationService{
     {
         $request->validate([
             "name" => "required",
-            "area_id" => "required"
         ]);
 
         return $this->mainRepository->updateLocation($request->all(), $id);
