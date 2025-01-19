@@ -17,13 +17,13 @@ class DatabaseSeeder extends Seeder
             RoleAndPermissionSeeder::class,
             UserSeeder::class,
             CategorySeeder::class,
+            LocationSeeder::class,
             AreaSeeder::class,
             DeveloperSeeder::class,
             PropertySeeder::class,
             TestimonySeeder::class,
             BannerSeeder::class,
             WebPreferencesSeeder::class,
-            LocationSeeder::class
         ]);
     }
 }

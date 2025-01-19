@@ -15,20 +15,52 @@ class AreaSeeder extends Seeder
     {
         $areas = [
             [
-                "name" => "Jakarta Barat",
-                "description" => "Wilayah Jakarta yang terkenal dengan kawasan bisnis, pusat perbelanjaan, dan kawasan bersejarah seperti Kota Tua."
+                'name' => 'Central Park',
+                'description' => 'A beautiful park located in the city center.',
+                'is_active' => true,
+                "location_id" => 1,
             ],
             [
-                "name" => "Jakarta Timur",
-                "description" => "Wilayah Jakarta yang memiliki banyak area permukiman, kawasan industri, serta Taman Mini Indonesia Indah."
+                'name' => 'Downtown District',
+                'description' => 'The main business and entertainment area.',
+                'is_active' => true,
+                "location_id" => 2,
             ],
             [
-                "name" => "Jakarta Selatan",
-                "description" => "Wilayah Jakarta yang dikenal dengan pusat bisnis modern, kafe, dan kawasan permukiman elit."
+                'name' => 'Riverside',
+                'description' => 'A peaceful area next to the river with stunning views.',
+                'is_active' => true,
+                "location_id" => 3,
             ],
             [
-                "name" => "Jakarta Utara",
-                "description" => "Wilayah Jakarta yang mencakup kawasan pelabuhan, kawasan wisata Ancol, dan pusat perdagangan."
+                'name' => 'Historic Quarter',
+                'description' => 'An area rich in history with many landmarks.',
+                'is_active' => true,
+                "location_id" => 4,
+            ],
+            [
+                'name' => 'Industrial Zone',
+                'description' => 'A zone designated for industrial use.',
+                'is_active' => false,
+                "location_id" => 1,
+            ],
+            [
+                'name' => 'Suburban Neighborhood',
+                'description' => 'A quiet residential area outside the city center.',
+                'is_active' => true,
+                "location_id" => 2,
+            ],
+            [
+                'name' => 'Mountain Retreat',
+                'description' => 'A remote area surrounded by mountains.',
+                'is_active' => true,
+                "location_id" => 3,
+            ],
+            [
+                'name' => 'Beachside',
+                'description' => 'A popular destination by the beach.',
+                'is_active' => true,
+                "location_id" => 4,
             ],
         ];
 

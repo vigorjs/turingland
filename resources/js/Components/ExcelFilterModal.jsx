@@ -11,15 +11,19 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { usePage } from "@inertiajs/react";
 
 export default function ExcelFilterModal({ isOpen, setIsOpen, onFilterSubmit }) {
+  const { areas, categories, developers, locations } = usePage().props;
+
   const [filters, setFilters] = useState({
     title: "",
+    location_id: "", // Tambah filter lokasi
     area_id: "",
     price_min: "",
     price_max: "",
     developer_id: "",
-    type: "",
+    category_id: "",
     status: "",
     bathroom_count: "",
     bedroom_count: "",
@@ -32,15 +36,21 @@ export default function ExcelFilterModal({ isOpen, setIsOpen, onFilterSubmit }) 
     is_featured: false
   });
 
+  // Filter area berdasarkan location yang dipilih
+  const filteredAreas = filters.location_id 
+    ? areas.filter(area => area.location_id === parseInt(filters.location_id))
+    : areas;
+
   const handleClose = () => {
     setIsOpen(false);
     setFilters({
       title: "",
+      location_id: "",
       area_id: "",
       price_min: "",
       price_max: "",
       developer_id: "",
-      type: "",
+      category_id: "",
       status: "",
       bathroom_count: "",
       bedroom_count: "",
@@ -54,12 +64,33 @@ export default function ExcelFilterModal({ isOpen, setIsOpen, onFilterSubmit }) 
     });
   };
 
+  // Reset area ketika lokasi berubah
+  const handleLocationChange = (locationId) => {
+    setFilters(prev => ({
+      ...prev,
+      location_id: locationId,
+      area_id: "" // Reset area ketika lokasi berubah
+    }));
+  };
+
   const handleExport = () => {
-    // Remove empty filters
     const cleanedFilters = Object.fromEntries(
-      Object.entries(filters).filter(([_, value]) => 
-        value !== "" && value !== null && value !== undefined
-      )
+      Object.entries(filters).filter(([_, value]) => {
+        if (typeof value === 'string' && value.trim() === '') {
+          return false;
+        }
+        return value !== "" && value !== null && value !== undefined;
+      }).map(([key, value]) => {
+        if (['location_id', 'area_id', 'category_id', 'developer_id',
+             'bathroom_count', 'bedroom_count', 'carport_count', 'year_built'].includes(key)) {
+          return [key, parseInt(value)];
+        }
+        if (['price_min', 'price_max', 'land_area_min', 'land_area_max',
+             'building_area_min', 'building_area_max'].includes(key)) {
+          return [key, parseFloat(value)];
+        }
+        return [key, value];
+      })
     );
     onFilterSubmit(cleanedFilters);
   };
@@ -81,20 +112,82 @@ export default function ExcelFilterModal({ isOpen, setIsOpen, onFilterSubmit }) 
             />
           </div>
 
-          {/* Type */}
+          {/* Location Dropdown */}
           <div>
-            <Label htmlFor="type">Tipe Property</Label>
+            <Label htmlFor="location">Lokasi</Label>
             <Select
-              value={filters.type}
-              onValueChange={(value) => setFilters(prev => ({...prev, type: value}))}
+              value={filters.location_id}
+              onValueChange={handleLocationChange}
             >
               <SelectTrigger>
-                <SelectValue placeholder="Pilih tipe property" />
+                <SelectValue placeholder="Pilih lokasi" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="HOUSE">Rumah</SelectItem>
-                <SelectItem value="APARTMENT">Apartemen</SelectItem>
-                <SelectItem value="LAND">Tanah</SelectItem>
+                {locations.map((location) => (
+                  <SelectItem key={location.id} value={location.id.toString()}>
+                    {location.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Area Dropdown */}
+          <div>
+            <Label htmlFor="area">Area</Label>
+            <Select
+              value={filters.area_id}
+              onValueChange={(value) => setFilters(prev => ({...prev, area_id: value}))}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Pilih area" />
+              </SelectTrigger>
+              <SelectContent>
+                {filteredAreas.map((area) => (
+                  <SelectItem key={area.id} value={area.id.toString()}>
+                    {area.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Category Dropdown */}
+          <div>
+            <Label htmlFor="category">Kategori</Label>
+            <Select
+              value={filters.category_id}
+              onValueChange={(value) => setFilters(prev => ({...prev, category_id: value}))}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Pilih kategori" />
+              </SelectTrigger>
+              <SelectContent>
+                {categories.map((category) => (
+                  <SelectItem key={category.id} value={category.id}>
+                    {category.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Developer Dropdown */}
+          <div>
+            <Label htmlFor="developer">Developer</Label>
+            <Select
+              value={filters.developer_id}
+              onValueChange={(value) => setFilters(prev => ({...prev, developer_id: value}))}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Pilih developer" />
+              </SelectTrigger>
+              <SelectContent>
+                {developers.map((developer) => (
+                  <SelectItem key={developer.id} value={developer.id}>
+                    {developer.name}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
