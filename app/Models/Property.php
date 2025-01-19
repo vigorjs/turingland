@@ -70,6 +70,13 @@ class Property extends Model
 
     public function scopeFilter(Builder $query, $filters)
     {
+        if(!empty($filters['orderAdsFilter'])) {
+            if($filters['orderAdsFilter'] == "Terbaru") $query->orderBy('created_at', 'desc');
+            else if($filters['orderAdsFilter'] == "Harga Termurah") $query->orderBy('price', 'asc');
+            else if($filters['orderAdsFilter'] == "Luas Bangunan Terluas") $query->orderBy('building_area', 'desc');
+            else if($filters['orderAdsFilter'] == "Luas Tanah Terluas") $query->orderBy('land_area', 'desc');
+        }
+
         if (!empty($filters['title'])) {
             $query->where('title', 'like', '%' . $filters['title'] . '%');
         }
@@ -83,7 +90,7 @@ class Property extends Model
 
 
         if (!empty($filters['area_id'])) {
-            $query->where('area_id', $filters['area_id']);
+            $query->where('area_id', (int) $filters['area_id']);
         }
 
         if (!empty($filters['price_min']) && !empty($filters['price_max'])) {
@@ -99,6 +106,7 @@ class Property extends Model
         }
 
         if (!empty($filters['type'])) {
+            // $query->where('type', $filters['type']);
             $query->where('type', $filters['type']);
         }
 

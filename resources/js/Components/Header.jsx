@@ -42,7 +42,7 @@ const Header = ({ variant, auth, areas, categories }) => {
 
         const areaObj = {
             name: `Rumah Dijual di ${area.name}`,
-            url: `/jual/area/${area.id}`,
+            url: `/search?type=sale&area_id=${area.id}`,
         };
 
         if (existingArea) {
@@ -63,7 +63,7 @@ const Header = ({ variant, auth, areas, categories }) => {
 
         const areaObj = {
             name: `Rumah Disewa di ${area.name}`,
-            url: `/disewa/area/${area.id}`,
+            url: `/search?type=rent&area_id=${area.id}`,
         };
 
         if (existingArea) {

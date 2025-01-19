@@ -7,10 +7,10 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
+} from "@/Components/ui/select";
+import { Input } from "@/Components/ui/input";
+import { Label } from "@/Components/ui/label";
+import { Checkbox } from "@/Components/ui/checkbox";
 
 export default function ExcelFilterModal({ isOpen, setIsOpen, onFilterSubmit }) {
   const [filters, setFilters] = useState({
@@ -57,7 +57,7 @@ export default function ExcelFilterModal({ isOpen, setIsOpen, onFilterSubmit }) 
   const handleExport = () => {
     // Remove empty filters
     const cleanedFilters = Object.fromEntries(
-      Object.entries(filters).filter(([_, value]) => 
+      Object.entries(filters).filter(([_, value]) =>
         value !== "" && value !== null && value !== undefined
       )
     );
@@ -68,7 +68,7 @@ export default function ExcelFilterModal({ isOpen, setIsOpen, onFilterSubmit }) 
     <Modal show={isOpen} onClose={handleClose}>
       <div className="p-6">
         <h3 className="text-xl font-semibold mb-4">Export Excel Filter</h3>
-        
+
         <div className="grid grid-cols-2 gap-4 mb-4">
           {/* Title */}
           <div>
@@ -198,7 +198,7 @@ export default function ExcelFilterModal({ isOpen, setIsOpen, onFilterSubmit }) 
             <Checkbox
               id="is_featured"
               checked={filters.is_featured}
-              onCheckedChange={(checked) => 
+              onCheckedChange={(checked) =>
                 setFilters(prev => ({...prev, is_featured: checked}))
               }
             />

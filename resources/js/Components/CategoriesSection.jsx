@@ -9,6 +9,7 @@ export const CategoriesSection = ({ categories }) => {
             {categories.map((category, index) => (
                 <Link
                     key={index}
+                    href={`/search?category_id=${category.id}`}
                     className="w-28 h-24 sm:w-32 sm:h-24 p-4 bg-background dark:bg-muted rounded-lg flex flex-col justify-center items-center gap-3.5 transition-all duration-300 ease-in-out hover:text-primary shadow-md dark:shadow-slate-800 hover:shadow-2xl"
                     // style={{
                     //     boxShadow:
