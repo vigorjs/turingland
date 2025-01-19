@@ -27,7 +27,7 @@ Route::get('/search-api', [SearchController::class, 'indexApi'])->name('search.p
 
 Route::get('/api/header-data', function() {
     return response()->json([
-        "areas" => \App\Models\Area::orderBy('name')->get(),
+        "areas" => \App\Models\Area::orderBy('name')->with('location')->get(),
         "categories" => \App\Models\Category::orderBy('name')->get()
     ]);;
 })->name('api.header-data');
@@ -55,7 +55,8 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified', 'role:admin|agent']
     // AREA
     Route::get('/area', function () {
         return Inertia::render("Admin/Areas/AdminAreaPage", [
-            'areas' => \App\Models\Area::paginate(8)
+            'locations' => \App\Models\Location::orderBy('name')->get(),
+            'areas' => \App\Models\Area::with('location')->paginate(8)
         ]);
     })->middleware('role:admin')->name('dashboard.area');
     Route::post("/area", [AdminAreaController::class, "store"])->middleware('role:admin')->name("area.store");
@@ -66,7 +67,7 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified', 'role:admin|agent']
     Route::get('/location', function () {
         return Inertia::render("Admin/Locations/AdminLocationPage", [
             'areas' => \App\Models\Area::all(),
-            'locations' => \App\Models\Location::with('area')->paginate(8)
+            'locations' => \App\Models\Location::orderBy('name')->paginate(8)
         ]);
     })->middleware('role:admin')->name('dashboard.location');
     Route::post("/location", [AdminLocationController::class, "store"])->middleware('role:admin')->name("location.store");

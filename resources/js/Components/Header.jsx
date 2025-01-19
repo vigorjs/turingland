@@ -37,7 +37,7 @@ const Header = ({ variant, auth, areas, categories }) => {
     }, []);
 
     const buyAreaMenu = areas.reduce((acc, area) => {
-        const firstWord = area.name.split(" ")[0];
+        const firstWord = area?.location?.name;
         const existingArea = acc.find((item) => item.title === firstWord);
 
         const areaObj = {
@@ -58,7 +58,7 @@ const Header = ({ variant, auth, areas, categories }) => {
     }, []);
 
     const rentAreaMenu = areas.reduce((acc, area) => {
-        const firstWord = area.name.split(" ")[0];
+        const firstWord = area?.location?.name;
         const existingArea = acc.find((item) => item.title === firstWord);
 
         const areaObj = {
@@ -155,7 +155,7 @@ const Header = ({ variant, auth, areas, categories }) => {
                                     {/* Desktop Dropdown */}
                                     {item.subItems &&
                                         hoveredMenu === item.title && (
-                                            <div className="fixed top-13 left-0 mt-2 w-full bg-white border border-gray-200 rounded-b-2xl shadow-lg z-50 flex p-8 max-h-72 overflow-y-scroll">
+                                            <div className="fixed top-13 left-0 mt-2 w-full bg-white border border-gray-200 rounded-b-2xl shadow-lg z-50 flex p-8 max-h-[310px] overflow-y-scroll">
                                                 <div className="w-[15%]">
                                                     <img
                                                         src={img1}
@@ -169,7 +169,8 @@ const Header = ({ variant, auth, areas, categories }) => {
                                                             {item.title}
                                                         </h1>
                                                     </div>
-                                                    <div className="flex flex-wrap justify-start gap-6 px-4">
+                                                    {/* <div className="flex flex-wrap justify-start gap-6 px-4"> */}
+                                                    <div className="hidden lg:grid lg:grid-cols-3 xl:grid-cols-4 justify-start gap-6 px-4">
                                                         {item.subItems.map(
                                                             (
                                                                 subItem,

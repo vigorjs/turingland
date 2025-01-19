@@ -19,7 +19,7 @@ import { useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { HiSortAscending, HiSortDescending } from "react-icons/hi";
 
-export default function AdminLocationPage({ locations, areas, auth }) {
+export default function AdminLocationPage({ locations, auth }) {
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
     const [location, setLocation] = useState(null);
@@ -139,7 +139,6 @@ export default function AdminLocationPage({ locations, areas, auth }) {
                                         </th>
                                         {[
                                             { key: "name", label: "Name" },
-                                            { key: "area_id", label: "Area" },
                                             { key: "description", label: "Description" },
                                             { key: "status", label: "Status" },
                                         ].map(({ key, label, isStatic }, index) => (
@@ -212,11 +211,6 @@ export default function AdminLocationPage({ locations, areas, auth }) {
                                                     .includes(
                                                         filter.name.toLowerCase()
                                                     ) &&
-                                                location?.area?.name.
-                                                    toLowerCase()
-                                                    .includes(
-                                                        filter.area_id.toLowerCase()
-                                                    ) &&
                                                 location.description
                                                     .toLowerCase()
                                                     .includes(
@@ -255,12 +249,6 @@ export default function AdminLocationPage({ locations, areas, auth }) {
                                                 <td className="px-5 py-2.5">
                                                     <p className="font-normal text-sm text-gray-900">
                                                         {location.name}
-                                                    </p>
-                                                </td>
-                                                <td className="px-5 py-2.5">
-                                                    <p className="font-normal text-sm text-gray-900">
-                                                        {location?.area
-                                                            ?.name ?? "-"}
                                                     </p>
                                                 </td>
                                                 <td className="px-5 py-2.5">
@@ -357,7 +345,6 @@ export default function AdminLocationPage({ locations, areas, auth }) {
             {isOpenModal && (
                 <ModalLocationForm
                     location={location}
-                    areas={areas}
                     isOpenModal={isOpenModal}
                     setIsOpenModal={setIsOpenModal}
                 />
