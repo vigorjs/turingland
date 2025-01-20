@@ -50,7 +50,7 @@ function AdminEditPropertyPage({
             status: property.status,
             address: property.address,
             certificate_type: property.certificate_type,
-            year_built: property.year_built,
+            year_built: property.year_built || null,
             is_featured: property.is_featured,
             property_images: [],
         },
@@ -258,7 +258,6 @@ function AdminEditPropertyPage({
                             </div>
 
                             {/* Categories Select */}
-                            {/* Categories Select */}
                             <div className="space-y-2">
                                 <Label htmlFor="category_ids">Categories</Label>
                                 <Controller
@@ -428,7 +427,7 @@ function AdminEditPropertyPage({
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-3 gap-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="land_area">
                                         Land Area (m²)
@@ -472,6 +471,37 @@ function AdminEditPropertyPage({
                                                 id="building_area"
                                                 type="number"
                                                 step="0.01"
+                                                {...field}
+                                                onChange={(e) =>
+                                                    field.onChange(
+                                                        parseFloat(
+                                                            e.target.value
+                                                        )
+                                                    )
+                                                }
+                                                className={
+                                                    errors.building_area
+                                                        ? "border-red-500"
+                                                        : ""
+                                                }
+                                            />
+                                        )}
+                                    />
+                                    <ErrorMessage name="building_area" />
+                                </div>
+
+                                <div className="space-y-2">
+                                    <Label htmlFor="year_built">
+                                        Year Build
+                                    </Label>
+                                    <Controller
+                                        name="year_built"
+                                        control={control}
+                                        render={({ field }) => (
+                                            <Input
+                                                id="year_built"
+                                                type="number"
+                                                step="1"
                                                 {...field}
                                                 onChange={(e) =>
                                                     field.onChange(

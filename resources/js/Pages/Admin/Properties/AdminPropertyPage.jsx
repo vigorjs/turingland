@@ -294,7 +294,7 @@ function AdminPropertyPage({ properties, developers, areas, auth }) {
                 message="Are you sure to delete this property?"
                 onClick={handleDeleteProperty}
             />
-
+            
             <ExcelFilterModal
                 isOpen={isOpenExcelModal}
                 setIsOpen={setIsOpenExcelModal}

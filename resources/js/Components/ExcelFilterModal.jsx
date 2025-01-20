@@ -48,6 +48,7 @@ export default function ExcelFilterModal({
         : areas;
 
     const handleClose = () => {
+        console.log("Modal closing triggered");
         setIsOpen(false);
         setFilters({
             title: "",
@@ -124,7 +125,11 @@ export default function ExcelFilterModal({
     };
 
     return (
-        <Modal show={isOpen} onClose={handleClose}>
+        <Modal show={isOpen} onClose={(e) => {
+            if (!e.target.closest('.ui-select')) {
+                handleClose();
+            }
+        }}>
             <div className="p-6">
                 <h3 className="text-xl font-semibold mb-4">
                     Export Excel Filter

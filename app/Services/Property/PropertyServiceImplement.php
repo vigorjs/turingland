@@ -63,11 +63,20 @@ class PropertyServiceImplement extends ServiceApi implements PropertyService
     Log::info('Files:', isset($propertyImages) ? $propertyImages : []);
 
     return DB::transaction(function () use ($data, $propertyImages) {
+      if (!isset($data['when_sold'])) {
+        $data['when_sold'] = isset($data['status']) && $data['status'] === 'sold'
+          ? now()
+          : null;
+      }
+
+      $data['year_built'] = isset($data['year_built']) && $data['year_built'] !== 'null'
+        ? (int) $data['year_built']
+        : null;
+
       $property = $this->mainRepository->create($data);
 
-      // dd($data['category_ids']);
-      if($data['category_ids']){
-        foreach($data['category_ids'] as $categoryId){
+      if ($data['category_ids']) {
+        foreach ($data['category_ids'] as $categoryId) {
           $this->propertyCategoryService->createPropertyCategory([
             'property_id' => $property->id,
             'category_id' => $categoryId
@@ -104,38 +113,48 @@ class PropertyServiceImplement extends ServiceApi implements PropertyService
     Log::info('Update Files:', isset($newImages) ? $newImages : []);
 
     return DB::transaction(function () use ($id, $data, $newImages, $existingImages) {
+      $existingProperty = $this->mainRepository->find($id);
+
+      if (!isset($data['when_sold'])) {
+        if (isset($data['status'])) {
+          if ($data['status'] === 'sold' && $existingProperty->status !== 'sold') {
+            $data['when_sold'] = now();
+          } elseif ($data['status'] !== 'sold' && $existingProperty->status === 'sold') {
+            $data['when_sold'] = null;
+          }
+        }
+      }
+
+      $data['year_built'] = isset($data['year_built']) && $data['year_built'] !== 'null'
+        ? (int) $data['year_built']
+        : null;
+
       $property = $this->mainRepository->update($id, $data);
 
-              // Handle property categories
-              if (isset($data['category_ids'])) {
-                // Get current categories
-                $currentCategories = $this->propertyCategoryService
-                    ->getByPropertyId($id)
-                    ->pluck('category_id')
-                    ->map(fn($id) => (string) $id)
-                    ->toArray();
-    
-                // Convert new categories to array if it's not
-                $newCategories = is_array($data['category_ids']) 
-                    ? $data['category_ids'] 
-                    : explode(',', $data['category_ids']);
-    
-                // Categories to add (in new but not in current)
-                $categoriesToAdd = array_diff($newCategories, $currentCategories);
-                foreach ($categoriesToAdd as $categoryId) {
-                    $this->propertyCategoryService->createPropertyCategory([
-                        'property_id' => $id,
-                        'category_id' => $categoryId
-                    ]);
-                }
-    
-                // Categories to remove (in current but not in new)
-                $categoriesToRemove = array_diff($currentCategories, $newCategories);
-                foreach ($categoriesToRemove as $categoryId) {
-                    $this->propertyCategoryService->deleteWhere($id, $categoryId);
-                }
-            }
-    
+      if (isset($data['category_ids'])) {
+        $currentCategories = $this->propertyCategoryService
+          ->getByPropertyId($id)
+          ->pluck('category_id')
+          ->map(fn($id) => (string) $id)
+          ->toArray();
+
+        $newCategories = is_array($data['category_ids'])
+          ? $data['category_ids']
+          : explode(',', $data['category_ids']);
+
+        $categoriesToAdd = array_diff($newCategories, $currentCategories);
+        foreach ($categoriesToAdd as $categoryId) {
+          $this->propertyCategoryService->createPropertyCategory([
+            'property_id' => $id,
+            'category_id' => $categoryId
+          ]);
+        }
+
+        $categoriesToRemove = array_diff($currentCategories, $newCategories);
+        foreach ($categoriesToRemove as $categoryId) {
+          $this->propertyCategoryService->deleteWhere($id, $categoryId);
+        }
+      }
 
       if ($existingImages !== null) {
         $existingImageIds = collect($existingImages)->pluck('id')->toArray();

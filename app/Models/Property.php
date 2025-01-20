@@ -29,6 +29,7 @@ class Property extends Model
         'address',
         'certificate_type',
         'year_built',
+        'when_sold',
         'is_featured'
     ];
 
