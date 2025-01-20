@@ -24,7 +24,7 @@ import {
 import React, { useState, useEffect } from "react";
 
 
-export default function Home({ auth, categories, testimonials, banners, latestProperties, featuredProperties }) {
+export default function Home({ auth, categories, testimonials, banners, webPreferences, latestProperties, featuredProperties }) {
     console.log(testimonials);
     const img =
         "https://ecatalog.sinarmasland.com/_next/image?url=https%3A%2F%2Fecatalog.sinarmasland.com%2Fassets%2Fsite-setting-files%2F1%2Fhomepage-background-banner-desktop-677b6f397dc74.jpg&w=3840&q=75";
@@ -37,107 +37,22 @@ export default function Home({ auth, categories, testimonials, banners, latestPr
 
     const arr = [{}, {}, {}, {}, {}, {}, {}, {}];
 
-    const [currentHero, setCurrentHero] = useState(null);
-    useEffect(() => {
-        const fetchImage = async (key, setter) => {
-            try {
-                const response = await axios.get(
-                    route("web-preferences.get", { key })
-                );
-                setter(response.data.value); // Menyimpan path ke state
-            } catch (error) {
-                console.error(`Error fetching current ${key}:`, error);
-            }
-        };
+    const heroUrl = webPreferences?.find(pref => pref.key === 'hero_url')?.value;
 
-        fetchImage("hero_url", setCurrentHero);
-    }, []);
-
-    // const testimonials = [
-    //     {
-    //         id: 1,
-    //         img: "https://avatar.iran.liara.run/public",
-    //         name: "Saydova",
-    //         role: "Investor Kripto",
-    //         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, ex.",
-    //     },
-    //     {
-    //         id: 2,
-    //         img: "https://avatar.iran.liara.run/public",
-    //         name: "Tommy",
-    //         role: "Penyewa ",
-    //         text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nobis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nobisLorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nobisLorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, nobis",
-    //     },
-    //     {
-    //         id: 3,
-    //         img: "https://avatar.iran.liara.run/public",
-    //         name: "Jake Doe",
-    //         role: "Pembeli",
-    //         text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim, voluptate.",
-    //     },
-    //     {
-    //         id: 4,
-    //         img: "https://avatar.iran.liara.run/public",
-    //         name: "Attahlah",
-    //         role: "Investor",
-    //         text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim, voluptate.",
-    //     },
-    // ];
-
-    // const categories = [
-    //     {
-    //         img: "/assets/apartemen.png",
-    //         name: "Apartment",
-    //     },
-    //     {
-    //         img: "/assets/villa.png",
-    //         name: "Villa",
-    //     },
-    //     {
-    //         img: "/assets/kost.png",
-    //         name: "Kost",
-    //     },
-    //     {
-    //         img: "/assets/ruko.png",
-    //         name: "Ruko",
-    //     },
-    //     {
-    //         img: "/assets/rumah.png",
-    //         name: "Rumah",
-    //     },
-    //     {
-    //         img: "/assets/tanah.png",
-    //         name: "Tanah",
-    //     },
-    // ];
 
     return (
         <GuestLayout auth={auth}>
             <Head title="Tempat Jual Beli Rumah Apartement" />
             <div>
                 {/* HERO SECTION */}
-                {/* <Carousel
-                    plugins={[
-                        Autoplay({
-                            delay: 6000,
-                        }),
-                    ]}
-                    opts={{
-                        loop: true,
-                    }}
-                >
-                    <CarouselContent>
-                        {arr.length > 0
-                            ? arr.map((_, index) => (
-                                  <CarouselItem key={index}> */}
+
                 <div className="relative w-full h-[50vh] bg-cover bg-center bg-fixed border border-gray-400">
-                    <img src={currentHero ? `/storage/${currentHero}` : img2 } className="w-full h-full object-cover" />
+                    <img
+                        src={heroUrl ? `/storage/${heroUrl}` : img}
+                        className="w-full h-full object-cover" />
                     <div className="w-full min-h-full dark:bg-black/10 absolute top-0" />
                 </div>
-                {/* </CarouselItem>
-                              ))
-                            : null}
-                    </CarouselContent> */}
+
 
                 {/* FILTRE */}
                 <FilterSearch />
