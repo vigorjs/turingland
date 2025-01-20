@@ -2,6 +2,8 @@ import ApplicationLogo from "@/Components/ApplicationLogo";
 import { LoginForm } from "@/Components/auth/login-form";
 import AuthLayout from "@/Layouts/AuthLayout";
 import { Head } from "@inertiajs/react";
+import React, { useState, useEffect } from "react";
+
 
 export default function Login({
     status,
@@ -11,6 +13,25 @@ export default function Login({
     auth,
     ...props
 }) {
+
+    const [currentImgLogin, setCurrentImgLogin] = useState(null);
+
+    useEffect(() => {
+        const fetchImage = async (key, setter) => {
+            try {
+                const response = await axios.get(
+                    route("web-preferences.get", { key })
+                );
+                setter(response.data.value); // Menyimpan path ke state
+            } catch (error) {
+                console.error(`Error fetching current ${key}:`, error);
+            }
+        };
+
+
+        fetchImage("img_login_url", setCurrentImgLogin);
+
+    }, []);
     return (
         <AuthLayout auth={auth} >
             <Head title="Login" />
@@ -33,8 +54,8 @@ export default function Login({
                 <div className="hidden bg-muted lg:block">
                     <img
                         src={
-                            imageBackground
-                                ? imageBackground
+                            currentImgLogin
+                                ? `/storage/${currentImgLogin}`
                                 : "https://placehold.co/1920x1080?text=Your+Brand+Here"
                         }
                         alt="Image"

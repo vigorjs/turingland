@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Area;
+use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Developer;
 use App\Models\Location;
@@ -23,6 +24,7 @@ class HomeController extends Controller
             'categories' => Category::select('id', 'name')->with(['properties.images'])->get(),
             'locations' => Location::select('id', 'name')->get(),
             'testimonials' => Testimony::all(),
+            'banners' => Banner::all(),
             'latestProperties' => Property::with(['area', 'developer', 'categories', 'images'])
                 ->latest()
                 ->limit(6)
