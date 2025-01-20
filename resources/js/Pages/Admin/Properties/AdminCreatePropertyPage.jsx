@@ -14,9 +14,8 @@ import AdminLayout from "@/Layouts/AdminLayout";
 import { Checkbox } from "@/Components/ui/checkbox";
 import { Label } from "@/Components/ui/label";
 import { router } from "@inertiajs/react";
-import { MultiSelect } from "react-multi-select-component";
 import { X } from "lucide-react";
-
+import { MultiSelect } from "react-multi-select-component";
 
 function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
     // console.log(categories);
