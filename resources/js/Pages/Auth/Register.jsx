@@ -9,8 +9,12 @@ export default function Register({
     className,
     imageBackground,
     auth,
+    webPreferences,
     ...props
 }) {
+
+    const imgRegisterUrl = webPreferences?.find(pref => pref.key === 'img_register_url')?.value;
+
     return (
         <AuthLayout auth={auth}>
             <Head title="Register" />
@@ -32,11 +36,7 @@ export default function Register({
                 </div>
                 <div className="hidden bg-muted lg:block">
                     <img
-                        src={
-                            imageBackground
-                                ? imageBackground
-                                : "https://placehold.co/1920x1080?text=Your+Brand+Here"
-                        }
+                        src={imgRegisterUrl ? `/storage/${imgRegisterUrl}` : "https://placehold.co/1920x1080?text=Your+Brand+Here"}
                         alt="Image"
                         width="1920"
                         height="1080"
