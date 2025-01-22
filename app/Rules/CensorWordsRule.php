@@ -8,9 +8,11 @@ use Illuminate\Contracts\Validation\ValidationRule;
 class CensorWordsRule implements ValidationRule
 {
     protected array $censoredPatterns = [
-        '/\bchillguy\b/i',
-        '/\bchill guy\b/i',
-        '/\bcooldude\b/i',
+        '/\bch+i+l+g+u+y+\b/i',
+        '/\bch+i+l+ g+u+y+\b/i',       
+        '/\bf+a+u+z+a+n+\b/i',        
+        '/\bm+e+w+ c+o+i+n+\b/i',     
+        '/\bm+e+w+c+o+i+n+\b/i',      
     ];
     /**
      * Run the validation rule.
