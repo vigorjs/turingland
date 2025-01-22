@@ -31,6 +31,8 @@ const SearchBar = ({ categories, areas, filters, setPropertiesData }) => {
     const handleClickOrderAdsFilter = (value) => {
         if(value === orderAdsFilter) setOrderAdsFilter("");
         else setOrderAdsFilter(value);
+
+        handleSearchSubmit()
     };
 
     const handleClickTypeAdsFilter = (value) => {
@@ -91,10 +93,6 @@ const SearchBar = ({ categories, areas, filters, setPropertiesData }) => {
         setPropertyAdsFilter("");
         setAreaId("")
     };
-
-    useEffect(() => {
-        handleSearchSubmit();
-    }, [orderAdsFilter]);
 
     return (
         <>

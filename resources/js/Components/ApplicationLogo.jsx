@@ -2,7 +2,7 @@ import { useTheme } from "@/hooks/useTheme";
 import { Link } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 
-export default function ApplicationLogo(props, className) {
+export default function ApplicationLogo({ className, ...props }) {
     const { theme } = useTheme();
     const [currentLogo, setCurrentLogo] = useState(null);
     const [currentLogoDark, setCurrentLogoDark] = useState(null);

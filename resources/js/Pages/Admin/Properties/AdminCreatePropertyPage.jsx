@@ -12,12 +12,14 @@ import {
 } from "@/Components/ui/select";
 import AdminLayout from "@/Layouts/AdminLayout";
 import { Checkbox } from "@/Components/ui/checkbox";
-import { X } from "lucide-react";
 import { Label } from "@/Components/ui/label";
 import { router } from "@inertiajs/react";
-import MultiSelect from "@/Components/MultiSelect";
+import { X } from "lucide-react";
+import { MultiSelect } from "react-multi-select-component";
 
 function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
+    // console.log(categories);
+    const [selectedCategories, setSelectedCategories] = useState([]);
     const [uploadedImages, setUploadedImages] = useState([]);
     const [errors, setErrors] = useState({});
 
@@ -32,7 +34,7 @@ function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
             description: "",
             developer_id: "",
             area_id: "",
-            category_ids: [1, 2],
+            category_ids: [],
             bathroom_count: 0,
             bedroom_count: 0,
             carport_count: 0,
@@ -89,8 +91,7 @@ function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
         // Add non-file form values
         Object.entries(values).forEach(([key, value]) => {
             if (key === "category_ids") {
-                // Kirim sebagai multiple entries untuk array
-                value.forEach((categoryId, index) => {
+                value.forEach((categoryId) => {
                     formData.append(`category_ids[]`, categoryId);
                 });
             } else if (key !== "property_images") {
@@ -135,14 +136,11 @@ function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
         ) : null;
     };
 
-    const arrObjCategories = categories.map((item) => {
-        return {
-            label: item.name, value: item.id
-        }
-    })
-
-    console.log("arrObjCategories: ", arrObjCategories);
-    
+    // Format options untuk react-multi-select-component
+    const categoryOptions = categories.map((category) => ({
+        label: category.name,
+        value: category.id,
+    }));
 
     return (
         <AdminLayout auth={auth}>
@@ -243,39 +241,44 @@ function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
                                     name="category_ids"
                                     control={control}
                                     defaultValue={[]}
-                                    render={({ field }) => {
-                                        // Convert IDs to full category objects
-                                        const selectedCategories = (
-                                            field.value || []
-                                        )
-                                            .map((id) =>
-                                                categories.find(
-                                                    (cat) =>
-                                                        cat.id.toString() ===
-                                                        id.toString()
-                                                )
-                                            )
-                                            .filter(Boolean); // Remove any undefined values
-                                            console.log("selectedCategories: ", selectedCategories);
-                                            
-                                        return (
-                                            <MultiSelect
-                                                selected={selectedCategories}
-                                                options={arrObjCategories}
-                                                onChange={(selected) => {
-                                                    // Convert back to array of IDs for form value
-                                                    const selectedIds =
-                                                        selected.map((item) =>
-                                                            item.id.toString()
-                                                        );
-                                                    field.onChange(selectedIds);
-                                                }}
-                                                placeholder="Select categories"
-                                            />
-                                        );
-                                    }}
+                                    render={({ field }) => (
+                                        <MultiSelect
+                                            options={categoryOptions}
+                                            value={categoryOptions.filter(
+                                                (option) =>
+                                                    field.value.includes(
+                                                        option.value
+                                                    )
+                                            )}
+                                            onChange={(selected) => {
+                                                // Update form dengan array of IDs
+                                                field.onChange(
+                                                    selected.map(
+                                                        (item) => item.value
+                                                    )
+                                                );
+                                            }}
+                                            labelledBy="Select categories"
+                                            // Optional props untuk kustomisasi
+                                            hasSelectAll={true}
+                                            disableSearch={false}
+                                            className="w-full"
+                                            overrideStrings={{
+                                                selectSomeItems:
+                                                    "Select categories...",
+                                                allItemsAreSelected:
+                                                    "All categories selected",
+                                                selectAll: "Select All",
+                                                search: "Search",
+                                            }}
+                                        />
+                                    )}
                                 />
-                                <ErrorMessage name="category_ids" />
+                                {errors.category_ids && (
+                                    <p className="text-red-500 text-sm mt-1">
+                                        {errors.category_ids}
+                                    </p>
+                                )}
                             </div>
 
                             {/* Area Select */}
@@ -401,7 +404,7 @@ function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-3 gap-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="land_area">
                                         Land Area (m²)
@@ -445,6 +448,37 @@ function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
                                                 id="building_area"
                                                 type="number"
                                                 step="0.01"
+                                                {...field}
+                                                onChange={(e) =>
+                                                    field.onChange(
+                                                        parseFloat(
+                                                            e.target.value
+                                                        )
+                                                    )
+                                                }
+                                                className={
+                                                    errors.building_area
+                                                        ? "border-red-500"
+                                                        : ""
+                                                }
+                                            />
+                                        )}
+                                    />
+                                    <ErrorMessage name="building_area" />
+                                </div>
+
+                                <div className="space-y-2">
+                                    <Label htmlFor="year_built">
+                                        Year Build
+                                    </Label>
+                                    <Controller
+                                        name="year_built"
+                                        control={control}
+                                        render={({ field }) => (
+                                            <Input
+                                                id="year_built"
+                                                type="number"
+                                                step="1"
                                                 {...field}
                                                 onChange={(e) =>
                                                     field.onChange(

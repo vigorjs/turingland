@@ -24,12 +24,13 @@ return new class extends Migration
             $table->decimal('land_area', 10, 2); // LT
             $table->decimal('building_area', 10, 2); // LB
             $table->decimal('price', 15, 2);
-            $table->enum('type', ['sale', 'rent']); // Jual atau Sewa
+            $table->enum('type', ['sale', 'rent']);
             $table->enum('status', ['active', 'sold', 'rented', 'inactive'])->default('active');
             $table->text('address');
             $table->string('certificate_type')->nullable();
             $table->year('year_built')->nullable();
             $table->boolean('is_featured')->default(false);
+            $table->date('when_sold')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -3,28 +3,19 @@ import Modal from "@/Components/Modal";
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/Components/ui/select";
 import { toast } from "@/hooks/use-toast";
 import { useForm } from "@inertiajs/react";
 import { LoaderIcon, X } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-function ModalLocationForm({ location, areas, isOpenModal, setIsOpenModal }) {
+function ModalLocationForm({ location, isOpenModal, setIsOpenModal }) {
     const [isActive, setIsActive] = useState(location?.is_active ?? false);
     const [errors, setErrors] = useState([])
-    const [areaId, setAreaId] = useState(location?.area_id.toString());
     const [loading, setLoading] = useState(false);
 
     const { data, setData, post, put, reset } = useForm({
         name: location?.name ?? "",
         description: location?.description ?? "",
-        area_id: areaId,
         is_active: isActive,
         // _method: location ? "PUT" : "POST",
     });
@@ -32,10 +23,6 @@ function ModalLocationForm({ location, areas, isOpenModal, setIsOpenModal }) {
     useEffect(() => {
         setData("is_active", isActive);
     }, [isActive]);
-
-    useEffect(() => {
-        setData("area_id", areaId);
-    }, [areaId]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -116,7 +103,7 @@ function ModalLocationForm({ location, areas, isOpenModal, setIsOpenModal }) {
     };
 
     return (
-        <Modal show={isOpenModal}>
+        <Modal show={isOpenModal} onClose={() => setIsOpenModal(false)}>
             <div className="p-3.5 flex justify-between items-center">
                 <h1 className="text-xl font-medium">
                     {!location ? "Tambah " : "Edit "} Lokasi
@@ -152,36 +139,6 @@ function ModalLocationForm({ location, areas, isOpenModal, setIsOpenModal }) {
                     <ErrorMessage name="description" />
                 </div>
                 <div className="grid w-full items-center gap-1.5">
-                    <Label
-                        className="text-[#5B5B5B] font-normal"
-                        htmlFor="area"
-                    >
-                        Area
-                    </Label>
-                    <Select
-                        value={areaId}
-                        onValueChange={(value) => setAreaId(value)}
-                    >
-                        <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6] w-full ">
-                            <SelectValue placeholder="Pilih Lokasi" />
-                        </SelectTrigger>
-                        <SelectContent className="z-50 bg-white dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
-                            {areas.length > 0
-                                ? areas.map((area, index) => (
-                                      <SelectItem
-                                          key={`area-${area.id}-${index}`}
-                                          value={`${area.id}`}
-                                          //   selected={areaId == `${area.id}`}
-                                      >
-                                          {area.name}
-                                      </SelectItem>
-                                  ))
-                                : null}
-                        </SelectContent>
-                    </Select>
-                    <ErrorMessage name="area_id" />
-                </div>
-                <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="is_active">Active</Label>
                     <InputActiveCheckbox
                         isActive={isActive}
@@ -192,7 +149,7 @@ function ModalLocationForm({ location, areas, isOpenModal, setIsOpenModal }) {
                 <Button
                     // onClick={() => setIsOpenModal(false)}
                     type="submit"
-                    disabled={loading || !data.name || areaId === null}
+                    disabled={loading || !data.name}
                     className="bg-primary text-white hover:bg-primary/95 hover:text-white"
                 >
                     {loading && (

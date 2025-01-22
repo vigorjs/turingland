@@ -77,7 +77,11 @@ const AdminDetailPropertyPage = ({ property, auth }) => {
                                 {property.images?.map((image) => (
                                     <img
                                         key={image.id}
-                                        src={image.image_path}
+                                        src={
+                                            image.image_path
+                                                ? image.image_path
+                                                : "https://ik.imagekit.io/pashouses/pb1/tr:n-hl_v3/property/front-house/-JDoNqEMWigKKq7jtLReZVFmjQ7pfFdb0Op7MHND.jpeg"
+                                        }
                                         alt="Property"
                                         className={`w-full h-24 object-cover rounded cursor-pointer ${
                                             selectedImage === image.image_path

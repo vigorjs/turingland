@@ -106,7 +106,6 @@ const Sidebar = ({ isCollapsed, user }) => {
 
     const isActive = (namedRoute) => url === `/${namedRoute}`;
 
-    // Define role-based access
     const roleAccess = {
         admin: [
             "Dashboard",
@@ -122,10 +121,9 @@ const Sidebar = ({ isCollapsed, user }) => {
             "Customer",
         ],
         agent: ["Property"],
-        customer: [], // No access
+        customer: [],
     };
 
-    // Filter sidebar links based on user role
     const filteredSidebarLinks = sidebarLinks
         .map(({ section, links }) => ({
             section,
@@ -133,69 +131,74 @@ const Sidebar = ({ isCollapsed, user }) => {
                 roleAccess[user.role]?.includes(name)
             ),
         }))
-        .filter(({ links }) => links.length > 0); // Remove empty sections
+        .filter(({ links }) => links.length > 0);
 
     return (
-        <div
-            className={`bg-[#222222] text-white rounded-none md:rounded-2xl px-4 py-6 h-svh flex flex-col shadow-lg transition-all duration-300 ${
-                isMobileOpen ? "w-[80px]" : "w-[270px]"
-            }`}
-        >
-            {/* Logo and Toggle */}
-            <div className="mb-5 flex justify-center items-center flex-col gap-3">
-                <ApplicationLogo />
-                <button
-                    className="bg-[#222222] text-white p-2 rounded-full px-4"
-                    onClick={toggleSidebar}
-                >
-                    <FaBars size={20} />
-                </button>
-            </div>
+        <div className="h-screen overflow-hidden">
+            <div
+                className={`bg-[#222222] text-white rounded-none md:rounded-2xl px-4 py-6 h-full flex flex-col shadow-lg transition-all duration-300 overflow-y-auto ${
+                    isMobileOpen ? "w-[80px]" : "w-[270px]"
+                }`}
+            >
+                <div className="mb-5 flex justify-center items-center flex-col gap-3 sticky top-0 bg-[#222222] z-10">
+                    <ApplicationLogo />
+                    <button
+                        className="bg-[#222222] text-white p-2 rounded-full px-4"
+                        onClick={toggleSidebar}
+                    >
+                        <FaBars size={20} />
+                    </button>
+                </div>
 
-            {/* Navigation */}
-            <div className="flex-1 flex flex-col justify-between">
-                {filteredSidebarLinks.map(({ section, links }) => (
-                    <div key={section} className="mb-4">
-                        {!isMobileOpen && (
-                            <h2 className="text-[#979797] text-[14px] uppercase mb-2">
-                                {section}
-                            </h2>
-                        )}
-                        {links.map(({ name, namedRoute, icon }) => (
-                            <Link
-                                key={namedRoute}
-                                href={route(namedRoute)}
-                                className={`flex items-center gap-3 px-4 py-2 rounded-md transition ${
-                                    isActive(namedRoute)
-                                        ? "bg-white text-[#222222]"
-                                        : "text-white hover:bg-gray-700"
-                                }`}
-                            >
-                                <span className="text-xl">{icon}</span>
+                <div className="flex-1 flex flex-col justify-between min-h-0">
+                    <div className="overflow-y-auto flex-1">
+                        {filteredSidebarLinks.map(({ section, links }) => (
+                            <div key={section} className="mb-4">
                                 {!isMobileOpen && (
-                                    <span className="font-bold text-[15px]">
-                                        {name}
-                                    </span>
+                                    <h2 className="text-[#979797] text-[14px] uppercase mb-2 sticky top-0">
+                                        {section}
+                                    </h2>
                                 )}
-                            </Link>
+                                {links.map(({ name, namedRoute, icon }) => (
+                                    <Link
+                                        key={namedRoute}
+                                        href={route(namedRoute)}
+                                        className={`flex items-center gap-3 px-4 py-2 rounded-md transition ${
+                                            isActive(namedRoute)
+                                                ? "bg-white text-[#222222]"
+                                                : "text-white hover:bg-gray-700"
+                                        }`}
+                                    >
+                                        <span className="text-xl">{icon}</span>
+                                        {!isMobileOpen && (
+                                            <span className="font-bold text-[15px]">
+                                                {name}
+                                            </span>
+                                        )}
+                                    </Link>
+                                ))}
+                            </div>
                         ))}
                     </div>
-                ))}
 
-                {/* Logout Button */}
-                <button
-                    onClick={handleLogout}
-                    className={`flex items-center gap-3 px-4 py-2 rounded-md transition mt-4 ${
-                        isMobileOpen
-                            ? "justify-center"
-                            : "justify-start hover:bg-gray-700"
-                    }`}
-                >
-                    <span className="text-xl">{<LogOutIcon />}</span>
-                    {!isMobileOpen && (
-                        <span className="font-bold text-[15px]">Logout</span>
-                    )}
-                </button>
+                    <div className="sticky bottom-0 bg-[#222222] pt-4">
+                        <button
+                            onClick={handleLogout}
+                            className={`flex items-center gap-3 px-4 py-2 rounded-md transition ${
+                                isMobileOpen
+                                    ? "justify-center"
+                                    : "justify-start hover:bg-gray-700"
+                            }`}
+                        >
+                            <span className="text-xl">{<LogOutIcon />}</span>
+                            {!isMobileOpen && (
+                                <span className="font-bold text-[15px]">
+                                    Logout
+                                </span>
+                            )}
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     );

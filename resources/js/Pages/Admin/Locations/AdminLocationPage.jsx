@@ -16,10 +16,10 @@ import { toast } from "@/hooks/use-toast";
 import AdminLayout from "@/Layouts/AdminLayout";
 import { Link, router } from "@inertiajs/react";
 import { useState } from "react";
-import { FaEye } from "react-icons/fa";
+import { FaEye, FaPlus } from "react-icons/fa";
 import { HiSortAscending, HiSortDescending } from "react-icons/hi";
 
-export default function AdminLocationPage({ locations, areas, auth }) {
+export default function AdminLocationPage({ locations, auth }) {
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
     const [location, setLocation] = useState(null);
@@ -109,7 +109,7 @@ export default function AdminLocationPage({ locations, areas, auth }) {
                 }}
                 className="text-white mb-3.5"
             >
-                Tambah Lokasi
+                <FaPlus /> Tambah Lokasi
             </Button>
 
             <div className="flex flex-col">
@@ -139,7 +139,6 @@ export default function AdminLocationPage({ locations, areas, auth }) {
                                         </th>
                                         {[
                                             { key: "name", label: "Name" },
-                                            { key: "area_id", label: "Area" },
                                             { key: "description", label: "Description" },
                                             { key: "status", label: "Status" },
                                         ].map(({ key, label, isStatic }, index) => (
@@ -172,8 +171,8 @@ export default function AdminLocationPage({ locations, areas, auth }) {
                                                             </SelectTrigger>
                                                             <SelectContent>
                                                                 <SelectItem value="-1">All</SelectItem>
-                                                                <SelectItem value="1">Active</SelectItem>
-                                                                <SelectItem value="0">Inactive</SelectItem>
+                                                                <SelectItem value="true">Active</SelectItem>
+                                                                <SelectItem value="false">Inactive</SelectItem>
                                                             </SelectContent>
                                                         </Select>
                                                     ) : (
@@ -211,11 +210,6 @@ export default function AdminLocationPage({ locations, areas, auth }) {
                                                     .toLowerCase()
                                                     .includes(
                                                         filter.name.toLowerCase()
-                                                    ) &&
-                                                location?.area?.name.
-                                                    toLowerCase()
-                                                    .includes(
-                                                        filter.area_id.toLowerCase()
                                                     ) &&
                                                 location.description
                                                     .toLowerCase()
@@ -255,12 +249,6 @@ export default function AdminLocationPage({ locations, areas, auth }) {
                                                 <td className="px-5 py-2.5">
                                                     <p className="font-normal text-sm text-gray-900">
                                                         {location.name}
-                                                    </p>
-                                                </td>
-                                                <td className="px-5 py-2.5">
-                                                    <p className="font-normal text-sm text-gray-900">
-                                                        {location?.area
-                                                            ?.name ?? "-"}
                                                     </p>
                                                 </td>
                                                 <td className="px-5 py-2.5">
@@ -357,7 +345,6 @@ export default function AdminLocationPage({ locations, areas, auth }) {
             {isOpenModal && (
                 <ModalLocationForm
                     location={location}
-                    areas={areas}
                     isOpenModal={isOpenModal}
                     setIsOpenModal={setIsOpenModal}
                 />

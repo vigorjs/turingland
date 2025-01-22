@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Area;
+use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Developer;
 use App\Models\Location;
 use App\Models\Property;
 use App\Models\Testimony;
+use App\Models\WebPreferences;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -23,6 +25,8 @@ class HomeController extends Controller
             'categories' => Category::select('id', 'name')->with(['properties.images'])->get(),
             'locations' => Location::select('id', 'name')->get(),
             'testimonials' => Testimony::all(),
+            'banners' => Banner::all(),
+            'webPreferences' => WebPreferences::all(),
             'latestProperties' => Property::with(['area', 'developer', 'categories', 'images'])
                 ->latest()
                 ->limit(6)

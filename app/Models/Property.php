@@ -29,6 +29,7 @@ class Property extends Model
         'address',
         'certificate_type',
         'year_built',
+        'when_sold',
         'is_featured'
     ];
 
@@ -109,7 +110,7 @@ class Property extends Model
         }
 
         if (!empty($filters['developer_id'])) {
-            $query->where('developer_id', $filters['developer_id']);
+            $query->where('developer_id', (int) $filters['developer_id']);
         }
 
         if (!empty($filters['type'])) {

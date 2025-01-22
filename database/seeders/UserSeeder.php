@@ -13,7 +13,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $admin = \App\Models\User::factory()->create([
-            'name' => 'Admin User',
+            'name' => 'Sigma Boy',
             'email' => 'admin@example.com',
             'password' => 'password123'
         ]);

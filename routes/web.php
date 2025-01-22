@@ -18,16 +18,17 @@ use App\Http\Controllers\WebPreferencesController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-require __DIR__.'/auth.php';
+
+require __DIR__ . '/auth.php';
 
 Route::get("/", [HomeController::class, 'index'])->name('homepage');
 Route::get('/property/{id}', [PropertyController::class, 'show'])->name('property.show');
 Route::get('/search', [SearchController::class, 'index'])->name('search.property');
 Route::get('/search-api', [SearchController::class, 'indexApi'])->name('search.property.api');
 
-Route::get('/api/header-data', function() {
+Route::get('/api/header-data', function () {
     return response()->json([
-        "areas" => \App\Models\Area::orderBy('name')->get(),
+        "areas" => \App\Models\Area::orderBy('name')->with('location')->get(),
         "categories" => \App\Models\Category::orderBy('name')->get()
     ]);;
 })->name('api.header-data');
@@ -37,7 +38,7 @@ Route::get('/dashboard/profile', [ProfileController::class, 'edit'])->name('prof
 Route::patch('/dashboard/profile', [ProfileController::class, 'update'])->name('profile.update');
 Route::delete('/dashboard/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-Route::prefix('/dashboard')->middleware(['auth', 'verified', 'role:admin|agent'])->group(function (){
+Route::prefix('/dashboard')->middleware(['auth', 'verified', 'role:admin|agent'])->group(function () {
     Route::get('users/export/', [UserController::class, 'export'])->middleware('role:admin');
     // DASHBOARD
     Route::get('', [AdminDashboardController::class, 'index'])->middleware('role:admin')->name('dashboard');
@@ -55,7 +56,8 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified', 'role:admin|agent']
     // AREA
     Route::get('/area', function () {
         return Inertia::render("Admin/Areas/AdminAreaPage", [
-            'areas' => \App\Models\Area::paginate(8)
+            'locations' => \App\Models\Location::orderBy('name')->get(),
+            'areas' => \App\Models\Area::with('location')->paginate(8)
         ]);
     })->middleware('role:admin')->name('dashboard.area');
     Route::post("/area", [AdminAreaController::class, "store"])->middleware('role:admin')->name("area.store");
@@ -66,7 +68,7 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified', 'role:admin|agent']
     Route::get('/location', function () {
         return Inertia::render("Admin/Locations/AdminLocationPage", [
             'areas' => \App\Models\Area::all(),
-            'locations' => \App\Models\Location::with('area')->paginate(8)
+            'locations' => \App\Models\Location::orderBy('name')->paginate(8)
         ]);
     })->middleware('role:admin')->name('dashboard.location');
     Route::post("/location", [AdminLocationController::class, "store"])->middleware('role:admin')->name("location.store");
@@ -117,7 +119,7 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified', 'role:admin|agent']
     Route::get('/web-preferences', function () {
         return Inertia::render("Admin/WebPreferences/WebPreferences");
     })->middleware('role:admin')->name('dashboard.web-preferences');
-Route::post('web-preferences', [WebPreferencesController::class, 'updateWebPreference'])->name("web-preferences.post");
+    Route::post('web-preferences', [WebPreferencesController::class, 'updateWebPreference'])->name("web-preferences.post");
 
 
     //AGENT
@@ -135,5 +137,3 @@ Route::post('web-preferences', [WebPreferencesController::class, 'updateWebPrefe
 
 //Web Pref
 Route::get('web-preferences/{key}', [WebPreferencesController::class, 'getWebPreference'])->name('web-preferences.get');
-
-
