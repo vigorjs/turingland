@@ -20,8 +20,6 @@ import { FaEye, FaPlus } from "react-icons/fa";
 import { HiSortAscending, HiSortDescending } from "react-icons/hi";
 
 export default function AdminAgentPage({ agents, auth }) {
-    console.log(agents);
-
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
     const [agent, setAgent] = useState(null);
@@ -89,7 +87,6 @@ export default function AdminAgentPage({ agents, auth }) {
                     description: err,
                     variant: "destructive",
                 });
-                console.log("ERR: ", err);
             },
             onFinish: () => {
                 setIsOpenDeleteModal(false);

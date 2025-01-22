@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Area;
+use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Property;
 use Illuminate\Http\Request;
@@ -19,6 +20,8 @@ class SearchController extends Controller
             ->paginate(12)
             ->withQueryString();
 
+        $banner = Banner::whereNotNull('image_path')->get();
+
         // dd($properties);
 
         return Inertia::render('Search/Search', [
@@ -27,6 +30,7 @@ class SearchController extends Controller
             'areas' => Area::orderBy('name')->get(),
             'filters' => $request->all(),
             'auth' => Auth::user(),
+            'banner' => $banner
         ]);
     }
 

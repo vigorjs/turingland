@@ -18,7 +18,7 @@ import { X } from "lucide-react";
 import { MultiSelect } from "react-multi-select-component";
 
 function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
-    // console.log(categories);
+    //
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [uploadedImages, setUploadedImages] = useState([]);
     const [errors, setErrors] = useState({});
@@ -112,7 +112,6 @@ function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
 
         // Debug: cek isi formData
         for (let pair of formData.entries()) {
-            console.log(pair[0], pair[1]);
         }
 
         router.post(route("dashboard.property.store"), formData, {
@@ -121,11 +120,9 @@ function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
             preserveScroll: true,
             onSuccess: () => {
                 setErrors({});
-                console.log("Upload success");
             },
             onError: (errors) => {
                 setErrors(errors);
-                console.log("Upload errors:", errors);
             },
         });
     };
@@ -642,7 +639,7 @@ function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
                                     id="images"
                                     type="file"
                                     multiple
-                                    accept="image/*"
+                                    accept=".png, .jpg, .jpeg"
                                     onChange={handleImageUpload}
                                     className={`mb-4 ${
                                         errors.property_images

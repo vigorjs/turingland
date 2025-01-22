@@ -3,7 +3,7 @@ import Header from "@/Components/Header";
 import { useEffect, useState } from "react";
 
 export default function GuestLayout({ children, auth }) {
-    // console.log("ini props dari auth di komponen guestLayout : ", auth);
+    //
 
     const [categories, setCategories] = useState([]);
 

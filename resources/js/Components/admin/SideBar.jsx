@@ -103,8 +103,21 @@ const Sidebar = ({ isCollapsed, user }) => {
         e.preventDefault();
         router.post(route("logout"));
     };
+    String.prototype.replaceAt = function (index, replacement) {
+        return (
+            this.substring(0, index) +
+            replacement +
+            this.substring(index + replacement.length)
+        );
+    };
 
-    const isActive = (namedRoute) => url === `/${namedRoute}`;
+    const isActive = (namedRoute) =>
+        url ===
+        `/${
+            namedRoute == "dashboard"
+                ? namedRoute
+                : namedRoute.replaceAt(9, "/")
+        }`;
 
     const roleAccess = {
         admin: [

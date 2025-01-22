@@ -48,6 +48,7 @@ class DeveloperServiceImplement extends ServiceApi implements DeveloperService{
     {
         $request->validate([
             "name" => "required",
+            // "logo" => "nullable|mimes:jpeg,png,jpg,gif|max:2048"
         ]);
 
         $developer = new Developer();
@@ -59,7 +60,7 @@ class DeveloperServiceImplement extends ServiceApi implements DeveloperService{
             $file = $request->file("logo");
             $ext = $file->getClientOriginalExtension();
             $fileName = time() . "-" . $request->input("name") . "." . $ext;
-            $path = $file->storeAs("developers", $fileName);
+            $path = $file->storeAs("developers", $fileName, "public");
             $developer->logo = $path;
         }
 
@@ -69,7 +70,8 @@ class DeveloperServiceImplement extends ServiceApi implements DeveloperService{
     public function updateDeveloper(Request $request, $id)
     {
         $request->validate([
-            "name" => "required"
+            "name" => "required",
+            // "logo" => "nullable|mimes:jpeg,png,jpg,gif|max:2048"
         ]);
 
         $developer = $this->showDeveloper($id);
@@ -83,7 +85,7 @@ class DeveloperServiceImplement extends ServiceApi implements DeveloperService{
             $file = $request->file("logo");
             $ext = $file->getClientOriginalExtension();
             $fileName = time() . "-" . $request->input("name") . "." . $ext;
-            $path = $file->storeAs("developers", $fileName);
+            $path = $file->storeAs("developers", $fileName, "public");
             $developer->logo = $path;
         }
 

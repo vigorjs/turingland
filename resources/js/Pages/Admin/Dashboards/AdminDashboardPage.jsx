@@ -25,8 +25,6 @@ export default function AdminDashboardPage({
     propertyTypeData,
     auth,
 }) {
-    console.log(latestDevelopers);
-
     const cardCounting = [
         {
             icon: <Users className="text-2xl w-6 h-6 text-white" />,

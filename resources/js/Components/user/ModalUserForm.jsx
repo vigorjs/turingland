@@ -8,11 +8,19 @@ import { LoaderIcon, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import InputActiveCheckbox from "../InputActiveCheckbox";
 
-function ModalUserForm({ user, setUser, isOpenModal, setIsOpenModal }) {
+function ModalUserForm({
+    user,
+    setUser,
+    isOpenModal,
+    setIsOpenModal,
+    isCustomer,
+}) {
     const [loading, setLoading] = useState(false);
     const [isAgentActive, setIsAgentActive] = useState(
         user?.is_agent_active ?? false
     );
+
+    const role = isCustomer ? "customer" : "agent";
 
     const [photo, setPhoto] = useState(
         user?.photo ? `/storage/${user?.photo}` : null
@@ -31,15 +39,13 @@ function ModalUserForm({ user, setUser, isOpenModal, setIsOpenModal }) {
         setData("is_agent_active", isAgentActive);
     }, [isAgentActive]);
 
-    console.log("ERR: ", errors);
-
     const handleSubmit = (e) => {
         e.preventDefault();
 
         setLoading(true);
 
         if (!user) {
-            post(route("dashboard.agent.store"), {
+            post(route(`dashboard.${role}.store`), {
                 onError: (errors) => {
                     setLoading(false);
                     toast({
@@ -48,7 +54,6 @@ function ModalUserForm({ user, setUser, isOpenModal, setIsOpenModal }) {
                             errors?.name || errors?.photo || errors.wa_number,
                         variant: "destructive",
                     });
-                    console.log("err: ", errors);
                 },
                 onSuccess: () => {
                     toast({
@@ -64,7 +69,7 @@ function ModalUserForm({ user, setUser, isOpenModal, setIsOpenModal }) {
                 },
             });
         } else {
-            post(route("dashboard.agent.update", user.id), {
+            post(route(`dashboard.${role}.update`, user.id), {
                 onError: (errors) => {
                     setLoading(false);
                     toast({
@@ -72,7 +77,6 @@ function ModalUserForm({ user, setUser, isOpenModal, setIsOpenModal }) {
                         description: errors?.name || errors?.photo,
                         variant: "destructive",
                     });
-                    console.log("err: ", errors);
                 },
                 onSuccess: () => {
                     toast({
@@ -171,7 +175,7 @@ function ModalUserForm({ user, setUser, isOpenModal, setIsOpenModal }) {
                     <Input
                         type="file"
                         id="photo"
-                        accept="photo/*"
+                        accept=".png, .jpg, .jpeg"
                         placeholder="Input photo user..."
                         // onChange={(e) => setData("photo", e.target.files?.[0] || null)}
                         onChange={(e) => {

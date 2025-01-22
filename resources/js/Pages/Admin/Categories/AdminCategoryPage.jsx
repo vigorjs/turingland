@@ -67,7 +67,6 @@ export default function AdminCategoryPage({ categories, auth }) {
                     variant: "destructive",
                 });
                 setErrors(err);
-                console.log("ERR: ", err);
             },
             onFinish: () => {
                 setIsOpenDeleteModal(false);

@@ -172,6 +172,7 @@ function ModalBannerForm({ banner, setBanner, isOpenModal, setIsOpenModal }) {
                         }
                         type="file"
                         id="image_path"
+                        accept=".png, .jpg, .jpeg"
                     />
                 </div>
 

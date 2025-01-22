@@ -11,6 +11,7 @@ use App\Http\Controllers\AdminTestimonyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AgentController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
@@ -133,6 +134,9 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified', 'role:admin|agent']
             'customers' => User::role('customer')->with('roles')->paginate(8)
         ]);
     })->middleware('role:admin')->name('dashboard.customer');
+
+    Route::post('/customer', [CustomerController::class, "store"])->middleware('role:admin')->name('dashboard.customer.store');
+    Route::put('/customer/{id}', [CustomerController::class, "update"])->middleware('role:admin')->name('dashboard.customer.update');
 });
 
 //Web Pref

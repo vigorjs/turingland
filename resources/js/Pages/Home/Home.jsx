@@ -33,7 +33,6 @@ export default function Home({
     latestProperties,
     featuredProperties,
 }) {
-    console.log(testimonials);
     const img =
         "https://ecatalog.sinarmasland.com/_next/image?url=https%3A%2F%2Fecatalog.sinarmasland.com%2Fassets%2Fsite-setting-files%2F1%2Fhomepage-background-banner-desktop-677b6f397dc74.jpg&w=3840&q=75";
 
@@ -106,7 +105,7 @@ export default function Home({
                                                     : img
                                             }
                                             alt={`Carousel item ${index}`}
-                                            className="object-contain md:rounded-2xl rounded-none w-auto h-full"
+                                            className="object-contain md:rounded-2xl rounded-none w-[100vw] sm:w-auto sm:h-full"
                                         />
                                     </CarouselItem>
                                 ))}
@@ -160,7 +159,14 @@ export default function Home({
                                                   key={index}
                                               >
                                                   <CardProperty
-                                                      img={img3}
+                                                      img={
+                                                          property?.images
+                                                              .length > 0
+                                                              ? property
+                                                                    .images[0]
+                                                                    ?.image_path
+                                                              : "/assets/default-img-property.png"
+                                                      }
                                                       key={`properties-card-${index}`}
                                                       id={property.id}
                                                   >
@@ -286,7 +292,14 @@ export default function Home({
                                                   key={index}
                                               >
                                                   <CardProperty
-                                                      img={img3}
+                                                      img={
+                                                          property?.images
+                                                              .length > 0
+                                                              ? property
+                                                                    .images[0]
+                                                                    ?.image_path
+                                                              : "/assets/default-img-property.png"
+                                                      }
                                                       key={`properties-card-${index}`}
                                                       id={property.id}
                                                   >

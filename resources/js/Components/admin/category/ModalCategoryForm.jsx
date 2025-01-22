@@ -23,8 +23,6 @@ function ModalCategoryForm({
         _method: category ? "PUT" : "POST",
     });
 
-    console.log("ERR: ", errors);
-
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -39,7 +37,6 @@ function ModalCategoryForm({
                         description: errors?.name || errors?.icon,
                         variant: "destructive",
                     });
-                    console.log("err: ", errors);
                 },
                 onSuccess: () => {
                     toast({
@@ -65,7 +62,6 @@ function ModalCategoryForm({
                         description: errors?.name || errors?.icon,
                         variant: "destructive",
                     });
-                    console.log("err: ", errors);
                 },
                 onSuccess: () => {
                     toast({
@@ -136,7 +132,7 @@ function ModalCategoryForm({
                     <Input
                         type="file"
                         id="icon"
-                        accept="image/*"
+                        accept=".png, .jpg, .jpeg"
                         placeholder="Masukkan icon kategori..."
                         // onChange={(e) => setData("icon", e.target.files?.[0] || null)}
                         onChange={(e) => {

@@ -33,9 +33,7 @@ export default function PropertyDetailPage({
 }) {
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [isInfoLess, setIsInfoLess] = useState(true);
-    console.log(banner);
 
-    const img = `https://ecatalog.sinarmasland.com/_next/image?url=https%3A%2F%2Fecatalog.sinarmasland.com%2Fassets%2Fsite-setting-files%2F1%2Fhomepage-background-banner-desktop-677b6f397dc74.jpg&w=3840&q=75`;
 
     const img1 =
         "https://s3-alpha-sig.figma.com/img/db80/4347/cb68839c79ca58a9b46777e9c9c07cc0?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=nXWoIhqAUTi-at1criMJPC8l-xudGFynTTWb9Y-EQ3SJVxbjtvcOe0gMCLVH-t9DqTyNiL-Yzev8ZoIv8rUhxICHbXB8rkLeNKxj7EQ62uTTgu9cxyvbWTE~QRaByjGG1cJ6vcaSQ6MXKBL0oqfIGiBf0VqSA6UKFh5uufI7P4FLQmWmiBmecXFnhZ2A5p2FkQ5Vc~d9jsWCoMVMpC711S6lfNymccRCkodcG15Mx22s-p2ydCVU06b5TyCZg7x1tG2lcqPcdyaX07KFBNHfmAp9N23KdaCvnBgsmBAeg76eEDgO9y7B4xcEcerX559xGjDraUB~HpMhDXtZGXxetg__";
@@ -44,12 +42,9 @@ export default function PropertyDetailPage({
         (img) => img.is_primary == true
     );
     const otherImages = property.images.filter((img) => {
-        img.is_primary == false
+        img.is_primary == false;
     });
     const allImages = [imagePrimary, ...otherImages];
-
-    console.log("property: ", property);
-
 
     return (
         <GuestLayout auth={auth}>
@@ -57,15 +52,15 @@ export default function PropertyDetailPage({
 
             <div className="min-h-screen px-3 sm:px-4 md:px-6 lg:px-[150px] py-6">
                 {/* IMAGES */}
-                <button onClick={() => property?.images?.length > 1 && setIsOpenModal(true)} className="w-full">
+                <button onClick={() => property?.images?.length > 1 && setIsOpenModal(true)} className="w-full border border-gray-50 dark:border-white/90 rounded-2xl">
                     <img
                         src={
                             imagePrimary[0]
                                 ? imagePrimary[0].image_path
-                                : "https://ik.imagekit.io/pashouses/pb1/tr:n-hl_v3/property/front-house/-JDoNqEMWigKKq7jtLReZVFmjQ7pfFdb0Op7MHND.jpeg"
+                                : "/assets/default-img-property.png"
                         }
                         alt=""
-                        className="w-full h-80 sm:h-[420px] object-cover rounded-2xl shadow-lg"
+                        className={`w-full h-80 sm:h-[420px] rounded-2xl shadow-lg ${imagePrimary[0] ? "object-cover" : "object-contain"}`}
                     />
                 </button>
                 {property?.images?.length > 1 && (
@@ -383,9 +378,9 @@ export default function PropertyDetailPage({
                             </p>
                         </div>
 
-                        <div className="w-full">
+                        {/* <div className="w-full">
                             <img src={img1} alt="" className="rounded-2xl" />
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 
@@ -424,11 +419,17 @@ export default function PropertyDetailPage({
                                           key={index}
                                       >
                                           <CardProperty
+                                              //   img={
+                                              //       property.images.image_path
+                                              //           ? property.images
+                                              //                 .image_path
+                                              //           : "https://ik.imagekit.io/pashouses/pb1/tr:n-hl_v3/property/front-house/-JDoNqEMWigKKq7jtLReZVFmjQ7pfFdb0Op7MHND.jpeg"
+                                              //   }
                                               img={
-                                                  property.images.image_path
-                                                      ? property.images
-                                                            .image_path
-                                                      : "https://ik.imagekit.io/pashouses/pb1/tr:n-hl_v3/property/front-house/-JDoNqEMWigKKq7jtLReZVFmjQ7pfFdb0Op7MHND.jpeg"
+                                                  property?.images.length > 0
+                                                      ? property.images[0]
+                                                            ?.image_path
+                                                      : "/assets/default-img-property.png"
                                               }
                                               key={`properties-card-${index}`}
                                           >
@@ -472,8 +473,8 @@ export default function PropertyDetailPage({
                                               <div className="flex justify-between">
                                                   <p className="text-xs dark:text-primary font-semibold">
                                                       {formatRupiah(
-                                                                                                                        property.price
-                                                                                                                    )}
+                                                          property.price
+                                                      )}
                                                   </p>
                                                   <div className="flex gap-5">
                                                       <div className="flex items-center gap-x-1 text-xs">
@@ -535,10 +536,10 @@ export default function PropertyDetailPage({
                                             src={
                                                 bnr.image_path
                                                     ? bnr.image_path
-                                                    : "https://ik.imagekit.io/pashouses/pb1/tr:n-hl_v3/property/front-house/-JDoNqEMWigKKq7jtLReZVFmjQ7pfFdb0Op7MHND.jpeg"
+                                                    : "https://ecatalog.sinarmasland.com/_next/image?url=https%3A%2F%2Fecatalog.sinarmasland.com%2Fassets%2Fsite-setting-files%2F1%2Fhomepage-background-banner-desktop-677b6f397dc74.jpg&w=3840&q=75"
                                             }
                                             alt={`Carousel item ${index}`}
-                                            className="object-contain md:rounded-2xl rounded-none w-auto h-full"
+                                            className="object-contain md:rounded-2xl rounded-none w-[100vw] sm:w-auto sm:h-full"
                                         />
                                     </Link>
                                 </CarouselItem>
@@ -563,7 +564,6 @@ export default function PropertyDetailPage({
 
 function ModalImages({ isOpenModal, setIsOpenModal, images }) {
     const handleCloseModal = () => setIsOpenModal(false);
-    console.log("images : ", images);
 
     return (
         <Modal onClose={handleCloseModal} show={isOpenModal}>
