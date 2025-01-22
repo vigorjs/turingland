@@ -12,12 +12,23 @@ export default function AgentStatusBadge({ status }) {
             dot: "#059669",
             label: "Active",
         },
+        0: {
+            bg: "bg-red-50",
+            text: "text-red-600",
+            dot: "#dc2626",
+            label: "Inactive",
+        },
+        1: {
+            bg: "bg-emerald-50",
+            text: "text-emerald-600",
+            dot: "#059669",
+            label: "Active",
+        },
     };
     console.log(STATUS_STYLES[status]);
     console.log(status);
 
-    const { bg, text, dot, label } =
-        STATUS_STYLES[status] || STATUS_STYLES.inactive;
+    const { bg, text, dot, label } = STATUS_STYLES[status];
 
     return (
         <div

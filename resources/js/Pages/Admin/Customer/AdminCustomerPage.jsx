@@ -245,20 +245,6 @@ export default function AdminCustomerPage({ customers, auth }) {
                                                 <td className="flex p-5 items-center justify-center gap-0.5">
                                                     <button
                                                         onClick={() =>
-                                                            handleDetail(
-                                                                customer.id
-                                                            )
-                                                        }
-                                                        className="p-2 rounded-full bg-white group transition-all duration-500 hover:bg-slate-600 flex item-center"
-                                                    >
-                                                        <FaEye
-                                                            size={24}
-                                                            color="#5d6878"
-                                                            className="group-hover:fill-white"
-                                                        />
-                                                    </button>
-                                                    <button
-                                                        onClick={() =>
                                                             handleOpenEditModal(
                                                                 customer
                                                             )

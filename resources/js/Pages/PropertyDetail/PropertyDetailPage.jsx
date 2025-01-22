@@ -24,10 +24,15 @@ import {
 import React, { useState } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 
-export default function PropertyDetailPage({ property, auth, featuredProp }) {
+export default function PropertyDetailPage({
+    property,
+    auth,
+    featuredProp,
+    banner,
+}) {
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [isInfoLess, setIsInfoLess] = useState(true);
-    console.log(featuredProp);
+    console.log(banner);
 
     const img = `https://ecatalog.sinarmasland.com/_next/image?url=https%3A%2F%2Fecatalog.sinarmasland.com%2Fassets%2Fsite-setting-files%2F1%2Fhomepage-background-banner-desktop-677b6f397dc74.jpg&w=3840&q=75`;
 
@@ -509,21 +514,23 @@ export default function PropertyDetailPage({ property, auth, featuredProp }) {
                     }}
                 >
                     <CarouselContent>
-                        {featuredProp.length > 0 ? (
-                            featuredProp.map((property, index) => (
+                        {banner.length > 0 ? (
+                            banner.map((bnr, index) => (
                                 <CarouselItem
                                     key={`ads-section-${index}`}
                                     className="flex-shrink-0 basis-1/1 md:basis-1/2 max-h-[40vh]"
                                 >
-                                    <img
-                                        src={
-                                            property.images.image_path
-                                                ? property.images.image_path
-                                                : "https://ik.imagekit.io/pashouses/pb1/tr:n-hl_v3/property/front-house/-JDoNqEMWigKKq7jtLReZVFmjQ7pfFdb0Op7MHND.jpeg"
-                                        }
-                                        alt={`Carousel item ${index}`}
-                                        className="object-contain md:rounded-2xl rounded-none w-auto h-full"
-                                    />
+                                    <Link href={bnr.link}>
+                                        <img
+                                            src={
+                                                bnr.image_path
+                                                    ? bnr.image_path
+                                                    : "https://ik.imagekit.io/pashouses/pb1/tr:n-hl_v3/property/front-house/-JDoNqEMWigKKq7jtLReZVFmjQ7pfFdb0Op7MHND.jpeg"
+                                            }
+                                            alt={`Carousel item ${index}`}
+                                            className="object-contain md:rounded-2xl rounded-none w-auto h-full"
+                                        />
+                                    </Link>
                                 </CarouselItem>
                             ))
                         ) : (
