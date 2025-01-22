@@ -43,8 +43,8 @@ export default function SearchPage({
                     </div>
                     <div className="sticky top-3.5 w-full sm:w-1/3 flex flex-col gap-3">
                         {banner.length > 0
-                            ? banner.map((bnr) => (
-                                  <Link href={bnr.link}>
+                            ? banner.map((bnr, index) => (
+                                  <Link href={bnr.link} key={index}>
                                       <img
                                           src={`storage/${bnr.image_path}`}
                                           alt={`image`}
