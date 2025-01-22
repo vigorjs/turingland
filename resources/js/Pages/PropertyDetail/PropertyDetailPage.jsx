@@ -34,7 +34,9 @@ export default function PropertyDetailPage({
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [isInfoLess, setIsInfoLess] = useState(true);
 
-    const imagePrimary = property.images[0]
+    console.log("property.images: ", property.images);
+
+    const imagePrimary = property.images.length > 0 ? property.images[0] : null;
     // const imagePrimary = property.images.filter(
     //     (img) => img.is_primary == true
     // );
@@ -47,7 +49,7 @@ export default function PropertyDetailPage({
     const allImages = [imagePrimary, ...otherImages];
 
     console.log("property: ", property);
-    console.log("imagePrimary: ", imagePrimary);
+    // console.log("imagePrimary: ", imagePrimary);
     // console.log("otherImages: ", otherImages);
 
     return (
@@ -568,11 +570,13 @@ export default function PropertyDetailPage({
                 </Carousel>
             </div>
 
-            <ModalImages
-                isOpenModal={isOpenModal}
-                setIsOpenModal={setIsOpenModal}
-                images={allImages}
-            />
+            {property?.images?.length > 0 && (
+                <ModalImages
+                    isOpenModal={isOpenModal}
+                    setIsOpenModal={setIsOpenModal}
+                    images={allImages}
+                />
+            )}
         </GuestLayout>
     );
 }
@@ -598,7 +602,7 @@ function ModalImages({ isOpenModal, setIsOpenModal, images }) {
                                 <div className="w-auto flex justify-center items-center">
                                     <img
                                         src={
-                                            img[0]
+                                            img?.[0]
                                                 ? img?.[0].image_path
                                                 : img.image_path
                                         }

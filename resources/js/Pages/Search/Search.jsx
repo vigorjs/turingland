@@ -14,6 +14,9 @@ export default function SearchPage({
 }) {
     const [propertiesData, setPropertiesData] = useState(properties);
 
+    console.log("propertiesData: ", propertiesData.data);
+
+
     return (
         <GuestLayout auth={auth}>
             <Head title="Cari rumah" />
@@ -32,7 +35,7 @@ export default function SearchPage({
                 {/* CARD */}
                 <div className="flex flex-wrap sm:flex-nowrap justify-center sm:justify-between items-start gap-8 sm:gap-16">
                     <div className="w-full sm:w-2/3 flex flex-col gap-5">
-                        {propertiesData.data.length > 0
+                        {propertiesData?.data?.length > 0
                             ? propertiesData.data.map((property, index) => (
                                   <CardPropertySearch
                                       key={index}
@@ -42,7 +45,7 @@ export default function SearchPage({
                             : null}
                     </div>
                     <div className="sticky top-3.5 w-full sm:w-1/3 flex flex-col gap-3">
-                        {banner.length > 0
+                        {banner?.length > 0
                             ? banner.map((bnr, index) => (
                                   <Link href={bnr.link} key={index}>
                                       <img

@@ -25,7 +25,7 @@ export default function CardPropertySearch({ property }) {
         <div className="shadow-md rounded-2xl">
             <Carousel>
                 <CarouselContent>
-                    {imagePrimary.length > 0 ? (
+                    {imagePrimary?.length > 0 ? (
                         imagePrimary.map((img, index) => (
                             <CarouselItem
                                 key={`image-section-${index}`}
@@ -52,7 +52,7 @@ export default function CardPropertySearch({ property }) {
                         </CarouselItem>
                     )}
                 </CarouselContent>
-                {imagePrimary.length > 0 && (
+                {imagePrimary?.length > 0 && (
                     <div className="absolute top-1/2 left-14 right-14 flex items-center justify-center">
                         <div className="mx-auto w-full ">
                             <CarouselPrevious className="" />
@@ -115,10 +115,10 @@ export default function CardPropertySearch({ property }) {
                             {property.title}
                         </h1>
                         <p className="text-neutral-600 text-sm">
-                            {property.area.description}
+                            {property?.area?.name}
                         </p>
                         <p className="text-neutral-600 text-xs overflow-hidden whitespace-nowrap text-ellipsis mt-1">
-                            {property.description}
+                            {property?.description}
                         </p>
                     </div>
                 </Link>

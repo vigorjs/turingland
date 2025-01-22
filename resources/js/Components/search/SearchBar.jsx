@@ -59,7 +59,7 @@ const SearchBar = ({ categories, areas, filters, setPropertiesData }) => {
         // else setPropertyAdsFilter([...propertyAdsFilter, value]);
     };
 
-    const orderAdsTexts = ["Terbaru", "Harga Termurah", "Harga Terjangkau"];
+    const orderAdsTexts = ["Terbaru", "Harga Termurah", "Luas Bangunan Terluas"];
 
     const { data, setData, get, processing, errors } = useForm({
         title: "",
