@@ -33,7 +33,7 @@ export default function CardPropertySearch({ property }) {
                                 <div className="w-auto flex justify-center items-center">
                                     <img
                                         src={img?.image_path}
-                                        className="w-full object-contain rounded-t-xl"
+                                        className="w-full object-cover h-[500px] rounded-t-xl"
                                         alt=""
                                     />
                                 </div>
@@ -44,7 +44,7 @@ export default function CardPropertySearch({ property }) {
                             <div className="w-auto flex justify-center items-center">
                                 <img
                                     src={"/assets/default-img-property.png"}
-                                    className="w-full object-cover rounded-t-xl"
+                                    className="w-full object-cover h-[500px] rounded-t-xl"
                                     alt=""
                                 />
                             </div>

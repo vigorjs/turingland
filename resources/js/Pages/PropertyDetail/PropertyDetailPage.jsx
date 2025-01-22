@@ -439,7 +439,7 @@ export default function PropertyDetailPage({
                                               //   }
                                               img={
                                                   property?.images.length > 0
-                                                      ? property.images[0]
+                                                      ? property.images?.[0]
                                                             ?.image_path
                                                       : "/assets/default-img-property.png"
                                               }
@@ -596,10 +596,10 @@ function ModalImages({ isOpenModal, setIsOpenModal, images }) {
                                     <img
                                         src={
                                             img[0]
-                                                ? img[0].image_path
+                                                ? img?.[0].image_path
                                                 : img.image_path
                                         }
-                                        className="w-full object-contain rounded-xl shadow-md"
+                                        className="w-full object-contain h-80 sm:h-96 rounded-xl shadow-md"
                                         alt=""
                                     />
                                 </div>
