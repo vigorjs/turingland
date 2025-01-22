@@ -15,7 +15,7 @@ export const CardProperty = ({
             <img
                 src={img}
                 alt={img}
-                className="w-full h-full object-cover rounded-2xl bg-gray-100"
+                className="w-full h-full object-cover rounded-2xl bg-gray-100 dark:bg-gray-200"
             />
 
             <div className="absolute bottom-0 p-1.5 w-full">
