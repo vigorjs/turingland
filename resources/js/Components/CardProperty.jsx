@@ -2,7 +2,7 @@ import { Link } from "@inertiajs/react";
 
 export const CardProperty = ({ children, img, isFullWhenMobile = false, id = 1 }) => {
     console.log("testst", id);
-    
+
     const twClass = isFullWhenMobile
         ? "relative w-full aspect-square h-full rounded-2xl"
         : "relative w-full h-full rounded-2xl";
@@ -12,7 +12,7 @@ export const CardProperty = ({ children, img, isFullWhenMobile = false, id = 1 }
             <img
                 src={img}
                 alt={img}
-                className="w-full h-full object-cover rounded-2xl"
+                className="w-full h-full object-cover rounded-2xl bg-gray-100"
             />
 
             <div className="absolute bottom-0 p-1.5 w-full">

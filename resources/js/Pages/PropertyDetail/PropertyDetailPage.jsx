@@ -424,12 +424,13 @@ export default function PropertyDetailPage({
                                           key={index}
                                       >
                                           <CardProperty
-                                              img={
-                                                  property.images.image_path
-                                                      ? property.images
-                                                            .image_path
-                                                      : "https://ik.imagekit.io/pashouses/pb1/tr:n-hl_v3/property/front-house/-JDoNqEMWigKKq7jtLReZVFmjQ7pfFdb0Op7MHND.jpeg"
-                                              }
+                                            //   img={
+                                            //       property.images.image_path
+                                            //           ? property.images
+                                            //                 .image_path
+                                            //           : "https://ik.imagekit.io/pashouses/pb1/tr:n-hl_v3/property/front-house/-JDoNqEMWigKKq7jtLReZVFmjQ7pfFdb0Op7MHND.jpeg"
+                                            //   }
+                                            img={property?.images.length > 0 ? property.images[0]?.image_path : "/assets/default-img-property.png"}
                                               key={`properties-card-${index}`}
                                           >
                                               <div className="flex flex-row justify-between items-center w-full">
@@ -535,10 +536,10 @@ export default function PropertyDetailPage({
                                             src={
                                                 bnr.image_path
                                                     ? bnr.image_path
-                                                    : "https://ik.imagekit.io/pashouses/pb1/tr:n-hl_v3/property/front-house/-JDoNqEMWigKKq7jtLReZVFmjQ7pfFdb0Op7MHND.jpeg"
+                                                    : "https://ecatalog.sinarmasland.com/_next/image?url=https%3A%2F%2Fecatalog.sinarmasland.com%2Fassets%2Fsite-setting-files%2F1%2Fhomepage-background-banner-desktop-677b6f397dc74.jpg&w=3840&q=75"
                                             }
                                             alt={`Carousel item ${index}`}
-                                            className="object-contain md:rounded-2xl rounded-none w-auto h-full"
+                                            className="object-contain md:rounded-2xl rounded-none w-[100vw] sm:w-auto sm:h-full"
                                         />
                                     </Link>
                                 </CarouselItem>

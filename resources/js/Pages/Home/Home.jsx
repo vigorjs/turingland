@@ -106,7 +106,7 @@ export default function Home({
                                                     : img
                                             }
                                             alt={`Carousel item ${index}`}
-                                            className="object-contain md:rounded-2xl rounded-none w-auto h-full"
+                                            className="object-contain md:rounded-2xl rounded-none w-[100vw] sm:w-auto sm:h-full"
                                         />
                                     </CarouselItem>
                                 ))}
@@ -160,7 +160,7 @@ export default function Home({
                                                   key={index}
                                               >
                                                   <CardProperty
-                                                      img={img3}
+                                                      img={property?.images.length > 0 ? property.images[0]?.image_path : "/assets/default-img-property.png"}
                                                       key={`properties-card-${index}`}
                                                       id={property.id}
                                                   >
@@ -286,7 +286,7 @@ export default function Home({
                                                   key={index}
                                               >
                                                   <CardProperty
-                                                      img={img3}
+                                                      img={property?.images.length > 0 ? property.images[0]?.image_path : "/assets/default-img-property.png"}
                                                       key={`properties-card-${index}`}
                                                       id={property.id}
                                                   >
