@@ -12,6 +12,7 @@ import {
     CarouselPrevious,
 } from "@/Components/ui/carousel";
 import GuestLayout from "@/Layouts/GuestLayout";
+import { formatRupiah } from "@/lib/utils";
 import { Head, Link } from "@inertiajs/react";
 import Autoplay from "embla-carousel-autoplay";
 import {
@@ -109,11 +110,11 @@ export default function Home({
                     <div className="mt-16 mb-4 " id="terbaru">
                         <div className="mb-4 flex justify-between items-center">
                             <div>
-                                <div className="flex gap-2">
+                                <div className="flex items-center gap-2">
                                     <h2 className="text-xl sm:text-2xl font-bold">
                                         Rekomendasi Properti Terbaru
                                     </h2>
-                                    <span>
+                                    <span className="hidden sm:block">
                                         <Badge
                                             className={
                                                 "text-sm font-extralight rounded-xl"
@@ -201,8 +202,9 @@ export default function Home({
                                                       <hr className="mt-2 mb-3 dark:border-white" />
                                                       <div className="flex justify-between">
                                                           <p className="text-xs dark:text-primary font-semibold">
-                                                              Rp{" "}
-                                                              {property.price}
+                                                              {formatRupiah(
+                                                                  property.price
+                                                              )}
                                                           </p>
                                                           <div className="flex gap-5">
                                                               <div className="flex items-center gap-x-1 text-xs">
@@ -327,7 +329,9 @@ export default function Home({
                                                       <div className="flex justify-between">
                                                           <p className="text-xs dark:text-primary font-semibold">
                                                               Rp{" "}
-                                                              {property.price}
+                                                              {formatRupiah(
+                                                                  property.price
+                                                              )}
                                                           </p>
                                                           <div className="flex gap-5">
                                                               <div className="flex items-center gap-x-1 text-xs">
