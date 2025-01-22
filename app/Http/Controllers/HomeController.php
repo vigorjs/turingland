@@ -22,7 +22,7 @@ class HomeController extends Controller
             "auth" => Auth::user(),
             'areas' => Area::select('id', 'name')->get(),
             'developers' => Developer::select('id', 'name')->get(),
-            'categories' => Category::select('id', 'name')->with(['properties.images'])->get(),
+            'categories' => Category::select('id', 'name', 'icon')->with(['properties.images'])->get(),
             'locations' => Location::select('id', 'name')->get(),
             'testimonials' => Testimony::all(),
             'banners' => Banner::all(),

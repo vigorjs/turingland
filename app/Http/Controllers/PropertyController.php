@@ -19,6 +19,8 @@ class PropertyController extends Controller
                 ->limit(6)
                 ->get();
         $banner = Banner::all();
+
+        // dd($banner);
         // if(!$property) return redirect()->route('homepage');
 
         return Inertia::render('PropertyDetail/PropertyDetailPage', compact('property', 'auth', 'featuredProp', 'banner'));

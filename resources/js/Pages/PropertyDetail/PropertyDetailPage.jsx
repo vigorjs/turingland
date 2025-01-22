@@ -9,6 +9,7 @@ import {
     CarouselPrevious,
 } from "@/Components/ui/carousel";
 import GuestLayout from "@/Layouts/GuestLayout";
+import { formatRupiah } from "@/lib/utils";
 import { Head, Link } from "@inertiajs/react";
 import Autoplay from "embla-carousel-autoplay";
 import {
@@ -40,17 +41,14 @@ export default function PropertyDetailPage({
         "https://s3-alpha-sig.figma.com/img/db80/4347/cb68839c79ca58a9b46777e9c9c07cc0?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=nXWoIhqAUTi-at1criMJPC8l-xudGFynTTWb9Y-EQ3SJVxbjtvcOe0gMCLVH-t9DqTyNiL-Yzev8ZoIv8rUhxICHbXB8rkLeNKxj7EQ62uTTgu9cxyvbWTE~QRaByjGG1cJ6vcaSQ6MXKBL0oqfIGiBf0VqSA6UKFh5uufI7P4FLQmWmiBmecXFnhZ2A5p2FkQ5Vc~d9jsWCoMVMpC711S6lfNymccRCkodcG15Mx22s-p2ydCVU06b5TyCZg7x1tG2lcqPcdyaX07KFBNHfmAp9N23KdaCvnBgsmBAeg76eEDgO9y7B4xcEcerX559xGjDraUB~HpMhDXtZGXxetg__";
 
     const imagePrimary = property.images.filter(
-        (img) => img.is_primary === true
+        (img) => img.is_primary == true
     );
-    const otherImages = property.images;
+    const otherImages = property.images.filter((img) => {
+        img.is_primary == false
+    });
     const allImages = [imagePrimary, ...otherImages];
 
-    const formatPrice = (price) => {
-        return new Intl.NumberFormat("id-ID", {
-            style: "currency",
-            currency: "IDR",
-        }).format(price);
-    };
+    console.log("property: ", property);
 
 
     return (
@@ -59,7 +57,7 @@ export default function PropertyDetailPage({
 
             <div className="min-h-screen px-3 sm:px-4 md:px-6 lg:px-[150px] py-6">
                 {/* IMAGES */}
-                <button onClick={() => setIsOpenModal(true)} className="w-full">
+                <button onClick={() => property?.images?.length > 1 && setIsOpenModal(true)} className="w-full">
                     <img
                         src={
                             imagePrimary[0]
@@ -70,37 +68,39 @@ export default function PropertyDetailPage({
                         className="w-full h-80 sm:h-[420px] object-cover rounded-2xl shadow-lg"
                     />
                 </button>
-                <div className="relative flex justify-center items-center -mt-10 sm:-mt-16">
-                    <Carousel className="bg-white sm:gap-4 w-auto max-w-xs sm:max-w-xl p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl shadow-md">
-                        <CarouselContent>
-                            {otherImages.map((img, index) => (
-                                <CarouselItem
-                                    className="basis-auto"
-                                    key={index}
-                                >
-                                    <button
-                                        onClick={() => setIsOpenModal(true)}
+                {property?.images?.length > 1 && (
+                    <div className="relative flex justify-center items-center -mt-10 sm:-mt-16">
+                        <Carousel className="bg-white sm:gap-4 w-auto max-w-xs sm:max-w-xl p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl shadow-md">
+                            <CarouselContent>
+                                {otherImages.map((img, index) => (
+                                    <CarouselItem
+                                        className="basis-auto"
+                                        key={index}
                                     >
-                                        <img
-                                            src={
-                                                img.image_path
-                                                    ? img.image_path
-                                                    : "https://ik.imagekit.io/pashouses/pb1/tr:n-hl_v3/property/front-house/-JDoNqEMWigKKq7jtLReZVFmjQ7pfFdb0Op7MHND.jpeg"
-                                            }
-                                            className="w-[100px] sm:w-40 rounded-xl"
-                                        />
-                                    </button>
-                                </CarouselItem>
-                            ))}
-                        </CarouselContent>
-                        <div className="absolute -bottom-6 right-14 flex justify-center items-center">
-                            <div className="mx-auto w-full ">
-                                <CarouselPrevious className="" />
-                                <CarouselNext className="" />
+                                        <button
+                                            onClick={() => setIsOpenModal(true)}
+                                        >
+                                            <img
+                                                src={
+                                                    img.image_path
+                                                        ? img.image_path
+                                                        : "https://ik.imagekit.io/pashouses/pb1/tr:n-hl_v3/property/front-house/-JDoNqEMWigKKq7jtLReZVFmjQ7pfFdb0Op7MHND.jpeg"
+                                                }
+                                                className="w-[100px] sm:w-40 rounded-xl"
+                                            />
+                                        </button>
+                                    </CarouselItem>
+                                ))}
+                            </CarouselContent>
+                            <div className="absolute -bottom-6 right-14 flex justify-center items-center">
+                                <div className="mx-auto w-full ">
+                                    <CarouselPrevious className="" />
+                                    <CarouselNext className="" />
+                                </div>
                             </div>
-                        </div>
-                    </Carousel>
-                </div>
+                        </Carousel>
+                    </div>
+                )}
 
                 {/* DETAIL */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-0 mt-16 md:mt-20">
@@ -121,9 +121,7 @@ export default function PropertyDetailPage({
 
                         <div className="mt-6 border-b pb-4 border-neutral-300">
                             <h1 className="text-primary text-2xl font-extrabold mb-1">
-                            {formatPrice(
-                                property.price
-                            )}
+                                {formatRupiah(property.price)}
                             </h1>
                             <p className="text-neutral-600 text-base">
                                 {property.title}
@@ -473,9 +471,9 @@ export default function PropertyDetailPage({
                                               <hr className="mt-2 mb-3 dark:border-white" />
                                               <div className="flex justify-between">
                                                   <p className="text-xs dark:text-primary font-semibold">
-                                                  {formatPrice(
-                                                        property.price
-                                                    )}
+                                                      {formatRupiah(
+                                                                                                                        property.price
+                                                                                                                    )}
                                                   </p>
                                                   <div className="flex gap-5">
                                                       <div className="flex items-center gap-x-1 text-xs">
