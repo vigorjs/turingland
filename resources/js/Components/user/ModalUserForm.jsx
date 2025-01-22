@@ -8,11 +8,19 @@ import { LoaderIcon, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import InputActiveCheckbox from "../InputActiveCheckbox";
 
-function ModalUserForm({ user, setUser, isOpenModal, setIsOpenModal }) {
+function ModalUserForm({
+    user,
+    setUser,
+    isOpenModal,
+    setIsOpenModal,
+    isCustomer,
+}) {
     const [loading, setLoading] = useState(false);
     const [isAgentActive, setIsAgentActive] = useState(
         user?.is_agent_active ?? false
     );
+
+    const role = isCustomer ? "customer" : "agent";
 
     const [photo, setPhoto] = useState(
         user?.photo ? `/storage/${user?.photo}` : null
@@ -39,7 +47,7 @@ function ModalUserForm({ user, setUser, isOpenModal, setIsOpenModal }) {
         setLoading(true);
 
         if (!user) {
-            post(route("dashboard.agent.store"), {
+            post(route(`dashboard.${role}.store`), {
                 onError: (errors) => {
                     setLoading(false);
                     toast({
@@ -64,7 +72,7 @@ function ModalUserForm({ user, setUser, isOpenModal, setIsOpenModal }) {
                 },
             });
         } else {
-            post(route("dashboard.agent.update", user.id), {
+            post(route(`dashboard.${role}.update`, user.id), {
                 onError: (errors) => {
                     setLoading(false);
                     toast({

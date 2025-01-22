@@ -314,6 +314,7 @@ export default function AdminCustomerPage({ customers, auth }) {
                     setUser={setCustomer}
                     isOpenModal={isOpenModal}
                     setIsOpenModal={setIsOpenModal}
+                    isCustomer={true}
                 />
             )}
 
