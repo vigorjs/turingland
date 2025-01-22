@@ -45,6 +45,14 @@ export default function PropertyDetailPage({
     const otherImages = property.images;
     const allImages = [imagePrimary, ...otherImages];
 
+    const formatPrice = (price) => {
+        return new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+        }).format(price);
+    };
+
+
     return (
         <GuestLayout auth={auth}>
             <Head title="Property Detail" />
@@ -113,7 +121,9 @@ export default function PropertyDetailPage({
 
                         <div className="mt-6 border-b pb-4 border-neutral-300">
                             <h1 className="text-primary text-2xl font-extrabold mb-1">
-                                Rp {property.price}
+                            {formatPrice(
+                                property.price
+                            )}
                             </h1>
                             <p className="text-neutral-600 text-base">
                                 {property.title}
@@ -463,7 +473,9 @@ export default function PropertyDetailPage({
                                               <hr className="mt-2 mb-3 dark:border-white" />
                                               <div className="flex justify-between">
                                                   <p className="text-xs dark:text-primary font-semibold">
-                                                      Rp {property.price}
+                                                  {formatPrice(
+                                                        property.price
+                                                    )}
                                                   </p>
                                                   <div className="flex gap-5">
                                                       <div className="flex items-center gap-x-1 text-xs">

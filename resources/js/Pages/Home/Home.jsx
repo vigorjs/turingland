@@ -48,6 +48,13 @@ export default function Home({
         (pref) => pref.key === "hero_url"
     )?.value;
 
+    const formatPrice = (price) => {
+        return new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+        }).format(price);
+    };
+
     return (
         <GuestLayout auth={auth}>
             <Head title="Tempat Jual Beli Rumah Apartement" />
@@ -201,8 +208,9 @@ export default function Home({
                                                       <hr className="mt-2 mb-3 dark:border-white" />
                                                       <div className="flex justify-between">
                                                           <p className="text-xs dark:text-primary font-semibold">
-                                                              Rp{" "}
-                                                              {property.price}
+                                                              {formatPrice(
+                                                                    property.price
+                                                                )}
                                                           </p>
                                                           <div className="flex gap-5">
                                                               <div className="flex items-center gap-x-1 text-xs">
@@ -326,8 +334,9 @@ export default function Home({
                                                       <hr className="mt-2 mb-3 dark:border-white" />
                                                       <div className="flex justify-between">
                                                           <p className="text-xs dark:text-primary font-semibold">
-                                                              Rp{" "}
-                                                              {property.price}
+                                                          {formatPrice(
+                                                                property.price
+                                                            )}
                                                           </p>
                                                           <div className="flex gap-5">
                                                               <div className="flex items-center gap-x-1 text-xs">
