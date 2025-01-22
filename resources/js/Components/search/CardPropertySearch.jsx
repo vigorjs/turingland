@@ -9,7 +9,7 @@ import {
 import { BathIcon, BedDoubleIcon, CarFrontIcon, PhoneCall } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { Button } from "../ui/button";
-import { formatRupiah } from "@/lib/utils";
+import { formatRupiah, formatUpdatedAt } from "@/lib/utils";
 import { Link } from "@inertiajs/react";
 
 export default function CardPropertySearch({ property }) {
@@ -119,7 +119,7 @@ export default function CardPropertySearch({ property }) {
                                 />
                                 <div>
                                     <p className="text-neutral-600 text-xs overflow-hidden whitespace-nowrap text-ellipsis">
-                                        Diperbarui 2 jam yang lalu
+                                        {formatUpdatedAt(property.updated_at)}
                                     </p>
                                     <p className="text-sm text-neutral-600 overflow-hidden whitespace-nowrap text-ellipsis">
                                         {property.developer.name} Properties
