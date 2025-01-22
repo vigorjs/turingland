@@ -1,30 +1,25 @@
+import InputActiveCheckbox from "@/Components/InputActiveCheckbox";
 import Modal from "@/Components/Modal";
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
-import { Checkbox } from "@/Components/ui/checkbox";
 import { toast } from "@/hooks/use-toast";
 import { useForm } from "@inertiajs/react";
-import { LoaderIcon, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { LoaderIcon, X } from "lucide-react";
 
-function ModalBannerForm({
-    banner,
-    setBanner,
-    isOpenModal,
-    setIsOpenModal,
-}) {
-    const [loading, setLoading] = useState(false);
+function ModalBannerForm({ banner, setBanner, isOpenModal, setIsOpenModal }) {
     const [isActive, setIsActive] = useState(banner?.is_active ?? false);
+    const [loading, setLoading] = useState(false);
+    const [errors, setErrors] = useState([]);
 
-    const { data, setData, post, reset, errors } = useForm({
+    const { data, setData, post, put, reset } = useForm({
         title: banner?.title ?? "",
         description: banner?.description ?? "",
         image_path: null,
         link: banner?.link ?? "",
         order: banner?.order ?? 0,
         is_active: isActive,
-        _method: banner ? "PUT" : "POST",
     });
 
     useEffect(() => {
@@ -39,49 +34,45 @@ function ModalBannerForm({
             post(route("banner.store"), {
                 onError: (errors) => {
                     setLoading(false);
+                    setErrors(errors);
                     toast({
                         title: "Banner gagal dibuat!",
-                        description: errors?.name || errors?.icon,
+                        description: errors?.title || errors?.description,
                         variant: "destructive",
                     });
-                    console.log("err: ", errors);
                 },
                 onSuccess: () => {
                     toast({
-                        title: `banner berhasil ${banner ? "diupdate" : "dibuat"
-                            }!`,
+                        title: "Banner berhasil dibuat!",
                         variant: "default",
                     });
-                    setLoading(true);
                     setIsOpenModal(false);
-                    reset("title", "description", "image_path", "link", "order", "is_active");
                     setIsActive(false);
+                    reset("title", "description", "image_path", "link", "order", "is_active");
                 },
                 onFinish: () => {
                     setLoading(false);
                 },
             });
         } else {
-            post(route("banner.update", banner.id), {
+            put(route("banner.update", banner.id), {
                 onError: (errors) => {
                     setLoading(false);
+                    setErrors(errors);
                     toast({
-                        title: "Banner gagal dibuat!",
-                        description: errors?.name || errors?.icon,
+                        title: "Banner gagal diupdate!",
+                        description: errors?.title || errors?.description,
                         variant: "destructive",
                     });
-                    console.log("err: ", errors);
                 },
                 onSuccess: () => {
                     toast({
-                        title: `banner berhasil ${banner ? "diupdate" : "dibuat"
-                            }!`,
+                        title: "Banner berhasil diupdate!",
                         variant: "default",
                     });
-                    setLoading(true);
                     setIsOpenModal(false);
-                    reset("title", "description", "image_path", "link", "order", "is_active");
                     setIsActive(false);
+                    reset("title", "description", "image_path", "link", "order", "is_active");
                 },
                 onFinish: () => {
                     setLoading(false);
@@ -96,6 +87,12 @@ function ModalBannerForm({
         setIsOpenModal(false);
     };
 
+    const ErrorMessage = ({ name }) => {
+        return errors[name] ? (
+            <p className="text-red-500 text-sm mt-1">{errors[name]}</p>
+        ) : null;
+    }
+
     return (
         <Modal show={isOpenModal} onClose={handleCloseModal}>
             <div className="p-3.5 flex justify-between items-center">
@@ -109,12 +106,7 @@ function ModalBannerForm({
 
             <hr />
 
-            <form
-                onSubmit={handleSubmit}
-                encType="multipart/form-data"
-                className="p-3.5 flex flex-col gap-5"
-            >
-                {/* Title */}
+            <form onSubmit={handleSubmit} encType="multipart/form-data" className="p-3.5 flex flex-col gap-5">
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="title">Title</Label>
                     <Input
@@ -127,7 +119,6 @@ function ModalBannerForm({
                     {errors.title && <span className="text-red-600 text-sm">{errors.title}</span>}
                 </div>
 
-                {/* Description */}
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="description">Description</Label>
                     <Input
@@ -139,7 +130,6 @@ function ModalBannerForm({
                     {errors.description && <span className="text-red-600 text-sm">{errors.description}</span>}
                 </div>
 
-                {/* Image */}
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="image_path">Image</Label>
                     <Input
@@ -149,7 +139,6 @@ function ModalBannerForm({
                     />
                 </div>
 
-                {/* Link */}
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="link">Link</Label>
                     <Input
@@ -162,7 +151,6 @@ function ModalBannerForm({
                     {errors.link && <span className="text-red-600 text-sm">{errors.link}</span>}
                 </div>
 
-                {/* Order */}
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="order">Order</Label>
                     <Input
@@ -174,29 +162,22 @@ function ModalBannerForm({
                     {errors.order && <span className="text-red-600 text-sm">{errors.order}</span>}
                 </div>
 
-                {/* Is Active */}
-                <div className="flex items-center gap-2">
-                    <Checkbox
-                        id="is_active"
-                        checked={data?.is_active ?? false}
-                        onCheckedChange={(checked) => setData("is_active", checked)}
+                <div className="grid w-full items-center gap-1.5">
+                    <Label htmlFor="is_active">Active</Label>
+                    <InputActiveCheckbox
+                        isActive={isActive}
+                        setIsActive={setIsActive}
                     />
-                    <Label htmlFor="is_active">Is Active</Label>
+                    <ErrorMessage name="is_active" />
                 </div>
 
-                <Button
-                    type="submit"
-                    disabled={loading || !data.title}
-                    className="bg-primary text-white hover:bg-primary/95"
-                >
-                    {loading && (
-                        <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />
-                    )}
+                <Button type="submit" disabled={loading || !data.title} className="bg-primary text-white hover:bg-primary/95">
+                    {loading && <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />}
                     {!banner ? "Tambah " : "Edit "}
                 </Button>
             </form>
         </Modal>
     );
-};
+}
 
 export default ModalBannerForm;
