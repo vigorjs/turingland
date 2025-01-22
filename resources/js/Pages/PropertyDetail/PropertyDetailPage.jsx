@@ -9,7 +9,7 @@ import {
     CarouselPrevious,
 } from "@/Components/ui/carousel";
 import GuestLayout from "@/Layouts/GuestLayout";
-import { formatRupiah } from "@/lib/utils";
+import { formatRupiah, formatUpdatedAt } from "@/lib/utils";
 import { Head, Link } from "@inertiajs/react";
 import Autoplay from "embla-carousel-autoplay";
 import {
@@ -34,17 +34,19 @@ export default function PropertyDetailPage({
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [isInfoLess, setIsInfoLess] = useState(true);
 
-
-    const img1 =
-        "https://s3-alpha-sig.figma.com/img/db80/4347/cb68839c79ca58a9b46777e9c9c07cc0?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=nXWoIhqAUTi-at1criMJPC8l-xudGFynTTWb9Y-EQ3SJVxbjtvcOe0gMCLVH-t9DqTyNiL-Yzev8ZoIv8rUhxICHbXB8rkLeNKxj7EQ62uTTgu9cxyvbWTE~QRaByjGG1cJ6vcaSQ6MXKBL0oqfIGiBf0VqSA6UKFh5uufI7P4FLQmWmiBmecXFnhZ2A5p2FkQ5Vc~d9jsWCoMVMpC711S6lfNymccRCkodcG15Mx22s-p2ydCVU06b5TyCZg7x1tG2lcqPcdyaX07KFBNHfmAp9N23KdaCvnBgsmBAeg76eEDgO9y7B4xcEcerX559xGjDraUB~HpMhDXtZGXxetg__";
-
     const imagePrimary = property.images.filter(
         (img) => img.is_primary == true
     );
-    const otherImages = property.images.filter((img) => {
-        img.is_primary == false;
-    });
+    // const otherImages = property.images.filter((img) => {
+    //     img.is_primary == false;
+    // });
+
+    const otherImages = property.images.slice(1, property.images.length);
+
     const allImages = [imagePrimary, ...otherImages];
+
+    // console.log("property: ", property);
+    // console.log("otherImages: ", otherImages);
 
     return (
         <GuestLayout auth={auth}>
@@ -52,7 +54,12 @@ export default function PropertyDetailPage({
 
             <div className="min-h-screen px-3 sm:px-4 md:px-6 lg:px-[150px] py-6">
                 {/* IMAGES */}
-                <button onClick={() => property?.images?.length > 1 && setIsOpenModal(true)} className="w-full border border-gray-50 dark:border-white/90 rounded-2xl">
+                <button
+                    onClick={() =>
+                        property?.images?.length > 0 && setIsOpenModal(true)
+                    }
+                    className="w-full border border-gray-50 dark:border-white/90 rounded-2xl"
+                >
                     <img
                         src={
                             imagePrimary[0]
@@ -60,7 +67,9 @@ export default function PropertyDetailPage({
                                 : "/assets/default-img-property.png"
                         }
                         alt=""
-                        className={`w-full h-80 sm:h-[420px] rounded-2xl shadow-lg ${imagePrimary[0] ? "object-cover" : "object-contain"}`}
+                        className={`w-full h-80 sm:h-[420px] rounded-2xl shadow-lg ${
+                            imagePrimary[0] ? "object-cover" : "object-contain"
+                        }`}
                     />
                 </button>
                 {property?.images?.length > 1 && (
@@ -79,7 +88,7 @@ export default function PropertyDetailPage({
                                                 src={
                                                     img.image_path
                                                         ? img.image_path
-                                                        : "https://ik.imagekit.io/pashouses/pb1/tr:n-hl_v3/property/front-house/-JDoNqEMWigKKq7jtLReZVFmjQ7pfFdb0Op7MHND.jpeg"
+                                                        : "/assets/default-img-property.png"
                                                 }
                                                 className="w-[100px] sm:w-40 rounded-xl"
                                             />
@@ -120,6 +129,9 @@ export default function PropertyDetailPage({
                             </h1>
                             <p className="text-neutral-600 text-base">
                                 {property.title}
+                            </p>
+                            <p className="text-neutral-500 text-xs">
+                                {formatUpdatedAt(property.updated_at)}
                             </p>
 
                             <div className="mt-6">
@@ -587,7 +599,7 @@ function ModalImages({ isOpenModal, setIsOpenModal, images }) {
                                                 ? img[0].image_path
                                                 : img.image_path
                                         }
-                                        className="w-full object-contain rounded-xl"
+                                        className="w-full object-contain rounded-xl shadow-md"
                                         alt=""
                                     />
                                 </div>

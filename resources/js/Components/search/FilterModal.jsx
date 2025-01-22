@@ -43,7 +43,7 @@ const FilterModal = ({
             show={isVisibleModalFilter}
             onClose={() => setIsVisibleModalFilter(false)}
         >
-            <div className="">
+            <div>
                 <div className="p-3.5 flex justify-between items-center">
                     <h1 className="text-xl font-medium">Filter</h1>
                     <button onClick={() => setIsVisibleModalFilter(false)}>
