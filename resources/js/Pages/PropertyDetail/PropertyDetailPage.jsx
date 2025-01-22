@@ -34,9 +34,10 @@ export default function PropertyDetailPage({
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [isInfoLess, setIsInfoLess] = useState(true);
 
-    const imagePrimary = property.images.filter(
-        (img) => img.is_primary == true
-    );
+    const imagePrimary = property.images[0]
+    // const imagePrimary = property.images.filter(
+    //     (img) => img.is_primary == true
+    // );
     // const otherImages = property.images.filter((img) => {
     //     img.is_primary == false;
     // });
@@ -45,8 +46,8 @@ export default function PropertyDetailPage({
 
     const allImages = [imagePrimary, ...otherImages];
 
-    // console.log("property: ", property);
-    console.log("imagePrimary: ", imagePrimary[0]);
+    console.log("property: ", property);
+    console.log("imagePrimary: ", imagePrimary);
     // console.log("otherImages: ", otherImages);
 
     return (
@@ -63,13 +64,13 @@ export default function PropertyDetailPage({
                 >
                     <img
                         src={
-                            imagePrimary[0]
-                                ? imagePrimary[0].image_path
+                            imagePrimary
+                                ? imagePrimary.image_path
                                 : "/assets/default-img-property.png"
                         }
                         alt=""
                         className={`w-full h-80 sm:h-[420px] rounded-2xl shadow-lg ${
-                            imagePrimary[0] ? "object-cover" : "object-contain"
+                            imagePrimary ? "object-cover" : "object-contain"
                         }`}
                     />
                 </button>
@@ -114,12 +115,13 @@ export default function PropertyDetailPage({
                         <div className="flex flex-wrap justify-start items-center gap-2">
                             {property.categories.length > 0
                                 ? property.categories.map((category, index) => (
-                                      <button
-                                          key={index}
+                                      <Link
+                                          href={`/search?category_id=${category.id}`}
+                                          key={`category-${index}`}
                                           className="bg-neutral-200/80 text-neutral-800 p-2 rounded-full text-xs"
                                       >
                                           {category.name}
-                                      </button>
+                                      </Link>
                                   ))
                                 : null}
                         </div>
