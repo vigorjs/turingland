@@ -172,8 +172,8 @@ export default function AdminDeveloperPage({ developers, auth }) {
                                                             </SelectTrigger>
                                                             <SelectContent>
                                                                 <SelectItem value="-1">All</SelectItem>
-                                                                <SelectItem value="1">Active</SelectItem>
-                                                                <SelectItem value="0">Inactive</SelectItem>
+                                                                <SelectItem value="true">Active</SelectItem>
+                                                                <SelectItem value="false">Inactive</SelectItem>
                                                             </SelectContent>
                                                         </Select>
                                                     ) : (

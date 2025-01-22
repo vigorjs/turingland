@@ -219,16 +219,15 @@ function AdminPropertyPage({ properties, developers, areas, auth }) {
                                                                 <SelectItem value="-1">All</SelectItem>
                                                                 {key === "status" && (
                                                                     <>
-                                                                        <SelectItem value="1">Active</SelectItem>
-                                                                        <SelectItem value="0">Inactive</SelectItem>
-                                                                    </>
-                                                                )}
-                                                                {key === "type" && (
-                                                                    <>
                                                                         <SelectItem value="active">Active</SelectItem>
                                                                         <SelectItem value="sold">Sold</SelectItem>
                                                                         <SelectItem value="rented">Rented</SelectItem>
                                                                         <SelectItem value="inactive">Inactive</SelectItem>
+
+                                                                    </>
+                                                                )}
+                                                                {key === "type" && (
+                                                                    <>
                                                                         <SelectItem value="rent">Rent</SelectItem>
                                                                         <SelectItem value="sale">Sale</SelectItem>
                                                                     </>
@@ -276,8 +275,12 @@ function AdminPropertyPage({ properties, developers, areas, auth }) {
                                                     .includes(filter.area.toLowerCase()) && // Remove ?.name
                                                 (filter.status === ""
                                                     ? true
-                                                    : property.is_active.toString() ===
-                                                    filter.status)
+                                                    : property.status.toString() ===
+                                                    filter.status) &&
+                                                (filter.type === ""
+                                                    ? true
+                                                    : property.type.toString() ===
+                                                    filter.type)
                                             );
                                         })
                                         .map((property, index) => (

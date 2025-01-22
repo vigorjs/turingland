@@ -28,6 +28,7 @@ export default function AdminAreaPage({ areas, locations, auth }) {
     const [filter, setFilter] = useState({
         name: "",
         description: "",
+        location: "",
         status: ""
     });
 
@@ -171,8 +172,8 @@ export default function AdminAreaPage({ areas, locations, auth }) {
                                                             </SelectTrigger>
                                                             <SelectContent>
                                                                 <SelectItem value="-1">All</SelectItem>
-                                                                <SelectItem value="1">Active</SelectItem>
-                                                                <SelectItem value="0">Inactive</SelectItem>
+                                                                <SelectItem value="true">Active</SelectItem>
+                                                                <SelectItem value="false">Inactive</SelectItem>
                                                             </SelectContent>
                                                         </Select>
                                                     ) : (
@@ -211,6 +212,10 @@ export default function AdminAreaPage({ areas, locations, auth }) {
                                                 area.description?.toLowerCase()
                                                     .includes(
                                                         filter.description?.toLowerCase()
+                                                    ) &&
+                                                area?.location.name?.toLowerCase()
+                                                    .includes(
+                                                        filter.location?.toLowerCase()
                                                     ) &&
                                                 (filter.status === ""
                                                     ? true
