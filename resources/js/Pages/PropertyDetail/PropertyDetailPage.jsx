@@ -84,25 +84,29 @@ export default function PropertyDetailPage({ property, auth }) {
                     <div className="w-full col-span-1 md:col-span-2">
                         {/* CATEGORIES */}
                         <div className="flex flex-wrap justify-start items-center gap-2">
-                            <button className="bg-neutral-200/80 text-neutral-800 p-2 rounded-full text-xs">
-                                Apartemen
-                            </button>
+                            {property.categories.length > 0
+                                ? property.categories.map((category, index) => (
+                                      <button key={index} className="bg-neutral-200/80 text-neutral-800 p-2 rounded-full text-xs">
+                                          {category.name}
+                                      </button>
+                                  ))
+                                : null}
                         </div>
 
                         <div className="mt-6 border-b pb-4 border-neutral-300">
                             <h1 className="text-primary text-2xl font-extrabold mb-1">
-                                Rp 69 Juta per tahun
+                                Rp {property.price}
                             </h1>
                             <p className="text-neutral-600 text-base">
-                                Studio Taman Anggrek Residence
+                                {property.title}
                             </p>
 
                             <div className="mt-6">
                                 <p className="text-primary font-bold text-sm">
-                                    Taman Anggrek Residence
+                                    {property.area.name}
                                 </p>
                                 <p className="text-neutral-600 text-sm">
-                                    Taman Anggrek, Jakarta Barat
+                                    {property.area.location.name}
                                 </p>
                                 <Button className="bg-primary flex justify-start items-center gap-0.5 mt-1.5 px-3 py-1 rounded-full">
                                     <MapPin className="text-white w-5 h-5" />
@@ -120,17 +124,17 @@ export default function PropertyDetailPage({ property, auth }) {
                             </h2>
                             <div className="flex flex-wrap justify-start items-center gap-2">
                                 <button className="bg-primary/15 text-primary px-2 py-1 font-semibold rounded-full text-xs">
-                                    Disewa
+                                    {property.type}
                                 </button>
                                 <button className="flex items-center gap-x-1 text-xs px-2.5 py-1 shadow rounded-full">
                                     <BedDoubleIcon className="w-3.5 h-3.5" /> :
-                                    3
+                                    {property.bedroom_count}
                                 </button>
                                 <button className="flex items-center gap-x-1 text-xs px-2.5 py-1 shadow rounded-full">
-                                    <BathIcon className="w-3.5 h-3.5" /> : 2
+                                    <BathIcon className="w-3.5 h-3.5" /> : {property.bathroom_count}
                                 </button>
                                 <button className="flex items-center gap-x-1 text-xs px-2.5 py-1 shadow rounded-full">
-                                    <CarFrontIcon className="w-3.5 h-3.5" /> : 2
+                                    <CarFrontIcon className="w-3.5 h-3.5" /> : {property.carport_count}
                                 </button>
                             </div>
                         </div>
@@ -153,7 +157,7 @@ export default function PropertyDetailPage({ property, auth }) {
                                                 Kamar Tidur
                                             </p>
                                             <p className="w-1/2 md:w-1/4 text-neutral-600 text-sm font-medium">
-                                                1
+                                                {property.bedroom_count}
                                             </p>
                                         </div>
                                     </li>
@@ -163,7 +167,7 @@ export default function PropertyDetailPage({ property, auth }) {
                                                 Kamar Mandi
                                             </p>
                                             <p className="w-1/2 md:w-1/4 text-neutral-600 text-sm font-medium">
-                                                1
+                                                {property.bathroom_count}
                                             </p>
                                         </div>
                                     </li>
@@ -173,7 +177,7 @@ export default function PropertyDetailPage({ property, auth }) {
                                                 Luas Bangunan
                                             </p>
                                             <p className="w-1/2 md:w-1/4 text-neutral-600 text-sm font-medium">
-                                                10 m&sup2;
+                                                {property.land_area} m&sup2;
                                             </p>
                                         </div>
                                     </li>
@@ -185,7 +189,7 @@ export default function PropertyDetailPage({ property, auth }) {
                                                         Sertifikat
                                                     </p>
                                                     <p className="w-1/2 md:w-1/4 text-neutral-600 text-sm font-medium">
-                                                        1
+                                                        {property.certificate_type ? property.certificate_type : "Sertifikat tidak tertera"}
                                                     </p>
                                                 </div>
                                             </li>
@@ -195,7 +199,7 @@ export default function PropertyDetailPage({ property, auth }) {
                                                         Tahun Dibangun
                                                     </p>
                                                     <p className="w-1/2 md:w-1/4 text-neutral-600 text-sm font-medium">
-                                                        2024
+                                                        {property.year_built ? property.year_built : "Tahun tidak tertera"}
                                                     </p>
                                                 </div>
                                             </li>
@@ -204,9 +208,14 @@ export default function PropertyDetailPage({ property, auth }) {
                                                     <p className="w-1/2 md:w-1/4 text-neutral-600 text-xs">
                                                         Tipe Properti
                                                     </p>
-                                                    <p className="w-1/2 md:w-1/4 text-neutral-600 text-sm font-medium">
-                                                        Apartement
-                                                    </p>
+                                                    {property.categories.length > 0
+                                                    ? property.categories.map((category, index) => (
+                                                        <p className="w-1/2 md:w-1/4 text-neutral-600 text-sm font-medium">
+                                                            {category.name}
+                                                        </p>
+                                                    ))
+                                                    : null}
+                                                    
                                                 </div>
                                             </li>
                                             <li>
@@ -215,7 +224,7 @@ export default function PropertyDetailPage({ property, auth }) {
                                                         Tipe Iklan
                                                     </p>
                                                     <p className="w-1/2 md:w-1/4 text-neutral-600 text-sm font-medium">
-                                                        Disewa
+                                                        {property.type}
                                                     </p>
                                                 </div>
                                             </li>
@@ -257,10 +266,7 @@ export default function PropertyDetailPage({ property, auth }) {
                                     Deskripsi
                                 </h3>
                                 <p className="text-neutral-600 text-xs">
-                                    Tersedia listing dr beberapa unit lain utk
-                                    disewakan dan dijual. Hanya sewa tahunan,
-                                    tidak bulanan. Bisa hubungi saya via
-                                    whatsapp, terimakasih
+                                    {property.description}
                                 </p>
                             </div>
                         </div>
