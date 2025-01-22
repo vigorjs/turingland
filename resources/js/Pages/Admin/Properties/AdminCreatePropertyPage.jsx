@@ -16,6 +16,7 @@ import { Label } from "@/Components/ui/label";
 import { router } from "@inertiajs/react";
 import { X } from "lucide-react";
 import { MultiSelect } from "react-multi-select-component";
+import { toast } from "@/hooks/use-toast";
 
 function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
     //
@@ -119,9 +120,18 @@ function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
             preserveState: true,
             preserveScroll: true,
             onSuccess: () => {
+                toast({
+                    title: `Property berhasil dibuat!`,
+                    // description: "Property berhasil dibuat",
+                    variant: "default",
+                });
                 setErrors({});
             },
             onError: (errors) => {
+                toast({
+                    title: `Property gagal dibuat!`,
+                    variant: "destructive",
+                });
                 setErrors(errors);
             },
         });
