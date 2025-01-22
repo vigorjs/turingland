@@ -12,7 +12,7 @@ import {
     CarouselPrevious,
 } from "@/Components/ui/carousel";
 import GuestLayout from "@/Layouts/GuestLayout";
-import { Head } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import Autoplay from "embla-carousel-autoplay";
 import {
     BathIcon,
@@ -23,8 +23,15 @@ import {
 } from "lucide-react";
 import React, { useState, useEffect } from "react";
 
-
-export default function Home({ auth, categories, testimonials, banners, webPreferences, latestProperties, featuredProperties }) {
+export default function Home({
+    auth,
+    categories,
+    testimonials,
+    banners,
+    webPreferences,
+    latestProperties,
+    featuredProperties,
+}) {
     console.log(testimonials);
     const img =
         "https://ecatalog.sinarmasland.com/_next/image?url=https%3A%2F%2Fecatalog.sinarmasland.com%2Fassets%2Fsite-setting-files%2F1%2Fhomepage-background-banner-desktop-677b6f397dc74.jpg&w=3840&q=75";
@@ -33,12 +40,13 @@ export default function Home({ auth, categories, testimonials, banners, webPrefe
         "https://s3-alpha-sig.figma.com/img/b74a/c4c3/77ce5aaed022bc3392bf4c60e9f023f3?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=TBddhCyuhgK3h9pPOzC6liBCEHm6TsYR7d~rH3sp4CvaC3yOelv4WVMmuxaxESdJNZc35GZAhsml9j6SGRGXsQOzrv92arIuKxGqA3G9aCE~3t24rREsBu3QdUvtkynVgfEqfZR30kwwC9guwj~syJ88f0fRfDbVJeZiyOTOqER4xiIV3wrAfMlcjQm9o-IcPSUM86bMEta04tgrQPaa2YxuMw~3EUz4FJJ~~gR2nASUu1cearMaxPV4coLrdbo2ysRfCKUs2HIDPgjEZQAf1xVt7tewP0fmtjjR7GxJ5FjWY5uzm3a-l3hcQaOIa~qekSB6fqROwfuzmK0r66Mt7Q__";
 
     const img3 =
-        "https://s3-alpha-sig.figma.com/img/db80/4347/cb68839c79ca58a9b46777e9c9c07cc0?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=nXWoIhqAUTi-at1criMJPC8l-xudGFynTTWb9Y-EQ3SJVxbjtvcOe0gMCLVH-t9DqTyNiL-Yzev8ZoIv8rUhxICHbXB8rkLeNKxj7EQ62uTTgu9cxyvbWTE~QRaByjGG1cJ6vcaSQ6MXKBL0oqfIGiBf0VqSA6UKFh5uufI7P4FLQmWmiBmecXFnhZ2A5p2FkQ5Vc~d9jsWCoMVMpC711S6lfNymccRCkodcG15Mx22s-p2ydCVU06b5TyCZg7x1tG2lcqPcdyaX07KFBNHfmAp9N23KdaCvnBgsmBAeg76eEDgO9y7B4xcEcerX559xGjDraUB~HpMhDXtZGXxetg__";
+        "https://ik.imagekit.io/pashouses/pb1/tr:n-hl_v3/property/front-house/-JDoNqEMWigKKq7jtLReZVFmjQ7pfFdb0Op7MHND.jpeg";
 
     const arr = [{}, {}, {}, {}, {}, {}, {}, {}];
 
-    const heroUrl = webPreferences?.find(pref => pref.key === 'hero_url')?.value;
-
+    const heroUrl = webPreferences?.find(
+        (pref) => pref.key === "hero_url"
+    )?.value;
 
     return (
         <GuestLayout auth={auth}>
@@ -49,10 +57,10 @@ export default function Home({ auth, categories, testimonials, banners, webPrefe
                 <div className="relative w-full h-[50vh] bg-cover bg-center bg-fixed border border-gray-400">
                     <img
                         src={heroUrl ? `/storage/${heroUrl}` : img}
-                        className="w-full h-full object-cover" />
+                        className="w-full h-full object-cover"
+                    />
                     <div className="w-full min-h-full dark:bg-black/10 absolute top-0" />
                 </div>
-
 
                 {/* FILTRE */}
                 <FilterSearch />
@@ -84,14 +92,16 @@ export default function Home({ auth, categories, testimonials, banners, webPrefe
                                         className="flex-shrink-0 basis-1/1 md:basis-1/2 max-h-[40vh]"
                                     >
                                         <img
-                                            src={banner.image_path ? `/storage/${banner.image_path}` : img}
+                                            src={
+                                                banner.image_path
+                                                    ? `/storage/${banner.image_path}`
+                                                    : img
+                                            }
                                             alt={`Carousel item ${index}`}
                                             className="object-contain md:rounded-2xl rounded-none w-auto h-full"
                                         />
-
                                     </CarouselItem>
-                                ))
-                            }
+                                ))}
                         </CarouselContent>
                     </Carousel>
 
@@ -117,12 +127,14 @@ export default function Home({ auth, categories, testimonials, banners, webPrefe
                                     Cek rekomendasi properti terbaru kami
                                 </p>
                             </div>
-                            <Button
-                                variant={"outline"}
-                                className="hidden md:mr-0 md:block lg:mr-40"
-                            >
-                                Lihat Selengkapnya
-                            </Button>
+                            <Link href={route("search.property")}>
+                                <Button
+                                    variant={"outline"}
+                                    className="hidden md:mr-0 md:block lg:mr-40"
+                                >
+                                    Lihat Selengkapnya
+                                </Button>
+                            </Link>
                         </div>
 
                         {/* CARD */}
@@ -133,69 +145,93 @@ export default function Home({ auth, categories, testimonials, banners, webPrefe
                         >
                             <CarouselContent>
                                 {latestProperties.length > 0
-                                    ? latestProperties.map((property, index) => (
-                                        <CarouselItem
-                                            className="flex-shrink-0 basis-auto w-[350px] h-[355px]"
-                                            key={index}
-                                        >
-                                            <CardProperty
-                                                img={img3}
-                                                key={`properties-card-${index}`}
-                                                id={property.id}
-                                            >
-                                                <div className="flex flex-row justify-between items-center w-full">
-                                                    <div>
-                                                        <h2 className="font-bold text-foreground">
-                                                            {property.title}
-                                                        </h2>
-                                                        <div className="flex justify-start items-center gap-1">
-                                                            <p className="text-xs text-neutral-600">
-                                                                <MapPinIcon
-                                                                    className="text-muted"
-                                                                    fill="#FD9458"
-                                                                    size={
-                                                                        "16px"
-                                                                    }
-                                                                />
-                                                            </p>
-                                                            <p className="text-xs text-muted-foreground">
-                                                                {property.address}
-                                                            </p>
-                                                        </div>
+                                    ? latestProperties.map(
+                                          (property, index) => (
+                                              <CarouselItem
+                                                  className="flex-shrink-0 basis-auto w-[350px] h-[355px]"
+                                                  key={index}
+                                              >
+                                                  <CardProperty
+                                                      img={img3}
+                                                      key={`properties-card-${index}`}
+                                                      id={property.id}
+                                                  >
+                                                      <div className="flex flex-row justify-between items-center w-full">
+                                                          <div>
+                                                              <h2 className="font-bold text-foreground">
+                                                                  {
+                                                                      property.title
+                                                                  }
+                                                              </h2>
+                                                              <div className="flex justify-start items-center gap-1">
+                                                                  <p className="text-xs text-neutral-600">
+                                                                      <MapPinIcon
+                                                                          className="text-muted"
+                                                                          fill="#FD9458"
+                                                                          size={
+                                                                              "16px"
+                                                                          }
+                                                                      />
+                                                                  </p>
+                                                                  <p className="text-xs text-muted-foreground">
+                                                                      {
+                                                                          property.address
+                                                                      }
+                                                                  </p>
+                                                              </div>
 
-                                                        <div className="flex justify-start items-center gap-3.5 mt-1">
-                                                            <p className="text-xs">
-                                                                LT: {property.land_area}&sup2;
-                                                            </p>
-                                                            <p className="text-xs">
-                                                                LB: {property.building_area}&sup2;
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <hr className="mt-2 mb-3 dark:border-white" />
-                                                <div className="flex justify-between">
-                                                    <p className="text-xs dark:text-primary font-semibold">
-                                                        Rp {property.price}
-                                                    </p>
-                                                    <div className="flex gap-5">
-                                                        <div className="flex items-center gap-x-1 text-xs">
-                                                            <BedDoubleIcon className="w-4 h-4" />{" "}
-                                                            : {property.bedroom_count}
-                                                        </div>
-                                                        <div className="flex items-center gap-x-1 text-xs">
-                                                            <BathIcon className="w-4 h-4" />{" "}
-                                                            : {property.bathroom_count}
-                                                        </div>
-                                                        <div className="flex items-center gap-x-1 text-xs">
-                                                            <CarFrontIcon className="w-4 h-4" />{" "}
-                                                            : {property.carport_count}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </CardProperty>
-                                        </CarouselItem>
-                                    ))
+                                                              <div className="flex justify-start items-center gap-3.5 mt-1">
+                                                                  <p className="text-xs">
+                                                                      LT:{" "}
+                                                                      {
+                                                                          property.land_area
+                                                                      }
+                                                                      &sup2;
+                                                                  </p>
+                                                                  <p className="text-xs">
+                                                                      LB:{" "}
+                                                                      {
+                                                                          property.building_area
+                                                                      }
+                                                                      &sup2;
+                                                                  </p>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                      <hr className="mt-2 mb-3 dark:border-white" />
+                                                      <div className="flex justify-between">
+                                                          <p className="text-xs dark:text-primary font-semibold">
+                                                              Rp{" "}
+                                                              {property.price}
+                                                          </p>
+                                                          <div className="flex gap-5">
+                                                              <div className="flex items-center gap-x-1 text-xs">
+                                                                  <BedDoubleIcon className="w-4 h-4" />{" "}
+                                                                  :{" "}
+                                                                  {
+                                                                      property.bedroom_count
+                                                                  }
+                                                              </div>
+                                                              <div className="flex items-center gap-x-1 text-xs">
+                                                                  <BathIcon className="w-4 h-4" />{" "}
+                                                                  :{" "}
+                                                                  {
+                                                                      property.bathroom_count
+                                                                  }
+                                                              </div>
+                                                              <div className="flex items-center gap-x-1 text-xs">
+                                                                  <CarFrontIcon className="w-4 h-4" />{" "}
+                                                                  :{" "}
+                                                                  {
+                                                                      property.carport_count
+                                                                  }
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </CardProperty>
+                                              </CarouselItem>
+                                          )
+                                      )
                                     : null}
                             </CarouselContent>
                             <div className="absolute -top-11 right-20  justify-center items-center hidden lg:flex">
@@ -216,12 +252,14 @@ export default function Home({ auth, categories, testimonials, banners, webPrefe
                                     Cek rekomendasi properti terpopuler kami
                                 </p>
                             </div>
-                            <Button
-                                variant={"outline"}
-                                className="hidden md:mr-0 md:block lg:mr-40"
-                            >
-                                Lihat Selengkapnya
-                            </Button>
+                            <Link href={route("search.property")}>
+                                <Button
+                                    variant={"outline"}
+                                    className="hidden md:mr-0 md:block lg:mr-40"
+                                >
+                                    Lihat Selengkapnya
+                                </Button>
+                            </Link>
                         </div>
 
                         {/* CARD */}
@@ -232,69 +270,93 @@ export default function Home({ auth, categories, testimonials, banners, webPrefe
                         >
                             <CarouselContent>
                                 {featuredProperties.length > 0
-                                    ? featuredProperties.map((property, index) => (
-                                        <CarouselItem
-                                            className="flex-shrink-0 basis-auto w-[350px] h-[355px]"
-                                            key={index}
-                                        >
-                                            <CardProperty
-                                                img={img3}
-                                                key={`properties-card-${index}`}
-                                                id={property.id}
-                                            >
-                                                <div className="flex flex-row justify-between items-center w-full">
-                                                    <div>
-                                                        <h2 className="font-bold text-foreground">
-                                                            {property.title}
-                                                        </h2>
-                                                        <div className="flex justify-start items-center gap-1">
-                                                            <p className="text-xs text-neutral-600">
-                                                                <MapPinIcon
-                                                                    className="text-muted"
-                                                                    fill="#FD9458"
-                                                                    size={
-                                                                        "16px"
-                                                                    }
-                                                                />
-                                                            </p>
-                                                            <p className="text-xs text-muted-foreground">
-                                                                {property.address}
-                                                            </p>
-                                                        </div>
+                                    ? featuredProperties.map(
+                                          (property, index) => (
+                                              <CarouselItem
+                                                  className="flex-shrink-0 basis-auto w-[350px] h-[355px]"
+                                                  key={index}
+                                              >
+                                                  <CardProperty
+                                                      img={img3}
+                                                      key={`properties-card-${index}`}
+                                                      id={property.id}
+                                                  >
+                                                      <div className="flex flex-row justify-between items-center w-full">
+                                                          <div>
+                                                              <h2 className="font-bold text-foreground">
+                                                                  {
+                                                                      property.title
+                                                                  }
+                                                              </h2>
+                                                              <div className="flex justify-start items-center gap-1">
+                                                                  <p className="text-xs text-neutral-600">
+                                                                      <MapPinIcon
+                                                                          className="text-muted"
+                                                                          fill="#FD9458"
+                                                                          size={
+                                                                              "16px"
+                                                                          }
+                                                                      />
+                                                                  </p>
+                                                                  <p className="text-xs text-muted-foreground">
+                                                                      {
+                                                                          property.address
+                                                                      }
+                                                                  </p>
+                                                              </div>
 
-                                                        <div className="flex justify-start items-center gap-3.5 mt-1">
-                                                            <p className="text-xs">
-                                                                LT: {property.land_area}&sup2;
-                                                            </p>
-                                                            <p className="text-xs">
-                                                                LB: {property.building_area}&sup2;
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <hr className="mt-2 mb-3 dark:border-white" />
-                                                <div className="flex justify-between">
-                                                    <p className="text-xs dark:text-primary font-semibold">
-                                                        Rp {property.price}
-                                                    </p>
-                                                    <div className="flex gap-5">
-                                                        <div className="flex items-center gap-x-1 text-xs">
-                                                            <BedDoubleIcon className="w-4 h-4" />{" "}
-                                                            : {property.bedroom_count}
-                                                        </div>
-                                                        <div className="flex items-center gap-x-1 text-xs">
-                                                            <BathIcon className="w-4 h-4" />{" "}
-                                                            : {property.bathroom_count}
-                                                        </div>
-                                                        <div className="flex items-center gap-x-1 text-xs">
-                                                            <CarFrontIcon className="w-4 h-4" />{" "}
-                                                            : {property.carport_count}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </CardProperty>
-                                        </CarouselItem>
-                                    ))
+                                                              <div className="flex justify-start items-center gap-3.5 mt-1">
+                                                                  <p className="text-xs">
+                                                                      LT:{" "}
+                                                                      {
+                                                                          property.land_area
+                                                                      }
+                                                                      &sup2;
+                                                                  </p>
+                                                                  <p className="text-xs">
+                                                                      LB:{" "}
+                                                                      {
+                                                                          property.building_area
+                                                                      }
+                                                                      &sup2;
+                                                                  </p>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                      <hr className="mt-2 mb-3 dark:border-white" />
+                                                      <div className="flex justify-between">
+                                                          <p className="text-xs dark:text-primary font-semibold">
+                                                              Rp{" "}
+                                                              {property.price}
+                                                          </p>
+                                                          <div className="flex gap-5">
+                                                              <div className="flex items-center gap-x-1 text-xs">
+                                                                  <BedDoubleIcon className="w-4 h-4" />{" "}
+                                                                  :{" "}
+                                                                  {
+                                                                      property.bedroom_count
+                                                                  }
+                                                              </div>
+                                                              <div className="flex items-center gap-x-1 text-xs">
+                                                                  <BathIcon className="w-4 h-4" />{" "}
+                                                                  :{" "}
+                                                                  {
+                                                                      property.bathroom_count
+                                                                  }
+                                                              </div>
+                                                              <div className="flex items-center gap-x-1 text-xs">
+                                                                  <CarFrontIcon className="w-4 h-4" />{" "}
+                                                                  :{" "}
+                                                                  {
+                                                                      property.carport_count
+                                                                  }
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </CardProperty>
+                                              </CarouselItem>
+                                          )
+                                      )
                                     : null}
                             </CarouselContent>
                             <div className="absolute -top-11 right-20  justify-center items-center hidden lg:flex">
@@ -317,7 +379,10 @@ export default function Home({ auth, categories, testimonials, banners, webPrefe
                         >
                             <CarouselContent className="flex gap-3">
                                 {testimonials
-                                    .filter((testimonial) => testimonial.is_active == true)
+                                    .filter(
+                                        (testimonial) =>
+                                            testimonial.is_active == true
+                                    )
                                     .map((testimonial, index) => (
                                         <CarouselItem
                                             key={index}
@@ -325,19 +390,32 @@ export default function Home({ auth, categories, testimonials, banners, webPrefe
                                         >
                                             <div className="p-1">
                                                 <TestimonialCard
-                                                    img={testimonial.client_avatar ? `/storage/${testimonial.client_avatar}` : "/assets/avatar.png"}
-                                                    name={testimonial.client_name}
+                                                    img={
+                                                        testimonial.client_avatar
+                                                            ? `/storage/${testimonial.client_avatar}`
+                                                            : "/assets/avatar.png"
+                                                    }
+                                                    name={
+                                                        testimonial.client_name
+                                                    }
                                                     role={
                                                         <span className="flex">
-                                                            {Array.from({ length: 5 }, (_, i) => (
-                                                                <span
-                                                                    key={i}
-                                                                    className={`${i < testimonial.rating ? "text-yellow-500" : "text-gray-300"
+                                                            {Array.from(
+                                                                { length: 5 },
+                                                                (_, i) => (
+                                                                    <span
+                                                                        key={i}
+                                                                        className={`${
+                                                                            i <
+                                                                            testimonial.rating
+                                                                                ? "text-yellow-500"
+                                                                                : "text-gray-300"
                                                                         }`}
-                                                                >
-                                                                    ★
-                                                                </span>
-                                                            ))}
+                                                                    >
+                                                                        ★
+                                                                    </span>
+                                                                )
+                                                            )}
                                                         </span>
                                                     }
                                                     text={testimonial.content}

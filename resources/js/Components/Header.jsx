@@ -19,7 +19,6 @@ const Header = ({ variant, auth, areas, categories }) => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [variants, setVariants] = useState(variant);
 
-
     console.log("auth: ", auth);
 
     const handleScroll = () => {
@@ -32,8 +31,8 @@ const Header = ({ variant, auth, areas, categories }) => {
 
     // Handle scroll to change header background
     useEffect(() => {
-            window.addEventListener("scroll", handleScroll);
-            return () => window.removeEventListener("scroll", handleScroll);
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
     const buyAreaMenu = areas.reduce((acc, area) => {
@@ -81,7 +80,7 @@ const Header = ({ variant, auth, areas, categories }) => {
     console.log("buyAreaMenu: ", buyAreaMenu);
 
     const menuItems = [
-        { title: "Home", url: '/' },
+        { title: "Home", url: "/" },
         {
             title: "Dijual",
             subItems: buyAreaMenu,
@@ -217,10 +216,12 @@ const Header = ({ variant, auth, areas, categories }) => {
                     </div>
 
                     <div className="flex items-center space-x-4">
-                        <Button className="bg-white hover:bg-white text-primary px-2 py-1 sm:px-4 sm:py-2 rounded-md text-xs sm:text-sm font-bold">
-                            <HiOutlineSpeakerphone className="text-xs sm:text-sm" />
-                            Pasang Iklan
-                        </Button>
+                        <Link href={route("dashboard")}>
+                            <Button className="bg-white hover:bg-white text-primary px-2 py-1 sm:px-4 sm:py-2 rounded-md text-xs sm:text-sm font-bold">
+                                <HiOutlineSpeakerphone className="text-xs sm:text-sm" />
+                                Pasang Iklan
+                            </Button>
+                        </Link>
                         {!auth ? (
                             <Link
                                 href={route("login")}
@@ -308,13 +309,14 @@ const Header = ({ variant, auth, areas, categories }) => {
                                         )}
                                 </div>
                             ))}
-                            {
-                                !auth && (
-                                    <Link href={route("login")} className="w-full text-left px-3 py-2 text-base font-medium text-white hover:text-primary hover:bg-gray-50 rounded-md lg:hidden">
-                                        Akun
-                                    </Link>
-                                )
-                            }
+                            {!auth && (
+                                <Link
+                                    href={route("login")}
+                                    className="w-full text-left px-3 py-2 text-base font-medium text-white hover:text-primary hover:bg-gray-50 rounded-md lg:hidden"
+                                >
+                                    Akun
+                                </Link>
+                            )}
                         </div>
                     </div>
                 )}

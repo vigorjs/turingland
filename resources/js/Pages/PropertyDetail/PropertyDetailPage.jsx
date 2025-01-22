@@ -9,7 +9,7 @@ import {
     CarouselPrevious,
 } from "@/Components/ui/carousel";
 import GuestLayout from "@/Layouts/GuestLayout";
-import { Head } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import Autoplay from "embla-carousel-autoplay";
 import {
     BathIcon,
@@ -24,22 +24,21 @@ import {
 import React, { useState } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 
-export default function PropertyDetailPage({ property, auth }) {
+export default function PropertyDetailPage({ property, auth, featuredProp }) {
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [isInfoLess, setIsInfoLess] = useState(true);
-
-    console.log("PROPERTY: ", property);
+    console.log(featuredProp);
 
     const img = `https://ecatalog.sinarmasland.com/_next/image?url=https%3A%2F%2Fecatalog.sinarmasland.com%2Fassets%2Fsite-setting-files%2F1%2Fhomepage-background-banner-desktop-677b6f397dc74.jpg&w=3840&q=75`;
 
     const img1 =
         "https://s3-alpha-sig.figma.com/img/db80/4347/cb68839c79ca58a9b46777e9c9c07cc0?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=nXWoIhqAUTi-at1criMJPC8l-xudGFynTTWb9Y-EQ3SJVxbjtvcOe0gMCLVH-t9DqTyNiL-Yzev8ZoIv8rUhxICHbXB8rkLeNKxj7EQ62uTTgu9cxyvbWTE~QRaByjGG1cJ6vcaSQ6MXKBL0oqfIGiBf0VqSA6UKFh5uufI7P4FLQmWmiBmecXFnhZ2A5p2FkQ5Vc~d9jsWCoMVMpC711S6lfNymccRCkodcG15Mx22s-p2ydCVU06b5TyCZg7x1tG2lcqPcdyaX07KFBNHfmAp9N23KdaCvnBgsmBAeg76eEDgO9y7B4xcEcerX559xGjDraUB~HpMhDXtZGXxetg__";
 
-    const imagePrimary = img1;
-    const otherImages = [img1, img1, img1, img1, img1];
+    const imagePrimary = property.images.filter(
+        (img) => img.is_primary === true
+    );
+    const otherImages = property.images;
     const allImages = [imagePrimary, ...otherImages];
-
-    const arr = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
 
     return (
         <GuestLayout auth={auth}>
@@ -49,7 +48,11 @@ export default function PropertyDetailPage({ property, auth }) {
                 {/* IMAGES */}
                 <button onClick={() => setIsOpenModal(true)} className="w-full">
                     <img
-                        src={imagePrimary}
+                        src={
+                            imagePrimary[0].image_path
+                                ? imagePrimary[0].image_path
+                                : "https://ik.imagekit.io/pashouses/pb1/tr:n-hl_v3/property/front-house/-JDoNqEMWigKKq7jtLReZVFmjQ7pfFdb0Op7MHND.jpeg"
+                        }
                         alt=""
                         className="w-full h-80 sm:h-[420px] object-cover rounded-2xl shadow-lg"
                     />
@@ -57,13 +60,20 @@ export default function PropertyDetailPage({ property, auth }) {
                 <div className="relative flex justify-center items-center -mt-10 sm:-mt-16">
                     <Carousel className="bg-white sm:gap-4 w-auto max-w-xs sm:max-w-xl p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl shadow-md">
                         <CarouselContent>
-                            {otherImages.map((img) => (
-                                <CarouselItem className="basis-auto">
+                            {otherImages.map((img, index) => (
+                                <CarouselItem
+                                    className="basis-auto"
+                                    key={index}
+                                >
                                     <button
                                         onClick={() => setIsOpenModal(true)}
                                     >
                                         <img
-                                            src={img}
+                                            src={
+                                                img.image_path
+                                                    ? img.image_path
+                                                    : "https://ik.imagekit.io/pashouses/pb1/tr:n-hl_v3/property/front-house/-JDoNqEMWigKKq7jtLReZVFmjQ7pfFdb0Op7MHND.jpeg"
+                                            }
                                             className="w-[100px] sm:w-40 rounded-xl"
                                         />
                                     </button>
@@ -86,7 +96,10 @@ export default function PropertyDetailPage({ property, auth }) {
                         <div className="flex flex-wrap justify-start items-center gap-2">
                             {property.categories.length > 0
                                 ? property.categories.map((category, index) => (
-                                      <button key={index} className="bg-neutral-200/80 text-neutral-800 p-2 rounded-full text-xs">
+                                      <button
+                                          key={index}
+                                          className="bg-neutral-200/80 text-neutral-800 p-2 rounded-full text-xs"
+                                      >
                                           {category.name}
                                       </button>
                                   ))
@@ -131,10 +144,12 @@ export default function PropertyDetailPage({ property, auth }) {
                                     {property.bedroom_count}
                                 </button>
                                 <button className="flex items-center gap-x-1 text-xs px-2.5 py-1 shadow rounded-full">
-                                    <BathIcon className="w-3.5 h-3.5" /> : {property.bathroom_count}
+                                    <BathIcon className="w-3.5 h-3.5" /> :{" "}
+                                    {property.bathroom_count}
                                 </button>
                                 <button className="flex items-center gap-x-1 text-xs px-2.5 py-1 shadow rounded-full">
-                                    <CarFrontIcon className="w-3.5 h-3.5" /> : {property.carport_count}
+                                    <CarFrontIcon className="w-3.5 h-3.5" /> :{" "}
+                                    {property.carport_count}
                                 </button>
                             </div>
                         </div>
@@ -189,7 +204,9 @@ export default function PropertyDetailPage({ property, auth }) {
                                                         Sertifikat
                                                     </p>
                                                     <p className="w-1/2 md:w-1/4 text-neutral-600 text-sm font-medium">
-                                                        {property.certificate_type ? property.certificate_type : "Sertifikat tidak tertera"}
+                                                        {property.certificate_type
+                                                            ? property.certificate_type
+                                                            : "Sertifikat tidak tertera"}
                                                     </p>
                                                 </div>
                                             </li>
@@ -199,7 +216,9 @@ export default function PropertyDetailPage({ property, auth }) {
                                                         Tahun Dibangun
                                                     </p>
                                                     <p className="w-1/2 md:w-1/4 text-neutral-600 text-sm font-medium">
-                                                        {property.year_built ? property.year_built : "Tahun tidak tertera"}
+                                                        {property.year_built
+                                                            ? property.year_built
+                                                            : "Tahun tidak tertera"}
                                                     </p>
                                                 </div>
                                             </li>
@@ -208,14 +227,21 @@ export default function PropertyDetailPage({ property, auth }) {
                                                     <p className="w-1/2 md:w-1/4 text-neutral-600 text-xs">
                                                         Tipe Properti
                                                     </p>
-                                                    {property.categories.length > 0
-                                                    ? property.categories.map((category, index) => (
-                                                        <p className="w-1/2 md:w-1/4 text-neutral-600 text-sm font-medium">
-                                                            {category.name}
-                                                        </p>
-                                                    ))
-                                                    : null}
-                                                    
+                                                    {property.categories
+                                                        .length > 0
+                                                        ? property.categories.map(
+                                                              (
+                                                                  category,
+                                                                  index
+                                                              ) => (
+                                                                  <p className="w-1/2 md:w-1/4 text-neutral-600 text-sm font-medium">
+                                                                      {
+                                                                          category.name
+                                                                      }
+                                                                  </p>
+                                                              )
+                                                          )
+                                                        : null}
                                                 </div>
                                             </li>
                                             <li>
@@ -291,38 +317,48 @@ export default function PropertyDetailPage({ property, auth }) {
                         <div className="shadow-md p-4 rounded-2xl mb-7">
                             <div className="flex justify-start items-start gap-2.5 border-b border-neutral-300 pb-5">
                                 <img
-                                    src={img1}
+                                    src={property.agent.photo}
                                     alt=""
                                     className="w-14 h-14 rounded-full object-cover"
                                 />
                                 <div>
                                     <p className="text-primary font-semibold text-sm">
-                                        Fauzan Zaman
+                                        {property.agent.name}
                                     </p>
                                     <p className="text-neutral-500 text-xs mt-0.5">
-                                        Agen Korporat
+                                        Agent
                                     </p>
                                     <p className="text-neutral-500 text-xs">
-                                        fauzangan@gmail.com
+                                        {property.agent.email}
                                     </p>
                                 </div>
                             </div>
-                            <Button className="w-full mt-3 bg-green-500 hover:bg-green-600">
-                                <FaWhatsapp className="text-white" />
-                                <p className="text-white text-sm">Whatsapp</p>
-                            </Button>
+                            <Link
+                                href={`https://api.whatsapp.com/send?phone=${property.agent.wa_number}`}
+                            >
+                                <Button className="w-full mt-3 bg-green-500 hover:bg-green-600">
+                                    <FaWhatsapp className="text-white" />
+                                    <p className="text-white text-sm">
+                                        Whatsapp
+                                    </p>
+                                </Button>
+                            </Link>
                         </div>
 
                         <div className="shadow-md p-4 rounded-2xl mb-7">
                             <div className="flex justify-start items-center gap-2.5 border-b border-neutral-300 pb-5">
                                 <img
-                                    src={img1}
+                                    src={
+                                        property.developer.logo
+                                            ? property.developer.logo
+                                            : "https://avatar.iran.liara.run/public"
+                                    }
                                     alt=""
                                     className="w-14 h-14 rounded-full object-cover"
                                 />
                                 <div>
                                     <p className="text-primary font-semibold text-sm">
-                                        Turing Real Estate
+                                        {property.developer.name}
                                     </p>
                                     <p className="text-neutral-500 text-xs mt-0.5">
                                         Developer
@@ -330,12 +366,7 @@ export default function PropertyDetailPage({ property, auth }) {
                                 </div>
                             </div>
                             <p className="text-neutral-500 text-xs mt-3">
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Quam ipsam voluptatum
-                                consectetur ullam quos aut a ad, laboriosam
-                                asperiores, quod corporis facilis similique
-                                molestias, porro repellat nulla! Laborum,
-                                doloremque! Aliquid?
+                                {property.developer.description}
                             </p>
                         </div>
 
@@ -356,12 +387,14 @@ export default function PropertyDetailPage({ property, auth }) {
                                 Cek rekomendasi properti terpopuler kami
                             </p>
                         </div>
-                        <Button
-                            variant={"outline"}
-                            className="hidden md:mr-0 md:block lg:mr-40"
-                        >
-                            Lihat Selengkapnya
-                        </Button>
+                        <Link href={route("search.property")}>
+                            <Button
+                                variant={"outline"}
+                                className="hidden md:mr-0 md:block lg:mr-40"
+                            >
+                                Lihat Selengkapnya
+                            </Button>
+                        </Link>
                     </div>
 
                     {/* CARD */}
@@ -371,20 +404,25 @@ export default function PropertyDetailPage({ property, auth }) {
                         }}
                     >
                         <CarouselContent>
-                            {arr.length > 0
-                                ? arr.map((_, index) => (
+                            {featuredProp.length > 0
+                                ? featuredProp.map((property, index) => (
                                       <CarouselItem
                                           className="flex-shrink-0 basis-auto w-[350px] h-[355px]"
                                           key={index}
                                       >
                                           <CardProperty
-                                              img={img1}
+                                              img={
+                                                  property.images.image_path
+                                                      ? property.images
+                                                            .image_path
+                                                      : "https://ik.imagekit.io/pashouses/pb1/tr:n-hl_v3/property/front-house/-JDoNqEMWigKKq7jtLReZVFmjQ7pfFdb0Op7MHND.jpeg"
+                                              }
                                               key={`properties-card-${index}`}
                                           >
                                               <div className="flex flex-row justify-between items-center w-full">
                                                   <div>
                                                       <h2 className="font-bold text-foreground">
-                                                          Fauzan Properties
+                                                          {property.title}
                                                       </h2>
                                                       <div className="flex justify-start items-center gap-1">
                                                           <p className="text-xs text-neutral-600">
@@ -395,17 +433,24 @@ export default function PropertyDetailPage({ property, auth }) {
                                                               />
                                                           </p>
                                                           <p className="text-xs text-muted-foreground">
-                                                              Jl. Kebon Jeruk,
-                                                              Jakarta
+                                                              {property.address}
                                                           </p>
                                                       </div>
 
                                                       <div className="flex justify-start items-center gap-3.5 mt-1">
                                                           <p className="text-xs">
-                                                              LT: 40&sup2;
+                                                              LT:{" "}
+                                                              {
+                                                                  property.land_area
+                                                              }
+                                                              &sup2;
                                                           </p>
                                                           <p className="text-xs">
-                                                              LB: 40&sup2;
+                                                              LB:{" "}
+                                                              {
+                                                                  property.building_area
+                                                              }
+                                                              &sup2;
                                                           </p>
                                                       </div>
                                                   </div>
@@ -413,20 +458,29 @@ export default function PropertyDetailPage({ property, auth }) {
                                               <hr className="mt-2 mb-3 dark:border-white" />
                                               <div className="flex justify-between">
                                                   <p className="text-xs dark:text-primary font-semibold">
-                                                      Rp 200 juta
+                                                      Rp {property.price}
                                                   </p>
                                                   <div className="flex gap-5">
                                                       <div className="flex items-center gap-x-1 text-xs">
                                                           <BedDoubleIcon className="w-4 h-4" />{" "}
-                                                          : 3
+                                                          :{" "}
+                                                          {
+                                                              property.bedroom_count
+                                                          }
                                                       </div>
                                                       <div className="flex items-center gap-x-1 text-xs">
                                                           <BathIcon className="w-4 h-4" />{" "}
-                                                          : 2
+                                                          :{" "}
+                                                          {
+                                                              property.bathroom_count
+                                                          }
                                                       </div>
                                                       <div className="flex items-center gap-x-1 text-xs">
                                                           <CarFrontIcon className="w-4 h-4" />{" "}
-                                                          : 2
+                                                          :{" "}
+                                                          {
+                                                              property.carport_count
+                                                          }
                                                       </div>
                                                   </div>
                                               </div>
@@ -455,14 +509,18 @@ export default function PropertyDetailPage({ property, auth }) {
                     }}
                 >
                     <CarouselContent>
-                        {arr.length > 0 ? (
-                            arr.map((_, index) => (
+                        {featuredProp.length > 0 ? (
+                            featuredProp.map((property, index) => (
                                 <CarouselItem
                                     key={`ads-section-${index}`}
                                     className="flex-shrink-0 basis-1/1 md:basis-1/2 max-h-[40vh]"
                                 >
                                     <img
-                                        src={img}
+                                        src={
+                                            property.images.image_path
+                                                ? property.images.image_path
+                                                : "https://ik.imagekit.io/pashouses/pb1/tr:n-hl_v3/property/front-house/-JDoNqEMWigKKq7jtLReZVFmjQ7pfFdb0Op7MHND.jpeg"
+                                        }
                                         alt={`Carousel item ${index}`}
                                         className="object-contain md:rounded-2xl rounded-none w-auto h-full"
                                     />
@@ -488,6 +546,7 @@ export default function PropertyDetailPage({ property, auth }) {
 
 function ModalImages({ isOpenModal, setIsOpenModal, images }) {
     const handleCloseModal = () => setIsOpenModal(false);
+    console.log("images : ", images);
 
     return (
         <Modal onClose={handleCloseModal} show={isOpenModal}>
@@ -506,7 +565,11 @@ function ModalImages({ isOpenModal, setIsOpenModal, images }) {
                             >
                                 <div className="w-auto flex justify-center items-center">
                                     <img
-                                        src={img}
+                                        src={
+                                            img[0]
+                                                ? img[0].image_path
+                                                : img.image_path
+                                        }
                                         className="w-full object-contain rounded-xl"
                                         alt=""
                                     />

@@ -11,10 +11,14 @@ class PropertyController extends Controller
 {
     public function show($id)
     {
-        $property = Property::where('id', $id)->with(['images', 'categories', 'area.location', 'developer'])->first();
+        $property = Property::where('id', $id)->with(['images', 'categories', 'area.location', 'developer', 'agent'])->first();
         $auth = Auth::user();
+        $featuredProp = Property::where('is_featured', true)->with(['area', 'developer', 'categories', 'images'])
+                ->latest()
+                ->limit(6)
+                ->get();
         // if(!$property) return redirect()->route('homepage');
 
-        return Inertia::render('PropertyDetail/PropertyDetailPage', compact('property', 'auth'));
+        return Inertia::render('PropertyDetail/PropertyDetailPage', compact('property', 'auth', 'featuredProp'));
     }
 }
