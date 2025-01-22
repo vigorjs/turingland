@@ -1,18 +1,18 @@
 export default function AgentStatusBadge({ status }) {
-    const STATUS_STYLES = [
-        {
+    const STATUS_STYLES = {
+        false: {
             bg: "bg-red-50",
             text: "text-red-600",
             dot: "#dc2626",
             label: "Inactive",
         },
-        {
+        true: {
             bg: "bg-emerald-50",
             text: "text-emerald-600",
             dot: "#059669",
             label: "Active",
         },
-    ];
+    };
     console.log(STATUS_STYLES[status]);
     console.log(status);
 
