@@ -11,7 +11,7 @@ class PropertyController extends Controller
 {
     public function show($id)
     {
-        $property = Property::where('id', $id)->first();
+        $property = Property::where('id', $id)->with(['images', 'categories', 'area.location', 'developer'])->first();
         $auth = Auth::user();
         // if(!$property) return redirect()->route('homepage');
 

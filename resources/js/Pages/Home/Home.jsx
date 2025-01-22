@@ -132,8 +132,8 @@ export default function Home({ auth, categories, testimonials, banners, webPrefe
                             }}
                         >
                             <CarouselContent>
-                                {arr.length > 0
-                                    ? arr.map((_, index) => (
+                                {latestProperties.length > 0
+                                    ? latestProperties.map((property, index) => (
                                         <CarouselItem
                                             className="flex-shrink-0 basis-auto w-[350px] h-[355px]"
                                             key={index}
@@ -141,11 +141,12 @@ export default function Home({ auth, categories, testimonials, banners, webPrefe
                                             <CardProperty
                                                 img={img3}
                                                 key={`properties-card-${index}`}
+                                                id={property.id}
                                             >
                                                 <div className="flex flex-row justify-between items-center w-full">
                                                     <div>
                                                         <h2 className="font-bold text-foreground">
-                                                            Fauzan Properties
+                                                            {property.title}
                                                         </h2>
                                                         <div className="flex justify-start items-center gap-1">
                                                             <p className="text-xs text-neutral-600">
@@ -158,17 +159,16 @@ export default function Home({ auth, categories, testimonials, banners, webPrefe
                                                                 />
                                                             </p>
                                                             <p className="text-xs text-muted-foreground">
-                                                                Jl. Kebon
-                                                                Jeruk, Jakarta
+                                                                {property.address}
                                                             </p>
                                                         </div>
 
                                                         <div className="flex justify-start items-center gap-3.5 mt-1">
                                                             <p className="text-xs">
-                                                                LT: 40&sup2;
+                                                                LT: {property.land_area}&sup2;
                                                             </p>
                                                             <p className="text-xs">
-                                                                LB: 40&sup2;
+                                                                LB: {property.building_area}&sup2;
                                                             </p>
                                                         </div>
                                                     </div>
@@ -176,20 +176,20 @@ export default function Home({ auth, categories, testimonials, banners, webPrefe
                                                 <hr className="mt-2 mb-3 dark:border-white" />
                                                 <div className="flex justify-between">
                                                     <p className="text-xs dark:text-primary font-semibold">
-                                                        Rp 200 juta
+                                                        Rp {property.price}
                                                     </p>
                                                     <div className="flex gap-5">
                                                         <div className="flex items-center gap-x-1 text-xs">
                                                             <BedDoubleIcon className="w-4 h-4" />{" "}
-                                                            : 3
+                                                            : {property.bedroom_count}
                                                         </div>
                                                         <div className="flex items-center gap-x-1 text-xs">
                                                             <BathIcon className="w-4 h-4" />{" "}
-                                                            : 2
+                                                            : {property.bathroom_count}
                                                         </div>
                                                         <div className="flex items-center gap-x-1 text-xs">
                                                             <CarFrontIcon className="w-4 h-4" />{" "}
-                                                            : 2
+                                                            : {property.carport_count}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -231,8 +231,8 @@ export default function Home({ auth, categories, testimonials, banners, webPrefe
                             }}
                         >
                             <CarouselContent>
-                                {arr.length > 0
-                                    ? arr.map((_, index) => (
+                                {featuredProperties.length > 0
+                                    ? featuredProperties.map((property, index) => (
                                         <CarouselItem
                                             className="flex-shrink-0 basis-auto w-[350px] h-[355px]"
                                             key={index}
@@ -240,11 +240,12 @@ export default function Home({ auth, categories, testimonials, banners, webPrefe
                                             <CardProperty
                                                 img={img3}
                                                 key={`properties-card-${index}`}
+                                                id={property.id}
                                             >
                                                 <div className="flex flex-row justify-between items-center w-full">
                                                     <div>
                                                         <h2 className="font-bold text-foreground">
-                                                            Fauzan Properties
+                                                            {property.title}
                                                         </h2>
                                                         <div className="flex justify-start items-center gap-1">
                                                             <p className="text-xs text-neutral-600">
@@ -257,17 +258,16 @@ export default function Home({ auth, categories, testimonials, banners, webPrefe
                                                                 />
                                                             </p>
                                                             <p className="text-xs text-muted-foreground">
-                                                                Jl. Kebon
-                                                                Jeruk, Jakarta
+                                                                {property.address}
                                                             </p>
                                                         </div>
 
                                                         <div className="flex justify-start items-center gap-3.5 mt-1">
                                                             <p className="text-xs">
-                                                                LT: 40&sup2;
+                                                                LT: {property.land_area}&sup2;
                                                             </p>
                                                             <p className="text-xs">
-                                                                LB: 40&sup2;
+                                                                LB: {property.building_area}&sup2;
                                                             </p>
                                                         </div>
                                                     </div>
@@ -275,20 +275,20 @@ export default function Home({ auth, categories, testimonials, banners, webPrefe
                                                 <hr className="mt-2 mb-3 dark:border-white" />
                                                 <div className="flex justify-between">
                                                     <p className="text-xs dark:text-primary font-semibold">
-                                                        Rp 200 juta
+                                                        Rp {property.price}
                                                     </p>
                                                     <div className="flex gap-5">
                                                         <div className="flex items-center gap-x-1 text-xs">
                                                             <BedDoubleIcon className="w-4 h-4" />{" "}
-                                                            : 3
+                                                            : {property.bedroom_count}
                                                         </div>
                                                         <div className="flex items-center gap-x-1 text-xs">
                                                             <BathIcon className="w-4 h-4" />{" "}
-                                                            : 2
+                                                            : {property.bathroom_count}
                                                         </div>
                                                         <div className="flex items-center gap-x-1 text-xs">
                                                             <CarFrontIcon className="w-4 h-4" />{" "}
-                                                            : 2
+                                                            : {property.carport_count}
                                                         </div>
                                                     </div>
                                                 </div>
