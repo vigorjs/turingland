@@ -2,7 +2,7 @@ import { Link } from "@inertiajs/react";
 import React from "react";
 
 export const CategoriesSection = ({ categories }) => {
-    console.log(categories);
+    console.log("categories: ", categories);
 
     return (
         <div className="flex flex-wrap justify-center items-center gap-3 mt-56 mb-14 md:my-14">

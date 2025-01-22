@@ -37,7 +37,6 @@ export default function ExcelFilterModal({
         building_area_min: "",
         building_area_max: "",
         year_built: "",
-        is_featured: false,
     });
 
     // Filter area berdasarkan location yang dipilih
@@ -396,21 +395,6 @@ export default function ExcelFilterModal({
                                 }))
                             }
                         />
-                    </div>
-
-                    {/* Featured Property */}
-                    <div className="flex items-center space-x-2">
-                        <Checkbox
-                            id="is_featured"
-                            checked={filters.is_featured}
-                            onCheckedChange={(checked) =>
-                                setFilters((prev) => ({
-                                    ...prev,
-                                    is_featured: checked,
-                                }))
-                            }
-                        />
-                        <Label htmlFor="is_featured">Property Unggulan</Label>
                     </div>
                 </div>
 
