@@ -599,7 +599,7 @@ function ModalImages({ isOpenModal, setIsOpenModal, images }) {
                                                 ? img[0].image_path
                                                 : img.image_path
                                         }
-                                        className="w-full object-contain rounded-xl shadow-md"
+                                        className="w-full object-contain h-80 sm:h-96 rounded-xl shadow-md"
                                         alt=""
                                     />
                                 </div>
