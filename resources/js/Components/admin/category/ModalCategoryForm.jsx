@@ -136,7 +136,7 @@ function ModalCategoryForm({
                     <Input
                         type="file"
                         id="icon"
-                        accept="image/*"
+                        accept=".png, .jpg, .jpeg"
                         placeholder="Masukkan icon kategori..."
                         // onChange={(e) => setData("icon", e.target.files?.[0] || null)}
                         onChange={(e) => {

@@ -158,7 +158,7 @@ function ModalDeveloperForm({ developer, isOpenModal, setIsOpenModal }) {
                         }}
                         type="file"
                         id="logo"
-                        accept="image/*"
+                        accept=".png, .jpg, .jpeg"
                     />
                     <ErrorMessage name="logo" />
                 </div>

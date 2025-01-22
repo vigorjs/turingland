@@ -121,7 +121,7 @@ export default function UpdateProfileInformation({
                         type="file"
                         className="mt-1 block w-full"
                         onChange={handlePhotoChange}
-                        accept="image/*"
+                        accept=".png, .jpg, .jpeg"
                     />
                     {photoPreview && (
                         <div className="mt-2">

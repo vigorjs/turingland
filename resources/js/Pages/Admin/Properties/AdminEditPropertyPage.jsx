@@ -665,7 +665,7 @@ function AdminEditPropertyPage({
                                     id="images"
                                     type="file"
                                     multiple
-                                    accept="image/*"
+                                    accept=".png, .jpg, .jpeg"
                                     onChange={handleImageUpload}
                                     className={`mb-4 ${
                                         errors.property_images

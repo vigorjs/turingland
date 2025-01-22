@@ -149,6 +149,7 @@ function ModalTestimonyForm({
                         }
                         type="file"
                         id="client_avatar"
+                        accept=".png, .jpg, .jpeg"
                     />
                     <ErrorMessage name="client_avatar" />
                 </div>

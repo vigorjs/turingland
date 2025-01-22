@@ -28,7 +28,7 @@ const UpdateImageForm = ({
                     </Label>
                     <Input
                         type="file"
-                        accept="image/*"
+                        accept=".png, .jpg, .jpeg"
                         onChange={onImageChange}
                         className="mt-2 p-2 border border-gray-300 rounded-lg text-black w-full"
                     />

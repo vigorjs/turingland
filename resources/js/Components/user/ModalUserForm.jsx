@@ -171,7 +171,7 @@ function ModalUserForm({ user, setUser, isOpenModal, setIsOpenModal }) {
                     <Input
                         type="file"
                         id="photo"
-                        accept="photo/*"
+                        accept=".png, .jpg, .jpeg"
                         placeholder="Input photo user..."
                         // onChange={(e) => setData("photo", e.target.files?.[0] || null)}
                         onChange={(e) => {

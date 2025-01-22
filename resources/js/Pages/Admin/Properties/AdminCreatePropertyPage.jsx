@@ -642,7 +642,7 @@ function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
                                     id="images"
                                     type="file"
                                     multiple
-                                    accept="image/*"
+                                    accept=".png, .jpg, .jpeg"
                                     onChange={handleImageUpload}
                                     className={`mb-4 ${
                                         errors.property_images
