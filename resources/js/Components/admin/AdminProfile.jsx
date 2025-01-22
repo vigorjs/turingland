@@ -19,7 +19,7 @@ const AdminProfile = ({ imgSrc, name, email, isCollapsed }) => {
                 <div className="flex items-center space-x-2 border border-gray-300 bg-white rounded-lg px-2 py-1 cursor-pointer">
                     {/* Profile Image */}
                     <img
-                        src={imgSrc}
+                        src={imgSrc ?? "https://avatar.iran.liara.run/public"}
                         alt="Profile"
                         className="w-[36px] h-[36px] rounded-full border border-gray-300"
                     />

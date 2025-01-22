@@ -19,7 +19,7 @@ export default function ProfileDropdown({ auth }) {
             <DropdownMenuTrigger asChild>
                 {/* Profile Image */}
                 <img
-                    src={auth?.photo}
+                    src={auth.photo ?? "https://avatar.iran.liara.run/public"}
                     alt="Profile"
                     className="w-[32px] h-[32px] sm:w-[36px] sm:h-[36px] rounded-full border border-gray-300"
                 />
