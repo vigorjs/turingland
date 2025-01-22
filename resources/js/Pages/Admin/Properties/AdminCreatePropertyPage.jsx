@@ -46,7 +46,7 @@ function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
             address: "",
             certificate_type: "",
             year_built: new Date().getFullYear(),
-            is_featured: false,
+            is_featured: 0,
             property_images: [],
         },
     });
@@ -623,7 +623,9 @@ function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
                                         <Checkbox
                                             id="is_featured"
                                             checked={field.value}
-                                            onCheckedChange={field.onChange}
+                                            onCheckedChange={(value) =>
+                                                field.onChange(value ? 1 : 0)
+                                            }
                                         />
                                     )}
                                 />
