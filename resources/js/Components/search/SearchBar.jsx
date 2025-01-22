@@ -26,27 +26,29 @@ const SearchBar = ({ categories, areas, filters, setPropertiesData }) => {
             ? "Disewa"
             : "") ?? ""
     );
-    const [propertyAdsFilter, setPropertyAdsFilter] = useState(filters["category_id"]);
+    const [propertyAdsFilter, setPropertyAdsFilter] = useState(
+        filters["category_id"]
+    );
 
     const handleClickOrderAdsFilter = (value) => {
-        if(value === orderAdsFilter) setOrderAdsFilter("");
+        if (value === orderAdsFilter) setOrderAdsFilter("");
         else setOrderAdsFilter(value);
 
-        handleSearchSubmit()
+        handleSearchSubmit();
     };
 
     const handleClickTypeAdsFilter = (value) => {
-        if(value === typeAdsFilter) setTypeAdsFilter("");
+        if (value === typeAdsFilter) setTypeAdsFilter("");
         else setTypeAdsFilter(value);
     };
 
     const handleClickPropertyAreaFilter = (value) => {
-        if(value === areaId) setAreaId("");
+        if (value === areaId) setAreaId("");
         else setAreaId(value);
-    }
+    };
 
     const handleClickPropertyAdsFilter = (value) => {
-        if(value === propertyAdsFilter) setPropertyAdsFilter("");
+        if (value === propertyAdsFilter) setPropertyAdsFilter("");
         else setPropertyAdsFilter(value);
         // const isExist = propertyAdsFilter.includes(value);
 
@@ -82,8 +84,6 @@ const SearchBar = ({ categories, areas, filters, setPropertiesData }) => {
         const res = await fetch(route("search.property.api", reqData));
         const resData = await res.json();
 
-        console.log("resData: ", resData);
-
         setPropertiesData(resData?.properties);
     };
 
@@ -91,7 +91,7 @@ const SearchBar = ({ categories, areas, filters, setPropertiesData }) => {
         setOrderAdsFilter("");
         setTypeAdsFilter("");
         setPropertyAdsFilter("");
-        setAreaId("")
+        setAreaId("");
     };
 
     return (

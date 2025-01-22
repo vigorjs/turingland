@@ -20,8 +20,6 @@ import { FaEye, FaPlus } from "react-icons/fa";
 import { HiSortAscending, HiSortDescending } from "react-icons/hi";
 
 export default function AdminTestimonyPage({ testimonies, auth }) {
-    console.log(testimonies);
-
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
     const [testimony, setTestimony] = useState(null);
@@ -69,7 +67,6 @@ export default function AdminTestimonyPage({ testimonies, auth }) {
                     description: err,
                     variant: "destructive",
                 });
-                console.log("ERR: ", err);
             },
             onFinish: () => {
                 setIsOpenDeleteModal(false);

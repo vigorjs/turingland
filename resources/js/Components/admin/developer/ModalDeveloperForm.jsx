@@ -40,8 +40,8 @@ function ModalDeveloperForm({ developer, isOpenModal, setIsOpenModal }) {
                         description: errors?.name || errors?.logo,
                         variant: "destructive",
                     });
-                    console.log("err: ", errors);
-                    setErrors(errors)
+
+                    setErrors(errors);
                 },
                 onSuccess: () => {
                     toast({
@@ -61,8 +61,6 @@ function ModalDeveloperForm({ developer, isOpenModal, setIsOpenModal }) {
                 },
             });
         } else {
-            console.log("LALALA: ", data.name);
-
             post(route("developer.update", developer.id), {
                 onError: (errors) => {
                     setIsLoading(false);
@@ -71,8 +69,7 @@ function ModalDeveloperForm({ developer, isOpenModal, setIsOpenModal }) {
                         description: errors?.name || errors?.logo,
                         variant: "destructive",
                     });
-                    setErrors(errors)
-                    console.log("err: ", errors);
+                    setErrors(errors);
                 },
                 onSuccess: () => {
                     toast({

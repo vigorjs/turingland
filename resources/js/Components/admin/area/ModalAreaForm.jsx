@@ -7,12 +7,18 @@ import { toast } from "@/hooks/use-toast";
 import { useForm } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import { LoaderIcon, X } from "lucide-react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/Components/ui/select";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/Components/ui/select";
 
 function ModalAreaForm({ area, locations, isOpenModal, setIsOpenModal }) {
     const [isActive, setIsActive] = useState(area?.is_active ?? false);
     const [locationId, setLocationId] = useState(area?.location_id?.toString());
-    const [errors, setErrors] = useState([])
+    const [errors, setErrors] = useState([]);
     const [loading, setLoading] = useState(false);
 
     const { data, setData, post, put, reset } = useForm({
@@ -45,8 +51,8 @@ function ModalAreaForm({ area, locations, isOpenModal, setIsOpenModal }) {
                         description: errors?.name || errors?.icon,
                         variant: "destructive",
                     });
-                    console.log("err: ", errors);
-                    setErrors(errors)
+
+                    setErrors(errors);
                 },
                 onSuccess: () => {
                     toast({
@@ -71,8 +77,8 @@ function ModalAreaForm({ area, locations, isOpenModal, setIsOpenModal }) {
                         description: errors?.name || errors?.icon,
                         variant: "destructive",
                     });
-                    console.log("err: ", errors);
-                    setErrors(errors)
+
+                    setErrors(errors);
                 },
                 onSuccess: () => {
                     toast({
@@ -95,7 +101,7 @@ function ModalAreaForm({ area, locations, isOpenModal, setIsOpenModal }) {
         return errors[name] ? (
             <p className="text-red-500 text-sm mt-1">{errors[name]}</p>
         ) : null;
-    }
+    };
 
     return (
         <Modal show={isOpenModal}>

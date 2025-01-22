@@ -39,8 +39,6 @@ function ModalUserForm({
         setData("is_agent_active", isAgentActive);
     }, [isAgentActive]);
 
-    console.log("ERR: ", errors);
-
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -56,7 +54,6 @@ function ModalUserForm({
                             errors?.name || errors?.photo || errors.wa_number,
                         variant: "destructive",
                     });
-                    console.log("err: ", errors);
                 },
                 onSuccess: () => {
                     toast({
@@ -80,7 +77,6 @@ function ModalUserForm({
                         description: errors?.name || errors?.photo,
                         variant: "destructive",
                     });
-                    console.log("err: ", errors);
                 },
                 onSuccess: () => {
                     toast({

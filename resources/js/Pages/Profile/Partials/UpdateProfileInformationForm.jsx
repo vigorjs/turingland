@@ -21,7 +21,6 @@ export default function UpdateProfileInformation({
             wa_number: user.wa_number || "",
             photo: user.photo || null,
         });
-    console.log(data);
 
     const [photoPreview, setPhotoPreview] = useState(
         user.photo && user.photo.includes("photos")
@@ -46,7 +45,6 @@ export default function UpdateProfileInformation({
                     description: errors?.name || errors?.icon,
                     variant: "destructive",
                 });
-                console.log("err: ", errors);
             },
             onSuccess: () => {
                 toast({

@@ -4,8 +4,6 @@ import { Head } from "@inertiajs/react";
 import { useState, useEffect } from "react";
 
 export default function AdminLayout({ children, auth, title = "Dashboard" }) {
-    console.log("ini props dari auth di komponen adminLayout : ", auth);
-
     const [isSmallScreen, setIsSmallScreen] = useState(false);
 
     useEffect(() => {

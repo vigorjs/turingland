@@ -1,12 +1,11 @@
-import { FaSearch } from 'react-icons/fa';
-import { useState } from 'react';
+import { FaSearch } from "react-icons/fa";
+import { useState } from "react";
 
 const AdminSearchBar = () => {
-    const [searchQuery, setSearchQuery] = useState('');
+    const [searchQuery, setSearchQuery] = useState("");
 
     const handleSearch = () => {
-        if (searchQuery.trim() !== '') {
-            console.log('Melakukan pencarian untuk:', searchQuery);
+        if (searchQuery.trim() !== "") {
         }
     };
 

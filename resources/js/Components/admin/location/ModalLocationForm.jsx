@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 
 function ModalLocationForm({ location, isOpenModal, setIsOpenModal }) {
     const [isActive, setIsActive] = useState(location?.is_active ?? false);
-    const [errors, setErrors] = useState([])
+    const [errors, setErrors] = useState([]);
     const [loading, setLoading] = useState(false);
 
     const { data, setData, post, put, reset } = useForm({
@@ -42,8 +42,7 @@ function ModalLocationForm({ location, isOpenModal, setIsOpenModal }) {
                             errors?.is_active,
                         variant: "destructive",
                     });
-                    setErrors(errors)
-                    console.log("err: ", errors);
+                    setErrors(errors);
                 },
                 onSuccess: () => {
                     toast({
@@ -74,8 +73,7 @@ function ModalLocationForm({ location, isOpenModal, setIsOpenModal }) {
                             errors?.is_active,
                         variant: "destructive",
                     });
-                    setErrors(errors)
-                    console.log("err: ", errors);
+                    setErrors(errors);
                 },
                 onSuccess: () => {
                     toast({

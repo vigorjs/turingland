@@ -33,7 +33,6 @@ export default function PropertyDetailPage({
 }) {
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [isInfoLess, setIsInfoLess] = useState(true);
-    console.log(banner);
 
     const img = `https://ecatalog.sinarmasland.com/_next/image?url=https%3A%2F%2Fecatalog.sinarmasland.com%2Fassets%2Fsite-setting-files%2F1%2Fhomepage-background-banner-desktop-677b6f397dc74.jpg&w=3840&q=75`;
 
@@ -44,12 +43,9 @@ export default function PropertyDetailPage({
         (img) => img.is_primary == true
     );
     const otherImages = property.images.filter((img) => {
-        img.is_primary == false
+        img.is_primary == false;
     });
     const allImages = [imagePrimary, ...otherImages];
-
-    console.log("property: ", property);
-
 
     return (
         <GuestLayout auth={auth}>
@@ -57,7 +53,12 @@ export default function PropertyDetailPage({
 
             <div className="min-h-screen px-3 sm:px-4 md:px-6 lg:px-[150px] py-6">
                 {/* IMAGES */}
-                <button onClick={() => property?.images?.length > 1 && setIsOpenModal(true)} className="w-full">
+                <button
+                    onClick={() =>
+                        property?.images?.length > 1 && setIsOpenModal(true)
+                    }
+                    className="w-full"
+                >
                     <img
                         src={
                             imagePrimary[0]
@@ -424,13 +425,18 @@ export default function PropertyDetailPage({
                                           key={index}
                                       >
                                           <CardProperty
-                                            //   img={
-                                            //       property.images.image_path
-                                            //           ? property.images
-                                            //                 .image_path
-                                            //           : "https://ik.imagekit.io/pashouses/pb1/tr:n-hl_v3/property/front-house/-JDoNqEMWigKKq7jtLReZVFmjQ7pfFdb0Op7MHND.jpeg"
-                                            //   }
-                                            img={property?.images.length > 0 ? property.images[0]?.image_path : "/assets/default-img-property.png"}
+                                              //   img={
+                                              //       property.images.image_path
+                                              //           ? property.images
+                                              //                 .image_path
+                                              //           : "https://ik.imagekit.io/pashouses/pb1/tr:n-hl_v3/property/front-house/-JDoNqEMWigKKq7jtLReZVFmjQ7pfFdb0Op7MHND.jpeg"
+                                              //   }
+                                              img={
+                                                  property?.images.length > 0
+                                                      ? property.images[0]
+                                                            ?.image_path
+                                                      : "/assets/default-img-property.png"
+                                              }
                                               key={`properties-card-${index}`}
                                           >
                                               <div className="flex flex-row justify-between items-center w-full">
@@ -473,8 +479,8 @@ export default function PropertyDetailPage({
                                               <div className="flex justify-between">
                                                   <p className="text-xs dark:text-primary font-semibold">
                                                       {formatRupiah(
-                                                                                                                        property.price
-                                                                                                                    )}
+                                                          property.price
+                                                      )}
                                                   </p>
                                                   <div className="flex gap-5">
                                                       <div className="flex items-center gap-x-1 text-xs">
@@ -564,7 +570,6 @@ export default function PropertyDetailPage({
 
 function ModalImages({ isOpenModal, setIsOpenModal, images }) {
     const handleCloseModal = () => setIsOpenModal(false);
-    console.log("images : ", images);
 
     return (
         <Modal onClose={handleCloseModal} show={isOpenModal}>

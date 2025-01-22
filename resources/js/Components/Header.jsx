@@ -19,8 +19,6 @@ const Header = ({ variant, auth, areas, categories }) => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [variants, setVariants] = useState(variant);
 
-    console.log("auth: ", auth);
-
     const handleScroll = () => {
         if (window.scrollY > 0) {
             setIsScrolled(true);
@@ -76,8 +74,6 @@ const Header = ({ variant, auth, areas, categories }) => {
 
         return acc;
     }, []);
-
-    console.log("buyAreaMenu: ", buyAreaMenu);
 
     const menuItems = [
         { title: "Home", url: "/" },

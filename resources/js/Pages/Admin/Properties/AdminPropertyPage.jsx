@@ -20,21 +20,19 @@ import {
 import { HiSortAscending, HiSortDescending } from "react-icons/hi";
 import { Input } from "@/Components/ui/input";
 
-
-
 function AdminPropertyPage({ properties, developers, areas, auth }) {
     const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
     const [isOpenExcelModal, setIsOpenExcelModal] = useState(false);
     const [property, setProperty] = useState(null);
-    console.log(properties);
+
     const [sortOrder, setSortOrder] = useState("asc");
     const [editingColumn, setEditingColumn] = useState(null);
     const [filter, setFilter] = useState({
         title: "",
-        developer: "",  // This is a string, not an object with name property
-        area: "",       // This is a string, not an object with name property
+        developer: "", // This is a string, not an object with name property
+        area: "", // This is a string, not an object with name property
         type: "",
-        status: ""
+        status: "",
     });
 
     const [selectedProperties, setSelectedProperties] = useState([]);
@@ -68,7 +66,9 @@ function AdminPropertyPage({ properties, developers, areas, auth }) {
     const handleExportExcel = (filters) => {
         // Buat URL dengan query params
         const queryString = new URLSearchParams(filters).toString();
-        const exportUrl = `${route("dashboard.property.export")}?${queryString}`;
+        const exportUrl = `${route(
+            "dashboard.property.export"
+        )}?${queryString}`;
 
         // Gunakan window.location untuk download
         window.location.href = exportUrl;
@@ -95,7 +95,6 @@ function AdminPropertyPage({ properties, developers, areas, auth }) {
                     description: err,
                     variant: "destructive",
                 });
-                console.log("ERR: ", err);
             },
             onFinish: () => {
                 setIsOpenDeleteModal(false);
@@ -124,7 +123,9 @@ function AdminPropertyPage({ properties, developers, areas, auth }) {
     const handleSelectAll = (e) => {
         if (e.target.checked) {
             setSelectAll(true);
-            setSelectedProperties(properties.data.map((property) => property.id));
+            setSelectedProperties(
+                properties.data.map((property) => property.id)
+            );
         } else {
             setSelectAll(false);
             setSelectedProperties([]);
@@ -182,78 +183,140 @@ function AdminPropertyPage({ properties, developers, areas, auth }) {
                                         </th>
                                         {[
                                             { key: "title", label: "Title" },
-                                            { key: "developer", label: "Developer" },
+                                            {
+                                                key: "developer",
+                                                label: "Developer",
+                                            },
                                             { key: "area", label: "Area" },
                                             { key: "price", label: "Price" },
                                             { key: "type", label: "Type" },
                                             { key: "status", label: "Status" },
-                                        ].map(({ key, label, isStatic }, index) => (
-                                            <th
-                                                key={index}
-                                                className={`px-6 py-4 text-left whitespace-nowrap text-sm leading-6 font-semibold capitalize ${isStatic
-                                                    ? ""
-                                                    : "cursor-pointer transition-all duration-300 ease-in-out hover:bg-gray-200 hover:scale-105 hover:text-primary"
+                                        ].map(
+                                            (
+                                                { key, label, isStatic },
+                                                index
+                                            ) => (
+                                                <th
+                                                    key={index}
+                                                    className={`px-6 py-4 text-left whitespace-nowrap text-sm leading-6 font-semibold capitalize ${
+                                                        isStatic
+                                                            ? ""
+                                                            : "cursor-pointer transition-all duration-300 ease-in-out hover:bg-gray-200 hover:scale-105 hover:text-primary"
                                                     }`}
-                                                {...(!isStatic && {
-                                                    onClick: () => setEditingColumn(key),
-                                                })}
-                                            >
-                                                {editingColumn === key && !isStatic ? (
-                                                    key === "status" || key === "type" ? ( // Sama-sama menggunakan Select untuk status dan type
-                                                        <Select
-                                                            value={filter[key]}
-                                                            onValueChange={(value) =>
-                                                                setFilter((prev) => ({
-                                                                    ...prev,
-                                                                    [key]: value !== "-1" ? value : "",
-                                                                }))
-                                                            }
-                                                            onBlur={() => setEditingColumn(null)}
-                                                        >
-                                                            <SelectTrigger>
-                                                                <SelectValue
-                                                                    placeholder={filter[key] || "All"}
-                                                                />
-                                                            </SelectTrigger>
-                                                            <SelectContent>
-                                                                <SelectItem value="-1">All</SelectItem>
-                                                                {key === "status" && (
-                                                                    <>
-                                                                        <SelectItem value="active">Active</SelectItem>
-                                                                        <SelectItem value="sold">Sold</SelectItem>
-                                                                        <SelectItem value="rented">Rented</SelectItem>
-                                                                        <SelectItem value="inactive">Inactive</SelectItem>
-
-                                                                    </>
-                                                                )}
-                                                                {key === "type" && (
-                                                                    <>
-                                                                        <SelectItem value="rent">Rent</SelectItem>
-                                                                        <SelectItem value="sale">Sale</SelectItem>
-                                                                    </>
-                                                                )}
-                                                            </SelectContent>
-                                                        </Select>
+                                                    {...(!isStatic && {
+                                                        onClick: () =>
+                                                            setEditingColumn(
+                                                                key
+                                                            ),
+                                                    })}
+                                                >
+                                                    {editingColumn === key &&
+                                                    !isStatic ? (
+                                                        key === "status" ||
+                                                        key === "type" ? ( // Sama-sama menggunakan Select untuk status dan type
+                                                            <Select
+                                                                value={
+                                                                    filter[key]
+                                                                }
+                                                                onValueChange={(
+                                                                    value
+                                                                ) =>
+                                                                    setFilter(
+                                                                        (
+                                                                            prev
+                                                                        ) => ({
+                                                                            ...prev,
+                                                                            [key]:
+                                                                                value !==
+                                                                                "-1"
+                                                                                    ? value
+                                                                                    : "",
+                                                                        })
+                                                                    )
+                                                                }
+                                                                onBlur={() =>
+                                                                    setEditingColumn(
+                                                                        null
+                                                                    )
+                                                                }
+                                                            >
+                                                                <SelectTrigger>
+                                                                    <SelectValue
+                                                                        placeholder={
+                                                                            filter[
+                                                                                key
+                                                                            ] ||
+                                                                            "All"
+                                                                        }
+                                                                    />
+                                                                </SelectTrigger>
+                                                                <SelectContent>
+                                                                    <SelectItem value="-1">
+                                                                        All
+                                                                    </SelectItem>
+                                                                    {key ===
+                                                                        "status" && (
+                                                                        <>
+                                                                            <SelectItem value="active">
+                                                                                Active
+                                                                            </SelectItem>
+                                                                            <SelectItem value="sold">
+                                                                                Sold
+                                                                            </SelectItem>
+                                                                            <SelectItem value="rented">
+                                                                                Rented
+                                                                            </SelectItem>
+                                                                            <SelectItem value="inactive">
+                                                                                Inactive
+                                                                            </SelectItem>
+                                                                        </>
+                                                                    )}
+                                                                    {key ===
+                                                                        "type" && (
+                                                                        <>
+                                                                            <SelectItem value="rent">
+                                                                                Rent
+                                                                            </SelectItem>
+                                                                            <SelectItem value="sale">
+                                                                                Sale
+                                                                            </SelectItem>
+                                                                        </>
+                                                                    )}
+                                                                </SelectContent>
+                                                            </Select>
+                                                        ) : (
+                                                            <Input
+                                                                type="text"
+                                                                placeholder={`Filter ${label}`}
+                                                                className="border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                value={
+                                                                    filter[key]
+                                                                }
+                                                                onChange={(e) =>
+                                                                    setFilter(
+                                                                        (
+                                                                            prev
+                                                                        ) => ({
+                                                                            ...prev,
+                                                                            [key]: e
+                                                                                .target
+                                                                                .value,
+                                                                        })
+                                                                    )
+                                                                }
+                                                                onBlur={() =>
+                                                                    setEditingColumn(
+                                                                        null
+                                                                    )
+                                                                }
+                                                            />
+                                                        )
                                                     ) : (
-                                                        <Input
-                                                            type="text"
-                                                            placeholder={`Filter ${label}`}
-                                                            className="border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                                            value={filter[key]}
-                                                            onChange={(e) =>
-                                                                setFilter((prev) => ({
-                                                                    ...prev,
-                                                                    [key]: e.target.value,
-                                                                }))
-                                                            }
-                                                            onBlur={() => setEditingColumn(null)}
-                                                        />
-                                                    )
-                                                ) : (
-                                                    label
-                                                )}
-                                            </th>
-                                        ))}
+                                                        label
+                                                    )}
+                                                </th>
+                                            )
+                                        )}
 
                                         <th className="px-6 py-4 text-left whitespace-nowrap text-sm leading-6 font-semibold capitalize">
                                             Action
@@ -266,21 +329,27 @@ function AdminPropertyPage({ properties, developers, areas, auth }) {
                                             return (
                                                 property.title
                                                     .toLowerCase()
-                                                    .includes(filter.title.toLowerCase()) &&
+                                                    .includes(
+                                                        filter.title.toLowerCase()
+                                                    ) &&
                                                 property.developer?.name
                                                     .toLowerCase()
-                                                    .includes(filter.developer.toLowerCase()) && // Remove ?.name
+                                                    .includes(
+                                                        filter.developer.toLowerCase()
+                                                    ) && // Remove ?.name
                                                 property.area?.name
                                                     .toLowerCase()
-                                                    .includes(filter.area.toLowerCase()) && // Remove ?.name
+                                                    .includes(
+                                                        filter.area.toLowerCase()
+                                                    ) && // Remove ?.name
                                                 (filter.status === ""
                                                     ? true
                                                     : property.status.toString() ===
-                                                    filter.status) &&
+                                                      filter.status) &&
                                                 (filter.type === ""
                                                     ? true
                                                     : property.type.toString() ===
-                                                    filter.type)
+                                                      filter.type)
                                             );
                                         })
                                         .map((property, index) => (
@@ -309,10 +378,7 @@ function AdminPropertyPage({ properties, developers, areas, auth }) {
                                                     {property.title}
                                                 </td>
                                                 <td className="px-5 py-3.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900 ">
-                                                    {
-                                                        property.developer
-                                                            ?.name
-                                                    }
+                                                    {property.developer?.name}
                                                 </td>
                                                 <td className="px-5 py-3.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900 ">
                                                     {property.area?.name}
@@ -324,16 +390,12 @@ function AdminPropertyPage({ properties, developers, areas, auth }) {
                                                 </td>
                                                 <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
                                                     <PropertyStatusBadge
-                                                        status={
-                                                            property.type
-                                                        }
+                                                        status={property.type}
                                                     />
                                                 </td>
                                                 <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
                                                     <PropertyStatusBadge
-                                                        status={
-                                                            property.status
-                                                        }
+                                                        status={property.status}
                                                     />
                                                 </td>
                                                 <td className="flex p-5 items-center gap-0.5">
