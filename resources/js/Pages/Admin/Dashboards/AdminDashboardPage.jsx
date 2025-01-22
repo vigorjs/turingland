@@ -122,7 +122,7 @@ export default function AdminDashboardPage({
                                             alt="profil"
                                             src={
                                                 item.logo
-                                                    ? item.logo
+                                                    ? `storage/${item.logo}`
                                                     : "https://avatar.iran.liara.run/public"
                                             }
                                             className="w-full h-full object-cover rounded"
@@ -164,7 +164,7 @@ export default function AdminDashboardPage({
                                             alt="profil"
                                             src={
                                                 item.photo
-                                                    ? item.photo
+                                                    ? `storage/${item.photo}`
                                                     : "https://avatar.iran.liara.run/public"
                                             }
                                             className="w-full h-full object-cover rounded"

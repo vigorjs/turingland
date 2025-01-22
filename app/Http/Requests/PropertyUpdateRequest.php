@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\CensorWordsRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PropertyUpdateRequest extends FormRequest
@@ -22,8 +23,8 @@ class PropertyUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
+            'title' => ['required', 'string', 'max:255', new CensorWordsRule()],
+            'description' => ['required', 'string', new CensorWordsRule()],
             'developer_id' => 'required|exists:developers,id',
             'area_id' => 'required|exists:areas,id',
             'bathroom_count' => 'required|integer|min:0',

@@ -29,7 +29,7 @@ return new class extends Migration
             $table->text('address');
             $table->string('certificate_type')->nullable();
             $table->year('year_built')->nullable();
-            $table->boolean('is_featured')->default(false);
+            $table->tinyInteger('is_featured')->default(0);
             $table->date('when_sold')->nullable();
             $table->timestamps();
             $table->softDeletes();

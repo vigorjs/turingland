@@ -51,7 +51,7 @@ function AdminEditPropertyPage({
             address: property.address,
             certificate_type: property.certificate_type,
             year_built: property.year_built || null,
-            is_featured: property.is_featured,
+            is_featured: property.is_featured ? 1 : 0,
             property_images: [],
         },
     });
@@ -646,8 +646,12 @@ function AdminEditPropertyPage({
                                     render={({ field }) => (
                                         <Checkbox
                                             id="is_featured"
-                                            checked={field.value}
-                                            onCheckedChange={field.onChange}
+                                            checked={field.value === 1}
+                                            onCheckedChange={(checked) => {
+                                                field.onChange(
+                                                    checked ? 1 : 0
+                                                );
+                                            }}
                                         />
                                     )}
                                 />
