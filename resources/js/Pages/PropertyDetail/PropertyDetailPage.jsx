@@ -56,7 +56,7 @@ export default function PropertyDetailPage({
                 {/* IMAGES */}
                 <button
                     onClick={() =>
-                        property?.images?.length > 1 && setIsOpenModal(true)
+                        property?.images?.length > 0 && setIsOpenModal(true)
                     }
                     className="w-full border border-gray-50 dark:border-white/90 rounded-2xl"
                 >

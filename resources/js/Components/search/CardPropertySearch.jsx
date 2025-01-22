@@ -43,20 +43,22 @@ export default function CardPropertySearch({ property }) {
                         <CarouselItem>
                             <div className="w-auto flex justify-center items-center">
                                 <img
-                                    src={img2}
-                                    className="w-full object-contain rounded-t-xl"
+                                    src={"/assets/default-img-property.png"}
+                                    className="w-full object-cover rounded-t-xl"
                                     alt=""
                                 />
                             </div>
                         </CarouselItem>
                     )}
                 </CarouselContent>
-                <div className="absolute top-1/2 left-14 right-14 flex items-center justify-center">
-                    <div className="mx-auto w-full ">
-                        <CarouselPrevious className="" />
-                        <CarouselNext className="" />
+                {imagePrimary.length > 0 && (
+                    <div className="absolute top-1/2 left-14 right-14 flex items-center justify-center">
+                        <div className="mx-auto w-full ">
+                            <CarouselPrevious className="" />
+                            <CarouselNext className="" />
+                        </div>
                     </div>
-                </div>
+                )}
             </Carousel>
 
             {/* CATEGORIES PROPERTY */}
