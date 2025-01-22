@@ -46,6 +46,7 @@ export default function PropertyDetailPage({
     const allImages = [imagePrimary, ...otherImages];
 
     // console.log("property: ", property);
+    console.log("imagePrimary: ", imagePrimary[0]);
     // console.log("otherImages: ", otherImages);
 
     return (
@@ -63,12 +64,12 @@ export default function PropertyDetailPage({
                     <img
                         src={
                             imagePrimary[0]
-                                ? imagePrimary?.[0].image_path
+                                ? imagePrimary[0].image_path
                                 : "/assets/default-img-property.png"
                         }
                         alt=""
                         className={`w-full h-80 sm:h-[420px] rounded-2xl shadow-lg ${
-                            imagePrimary?.[0] ? "object-cover" : "object-contain"
+                            imagePrimary[0] ? "object-cover" : "object-contain"
                         }`}
                     />
                 </button>
