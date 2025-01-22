@@ -8,7 +8,7 @@ import { toast } from "@/hooks/use-toast";
 import AdminLayout from "@/Layouts/AdminLayout";
 import { Link, router } from "@inertiajs/react";
 import { useState } from "react";
-import { FaEye } from "react-icons/fa";
+import { FaEye, FaPlus } from "react-icons/fa";
 import { HiSortAscending, HiSortDescending } from "react-icons/hi";
 
 export default function AdminCustomerPage({ customers, auth }) {
@@ -102,7 +102,7 @@ export default function AdminCustomerPage({ customers, auth }) {
                 }}
                 className="text-white mb-3.5"
             >
-                New Customer
+                <FaPlus /> Tambah Customer
             </Button>
 
             <div className="flex flex-col">

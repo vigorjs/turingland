@@ -16,7 +16,7 @@ import { toast } from "@/hooks/use-toast";
 import AdminLayout from "@/Layouts/AdminLayout";
 import { Link, router } from "@inertiajs/react";
 import { useState } from "react";
-import { FaEye } from "react-icons/fa";
+import { FaEye, FaPlus } from "react-icons/fa";
 import { HiSortAscending, HiSortDescending } from "react-icons/hi";
 
 
@@ -110,7 +110,7 @@ export default function AdminDeveloperPage({ developers, auth }) {
                 }}
                 className="text-white mb-3.5"
             >
-                Tambah Developer
+                <FaPlus /> Tambah Developer
             </Button>
 
             <div className="flex flex-col">
