@@ -9,8 +9,12 @@ export default function Login({
     className,
     imageBackground,
     auth,
+    webPreferences,
     ...props
 }) {
+
+    const imgLoginUrl = webPreferences?.find(pref => pref.key === 'img_login_url')?.value;
+
     return (
         <AuthLayout auth={auth} >
             <Head title="Login" />
@@ -32,11 +36,7 @@ export default function Login({
                 </div>
                 <div className="hidden bg-muted lg:block">
                     <img
-                        src={
-                            imageBackground
-                                ? imageBackground
-                                : "https://placehold.co/1920x1080?text=Your+Brand+Here"
-                        }
+                        src={imgLoginUrl ? `/storage/${imgLoginUrl}` : "https://placehold.co/1920x1080?text=Your+Brand+Here"}
                         alt="Image"
                         width="1920"
                         height="1080"

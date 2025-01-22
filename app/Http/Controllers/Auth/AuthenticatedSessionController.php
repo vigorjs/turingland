@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Models\Area;
 use App\Models\Category;
 use App\Models\Developer;
+use App\Models\WebPreferences;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +26,7 @@ class AuthenticatedSessionController extends Controller
             'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),
             "auth" => Auth::user(),
+            'webPreferences' => WebPreferences::all()
         ]);
     }
 
