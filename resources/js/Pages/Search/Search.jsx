@@ -14,8 +14,6 @@ export default function SearchPage({
 }) {
     const [propertiesData, setPropertiesData] = useState(properties);
 
-    console.log(banner[0]);
-
     return (
         <GuestLayout auth={auth}>
             <Head title="Cari rumah" />

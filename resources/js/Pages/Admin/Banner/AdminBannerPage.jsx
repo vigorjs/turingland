@@ -68,7 +68,6 @@ export default function AdminBannerPage({ banners, auth }) {
                     description: err,
                     variant: "destructive",
                 });
-                console.log("ERR: ", err);
             },
             onFinish: () => {
                 setIsOpenDeleteModal(false);

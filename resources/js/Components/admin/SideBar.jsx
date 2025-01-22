@@ -146,8 +146,6 @@ const Sidebar = ({ isCollapsed, user }) => {
         }))
         .filter(({ links }) => links.length > 0);
 
-    console.log(url);
-
     return (
         <div className="h-screen overflow-hidden">
             <div

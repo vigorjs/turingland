@@ -33,7 +33,6 @@ export default function PropertyDetailPage({
 }) {
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [isInfoLess, setIsInfoLess] = useState(true);
-    console.log(banner);
 
 
     const img1 =
@@ -43,12 +42,9 @@ export default function PropertyDetailPage({
         (img) => img.is_primary == true
     );
     const otherImages = property.images.filter((img) => {
-        img.is_primary == false
+        img.is_primary == false;
     });
     const allImages = [imagePrimary, ...otherImages];
-
-    console.log("property: ", property);
-
 
     return (
         <GuestLayout auth={auth}>
@@ -423,13 +419,18 @@ export default function PropertyDetailPage({
                                           key={index}
                                       >
                                           <CardProperty
-                                            //   img={
-                                            //       property.images.image_path
-                                            //           ? property.images
-                                            //                 .image_path
-                                            //           : "https://ik.imagekit.io/pashouses/pb1/tr:n-hl_v3/property/front-house/-JDoNqEMWigKKq7jtLReZVFmjQ7pfFdb0Op7MHND.jpeg"
-                                            //   }
-                                            img={property?.images.length > 0 ? property.images[0]?.image_path : "/assets/default-img-property.png"}
+                                              //   img={
+                                              //       property.images.image_path
+                                              //           ? property.images
+                                              //                 .image_path
+                                              //           : "https://ik.imagekit.io/pashouses/pb1/tr:n-hl_v3/property/front-house/-JDoNqEMWigKKq7jtLReZVFmjQ7pfFdb0Op7MHND.jpeg"
+                                              //   }
+                                              img={
+                                                  property?.images.length > 0
+                                                      ? property.images[0]
+                                                            ?.image_path
+                                                      : "/assets/default-img-property.png"
+                                              }
                                               key={`properties-card-${index}`}
                                           >
                                               <div className="flex flex-row justify-between items-center w-full">
@@ -472,8 +473,8 @@ export default function PropertyDetailPage({
                                               <div className="flex justify-between">
                                                   <p className="text-xs dark:text-primary font-semibold">
                                                       {formatRupiah(
-                                                                                                                        property.price
-                                                                                                                    )}
+                                                          property.price
+                                                      )}
                                                   </p>
                                                   <div className="flex gap-5">
                                                       <div className="flex items-center gap-x-1 text-xs">
@@ -563,7 +564,6 @@ export default function PropertyDetailPage({
 
 function ModalImages({ isOpenModal, setIsOpenModal, images }) {
     const handleCloseModal = () => setIsOpenModal(false);
-    console.log("images : ", images);
 
     return (
         <Modal onClose={handleCloseModal} show={isOpenModal}>

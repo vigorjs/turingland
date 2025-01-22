@@ -10,18 +10,18 @@ use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
 
-class AgentController extends Controller
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        // Fetch all users with the role 'agent'
-        $agents = User::role('agent')->with('roles')->paginate(8);
+        // Fetch all users with the role 'customer'
+        $customers = User::role('customer')->with('roles')->paginate(8);
 
-        return Inertia::render("Admin/Agent/AdminAgentPage", [
-            "agents" => $agents
+        return Inertia::render("Admin/Customer/AdminCustomerPage", [
+            "customers" => $customers
         ]);
     }
 
@@ -39,49 +39,47 @@ public function store(Request $request)
         'password' => 'required|string|min:6',
         'wa_number' => 'required',
         'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        'is_agent_active' => 'sometimes|boolean',
     ]);
 
-    $agent = new User();
-    $agent->name = $request->name;
-    $agent->email = $request->email;
-    $agent->password = Hash::make($request->password);
-    $agent->wa_number = $request->wa_number;
-    $agent->is_agent_active = $request->has('is_agent_active') ? $request->is_agent_active : false;
+    $customer = new User();
+    $customer->name = $request->name;
+    $customer->email = $request->email;
+    $customer->password = Hash::make($request->password);
+    $customer->wa_number = $request->wa_number;
 
     // Handle photo upload
     if ($request->hasFile('photo')) {
         $photoPath = $request->file('photo')->store('photos', 'public');
-        $agent->photo = $photoPath;
+        $customer->photo = $photoPath;
     }
 
-    $agent->save();
+    $customer->save();
 
-    // Assign role 'agent'
-    $agent->assignRole('agent');
+    // Assign role 'customer'
+    $customer->assignRole('customer');
 
-    return redirect()->route('dashboard.agent');
+    return redirect()->route('dashboard.customer');
 }
 
 
     /**
-     * Display the specified agent.
+     * Display the specified customer.
      */
     public function show(string $id)
     {
-        $agent = User::role('agent')->findOrFail($id);
-        return response()->json(['agent' => $agent]);
+        $customer = User::role('customer')->findOrFail($id);
+        return response()->json(['customer' => $customer]);
     }
 
     /**
-     * Update the specified agent in storage.
+     * Update the specified customer in storage.
      */
     /**
- * Update the specified agent in storage.
+ * Update the specified customer in storage.
  */
 public function update(Request $request, string $id)
 {
-    $agent = User::role('agent')->findOrFail($id);
+    $customer = User::role('customer')->findOrFail($id);
 
     $request->validate([
         'name' => 'sometimes|required|string|max:255',
@@ -89,28 +87,27 @@ public function update(Request $request, string $id)
         'password' => 'nullable|string|min:6',
         'wa_number' => 'sometimes|unique:users,wa_number,' . $id,
         'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        'is_agent_active' => 'sometimes|boolean',
     ]);
 
-    $agent->fill($request->only(['name', 'email', 'wa_number', 'is_agent_active']));
+    $customer->fill($request->only(['name', 'email', 'wa_number']));
 
     if ($request->filled('password')) {
-        $agent->password = Hash::make($request->password);
+        $customer->password = Hash::make($request->password);
     }
 
     // Handle photo update
     if ($request->hasFile('photo')) {
         // Delete old photo if exists
-        if ($agent->photo && Storage::disk('public')->exists($agent->photo)) {
-            Storage::disk('public')->delete($agent->photo);
+        if ($customer->photo && Storage::disk('public')->exists($customer->photo)) {
+            Storage::disk('public')->delete($customer->photo);
         }
 
         $photoPath = $request->file('photo')->store('photos', 'public');
-        $agent->photo = $photoPath;
+        $customer->photo = $photoPath;
     }
 
-    $agent->save();
+    $customer->save();
 
-    return redirect()->route('dashboard.agent');
+    return redirect()->route('dashboard.customer');
 }
 }

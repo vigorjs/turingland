@@ -144,11 +144,9 @@ function AdminEditPropertyPage({
             preserveScroll: true,
             onSuccess: () => {
                 setErrors({});
-                console.log("Update success");
             },
             onError: (errors) => {
                 setErrors(errors);
-                console.log("Update errors:", errors);
             },
         });
     };

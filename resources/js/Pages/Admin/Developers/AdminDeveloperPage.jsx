@@ -66,7 +66,6 @@ export default function AdminDeveloperPage({ developers, auth }) {
                     description: err,
                     variant: "destructive",
                 });
-                console.log("ERR: ", err);
             },
             onFinish: () => {
                 setIsOpenDeleteModal(false);

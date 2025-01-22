@@ -25,8 +25,6 @@ export default function AgentStatusBadge({ status }) {
             label: "Active",
         },
     };
-    console.log(STATUS_STYLES[status]);
-    console.log(status);
 
     const { bg, text, dot, label } = STATUS_STYLES[status];
 

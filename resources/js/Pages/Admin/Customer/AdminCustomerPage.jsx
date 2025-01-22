@@ -12,8 +12,6 @@ import { FaEye, FaPlus } from "react-icons/fa";
 import { HiSortAscending, HiSortDescending } from "react-icons/hi";
 
 export default function AdminCustomerPage({ customers, auth }) {
-    console.log(customers);
-
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
     const [customer, setCustomer] = useState(null);
@@ -60,7 +58,6 @@ export default function AdminCustomerPage({ customers, auth }) {
                     description: err,
                     variant: "destructive",
                 });
-                console.log("ERR: ", err);
             },
             onFinish: () => {
                 setIsOpenDeleteModal(false);
@@ -314,6 +311,7 @@ export default function AdminCustomerPage({ customers, auth }) {
                     setUser={setCustomer}
                     isOpenModal={isOpenModal}
                     setIsOpenModal={setIsOpenModal}
+                    isCustomer={true}
                 />
             )}
 
