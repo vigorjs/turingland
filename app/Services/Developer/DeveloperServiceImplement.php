@@ -59,7 +59,7 @@ class DeveloperServiceImplement extends ServiceApi implements DeveloperService{
             $file = $request->file("logo");
             $ext = $file->getClientOriginalExtension();
             $fileName = time() . "-" . $request->input("name") . "." . $ext;
-            $path = $file->storeAs("developers", $fileName);
+            $path = $file->storeAs("developers", $fileName, "public");
             $developer->logo = $path;
         }
 
@@ -83,7 +83,7 @@ class DeveloperServiceImplement extends ServiceApi implements DeveloperService{
             $file = $request->file("logo");
             $ext = $file->getClientOriginalExtension();
             $fileName = time() . "-" . $request->input("name") . "." . $ext;
-            $path = $file->storeAs("developers", $fileName);
+            $path = $file->storeAs("developers", $fileName, "public");
             $developer->logo = $path;
         }
 
