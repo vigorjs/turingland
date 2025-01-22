@@ -77,6 +77,7 @@ export default function Home({ auth, categories, testimonials, banners, webPrefe
                         <CarouselContent>
                             {banners
                                 .filter((banner) => banner.is_active == true)
+                                .sort((a, b) => a.order - b.order) // Urutkan berdasarkan banner.order dari kecil ke besar
                                 .map((banner, index) => (
                                     <CarouselItem
                                         key={`ads-section-${index}`}
