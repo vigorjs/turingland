@@ -14,7 +14,7 @@ class PropertyController extends Controller
     {
         $property = Property::where('id', $id)->with(['images', 'categories', 'area.location', 'developer', 'agent'])->first();
         $auth = Auth::user();
-        $featuredProp = Property::where('is_featured', true)->with(['area', 'developer', 'categories', 'images'])
+        $featuredProp = Property::where('is_featured', 1)->with(['area', 'developer', 'categories', 'images'])
                 ->latest()
                 ->limit(6)
                 ->get();

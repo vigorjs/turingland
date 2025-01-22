@@ -622,10 +622,10 @@ function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
                                     render={({ field }) => (
                                         <Checkbox
                                             id="is_featured"
-                                            checked={field.value}
-                                            onCheckedChange={(value) =>
-                                                field.onChange(value ? 1 : 0)
-                                            }
+                                            checked={field.value === 1}
+                                            onCheckedChange={(checked) => {
+                                                field.onChange(checked ? 1 : 0);
+                                            }}
                                         />
                                     )}
                                 />
