@@ -1,3 +1,4 @@
+import { typeProperty } from "@/const/TypeProperty";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -37,3 +38,9 @@ export function formatUpdatedAt(value) {
     else if (monthDiff < 12) return `Diperbarui ${monthDiff} bulan yang lalu`;
     else return `Diperbarui ${yearDiff} tahun yang lalu`;
 }
+
+// export function typePropertyToBahasa(value) {
+//     value = value?.toLowerCase();
+
+//     return typeProperty[value];
+// }

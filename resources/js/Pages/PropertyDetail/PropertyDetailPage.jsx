@@ -46,7 +46,7 @@ export default function PropertyDetailPage({
 
     const allImages = [imagePrimary, ...otherImages];
 
-    // console.log("property: ", property);
+    console.log("property: ", property);
     console.log("imagePrimary: ", imagePrimary);
     // console.log("otherImages: ", otherImages);
 
@@ -115,12 +115,13 @@ export default function PropertyDetailPage({
                         <div className="flex flex-wrap justify-start items-center gap-2">
                             {property.categories.length > 0
                                 ? property.categories.map((category, index) => (
-                                      <button
-                                          key={index}
+                                      <Link
+                                          href={`/search?category_id=${category.id}`}
+                                          key={`category-${index}`}
                                           className="bg-neutral-200/80 text-neutral-800 p-2 rounded-full text-xs"
                                       >
                                           {category.name}
-                                      </button>
+                                      </Link>
                                   ))
                                 : null}
                         </div>

@@ -11,6 +11,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import { Button } from "../ui/button";
 import { formatRupiah, formatUpdatedAt } from "@/lib/utils";
 import { Link } from "@inertiajs/react";
+import { typeProperty } from "@/const/TypeProperty";
 
 export default function CardPropertySearch({ property }) {
     const img2 =
@@ -33,7 +34,7 @@ export default function CardPropertySearch({ property }) {
                                 <div className="w-auto flex justify-center items-center">
                                     <img
                                         src={img?.image_path}
-                                        className="w-full object-cover h-[500px] rounded-t-xl"
+                                        className="w-full object-cover h-80 sm:h-[500px] rounded-t-xl"
                                         alt=""
                                     />
                                 </div>
@@ -44,7 +45,7 @@ export default function CardPropertySearch({ property }) {
                             <div className="w-auto flex justify-center items-center">
                                 <img
                                     src={"/assets/default-img-property.png"}
-                                    className="w-full object-cover h-[500px] rounded-t-xl"
+                                    className="w-full object-cover h-80 sm:h-[500px] rounded-t-xl"
                                     alt=""
                                 />
                             </div>
@@ -62,10 +63,19 @@ export default function CardPropertySearch({ property }) {
             </Carousel>
 
             {/* CATEGORIES PROPERTY */}
-            <div className="bg-primary/75 w-full py-2.5 px-3.5">
-                <button className="bg-neutral-200/90 text-neutral-800 p-1.5 rounded-full text-[9px]">
-                    Apartemen
-                </button>
+            <div className="bg-primary/75 w-full py-2.5 px-3.5 flex flex-wrap justify-start items-center gap-1.5">
+                {property?.categories &&
+                    property?.categories
+                        ?.slice(0, 5)
+                        ?.map((category, index) => (
+                            <Link
+                                key={`category-${index}`}
+                                href={`/search?category_id=${category.id}`}
+                                className="bg-neutral-200/90 text-neutral-800 p-1.5 rounded-full text-[9px]"
+                            >
+                                {category?.name}
+                            </Link>
+                        ))}
             </div>
 
             {/* DETAIL PROPERTY */}
@@ -74,8 +84,14 @@ export default function CardPropertySearch({ property }) {
                 <Link href={route("property.show", { id: property.id })}>
                     <h1 className="text-primary text-lg font-extrabold mb-1">
                         {formatRupiah(property.price)}
-                        <span className="ml-2 bg-primary/15 text-primary px-2 py-1 font-semibold rounded-full text-xs">
-                            Disewa
+                        <span
+                            className={`ml-2 px-2 py-1 rounded-full text-xs capitalize ${
+                                typeProperty[property.type] == "Dijual"
+                                    ? "bg-green-500/15 text-green-500 font-medium"
+                                    : "bg-primary/15 text-primary font-medium"
+                            }`}
+                        >
+                            {typeProperty[property.type]}
                         </span>
                     </h1>
 
