@@ -29,11 +29,11 @@ export function formatUpdatedAt(value) {
     const yearDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 365));
 
     if (secondDiff < 1) return "Diperbarui kurang dari satu detik yang lalu";
-    else if (secondDiff < 60) return `Diperbarui secondDiff} detik yang lalu`;
-    else if (minuteDiff < 60) return `Diperbarui minuteDiff} menit yang lalu`;
-    else if (hourDiff < 24) return `Diperbarui hourDiff} jam yang lalu`;
-    else if (dayDiff < 7) return `Diperbarui dayDiff} hari yang lalu`;
-    else if (weekDiff < 4) return `Diperbarui weekDiff} minggu yang lalu`;
-    else if (monthDiff < 12) return `Diperbarui monthDiff} bulan yang lalu`;
+    else if (secondDiff < 60) return `Diperbarui ${secondDiff} detik yang lalu`;
+    else if (minuteDiff < 60) return `Diperbarui ${minuteDiff} menit yang lalu`;
+    else if (hourDiff < 24) return `Diperbarui ${hourDiff} jam yang lalu`;
+    else if (dayDiff < 7) return `Diperbarui ${dayDiff} hari yang lalu`;
+    else if (weekDiff < 4) return `Diperbarui ${weekDiff} minggu yang lalu`;
+    else if (monthDiff < 12) return `Diperbarui ${monthDiff} bulan yang lalu`;
     else return `Diperbarui ${yearDiff} tahun yang lalu`;
 }

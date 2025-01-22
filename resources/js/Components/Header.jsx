@@ -249,7 +249,8 @@ const Header = ({ variant, auth, areas, categories }) => {
                         <div className="px-2 pt-2 pb-3 space-y-1">
                             {menuItems.map((item, index) => (
                                 <div key={`mobile-menu-${index}`}>
-                                    <button
+                                    {item.subItems ? (
+                                        <button
                                         onClick={() =>
                                             setHoveredMenu(
                                                 hoveredMenu === item.title
@@ -264,6 +265,14 @@ const Header = ({ variant, auth, areas, categories }) => {
                                             <ChevronDown className="h-4 w-4" />
                                         )}
                                     </button>
+                                    ) : (
+                                        <Link
+                                            href={item.url}
+                                            className="flex items-center px-3 py-2 text-base text-white/90 hover:text-white hover:font-medium"
+                                        >
+                                            {item.title}
+                                        </Link>
+                                    )}
 
                                     {/* Mobile Dropdown */}
                                     {item.subItems &&
