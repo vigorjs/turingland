@@ -23,7 +23,7 @@ class CensorWordsRule implements ValidationRule
     {
         foreach ($this->censoredPatterns as $pattern) {
             if (preg_match($pattern, $value)) {
-                $fail("The {$attribute} contains prohibited words: '{$value}' cause the coin is not pump yet.");
+                $fail("The {$attribute} contains prohibited words: '{$value}'");
             }
         }
     }
