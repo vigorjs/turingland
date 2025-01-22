@@ -104,7 +104,7 @@ const SearchBar = ({ categories, areas, filters, setPropertiesData }) => {
                     <input
                         onChange={(e) => setData("title", e.target.value)}
                         type="text"
-                        placeholder="Rumah Fauzan Property"
+                        placeholder="Cari properti..."
                         className="flex-1 px-4 py-2 border border-[#C6C6C6] bg-[#EDEDED] rounded-lg w-2/3"
                     />
                     <Button
