@@ -19,8 +19,6 @@ import { useState } from "react";
 import { FaEye, FaPlus } from "react-icons/fa";
 import { HiSortAscending, HiSortDescending } from "react-icons/hi";
 
-
-
 export default function AdminDeveloperPage({ developers, auth }) {
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
@@ -30,7 +28,7 @@ export default function AdminDeveloperPage({ developers, auth }) {
     const [filter, setFilter] = useState({
         name: "",
         description: "",
-        status: ""
+        status: "",
     });
 
     const [selectedDevelopers, setSelectedDevelopers] = useState([]);
@@ -90,7 +88,9 @@ export default function AdminDeveloperPage({ developers, auth }) {
     const handleSelectAll = (e) => {
         if (e.target.checked) {
             setSelectAll(true);
-            setSelectedDevelopers(developers.data.map((developer) => developer.id));
+            setSelectedDevelopers(
+                developers.data.map((developer) => developer.id)
+            );
         } else {
             setSelectAll(false);
             setSelectedDevelopers([]);
@@ -140,85 +140,136 @@ export default function AdminDeveloperPage({ developers, auth }) {
                                         </th>
                                         {[
                                             { key: "name", label: "Developer" },
-                                            { key: "description", label: "Description" },
+                                            {
+                                                key: "description",
+                                                label: "Description",
+                                            },
                                             { key: "status", label: "Status" },
-                                        ].map(({ key, label, isStatic }, index) => (
-                                            <th
-                                                key={index}
-                                                className={`px-6 py-4 text-left whitespace-nowrap text-sm leading-6 font-semibold capitalize ${isStatic
-                                                    ? ""
-                                                    : "cursor-pointer transition-all duration-300 ease-in-out hover:bg-gray-200 hover:scale-105 hover:text-primary"
+                                        ].map(
+                                            (
+                                                { key, label, isStatic },
+                                                index
+                                            ) => (
+                                                <th
+                                                    key={index}
+                                                    className={`px-6 py-4 text-left whitespace-nowrap text-sm leading-6 font-semibold capitalize ${
+                                                        isStatic
+                                                            ? ""
+                                                            : "cursor-pointer transition-all duration-300 ease-in-out hover:bg-gray-200 hover:scale-105 hover:text-primary"
                                                     }`}
-                                                {...(!isStatic && {
-                                                    onClick: () => setEditingColumn(key),
-                                                })}
-                                            >
-                                                {editingColumn === key && !isStatic ? (
-                                                    key === "status" ? (
-                                                        <Select
-                                                            value={filter.status}
-                                                            onValueChange={(value) =>
-                                                                setFilter((prev) => ({
-                                                                    ...prev,
-                                                                    status: value !== "-1" ? value : "",
-                                                                }))
-                                                            }
-                                                            onBlur={() => setEditingColumn(null)}
-                                                        >
-                                                            <SelectTrigger>
-                                                                <SelectValue
-                                                                    placeholder={filter.status || "All"}
-                                                                />
-                                                            </SelectTrigger>
-                                                            <SelectContent>
-                                                                <SelectItem value="-1">All</SelectItem>
-                                                                <SelectItem value="true">Active</SelectItem>
-                                                                <SelectItem value="false">Inactive</SelectItem>
-                                                            </SelectContent>
-                                                        </Select>
+                                                    {...(!isStatic && {
+                                                        onClick: () =>
+                                                            setEditingColumn(
+                                                                key
+                                                            ),
+                                                    })}
+                                                >
+                                                    {editingColumn === key &&
+                                                    !isStatic ? (
+                                                        key === "status" ? (
+                                                            <Select
+                                                                value={
+                                                                    filter.status
+                                                                }
+                                                                onValueChange={(
+                                                                    value
+                                                                ) =>
+                                                                    setFilter(
+                                                                        (
+                                                                            prev
+                                                                        ) => ({
+                                                                            ...prev,
+                                                                            status:
+                                                                                value !==
+                                                                                "-1"
+                                                                                    ? value
+                                                                                    : "",
+                                                                        })
+                                                                    )
+                                                                }
+                                                                onBlur={() =>
+                                                                    setEditingColumn(
+                                                                        null
+                                                                    )
+                                                                }
+                                                            >
+                                                                <SelectTrigger>
+                                                                    <SelectValue
+                                                                        placeholder={
+                                                                            filter.status ||
+                                                                            "All"
+                                                                        }
+                                                                    />
+                                                                </SelectTrigger>
+                                                                <SelectContent>
+                                                                    <SelectItem value="-1">
+                                                                        All
+                                                                    </SelectItem>
+                                                                    <SelectItem value="true">
+                                                                        Active
+                                                                    </SelectItem>
+                                                                    <SelectItem value="false">
+                                                                        Inactive
+                                                                    </SelectItem>
+                                                                </SelectContent>
+                                                            </Select>
+                                                        ) : (
+                                                            <Input
+                                                                type="text"
+                                                                placeholder={`Filter ${label}`}
+                                                                className="border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                value={
+                                                                    filter[key]
+                                                                }
+                                                                onChange={(e) =>
+                                                                    setFilter(
+                                                                        (
+                                                                            prev
+                                                                        ) => ({
+                                                                            ...prev,
+                                                                            [key]: e
+                                                                                .target
+                                                                                .value,
+                                                                        })
+                                                                    )
+                                                                }
+                                                                onBlur={() =>
+                                                                    setEditingColumn(
+                                                                        null
+                                                                    )
+                                                                }
+                                                            />
+                                                        )
                                                     ) : (
-                                                        <Input
-                                                            type="text"
-                                                            placeholder={`Filter ${label}`}
-                                                            className="border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                                            value={filter[key]}
-                                                            onChange={(e) =>
-                                                                setFilter((prev) => ({
-                                                                    ...prev,
-                                                                    [key]: e.target.value,
-                                                                }))
-                                                            }
-                                                            onBlur={() => setEditingColumn(null)}
-                                                        />
-                                                    )
-                                                ) : (
-                                                    label
-                                                )}
-                                            </th>
-                                        ))}
+                                                        label
+                                                    )}
+                                                </th>
+                                            )
+                                        )}
                                         <th className="px-6 py-4 text-center whitespace-nowrap text-sm leading-6 font-semibold capitalize">
                                             Action
                                         </th>
                                     </tr>
                                 </thead>
 
-
                                 <tbody className="divide-y divide-gray-300">
                                     {sortedData
                                         .filter((developer) => {
                                             return (
-                                                developer.name?.toLowerCase()
+                                                developer.name
+                                                    ?.toLowerCase()
                                                     .includes(
                                                         filter.name.toLowerCase()
                                                     ) &&
-                                                developer.description?.toLowerCase()
+                                                developer.description
+                                                    ?.toLowerCase()
                                                     .includes(
                                                         filter.description?.toLowerCase()
                                                     ) &&
                                                 (filter.status === ""
                                                     ? true
                                                     : developer.is_active.toString() ===
-                                                    filter.status)
+                                                      filter.status)
                                             );
                                         })
                                         .map((developer, index) => (
@@ -253,15 +304,11 @@ export default function AdminDeveloperPage({ developers, auth }) {
                                                                     ? `/storage/${developer.logo}`
                                                                     : "/assets/avatar.png"
                                                             }
-                                                            alt={
-                                                                developer.name
-                                                            }
+                                                            alt={developer.name}
                                                         />
                                                         <div className="data">
                                                             <p className="font-normal text-sm text-gray-900">
-                                                                {
-                                                                    developer.name
-                                                                }
+                                                                {developer.name}
                                                             </p>
                                                         </div>
                                                     </div>
@@ -279,20 +326,6 @@ export default function AdminDeveloperPage({ developers, auth }) {
                                                     />
                                                 </td>
                                                 <td className="flex p-5 items-center justify-center gap-0.5">
-                                                    <button
-                                                        onClick={() =>
-                                                            handleDetail(
-                                                                developer.id
-                                                            )
-                                                        }
-                                                        className="p-2  rounded-full bg-white group transition-all duration-500 hover:bg-slate-600 flex item-center"
-                                                    >
-                                                        <FaEye
-                                                            size={24}
-                                                            color="#5d6878"
-                                                            className=" group-hover:fill-white "
-                                                        />
-                                                    </button>
                                                     <button
                                                         onClick={() =>
                                                             handleOpenEditModal(
@@ -357,15 +390,13 @@ export default function AdminDeveloperPage({ developers, auth }) {
                 </div>
             </div>
 
-            {
-                isOpenModal && (
-                    <ModalDeveloperForm
-                        developer={developer}
-                        isOpenModal={isOpenModal}
-                        setIsOpenModal={setIsOpenModal}
-                    />
-                )
-            }
+            {isOpenModal && (
+                <ModalDeveloperForm
+                    developer={developer}
+                    isOpenModal={isOpenModal}
+                    setIsOpenModal={setIsOpenModal}
+                />
+            )}
 
             <AlertConfirmModal
                 isOpen={isOpenDeleteModal}
@@ -374,6 +405,6 @@ export default function AdminDeveloperPage({ developers, auth }) {
                 message="Apakah anda yakin ingin menghapus developer ini?"
                 onClick={handleDeleteDeveloper}
             />
-        </AdminLayout >
+        </AdminLayout>
     );
 }

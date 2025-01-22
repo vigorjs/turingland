@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banner;
 use App\Models\Property;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,8 +18,9 @@ class PropertyController extends Controller
                 ->latest()
                 ->limit(6)
                 ->get();
+        $banner = Banner::all();
         // if(!$property) return redirect()->route('homepage');
 
-        return Inertia::render('PropertyDetail/PropertyDetailPage', compact('property', 'auth', 'featuredProp'));
+        return Inertia::render('PropertyDetail/PropertyDetailPage', compact('property', 'auth', 'featuredProp', 'banner'));
     }
 }

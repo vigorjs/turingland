@@ -20,6 +20,7 @@ function ModalBannerForm({ banner, setBanner, isOpenModal, setIsOpenModal }) {
         link: banner?.link ?? "",
         order: banner?.order ?? 0,
         is_active: isActive,
+        _method: banner ? "PUT" : "POST",
     });
 
     useEffect(() => {
@@ -48,14 +49,21 @@ function ModalBannerForm({ banner, setBanner, isOpenModal, setIsOpenModal }) {
                     });
                     setIsOpenModal(false);
                     setIsActive(false);
-                    reset("title", "description", "image_path", "link", "order", "is_active");
+                    reset(
+                        "title",
+                        "description",
+                        "image_path",
+                        "link",
+                        "order",
+                        "is_active"
+                    );
                 },
                 onFinish: () => {
                     setLoading(false);
                 },
             });
         } else {
-            put(route("banner.update", banner.id), {
+            post(route("banner.update", banner.id), {
                 onError: (errors) => {
                     setLoading(false);
                     setErrors(errors);
@@ -72,7 +80,14 @@ function ModalBannerForm({ banner, setBanner, isOpenModal, setIsOpenModal }) {
                     });
                     setIsOpenModal(false);
                     setIsActive(false);
-                    reset("title", "description", "image_path", "link", "order", "is_active");
+                    reset(
+                        "title",
+                        "description",
+                        "image_path",
+                        "link",
+                        "order",
+                        "is_active"
+                    );
                 },
                 onFinish: () => {
                     setLoading(false);
@@ -83,7 +98,14 @@ function ModalBannerForm({ banner, setBanner, isOpenModal, setIsOpenModal }) {
 
     const handleCloseModal = () => {
         setBanner(null);
-        reset("title", "description", "image_path", "link", "order", "is_active");
+        reset(
+            "title",
+            "description",
+            "image_path",
+            "link",
+            "order",
+            "is_active"
+        );
         setIsOpenModal(false);
     };
 
@@ -91,7 +113,7 @@ function ModalBannerForm({ banner, setBanner, isOpenModal, setIsOpenModal }) {
         return errors[name] ? (
             <p className="text-red-500 text-sm mt-1">{errors[name]}</p>
         ) : null;
-    }
+    };
 
     return (
         <Modal show={isOpenModal} onClose={handleCloseModal}>
@@ -106,7 +128,11 @@ function ModalBannerForm({ banner, setBanner, isOpenModal, setIsOpenModal }) {
 
             <hr />
 
-            <form onSubmit={handleSubmit} encType="multipart/form-data" className="p-3.5 flex flex-col gap-5">
+            <form
+                onSubmit={handleSubmit}
+                encType="multipart/form-data"
+                className="p-3.5 flex flex-col gap-5"
+            >
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="title">Title</Label>
                     <Input
@@ -116,7 +142,11 @@ function ModalBannerForm({ banner, setBanner, isOpenModal, setIsOpenModal }) {
                         value={data?.title ?? ""}
                         onChange={(e) => setData("title", e.target.value)}
                     />
-                    {errors.title && <span className="text-red-600 text-sm">{errors.title}</span>}
+                    {errors.title && (
+                        <span className="text-red-600 text-sm">
+                            {errors.title}
+                        </span>
+                    )}
                 </div>
 
                 <div className="grid w-full items-center gap-1.5">
@@ -127,13 +157,19 @@ function ModalBannerForm({ banner, setBanner, isOpenModal, setIsOpenModal }) {
                         onChange={(e) => setData("description", e.target.value)}
                         placeholder="Enter banner description..."
                     />
-                    {errors.description && <span className="text-red-600 text-sm">{errors.description}</span>}
+                    {errors.description && (
+                        <span className="text-red-600 text-sm">
+                            {errors.description}
+                        </span>
+                    )}
                 </div>
 
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="image_path">Image</Label>
                     <Input
-                        onChange={(e) => setData("image_path", e.target.files[0])}
+                        onChange={(e) =>
+                            setData("image_path", e.target.files[0])
+                        }
                         type="file"
                         id="image_path"
                     />
@@ -148,7 +184,11 @@ function ModalBannerForm({ banner, setBanner, isOpenModal, setIsOpenModal }) {
                         onChange={(e) => setData("link", e.target.value)}
                         placeholder="Enter banner link..."
                     />
-                    {errors.link && <span className="text-red-600 text-sm">{errors.link}</span>}
+                    {errors.link && (
+                        <span className="text-red-600 text-sm">
+                            {errors.link}
+                        </span>
+                    )}
                 </div>
 
                 <div className="grid w-full items-center gap-1.5">
@@ -159,7 +199,11 @@ function ModalBannerForm({ banner, setBanner, isOpenModal, setIsOpenModal }) {
                         value={data?.order ?? 0}
                         onChange={(e) => setData("order", e.target.value)}
                     />
-                    {errors.order && <span className="text-red-600 text-sm">{errors.order}</span>}
+                    {errors.order && (
+                        <span className="text-red-600 text-sm">
+                            {errors.order}
+                        </span>
+                    )}
                 </div>
 
                 <div className="grid w-full items-center gap-1.5">
@@ -171,8 +215,14 @@ function ModalBannerForm({ banner, setBanner, isOpenModal, setIsOpenModal }) {
                     <ErrorMessage name="is_active" />
                 </div>
 
-                <Button type="submit" disabled={loading || !data.title} className="bg-primary text-white hover:bg-primary/95">
-                    {loading && <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />}
+                <Button
+                    type="submit"
+                    disabled={loading || !data.title}
+                    className="bg-primary text-white hover:bg-primary/95"
+                >
+                    {loading && (
+                        <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />
+                    )}
                     {!banner ? "Tambah " : "Edit "}
                 </Button>
             </form>

@@ -25,6 +25,7 @@ function ModalTestimonyForm({
         content: testimony?.content ?? "",
         rating: testimony?.rating ?? 5,
         is_active: testimony?.is_active ?? true,
+        _method: testimony ? "PUT" : "POST",
     });
 
     useEffect(() => {
@@ -53,14 +54,20 @@ function ModalTestimonyForm({
                     });
                     setIsOpenModal(false);
                     setIsActive(false);
-                    reset("client_name", "client_avatar", "content", "rating", "is_active");
+                    reset(
+                        "client_name",
+                        "client_avatar",
+                        "content",
+                        "rating",
+                        "is_active"
+                    );
                 },
                 onFinish: () => {
                     setLoading(false);
                 },
             });
         } else {
-            put(route("testimony.update", testimony.id), {
+            post(route("testimony.update", testimony.id), {
                 onError: (errors) => {
                     setLoading(false);
                     setErrors(errors);
@@ -77,7 +84,13 @@ function ModalTestimonyForm({
                     });
                     setIsOpenModal(false);
                     setIsActive(false);
-                    reset("client_name", "client_avatar", "content", "rating", "is_active");
+                    reset(
+                        "client_name",
+                        "client_avatar",
+                        "content",
+                        "rating",
+                        "is_active"
+                    );
                 },
                 onFinish: () => {
                     setLoading(false);
@@ -131,7 +144,9 @@ function ModalTestimonyForm({
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="client_avatar">Client Avatar</Label>
                     <Input
-                        onChange={(e) => setData("client_avatar", e.target.files[0])}
+                        onChange={(e) =>
+                            setData("client_avatar", e.target.files[0])
+                        }
                         type="file"
                         id="client_avatar"
                     />
@@ -176,7 +191,9 @@ function ModalTestimonyForm({
                     disabled={loading || !data.client_name || !data.content}
                     className="bg-primary text-white hover:bg-primary/95"
                 >
-                    {loading && <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />}
+                    {loading && (
+                        <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />
+                    )}
                     {!testimony ? "Tambah " : "Edit "}
                 </Button>
             </form>

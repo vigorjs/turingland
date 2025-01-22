@@ -26,10 +26,10 @@ export default function AdminCategoryPage({ categories, auth }) {
     const [sortOrder, setSortOrder] = useState("asc");
     const [editingColumn, setEditingColumn] = useState(null);
     const [filter, setFilter] = useState({
-        name: ""
+        name: "",
     });
 
-    const [errors, setErrors] = useState([])
+    const [errors, setErrors] = useState([]);
 
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [selectAll, setSelectAll] = useState(false);
@@ -66,7 +66,7 @@ export default function AdminCategoryPage({ categories, auth }) {
                     description: err,
                     variant: "destructive",
                 });
-                setErrors(err)
+                setErrors(err);
                 console.log("ERR: ", err);
             },
             onFinish: () => {
@@ -89,7 +89,9 @@ export default function AdminCategoryPage({ categories, auth }) {
     const handleSelectAll = (e) => {
         if (e.target.checked) {
             setSelectAll(true);
-            setSelectedCategories(categories.data.map((category) => category.id));
+            setSelectedCategories(
+                categories.data.map((category) => category.id)
+            );
         } else {
             setSelectAll(false);
             setSelectedCategories([]);
@@ -109,7 +111,7 @@ export default function AdminCategoryPage({ categories, auth }) {
                 }}
                 className="text-white mb-3.5"
             >
-               <FaPlus /> Tambah Kategori
+                <FaPlus /> Tambah Kategori
             </Button>
 
             <div className="flex flex-col">
@@ -139,61 +141,112 @@ export default function AdminCategoryPage({ categories, auth }) {
                                         </th>
                                         {[
                                             { key: "name", label: "Category" },
-                                            { key: "icon", label: "Icon", isStatic: true },
-                                        ].map(({ key, label, isStatic }, index) => (
-                                            <th
-                                                key={index}
-                                                className={`px-6 py-4 text-left whitespace-nowrap text-sm leading-6 font-semibold capitalize ${isStatic
-                                                    ? ""
-                                                    : "cursor-pointer transition-all duration-300 ease-in-out hover:bg-gray-200 hover:scale-105 hover:text-primary"
+                                            {
+                                                key: "icon",
+                                                label: "Icon",
+                                                isStatic: true,
+                                            },
+                                        ].map(
+                                            (
+                                                { key, label, isStatic },
+                                                index
+                                            ) => (
+                                                <th
+                                                    key={index}
+                                                    className={`px-6 py-4 text-left whitespace-nowrap text-sm leading-6 font-semibold capitalize ${
+                                                        isStatic
+                                                            ? ""
+                                                            : "cursor-pointer transition-all duration-300 ease-in-out hover:bg-gray-200 hover:scale-105 hover:text-primary"
                                                     }`}
-                                                {...(!isStatic && {
-                                                    onClick: () => setEditingColumn(key),
-                                                })}
-                                            >
-                                                {editingColumn === key && !isStatic ? (
-                                                    key === "status" ? (
-                                                        <Select
-                                                            value={filter.status}
-                                                            onValueChange={(value) =>
-                                                                setFilter((prev) => ({
-                                                                    ...prev,
-                                                                    status: value !== "-1" ? value : "",
-                                                                }))
-                                                            }
-                                                            onBlur={() => setEditingColumn(null)}
-                                                        >
-                                                            <SelectTrigger>
-                                                                <SelectValue
-                                                                    placeholder={filter.status || "All"}
-                                                                />
-                                                            </SelectTrigger>
-                                                            <SelectContent>
-                                                                <SelectItem value="-1">All</SelectItem>
-                                                                <SelectItem value="1">Active</SelectItem>
-                                                                <SelectItem value="0">Inactive</SelectItem>
-                                                            </SelectContent>
-                                                        </Select>
+                                                    {...(!isStatic && {
+                                                        onClick: () =>
+                                                            setEditingColumn(
+                                                                key
+                                                            ),
+                                                    })}
+                                                >
+                                                    {editingColumn === key &&
+                                                    !isStatic ? (
+                                                        key === "status" ? (
+                                                            <Select
+                                                                value={
+                                                                    filter.status
+                                                                }
+                                                                onValueChange={(
+                                                                    value
+                                                                ) =>
+                                                                    setFilter(
+                                                                        (
+                                                                            prev
+                                                                        ) => ({
+                                                                            ...prev,
+                                                                            status:
+                                                                                value !==
+                                                                                "-1"
+                                                                                    ? value
+                                                                                    : "",
+                                                                        })
+                                                                    )
+                                                                }
+                                                                onBlur={() =>
+                                                                    setEditingColumn(
+                                                                        null
+                                                                    )
+                                                                }
+                                                            >
+                                                                <SelectTrigger>
+                                                                    <SelectValue
+                                                                        placeholder={
+                                                                            filter.status ||
+                                                                            "All"
+                                                                        }
+                                                                    />
+                                                                </SelectTrigger>
+                                                                <SelectContent>
+                                                                    <SelectItem value="-1">
+                                                                        All
+                                                                    </SelectItem>
+                                                                    <SelectItem value="1">
+                                                                        Active
+                                                                    </SelectItem>
+                                                                    <SelectItem value="0">
+                                                                        Inactive
+                                                                    </SelectItem>
+                                                                </SelectContent>
+                                                            </Select>
+                                                        ) : (
+                                                            <Input
+                                                                type="text"
+                                                                placeholder={`Filter ${label}`}
+                                                                className="border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                value={
+                                                                    filter[key]
+                                                                }
+                                                                onChange={(e) =>
+                                                                    setFilter(
+                                                                        (
+                                                                            prev
+                                                                        ) => ({
+                                                                            ...prev,
+                                                                            [key]: e
+                                                                                .target
+                                                                                .value,
+                                                                        })
+                                                                    )
+                                                                }
+                                                                onBlur={() =>
+                                                                    setEditingColumn(
+                                                                        null
+                                                                    )
+                                                                }
+                                                            />
+                                                        )
                                                     ) : (
-                                                        <Input
-                                                            type="text"
-                                                            placeholder={`Filter ${label}`}
-                                                            className="border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                                            value={filter[key]}
-                                                            onChange={(e) =>
-                                                                setFilter((prev) => ({
-                                                                    ...prev,
-                                                                    [key]: e.target.value,
-                                                                }))
-                                                            }
-                                                            onBlur={() => setEditingColumn(null)}
-                                                        />
-                                                    )
-                                                ) : (
-                                                    label
-                                                )}
-                                            </th>
-                                        ))}
+                                                        label
+                                                    )}
+                                                </th>
+                                            )
+                                        )}
                                         <th className="px-6 py-4 text-center whitespace-nowrap text-sm leading-6 font-semibold capitalize">
                                             Action
                                         </th>
@@ -202,13 +255,11 @@ export default function AdminCategoryPage({ categories, auth }) {
                                 <tbody className="divide-y divide-gray-300">
                                     {sortedData
                                         .filter((category) => {
-                                            return (
-                                                category.name
-                                                    .toLowerCase()
-                                                    .includes(
-                                                        filter.name.toLowerCase()
-                                                    )
-                                            );
+                                            return category.name
+                                                .toLowerCase()
+                                                .includes(
+                                                    filter.name.toLowerCase()
+                                                );
                                         })
                                         .map((category, index) => (
                                             <tr
@@ -238,40 +289,23 @@ export default function AdminCategoryPage({ categories, auth }) {
                                                     <div className="w-10 flex items-center gap-3">
                                                         <div className="data">
                                                             <p className="font-normal text-sm text-gray-900">
-                                                                {
-                                                                    category.name
-                                                                }
+                                                                {category.name}
                                                             </p>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td className="px-5 py-2.5">
-                                                    <img className="w-12"
+                                                    <img
+                                                        className="w-12"
                                                         src={
                                                             category.icon
                                                                 ? `/storage/${category.icon}`
                                                                 : "/assets/apartemen.png"
                                                         }
-                                                        alt={
-                                                            category.name
-                                                        }
+                                                        alt={category.name}
                                                     />
                                                 </td>
                                                 <td className="flex p-5 items-center justify-center gap-0.5">
-                                                    <button
-                                                        onClick={() =>
-                                                            handleDetail(
-                                                                category.id
-                                                            )
-                                                        }
-                                                        className="p-2  rounded-full bg-white group transition-all duration-500 hover:bg-slate-600 flex item-center"
-                                                    >
-                                                        <FaEye
-                                                            size={24}
-                                                            color="#5d6878"
-                                                            className=" group-hover:fill-white "
-                                                        />
-                                                    </button>
                                                     <button
                                                         onClick={() =>
                                                             handleOpenEditModal(
