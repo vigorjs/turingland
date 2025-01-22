@@ -143,9 +143,18 @@ function AdminEditPropertyPage({
             preserveState: true,
             preserveScroll: true,
             onSuccess: () => {
+                toast({
+                    title: `Property berhasil diupdate!`,
+                    // description: "Property berhasil diupdate",
+                    variant: "default",
+                });
                 setErrors({});
             },
             onError: (errors) => {
+                toast({
+                    title: `Property gagal diupdate!`,
+                    variant: "destructive",
+                });
                 setErrors(errors);
             },
         });
@@ -648,9 +657,7 @@ function AdminEditPropertyPage({
                                             id="is_featured"
                                             checked={field.value === 1}
                                             onCheckedChange={(checked) => {
-                                                field.onChange(
-                                                    checked ? 1 : 0
-                                                );
+                                                field.onChange(checked ? 1 : 0);
                                             }}
                                         />
                                     )}
