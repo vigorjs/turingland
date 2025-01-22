@@ -2,7 +2,7 @@ import Modal from "@/Components/Modal";
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
-import { Checkbox } from "@/Components/ui/checkbox";
+import InputActiveCheckbox from "@/Components/InputActiveCheckbox";
 import { toast } from "@/hooks/use-toast";
 import { useForm } from "@inertiajs/react";
 import { LoaderIcon, X } from "lucide-react";
@@ -17,14 +17,14 @@ function ModalTestimonyForm({
 }) {
     const [loading, setLoading] = useState(false);
     const [isActive, setIsActive] = useState(testimony?.is_active ?? false);
+    const [errors, setErrors] = useState([]);
 
-    const { data, setData, post, reset, errors } = useForm({
-        client_name: testimony?.client_name ?? "", // Mengambil nama klien, default kosong jika tidak ada
-        client_avatar: null, // Avatar klien, default null untuk file upload
-        content: testimony?.content ?? "", // Isi testimoni, default kosong
-        rating: testimony?.rating ?? 5, // Nilai rating, default 5
-        is_active: testimony?.is_active ?? true, // Status aktif, default true
-        _method: testimony ? "PUT" : "POST", // Jika testimony ada, gunakan PUT, jika tidak gunakan POST
+    const { data, setData, post, put, reset } = useForm({
+        client_name: testimony?.client_name ?? "",
+        client_avatar: null,
+        content: testimony?.content ?? "",
+        rating: testimony?.rating ?? 5,
+        is_active: testimony?.is_active ?? true,
     });
 
     useEffect(() => {
@@ -39,63 +39,45 @@ function ModalTestimonyForm({
             post(route("testimony.store"), {
                 onError: (errors) => {
                     setLoading(false);
+                    setErrors(errors);
                     toast({
                         title: "Testimoni gagal dibuat!",
                         description: errors?.client_name || errors?.content,
                         variant: "destructive",
                     });
-                    console.log("err: ", errors);
                 },
                 onSuccess: () => {
                     toast({
-                        title: `Testimoni berhasil ${
-                            testimony ? "diupdate" : "dibuat"
-                        }!`,
+                        title: "Testimoni berhasil dibuat!",
                         variant: "default",
                     });
-                    setLoading(false);
                     setIsOpenModal(false);
-                    reset(
-                        "client_name",
-                        "client_avatar",
-                        "content",
-                        "rating",
-                        "is_active"
-                    );
                     setIsActive(false);
+                    reset("client_name", "client_avatar", "content", "rating", "is_active");
                 },
                 onFinish: () => {
                     setLoading(false);
                 },
             });
         } else {
-            post(route("testimony.update", testimony.id), {
+            put(route("testimony.update", testimony.id), {
                 onError: (errors) => {
                     setLoading(false);
+                    setErrors(errors);
                     toast({
-                        title: "Testimoni update Failed!",
+                        title: "Testimoni gagal diupdate!",
                         description: errors?.client_name || errors?.content,
                         variant: "destructive",
                     });
-                    console.log("err: ", errors);
                 },
                 onSuccess: () => {
                     toast({
-                        title: `Testimoni berhasil ${
-                            testimony ? "diupdate" : "dibuat"
-                        }!`,
+                        title: "Testimoni berhasil diupdate!",
                         variant: "default",
                     });
-                    setLoading(false);
                     setIsOpenModal(false);
-                    reset(
-                        "client_name",
-                        "client_avatar",
-                        "content",
-                        "rating",
-                        "is_active"
-                    );
                     setIsActive(false);
+                    reset("client_name", "client_avatar", "content", "rating", "is_active");
                 },
                 onFinish: () => {
                     setLoading(false);
@@ -103,10 +85,17 @@ function ModalTestimonyForm({
             });
         }
     };
+
     const handleCloseModal = () => {
         setTestimony(null);
         reset("client_name", "client_avatar", "content", "rating", "is_active");
         setIsOpenModal(false);
+    };
+
+    const ErrorMessage = ({ name }) => {
+        return errors[name] ? (
+            <p className="text-red-500 text-sm mt-1">{errors[name]}</p>
+        ) : null;
     };
 
     return (
@@ -127,7 +116,6 @@ function ModalTestimonyForm({
                 encType="multipart/form-data"
                 className="p-3.5 flex flex-col gap-5"
             >
-                {/* Client Name */}
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="client_name">Client Name</Label>
                     <Input
@@ -137,26 +125,19 @@ function ModalTestimonyForm({
                         value={data?.client_name ?? ""}
                         onChange={(e) => setData("client_name", e.target.value)}
                     />
-                    {errors.client_name && (
-                        <span className="text-red-600 text-sm">
-                            {errors.client_name}
-                        </span>
-                    )}
+                    <ErrorMessage name="client_name" />
                 </div>
 
-                {/* Client Avatar */}
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="client_avatar">Client Avatar</Label>
                     <Input
-                        onChange={(e) =>
-                            setData("client_avatar", e.target.files[0])
-                        }
+                        onChange={(e) => setData("client_avatar", e.target.files[0])}
                         type="file"
                         id="client_avatar"
                     />
+                    <ErrorMessage name="client_avatar" />
                 </div>
 
-                {/* Content */}
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="content">Content</Label>
                     <Textarea
@@ -165,14 +146,9 @@ function ModalTestimonyForm({
                         onChange={(e) => setData("content", e.target.value)}
                         placeholder="Enter testimony content..."
                     />
-                    {errors.content && (
-                        <span className="text-red-600 text-sm">
-                            {errors.content}
-                        </span>
-                    )}
+                    <ErrorMessage name="content" />
                 </div>
 
-                {/* Rating */}
                 <div className="grid w-full items-center gap-1.5">
                     <Label htmlFor="rating">Rating</Label>
                     <Input
@@ -183,23 +159,16 @@ function ModalTestimonyForm({
                         value={data?.rating ?? 5}
                         onChange={(e) => setData("rating", e.target.value)}
                     />
-                    {errors.rating && (
-                        <span className="text-red-600 text-sm">
-                            {errors.rating}
-                        </span>
-                    )}
+                    <ErrorMessage name="rating" />
                 </div>
 
-                {/* Is Active */}
-                <div className="flex items-center gap-2">
-                    <Checkbox
-                        id="is_active"
-                        checked={data?.is_active ?? false}
-                        onCheckedChange={(checked) =>
-                            setData("is_active", checked)
-                        }
+                <div className="grid w-full items-center gap-1.5">
+                    <Label htmlFor="is_active">Active</Label>
+                    <InputActiveCheckbox
+                        isActive={isActive}
+                        setIsActive={setIsActive}
                     />
-                    <Label htmlFor="is_active">Is Active</Label>
+                    <ErrorMessage name="is_active" />
                 </div>
 
                 <Button
@@ -207,9 +176,7 @@ function ModalTestimonyForm({
                     disabled={loading || !data.client_name || !data.content}
                     className="bg-primary text-white hover:bg-primary/95"
                 >
-                    {loading && (
-                        <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />
-                    )}
+                    {loading && <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />}
                     {!testimony ? "Tambah " : "Edit "}
                 </Button>
             </form>

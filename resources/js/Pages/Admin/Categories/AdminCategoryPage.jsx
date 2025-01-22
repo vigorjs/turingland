@@ -16,7 +16,7 @@ import { toast } from "@/hooks/use-toast";
 import AdminLayout from "@/Layouts/AdminLayout";
 import { Link, router } from "@inertiajs/react";
 import { useState } from "react";
-import { FaEye } from "react-icons/fa";
+import { FaEye, FaPlus } from "react-icons/fa";
 import { HiSortAscending, HiSortDescending } from "react-icons/hi";
 
 export default function AdminCategoryPage({ categories, auth }) {
@@ -109,7 +109,7 @@ export default function AdminCategoryPage({ categories, auth }) {
                 }}
                 className="text-white mb-3.5"
             >
-                Tambah Kategori
+               <FaPlus /> Tambah Kategori
             </Button>
 
             <div className="flex flex-col">
