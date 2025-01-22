@@ -49,7 +49,7 @@ export default function PropertyDetailPage({ property, auth, featuredProp }) {
                 <button onClick={() => setIsOpenModal(true)} className="w-full">
                     <img
                         src={
-                            imagePrimary[0].image_path
+                            imagePrimary[0]
                                 ? imagePrimary[0].image_path
                                 : "https://ik.imagekit.io/pashouses/pb1/tr:n-hl_v3/property/front-house/-JDoNqEMWigKKq7jtLReZVFmjQ7pfFdb0Op7MHND.jpeg"
                         }
