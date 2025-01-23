@@ -251,20 +251,23 @@ const Header = ({ variant, auth, areas, categories }) => {
                                 <div key={`mobile-menu-${index}`}>
                                     {item.subItems ? (
                                         <button
-                                        onClick={() =>
-                                            setHoveredMenu(
-                                                hoveredMenu === item.title
-                                                    ? null
-                                                    : item.title
-                                            )
-                                        }
-                                        className="w-full text-left px-3 py-2 text-base font-medium text-white hover:text-primary hover:bg-gray-50 rounded-md flex items-center justify-between"
-                                    >
-                                        {item.title}
-                                        {item.subItems && (
-                                            <ChevronDown className="h-4 w-4" />
-                                        )}
-                                    </button>
+                                            onClick={() =>
+                                                setHoveredMenu(
+                                                    hoveredMenu === item.title
+                                                        ? null
+                                                        : item.title
+                                                )
+                                            }
+                                            className="w-full text-left px-3 py-2 text-base font-medium text-white/90 hover:text-white rounded-md flex items-center justify-between"
+                                        >
+                                            {item.title}
+                                            {item.subItems &&
+                                            hoveredMenu !== item.title ? (
+                                                <ChevronDownIcon className="h-4 w-4" />
+                                            ) : (
+                                                <ChevronUpIcon className="h-4 w-4" />
+                                            )}
+                                        </button>
                                     ) : (
                                         <Link
                                             href={item.url}
@@ -298,7 +301,7 @@ const Header = ({ variant, auth, areas, categories }) => {
                                                                             href={
                                                                                 body.url
                                                                             }
-                                                                            className="block text-sm text-white hover:text-primary py-1"
+                                                                            className="block text-sm text-white/90 hover:text-white dark:hover:text-primary py-1"
                                                                         >
                                                                             {
                                                                                 body.name

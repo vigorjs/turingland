@@ -94,7 +94,7 @@ export default function PropertyDetailPage({
                                                         ? img.image_path
                                                         : "/assets/default-img-property.png"
                                                 }
-                                                className="w-[100px] sm:w-40 rounded-xl"
+                                                className="w-[100px] h-[100px] sm:w-40 sm:h-40 object-cover rounded-xl"
                                             />
                                         </button>
                                     </CarouselItem>
