@@ -328,13 +328,12 @@ export default function PropertyDetailPage({
                                 Lokasi Properti
                             </h2>
                             <iframe
+                                className="w-full h-72"
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3967.173206341469!2d106.73638087572188!3d-6.1073660599005635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6a1d24cdcf722b%3A0x8404ce43bd74c99f!2sJakarta%20Utara%2C%20RT.6%2FRW.2%2C%20Kamal%20Muara%2C%20Kec.%20Penjaringan%2C%20Jkt%20Utara%2C%20Daerah%20Khusus%20Ibukota%20Jakarta%2014470!5e0!3m2!1sid!2sid!4v1737647817324!5m2!1sid!2sid"
-                                width="600"
-                                height="450"
-                                style="border:0;"
-                                allowfullscreen=""
+                                style={{ border: 0 }}
+                                allowFullScreen=""
                                 loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade"
+                                referrerPolicy="no-referrer-when-downgrade"
                             ></iframe>
                         </div>
                     </div>
