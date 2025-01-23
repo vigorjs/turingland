@@ -10,18 +10,19 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "illuminate/support": "^11.0",
         "inertiajs/inertia-laravel": "^2.0",
         "laravel/breeze": "^2.3",
         "laravel/framework": "^11.31",
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.9",
+        "maatwebsite/excel": "^3.1.51",
+        "phpoffice/phpspreadsheet": "^1.29",
         "spatie/laravel-permission": "^6.10",
         "tightenco/ziggy": "^2.4",
         "yaza/laravel-repository-service": "^5.1",
-        "maatwebsite/excel": "^3.1.51",
-        "phpoffice/phpspreadsheet": "^1.29",
-        "illuminate/support": "^11.0"
+        "yoeriboven/laravel-log-db": "^1.4"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

@@ -4,6 +4,7 @@ use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
 use Monolog\Processor\PsrLogMessageProcessor;
+use Yoeriboven\LaravelLogDb\DatabaseLogger;
 
 return [
 
@@ -125,6 +126,13 @@ return [
 
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
+        ],
+
+        'db' => [
+            'driver'     => 'custom',
+            'via'        => DatabaseLogger::class,
+            // 'connection' => env('LOG_DB_CONNECTION'), // Optional, defaults to app's DB connection
+            // 'days'       => 30, // Optional, retention period in days
         ],
 
     ],
