@@ -136,7 +136,7 @@ const Sidebar = ({ isCollapsed, user }) => {
             "Customer",
             "Log",
         ],
-        agent: ["Property"],
+        agent: ["Property", "Dashboard"],
         customer: [],
     };
 

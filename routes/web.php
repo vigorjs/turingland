@@ -49,7 +49,7 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified', 'role:admin|agent']
     Route::delete('/logs/{id}', [LogController::class, 'destroy'])->middleware('role:admin')->name('dashboard.log.destroy');
 
     // DASHBOARD
-    Route::get('', [AdminDashboardController::class, 'index'])->middleware('role:admin')->name('dashboard');
+    Route::get('', [AdminDashboardController::class, 'index'])->middleware('role:admin|agent')->name('dashboard');
 
     // PROPERTI
     Route::get('/property', [AdminPropertyController::class, 'index'])->middleware('role:admin|agent')->name('dashboard.property');
