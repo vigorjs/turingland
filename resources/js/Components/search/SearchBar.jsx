@@ -56,20 +56,20 @@ const SearchBar = ({ categories, areas, filters, setPropertiesData }) => {
     const orderAdsTexts = ["Terbaru", "Harga Termurah", "Luas Bangunan Terluas"];
 
     const { data, setData } = useForm({
-        title: "",
+        query: "",
     });
 
-    const debounce = useDebouncedCallback(async (title) => {
-        setData("title", title);
-        handleSearchSubmit(null, title);
+    const debounce = useDebouncedCallback(async (query) => {
+        setData("query", query);
+        handleSearchSubmit(null, query);
 
     }, 1000, { maxWait: 10000 });
 
-    const handleSearchSubmit = async (e, title) => {
+    const handleSearchSubmit = async (e, query) => {
         e?.preventDefault();
 
         const reqData = {
-            title,
+            query,
             orderAdsFilter,
             area_id: areaId,
             type:
@@ -102,7 +102,7 @@ const SearchBar = ({ categories, areas, filters, setPropertiesData }) => {
                     className="flex items-center gap-3 w-full"
                 >
                     <input
-                        // onChange={(e) => setData("title", e.target.value)}
+                        // onChange={(e) => setData("query", e.target.value)}
                         onChange={(e) => debounce(e.target.value)}
                         type="text"
                         placeholder="Cari properti, lokasi, area, developer, atau agent"
@@ -162,7 +162,7 @@ const SearchBar = ({ categories, areas, filters, setPropertiesData }) => {
             />
 
             <h2 className="text-2xl font-bold mb-2">
-                Menampilkan hasil pencarian {data?.title ?? ""}
+                Menampilkan hasil pencarian {data?.query ?? ""}
             </h2>
         </>
     );

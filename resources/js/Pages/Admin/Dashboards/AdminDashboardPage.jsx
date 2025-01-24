@@ -2,6 +2,7 @@ import AdminDeveloperChart from "@/Components/admin/AdminDeveloperChart";
 import AdminPropertyChart from "@/Components/AdminPropertyChart";
 import PropertyCategoryChart from "@/Components/PropertyCategoryChart";
 import PropertyTypeChart from "@/Components/PropertyTypeChart";
+import SearchQueryChart from "@/Components/SearchQueryChart";
 import {
     Carousel,
     CarouselContent,
@@ -24,6 +25,7 @@ export default function AdminDashboardPage({
     categoryData,
     propertyTypeData,
     auth,
+    logs
 }) {
     const cardCounting = [
         {
@@ -77,6 +79,8 @@ export default function AdminDashboardPage({
             <div className="flex flex-col lg:flex-row gap-4 py-8">
                 {/* Left Section - Charts */}
                 <div className="w-full lg:w-2/3 flex flex-col gap-6">
+
+                    <SearchQueryChart logs={logs} />
                     {/* Property Chart */}
                     <div className="w-full">
                         <AdminPropertyChart data={propertyData} />

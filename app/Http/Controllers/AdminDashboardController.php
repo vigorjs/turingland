@@ -8,6 +8,7 @@ use App\Models\Property;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Yoeriboven\LaravelLogDb\Models\LogMessage;
 
 class AdminDashboardController extends Controller
 {
@@ -88,14 +89,25 @@ class AdminDashboardController extends Controller
             ->get()
             ->map(function ($item) {
                 return [
-                    'name' => ucfirst($item->type), // Capitalize first letter
+                    'name' => ucfirst($item->type),
                     'total' => $item->total
                 ];
             });
 
-
         $latestAgents = User::role('agent')->orderBy('created_at', 'desc')->take(5)->get();
 
+        // In your controller, when passing logs
+        $logs = LogMessage::all()->map(function ($log) {
+            // Ensure context is a string if it's an array
+            $log->context = is_array($log->context)
+                ? json_encode($log->context)
+                : $log->context;
+            return $log;
+        });
+
+        // dd($logs[0]->context);
+
+        
 
         return Inertia::render("Admin/Dashboards/AdminDashboardPage", [
             'totalUser' => $totalUser,
@@ -106,7 +118,8 @@ class AdminDashboardController extends Controller
             'latestAgents' => $latestAgents,
             'propertyData' => array_values($months),
             'categoryData' => $categoryData,
-            'propertyTypeData' => $propertyTypeData
+            'propertyTypeData' => $propertyTypeData,
+            'logs' => $logs
         ]);
     }
 }
