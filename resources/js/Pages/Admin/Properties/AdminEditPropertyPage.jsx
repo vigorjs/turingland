@@ -16,6 +16,7 @@ import { Label } from "@/Components/ui/label";
 import { router } from "@inertiajs/react";
 import { Input } from "@/Components/ui/input";
 import { MultiSelect } from "react-multi-select-component";
+import { toast } from "@/hooks/use-toast";
 
 function AdminEditPropertyPage({
     property,
@@ -611,11 +612,20 @@ function AdminEditPropertyPage({
                                             type="number"
                                             step="0.01"
                                             {...field}
-                                            onChange={(e) =>
+                                            // Enforce max 7 digits on input
+                                            onInput={(e) => {
+                                                const value = e.target.value;
+                                                if (
+                                                    value.replace(/\D/g, "")
+                                                        .length > 7
+                                                ) {
+                                                    e.target.value =
+                                                        value.slice(0, 12);
+                                                }
                                                 field.onChange(
                                                     parseFloat(e.target.value)
-                                                )
-                                            }
+                                                );
+                                            }}
                                             className={
                                                 errors.price
                                                     ? "border-red-500"

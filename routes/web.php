@@ -12,6 +12,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\LogController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
@@ -41,8 +42,14 @@ Route::delete('/dashboard/profile', [ProfileController::class, 'destroy'])->name
 
 Route::prefix('/dashboard')->middleware(['auth', 'verified', 'role:admin|agent'])->group(function () {
     Route::get('users/export/', [UserController::class, 'export'])->middleware('role:admin');
+
+    //LOG
+    Route::get('/logs', [LogController::class, 'index'])->middleware('role:admin')->name('dashboard.log');
+    Route::get('/logs/level/{level}', [LogController::class, 'filterByLevel'])->middleware('role:admin')->name('dashboard.log.level');
+    Route::delete('/logs/{id}', [LogController::class, 'destroy'])->middleware('role:admin')->name('dashboard.log.destroy');
+
     // DASHBOARD
-    Route::get('', [AdminDashboardController::class, 'index'])->middleware('role:admin')->name('dashboard');
+    Route::get('', [AdminDashboardController::class, 'index'])->middleware('role:admin|agent')->name('dashboard');
 
     // PROPERTI
     Route::get('/property', [AdminPropertyController::class, 'index'])->middleware('role:admin|agent')->name('dashboard.property');

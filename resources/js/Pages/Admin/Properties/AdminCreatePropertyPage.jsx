@@ -18,7 +18,13 @@ import { X } from "lucide-react";
 import { MultiSelect } from "react-multi-select-component";
 import { toast } from "@/hooks/use-toast";
 
-function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
+function AdminCreatePropertyPage({
+    agents,
+    developers,
+    areas,
+    categories,
+    auth,
+}) {
     //
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [uploadedImages, setUploadedImages] = useState([]);
@@ -34,6 +40,7 @@ function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
             title: "",
             description: "",
             developer_id: "",
+            user_id: "",
             area_id: "",
             category_ids: [],
             bathroom_count: 0,
@@ -240,6 +247,44 @@ function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
                                 />
                                 <ErrorMessage name="developer_id" />
                             </div>
+
+                            {/* Agent Select */}
+                            {auth.user.role == "admin" && (
+                                <div className="space-y-2">
+                                    <Label htmlFor="user_id">Agent</Label>
+                                    <Controller
+                                        name="user_id"
+                                        control={control}
+                                        render={({ field }) => (
+                                            <Select
+                                                onValueChange={field.onChange}
+                                                value={field.value}
+                                            >
+                                                <SelectTrigger
+                                                    className={
+                                                        errors.user_id
+                                                            ? "border-red-500"
+                                                            : ""
+                                                    }
+                                                >
+                                                    <SelectValue placeholder="Select agent" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    {agents.map((agent) => (
+                                                        <SelectItem
+                                                            key={agent.id}
+                                                            value={agent.id.toString()}
+                                                        >
+                                                            {agent.name}
+                                                        </SelectItem>
+                                                    ))}
+                                                </SelectContent>
+                                            </Select>
+                                        )}
+                                    />
+                                    <ErrorMessage name="user_id" />
+                                </div>
+                            )}
 
                             {/* Categories Select */}
                             <div className="space-y-2">
@@ -588,11 +633,20 @@ function AdminCreatePropertyPage({ developers, areas, categories, auth }) {
                                             type="number"
                                             step="0.01"
                                             {...field}
-                                            onChange={(e) =>
+                                            // Enforce max 7 digits on input
+                                            onInput={(e) => {
+                                                const value = e.target.value;
+                                                if (
+                                                    value.replace(/\D/g, "")
+                                                        .length > 7
+                                                ) {
+                                                    e.target.value =
+                                                        value.slice(0, 12);
+                                                }
                                                 field.onChange(
                                                     parseFloat(e.target.value)
-                                                )
-                                            }
+                                                );
+                                            }}
                                             className={
                                                 errors.price
                                                     ? "border-red-500"

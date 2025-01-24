@@ -11,6 +11,7 @@ use App\Models\Developer;
 use App\Models\Location;
 use App\Models\Property;
 use App\Models\PropertyImage;
+use App\Models\User;
 use App\Services\Area\AreaService;
 use App\Services\Category\CategoryService;
 use App\Services\Developer\DeveloperService;
@@ -56,9 +57,9 @@ class AdminPropertyController extends Controller
         $filters = $request->validate([
             'title' => 'nullable|string|max:255',
             'area_id' => 'nullable|integer',
-            'category_id' => 'nullable|integer', 
-            'developer_id' => 'nullable|integer', 
-            'location_id' => 'nullable|integer', 
+            'category_id' => 'nullable|integer',
+            'developer_id' => 'nullable|integer',
+            'location_id' => 'nullable|integer',
             'price_min' => 'nullable|numeric',
             'price_max' => 'nullable|numeric',
             'type' => 'nullable|string',
@@ -100,6 +101,7 @@ class AdminPropertyController extends Controller
         $developers = $this->developerService->getAllDevelopers();
         $areas = $this->areaService->getAllAreas();
         // $categories = $this->categoryService->all()->getData();
+        $agents = User::role('agent')->with('roles')->get();
         $categories = Category::select('id', 'name')
         ->get()
         ->map(function($category) {
@@ -112,28 +114,31 @@ class AdminPropertyController extends Controller
         return Inertia::render("Admin/Properties/AdminCreatePropertyPage", [
             'developers' => $developers,
             'areas' => $areas,
-            'categories' => $categories
+            'categories' => $categories,
+            'agents' => $agents
         ]);
     }
 
     public function store(PropertyCreateRequest $request)
-    {
-        $this->propertyService->createPropertyWithImages(
-            array_merge(
-                $request->except('property_images'),
-                ['user_id' => Auth::id()]
-            ),
-            $request->property_images
-        );
+{
+    $userId = $request->filled('user_id') ? $request->user_id : Auth::id();
 
-        return redirect()->route('dashboard.property');
-    }
+    $this->propertyService->createPropertyWithImages(
+        array_merge(
+            $request->except('property_images'),
+            ['user_id' => $userId]
+        ),
+        $request->property_images
+    );
+
+    return redirect()->route('dashboard.property');
+}
 
     public function edit($id)
     {
         $property = $this->propertyService->getPropertyById($id);
         // dd($property);
-        
+
 
         $developers = $this->developerService->getAllDevelopers();
         $areas = $this->areaService->getAllAreas();

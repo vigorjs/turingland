@@ -14,6 +14,7 @@ import {
     FaComment,
     FaUserTie,
     FaUsers,
+    FaHistory,
 } from "react-icons/fa";
 import ApplicationLogo from "../ApplicationLogo";
 
@@ -22,6 +23,7 @@ const sidebarLinks = [
         section: "Menu",
         links: [
             { name: "Dashboard", namedRoute: "dashboard", icon: <FaHome /> },
+            { name: "Log", namedRoute: "dashboard.log", icon: <FaHistory /> },
         ],
     },
     {
@@ -132,8 +134,9 @@ const Sidebar = ({ isCollapsed, user }) => {
             "Web Preferences",
             "Agent",
             "Customer",
+            "Log",
         ],
-        agent: ["Property"],
+        agent: ["Property", "Dashboard"],
         customer: [],
     };
 
