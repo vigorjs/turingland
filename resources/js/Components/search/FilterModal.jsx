@@ -54,7 +54,7 @@ const FilterModal = ({
                 <hr />
 
                 <form onSubmit={(e) => {
-                    handleSearchSubmit(e);
+                    handleSearchSubmit(e, null);
                     setIsVisibleModalFilter(false);
                 }} className="p-3.5 flex flex-col gap-4">
                     <div>

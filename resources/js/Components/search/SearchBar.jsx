@@ -3,15 +3,9 @@ import { Button } from "../ui/button";
 import { useEffect, useState } from "react";
 import FilterModal from "./FilterModal";
 import { useForm } from "@inertiajs/react";
+import { useDebounce, useDebouncedCallback } from "use-debounce";
 
 const SearchBar = ({ categories, areas, filters, setPropertiesData }) => {
-    const searchButton = [
-        "Filter",
-        "Terbaru",
-        "Harga Termurah",
-        "Harga Termahal",
-    ];
-
     const [isVisibleModalFilter, setIsVisibleModalFilter] = useState(false);
 
     const [areaId, setAreaId] = useState(filters["area_id"] ?? "");
@@ -34,7 +28,7 @@ const SearchBar = ({ categories, areas, filters, setPropertiesData }) => {
         if (value === orderAdsFilter) setOrderAdsFilter("");
         else setOrderAdsFilter(value);
 
-        handleSearchSubmit();
+        handleSearchSubmit(null, data.title);
     };
 
     const handleClickTypeAdsFilter = (value) => {
@@ -61,15 +55,21 @@ const SearchBar = ({ categories, areas, filters, setPropertiesData }) => {
 
     const orderAdsTexts = ["Terbaru", "Harga Termurah", "Luas Bangunan Terluas"];
 
-    const { data, setData, get, processing, errors } = useForm({
+    const { data, setData } = useForm({
         title: "",
     });
 
-    const handleSearchSubmit = async (e) => {
+    const debounce = useDebouncedCallback(async (title) => {
+        setData("title", title);
+        handleSearchSubmit(null, title);
+
+    }, 1000, { maxWait: 10000 });
+
+    const handleSearchSubmit = async (e, title) => {
         e?.preventDefault();
 
         const reqData = {
-            ...data,
+            title,
             orderAdsFilter,
             area_id: areaId,
             type:
@@ -98,23 +98,24 @@ const SearchBar = ({ categories, areas, filters, setPropertiesData }) => {
         <>
             <div className="flex flex-col gap-4 mb-6 px-0">
                 <form
-                    onSubmit={handleSearchSubmit}
+                    // onSubmit={handleSearchSubmit}
                     className="flex items-center gap-3 w-full"
                 >
                     <input
-                        onChange={(e) => setData("title", e.target.value)}
+                        // onChange={(e) => setData("title", e.target.value)}
+                        onChange={(e) => debounce(e.target.value)}
                         type="text"
-                        placeholder="Cari properti..."
+                        placeholder="Cari properti, lokasi, area, developer, dan agent"
                         className="flex-1 px-4 py-2 border border-[#C6C6C6] bg-[#EDEDED] rounded-lg w-2/3"
                     />
-                    <Button
+                    {/* <Button
                         type="submit"
                         size="lg"
                         className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-lg"
                     >
                         <Search />{" "}
                         <span className="hidden sm:block">Search</span>
-                    </Button>
+                    </Button> */}
                 </form>
                 <div className="flex flex-wrap gap-1.5 mb-2">
                     <Button

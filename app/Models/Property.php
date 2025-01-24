@@ -12,26 +12,7 @@ class Property extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = [
-        'title',
-        'description',
-        'developer_id',
-        'area_id',
-        'user_id',
-        'bathroom_count',
-        'bedroom_count',
-        'carport_count',
-        'land_area',
-        'building_area',
-        'price',
-        'type',
-        'status',
-        'address',
-        'certificate_type',
-        'year_built',
-        'when_sold',
-        'is_featured'
-    ];
+    protected $fillable = ['title', 'description', 'developer_id', 'area_id', 'user_id', 'bathroom_count', 'bedroom_count', 'carport_count', 'land_area', 'building_area', 'price', 'type', 'status', 'address', 'certificate_type', 'year_built', 'when_sold', 'is_featured'];
 
     protected $casts = [
         'land_area' => 'decimal:2',
@@ -41,7 +22,7 @@ class Property extends Model
         'is_featured' => 'boolean',
         'bathroom_count' => 'integer',
         'bedroom_count' => 'integer',
-        'carport_count' => 'integer'
+        'carport_count' => 'integer',
     ];
 
     public function developer(): BelongsTo
@@ -71,15 +52,37 @@ class Property extends Model
 
     public function scopeFilter(Builder $query, $filters)
     {
-        if(!empty($filters['orderAdsFilter'])) {
-            if($filters['orderAdsFilter'] == "Terbaru") $query->orderBy('created_at', 'desc');
-            else if($filters['orderAdsFilter'] == "Harga Termurah") $query->orderBy('price', 'asc');
-            else if($filters['orderAdsFilter'] == "Luas Bangunan Terluas") $query->orderBy('building_area', 'desc');
-            else if($filters['orderAdsFilter'] == "Luas Tanah Terluas") $query->orderBy('land_area', 'desc');
+        if (!empty($filters['orderAdsFilter'])) {
+            if ($filters['orderAdsFilter'] == 'Terbaru') {
+                $query->orderBy('created_at', 'desc');
+            } elseif ($filters['orderAdsFilter'] == 'Harga Termurah') {
+                $query->orderBy('price', 'asc');
+            } elseif ($filters['orderAdsFilter'] == 'Luas Bangunan Terluas') {
+                $query->orderBy('building_area', 'desc');
+            } elseif ($filters['orderAdsFilter'] == 'Luas Tanah Terluas') {
+                $query->orderBy('land_area', 'desc');
+            }
         }
 
+        // if (!empty($filters['title'])) {
+        //     $query->where('title', 'like', '%' . $filters['title'] . '%');
+        // }
+
         if (!empty($filters['title'])) {
-            $query->where('title', 'like', '%' . $filters['title'] . '%');
+            $query
+                ->where('title', 'like', '%' . $filters['title'] . '%')
+                ->orWhereHas('categories', function ($query) use ($filters) {
+                    $query->where('categories.name', 'like', '%' . $filters['title'] . '%');
+                })
+                ->orWhereHas('area', function ($query) use ($filters) {
+                    $query->where('areas.name', 'like', '%' . $filters['title'] . '%');
+                })
+                ->orWhereHas('developer', function ($query) use ($filters) {
+                    $query->where('developers.name', 'like', '%' . $filters['title'] . '%');
+                })
+                ->orWhereHas('agent', function ($query) use ($filters) {
+                    $query->where('users.name', 'like', '%' . $filters['title'] . '%');
+                });
         }
 
         // Untuk category_id
@@ -151,7 +154,6 @@ class Property extends Model
         } elseif (!empty($filters['building_area_max'])) {
             $query->where('building_area', '<=', $filters['building_area_max']);
         }
-
 
         if (!empty($filters['year_built'])) {
             $query->where('year_built', $filters['year_built']);

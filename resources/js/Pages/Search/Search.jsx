@@ -14,7 +14,7 @@ export default function SearchPage({
 }) {
     const [propertiesData, setPropertiesData] = useState(properties);
 
-    console.log("propertiesData: ", propertiesData.data);
+    // console.log("propertiesData: ", propertiesData.data);
 
 
     return (
