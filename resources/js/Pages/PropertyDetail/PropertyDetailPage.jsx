@@ -339,7 +339,11 @@ export default function PropertyDetailPage({
                         <div className="shadow-md p-4 rounded-2xl mb-7">
                             <div className="flex justify-start items-start gap-2.5 border-b border-neutral-300 pb-5">
                                 <img
-                                    src={property.agent.photo}
+                                    src={
+                                        property.agent.photo
+                                            ? property.agent.photo
+                                            : "https://avatar.iran.liara.run/public"
+                                    }
                                     alt=""
                                     className="w-14 h-14 rounded-full object-cover"
                                 />
