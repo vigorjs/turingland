@@ -25,8 +25,10 @@ export default function AdminDashboardPage({
     categoryData,
     propertyTypeData,
     auth,
-    logs
+    logs,
 }) {
+    console.log(logs);
+
     const cardCounting = [
         {
             icon: <Users className="text-2xl w-6 h-6 text-white" />,
@@ -79,7 +81,6 @@ export default function AdminDashboardPage({
             <div className="flex flex-col lg:flex-row gap-4 py-8">
                 {/* Left Section - Charts */}
                 <div className="w-full lg:w-2/3 flex flex-col gap-6">
-
                     <SearchQueryChart logs={logs} />
                     {/* Property Chart */}
                     <div className="w-full">

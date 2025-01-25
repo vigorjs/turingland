@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Area;
 use App\Models\Banner;
 use App\Models\Category;
+use App\Models\Location;
 use App\Models\Property;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,13 +24,7 @@ class SearchController extends Controller
 
         $banner = Banner::whereNotNull('image_path')->get();
 
-        foreach ($request->all() as $key => $value) {
-            if (!is_null($value)) {
-                $log = [];
-                $log[$key] = $value;
-                Log::channel('db')->info("search index", $log);
-            }
-        }
+        $this->logger($request, "search index");
 
         // dd($properties);
 
@@ -51,14 +46,7 @@ class SearchController extends Controller
             ->paginate(12)
             ->withQueryString();
 
-            foreach ($request->all() as $key => $value) {
-                if (!is_null($value)) {
-                    $log = [];
-                    $log[$key] = $value;
-                    Log::channel('db')->info("search index", $log);
-                }
-            }
-
+        $this->logger($request, "search index api");
 
         // dd($properties);
 
@@ -66,5 +54,30 @@ class SearchController extends Controller
             'properties' => $properties,
             'filters' => $request->all()
         ]);;
+    }
+
+    private function logger(Request $request, string $message){
+        foreach ($request->all() as $key => $value) {
+            if (!is_null($value)) {
+                $log = [];
+                switch ($key) {
+                    case 'category_id':
+                        $name = Category::select('name')->where('id', $value)->first();
+                        $value = $name['name'];
+                        break;
+                    case 'location_id':
+                        $name = Location::select('name')->where('id', $value)->first();
+                        $value = $name['name'];
+                        break;
+                    case 'area_id':
+                        $name = Area::select('name')->where('id', $value)->first();
+                        $value = $name['name'];
+                        break;
+                }
+                $key = substr($key, 0, -3);
+                $log[$key] = $value;
+                Log::channel('db')->info($message, $log);
+            }
+        }
     }
 }

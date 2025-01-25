@@ -107,7 +107,7 @@ class AdminDashboardController extends Controller
 
         // dd($logs[0]->context);
 
-        
+
 
         return Inertia::render("Admin/Dashboards/AdminDashboardPage", [
             'totalUser' => $totalUser,

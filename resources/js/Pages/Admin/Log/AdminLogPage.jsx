@@ -10,7 +10,7 @@ import { Input } from "@/Components/ui/input";
 export default function AdminLogPage({ logs, auth }) {
     const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
     const [selectedLog, setSelectedLog] = useState(null);
-    const [sortOrder, setSortOrder] = useState("asc");
+    const [sortOrder, setSortOrder] = useState("desc");
     const [editingColumn, setEditingColumn] = useState(null);
     const [filter, setFilter] = useState({
         level: "",

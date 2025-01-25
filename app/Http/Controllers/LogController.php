@@ -16,7 +16,7 @@ class LogController extends Controller
     public function index()
     {
         // Retrieve paginated log messages from the database
-        $logs = LogMessage::paginate(8);
+        $logs = LogMessage::orderBy('id', 'desc')->paginate(8);
 
         return Inertia::render('Admin/Log/AdminLogPage', [
             'logs' => $logs,
