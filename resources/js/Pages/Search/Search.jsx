@@ -2,7 +2,8 @@ import CardPropertySearch from "@/Components/search/CardPropertySearch";
 import SearchBar from "@/Components/search/SearchBar";
 import GuestLayout from "@/Layouts/GuestLayout";
 import { Head, Link } from "@inertiajs/react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import axios from "axios";
 
 export default function SearchPage({
     properties,
@@ -13,9 +14,46 @@ export default function SearchPage({
     banner,
 }) {
     const [propertiesData, setPropertiesData] = useState(properties);
+    const [currentPage, setCurrentPage] = useState(properties.current_page);
+    const [hasMore, setHasMore] = useState(properties.current_page < properties.last_page);
+    const [loading, setLoading] = useState(false);
 
-    // console.log("propertiesData: ", propertiesData.data);
+    const observer = useRef();
 
+    const lastPropertyRef = (node) => {
+        if (loading) return;
+        if (observer.current) observer.current.disconnect();
+
+        observer.current = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && hasMore) {
+                loadMore();
+            }
+        });
+
+        if (node) observer.current.observe(node);
+    };
+
+    const loadMore = async () => {
+        if (!hasMore) return;
+        setLoading(true);
+
+        try {
+            const response = await axios.get(`/search-api?page=${currentPage + 1}`);
+            const newData = response.data.properties;
+            setPropertiesData((prev) => ({
+                ...prev,
+                current_page: newData.current_page,
+                last_page: newData.last_page,
+                data: [...prev.data, ...newData.data],
+            }));
+            setCurrentPage(newData.current_page);
+            setHasMore(newData.current_page < newData.last_page);
+        } catch (error) {
+            console.error("Error loading more properties:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <GuestLayout auth={auth}>
@@ -36,28 +74,45 @@ export default function SearchPage({
                 <div className="flex flex-wrap sm:flex-nowrap justify-center sm:justify-between items-start gap-8 sm:gap-16">
                     <div className="w-full sm:w-2/3 flex flex-col gap-5">
                         {propertiesData?.data?.length > 0
-                            ? propertiesData.data.map((property, index) => (
-                                  <CardPropertySearch
-                                      key={index}
-                                      property={property}
-                                  />
-                              ))
+                            ? propertiesData.data.map((property, index) => {
+                                if (index === propertiesData.data.length - 1) {
+                                    return (
+                                        <div key={index} ref={lastPropertyRef}>
+                                            <CardPropertySearch property={property} />
+                                        </div>
+                                    );
+                                }
+                                return (
+                                    <CardPropertySearch key={index} property={property} />
+                                );
+                            })
                             : null}
                     </div>
                     <div className="sticky top-3.5 w-full sm:w-1/3 flex flex-col gap-3">
                         {banner?.length > 0
                             ? banner.map((bnr, index) => (
-                                  <Link href={bnr.link} key={index}>
-                                      <img
-                                          src={`storage/${bnr.image_path}`}
-                                          alt={`image`}
-                                          className="object-contain rounded-2xl w-full"
-                                      />
-                                  </Link>
-                              ))
+                                <Link href={bnr.link} key={index}>
+                                    <img
+                                        src={`/storage/${bnr.image_path}`}
+                                        alt={bnr.image_alt || "Banner"}
+                                        className="object-contain rounded-2xl w-full"
+                                    />
+                                </Link>
+                            ))
                             : null}
                     </div>
                 </div>
+                {loading && (
+                    <div className="flex justify-center items-center py-4">
+                        <div
+                            className="animate-spin inline-block w-8 h-8 border-[3px] border-current border-t-transparent text-blue-600 rounded-full"
+                            role="status"
+                            aria-label="loading"
+                        >
+                            <span className="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                )}
             </div>
         </GuestLayout>
     );
