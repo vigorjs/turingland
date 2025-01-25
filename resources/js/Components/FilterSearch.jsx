@@ -19,7 +19,7 @@ export const FilterSearch = () => {
     return (
         <div
             className={`absolute w-full overflow-x-auto z-10 px-3 md:px-36 ${
-                isSimpleSearch ? "-mt-48" : "-mt-[216px]"
+                isSimpleSearch ? "-mt-48" : "-mt-[265px]"
             }`}
         >
             <div className="bg-white/85 dark:bg-muted w-full h-full sm:rounded-2xl transition-all duration-300 ease-in-out">
@@ -375,7 +375,7 @@ const AdvanceFilterSearch = ({
                 </Select>
             </div>
 
-            <div className="grid w-full max-w-sm items-center gap-1.5">
+            <div className="grid w-full items-center gap-1.5">
                 <Label
                     className="dark:text-white text-[#5B5B5B] font-normal"
                     htmlFor="email"
@@ -428,7 +428,7 @@ const AdvanceFilterSearch = ({
                 </Select>
             </div>
 
-            <div className="grid w-full max-w-sm items-center gap-1.5">
+            <div className="grid w-full items-center gap-1.5">
                 <Label
                     className="dark:text-white text-[#5B5B5B] font-normal"
                     htmlFor="email"
