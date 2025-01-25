@@ -341,7 +341,7 @@ export default function PropertyDetailPage({
                                 <img
                                     src={
                                         property.agent.photo
-                                            ? property.agent.photo
+                                            ? `/storage/${property.agent.photo}`
                                             : "https://avatar.iran.liara.run/public"
                                     }
                                     alt=""
@@ -381,7 +381,7 @@ export default function PropertyDetailPage({
                                 <img
                                     src={
                                         property.developer.logo
-                                            ? property.developer.logo
+                                            ? `/storage/${property.developer.logo}`
                                             : "https://avatar.iran.liara.run/public"
                                     }
                                     alt=""
