@@ -64,24 +64,24 @@ class Property extends Model
             }
         }
 
-        // if (!empty($filters['title'])) {
-        //     $query->where('title', 'like', '%' . $filters['title'] . '%');
+        // if (!empty($filters['query'])) {
+        //     $query->where('title', 'like', '%' . $filters['query'] . '%');
         // }
 
-        if (!empty($filters['title'])) {
+        if (!empty($filters['query'])) {
             $query
-                ->where('title', 'like', '%' . $filters['title'] . '%')
+                ->where('title', 'like', '%' . $filters['query'] . '%')
                 ->orWhereHas('categories', function ($query) use ($filters) {
-                    $query->where('categories.name', 'like', '%' . $filters['title'] . '%');
+                    $query->where('categories.name', 'like', '%' . $filters['query'] . '%');
                 })
                 ->orWhereHas('area', function ($query) use ($filters) {
-                    $query->where('areas.name', 'like', '%' . $filters['title'] . '%');
+                    $query->where('areas.name', 'like', '%' . $filters['query'] . '%');
                 })
                 ->orWhereHas('developer', function ($query) use ($filters) {
-                    $query->where('developers.name', 'like', '%' . $filters['title'] . '%');
+                    $query->where('developers.name', 'like', '%' . $filters['query'] . '%');
                 })
                 ->orWhereHas('agent', function ($query) use ($filters) {
-                    $query->where('users.name', 'like', '%' . $filters['title'] . '%');
+                    $query->where('users.name', 'like', '%' . $filters['query'] . '%');
                 });
         }
 
