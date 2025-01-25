@@ -36,14 +36,6 @@ export default function Home({
     const img =
         "https://ecatalog.sinarmasland.com/_next/image?url=https%3A%2F%2Fecatalog.sinarmasland.com%2Fassets%2Fsite-setting-files%2F1%2Fhomepage-background-banner-desktop-677b6f397dc74.jpg&w=3840&q=75";
 
-    const img2 =
-        "https://s3-alpha-sig.figma.com/img/b74a/c4c3/77ce5aaed022bc3392bf4c60e9f023f3?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=TBddhCyuhgK3h9pPOzC6liBCEHm6TsYR7d~rH3sp4CvaC3yOelv4WVMmuxaxESdJNZc35GZAhsml9j6SGRGXsQOzrv92arIuKxGqA3G9aCE~3t24rREsBu3QdUvtkynVgfEqfZR30kwwC9guwj~syJ88f0fRfDbVJeZiyOTOqER4xiIV3wrAfMlcjQm9o-IcPSUM86bMEta04tgrQPaa2YxuMw~3EUz4FJJ~~gR2nASUu1cearMaxPV4coLrdbo2ysRfCKUs2HIDPgjEZQAf1xVt7tewP0fmtjjR7GxJ5FjWY5uzm3a-l3hcQaOIa~qekSB6fqROwfuzmK0r66Mt7Q__";
-
-    const img3 =
-        "https://ik.imagekit.io/pashouses/pb1/tr:n-hl_v3/property/front-house/-JDoNqEMWigKKq7jtLReZVFmjQ7pfFdb0Op7MHND.jpeg";
-
-    const arr = [{}, {}, {}, {}, {}, {}, {}, {}];
-
     const heroUrl = webPreferences?.find(
         (pref) => pref.key === "hero_url"
     )?.value;
@@ -75,6 +67,7 @@ export default function Home({
                 <CategoriesSection categories={categories} />
 
                 {/* </Carousel> */}
+
                 <div className="px-3 sm:px-4 md:px-6 lg:px-[150px]">
                     {/* ADS SECTION */}
                     <Carousel
@@ -98,18 +91,24 @@ export default function Home({
                                         key={`ads-section-${index}`}
                                         className="flex-shrink-0 basis-1/1 md:basis-1/2 max-h-[40vh]"
                                     >
-                                        <img
-                                            src={
-                                                banner.image_path
-                                                    ? `/storage/${banner.image_path}`
-                                                    : img
-                                            }
-                                            alt={`Carousel item ${index}`}
-                                            className="object-contain md:rounded-2xl rounded-none w-[100vw] sm:w-auto sm:h-full"
-                                        />
+                                        <a href={banner.link} target="_blank">
+                                            <img
+                                                src={
+                                                    banner.image_path
+                                                        ? `/storage/${banner.image_path}`
+                                                        : img
+                                                }
+                                                alt={`Carousel item ${index}`}
+                                                className="object-contain md:rounded-2xl rounded-none w-[100vw] sm:w-auto sm:h-full"
+                                            />
+                                        </a>
                                     </CarouselItem>
                                 ))}
                         </CarouselContent>
+                        <div className="absolute -bottom-5 w-full bg-background flex justify-center items-center">
+                            <CarouselPrevious className="absolute left-0 bottom-0" />
+                            <CarouselNext className="absolute right-0 bottom-0" />
+                        </div>
                     </Carousel>
 
                     {/* NEW LAUNCH PROPERTIES */}
