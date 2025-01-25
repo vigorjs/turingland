@@ -40,13 +40,6 @@ export default function Home({
         (pref) => pref.key === "hero_url"
     )?.value;
 
-    const formatPrice = (price) => {
-        return new Intl.NumberFormat("id-ID", {
-            style: "currency",
-            currency: "IDR",
-        }).format(price);
-    };
-
     return (
         <GuestLayout auth={auth}>
             <Head title="Tempat Jual Beli Rumah Apartement" />

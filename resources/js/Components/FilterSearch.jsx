@@ -19,7 +19,7 @@ export const FilterSearch = () => {
     return (
         <div
             className={`absolute w-full overflow-x-auto z-10 px-3 md:px-36 ${
-                isSimpleSearch ? "-mt-36" : "-mt-[216px]"
+                isSimpleSearch ? "-mt-48" : "-mt-[265px]"
             }`}
         >
             <div className="bg-white/85 dark:bg-muted w-full h-full sm:rounded-2xl transition-all duration-300 ease-in-out">
@@ -48,8 +48,14 @@ export const FilterSearch = () => {
     );
 };
 
-const SimpleFilterSearch = ({ setIsSimpleSearch, areas, categories, locations }) => {
+const SimpleFilterSearch = ({
+    setIsSimpleSearch,
+    areas,
+    categories,
+    locations,
+}) => {
     const [filters, setFilters] = useState({
+        query: "",
         area_id: "",
         category_id: "", // Updated from type to category_id
         price_min: "",
@@ -82,6 +88,23 @@ const SimpleFilterSearch = ({ setIsSimpleSearch, areas, categories, locations })
             className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4"
             onSubmit={handleSubmit}
         >
+            <div className="grid w-full items-center gap-1.5">
+                <Label className="text-[#5B5B5B] dark:text-white font-normal">
+                    Pencarian
+                </Label>
+                <Input
+                    className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6]"
+                    type="text"
+                    onChange={(e) =>
+                        setFilters((prev) => ({
+                            ...prev,
+                            query: e.target.value,
+                        }))
+                    }
+                    placeholder="Cari properti, lokasi, area, developer, atau agent"
+                />
+            </div>
+
             <div className="grid w-full items-center gap-1.5">
                 <Label className="dark:text-white text-[#5B5B5B] font-normal">
                     Lokasi
@@ -155,7 +178,7 @@ const SimpleFilterSearch = ({ setIsSimpleSearch, areas, categories, locations })
                 </Select>
             </div>
 
-            <div className="grid w-full items-end">
+            <div className="grid col-span-1 sm:col-span-2 lg:col-span-4 w-full items-end">
                 <Button
                     type="submit"
                     className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-lg w-full"
@@ -176,9 +199,10 @@ const AdvanceFilterSearch = ({
     areas,
     categories,
     developers,
-    locations
+    locations,
 }) => {
     const [filters, setFilters] = useState({
+        query: "",
         area_id: "",
         category_id: "",
         price_min: "",
@@ -199,15 +223,17 @@ const AdvanceFilterSearch = ({
         { id: "sold", name: "Terjual" },
     ];
 
-    const filteredAreas = filters.location_id 
-    ? areas.filter(area => area.location_id === parseInt(filters.location_id))
-    : areas;
+    const filteredAreas = filters.location_id
+        ? areas.filter(
+              (area) => area.location_id === parseInt(filters.location_id)
+          )
+        : areas;
 
     const handleLocationChange = (locationId) => {
-        setFilters(prev => ({
+        setFilters((prev) => ({
             ...prev,
             location_id: locationId,
-            area_id: "" // Reset area ketika lokasi berubah
+            area_id: "", // Reset area ketika lokasi berubah
         }));
     };
 
@@ -250,51 +276,20 @@ const AdvanceFilterSearch = ({
             onSubmit={handleSubmit}
         >
             <div className="grid w-full items-center gap-1.5">
-                <Label className="dark:text-white text-[#5B5B5B] font-normal">
-                    Lokasi
+                <Label className="text-[#5B5B5B] dark:text-white font-normal">
+                    Pencarian
                 </Label>
-                <Select
-                    value={filters.location_id}
-                    onValueChange={handleLocationChange}
-                >
-                    <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6]">
-                        <SelectValue placeholder="Pilih Lokasi" />
-                    </SelectTrigger>
-                    <SelectContent className="z-50 bg-white dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
-                        {locations.map((location) => (
-                            <SelectItem
-                                key={location.id}
-                                value={location.id.toString()}
-                            >
-                                {location.name}
-                            </SelectItem>
-                        ))}
-                    </SelectContent>
-                </Select>
-            </div>
-            <div className="grid w-full items-center gap-1.5">
-                <Label className="dark:text-white text-[#5B5B5B] font-normal">
-                    Tipe Property
-                </Label>
-                <Select
-                    onValueChange={(value) =>
-                        setFilters((prev) => ({ ...prev, category_id: value }))
+                <Input
+                    className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6]"
+                    type="text"
+                    onChange={(e) =>
+                        setFilters((prev) => ({
+                            ...prev,
+                            query: e.target.value,
+                        }))
                     }
-                >
-                    <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6]">
-                        <SelectValue placeholder="Tipe Property" />
-                    </SelectTrigger>
-                    <SelectContent className="z-50 bg-white dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
-                        {categories.map((category) => (
-                            <SelectItem
-                                key={category.id}
-                                value={category.id.toString()}
-                            >
-                                {category.name}
-                            </SelectItem>
-                        ))}
-                    </SelectContent>
-                </Select>
+                    placeholder="Cari properti, lokasi, area, developer, atau agent"
+                />
             </div>
 
             <div className="grid w-full items-center gap-1.5">
@@ -331,14 +326,63 @@ const AdvanceFilterSearch = ({
                 />
             </div>
 
-            <div className="grid w-full max-w-sm items-center gap-1.5">
+            <div className="grid w-full items-center gap-1.5">
+                <Label className="dark:text-white text-[#5B5B5B] font-normal">
+                    Kategori
+                </Label>
+                <Select
+                    onValueChange={(value) =>
+                        setFilters((prev) => ({ ...prev, category_id: value }))
+                    }
+                >
+                    <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6]">
+                        <SelectValue placeholder="Pilih kategori" />
+                    </SelectTrigger>
+                    <SelectContent className="z-50 bg-white dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
+                        {categories.map((category) => (
+                            <SelectItem
+                                key={category.id}
+                                value={category.id.toString()}
+                            >
+                                {category.name}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
+            </div>
+
+            <div className="grid w-full items-center gap-1.5">
+                <Label className="dark:text-white text-[#5B5B5B] font-normal">
+                    Lokasi
+                </Label>
+                <Select
+                    value={filters.location_id}
+                    onValueChange={handleLocationChange}
+                >
+                    <SelectTrigger className="bg-[#EDEDED] dark:bg-[#3f3f3f] dark:text-[#8B8B8B] border border-[#C6C6C6]">
+                        <SelectValue placeholder="Pilih Lokasi" />
+                    </SelectTrigger>
+                    <SelectContent className="z-50 bg-white dark:bg-[#3f3f3f] dark:text-[#8B8B8B]">
+                        {locations.map((location) => (
+                            <SelectItem
+                                key={location.id}
+                                value={location.id.toString()}
+                            >
+                                {location.name}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
+            </div>
+
+            <div className="grid w-full items-center gap-1.5">
                 <Label
                     className="dark:text-white text-[#5B5B5B] font-normal"
                     htmlFor="email"
                 >
                     Area
                 </Label>
-                <Select 
+                <Select
                     onValueChange={(value) =>
                         setFilters((prev) => ({ ...prev, area_id: value }))
                     }
@@ -384,7 +428,7 @@ const AdvanceFilterSearch = ({
                 </Select>
             </div>
 
-            <div className="grid w-full max-w-sm items-center gap-1.5">
+            <div className="grid w-full items-center gap-1.5">
                 <Label
                     className="dark:text-white text-[#5B5B5B] font-normal"
                     htmlFor="email"
@@ -408,11 +452,7 @@ const AdvanceFilterSearch = ({
                     </SelectContent>
                 </Select>
             </div>
-            <div className="grid w-full max-w-sm items-end">
-                <Label
-                    className="text-[#5B5B5B] dark:text-white font-normal"
-                    htmlFor="email"
-                ></Label>
+            <div className="grid col-span-1 sm:col-span-2 lg:col-span-4 w-full items-end">
                 <Button className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-lg">
                     <SearchIcon />
                     Cari
