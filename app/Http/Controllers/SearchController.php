@@ -22,7 +22,9 @@ class SearchController extends Controller
             ->paginate(12)
             ->withQueryString();
 
-        $banner = Banner::whereNotNull('image_path')->get();
+        $banner = Banner::where('is_active', true)
+        ->limit(3)
+        ->get();
 
         $this->logger($request, "search index");
 

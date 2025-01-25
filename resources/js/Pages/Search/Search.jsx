@@ -15,7 +15,9 @@ export default function SearchPage({
 }) {
     const [propertiesData, setPropertiesData] = useState(properties);
     const [currentPage, setCurrentPage] = useState(properties.current_page);
-    const [hasMore, setHasMore] = useState(properties.current_page < properties.last_page);
+    const [hasMore, setHasMore] = useState(
+        properties.current_page < properties.last_page
+    );
     const [loading, setLoading] = useState(false);
 
     const observer = useRef();
@@ -38,7 +40,9 @@ export default function SearchPage({
         setLoading(true);
 
         try {
-            const response = await axios.get(`/search-api?page=${currentPage + 1}`);
+            const response = await axios.get(
+                `/search-api?page=${currentPage + 1}`
+            );
             const newData = response.data.properties;
             setPropertiesData((prev) => ({
                 ...prev,
@@ -75,30 +79,45 @@ export default function SearchPage({
                     <div className="w-full sm:w-2/3 flex flex-col gap-5">
                         {propertiesData?.data?.length > 0
                             ? propertiesData.data.map((property, index) => {
-                                if (index === propertiesData.data.length - 1) {
-                                    return (
-                                        <div key={index} ref={lastPropertyRef}>
-                                            <CardPropertySearch property={property} />
-                                        </div>
-                                    );
-                                }
-                                return (
-                                    <CardPropertySearch key={index} property={property} />
-                                );
-                            })
+                                  if (
+                                      index ===
+                                      propertiesData.data.length - 1
+                                  ) {
+                                      return (
+                                          <div
+                                              key={index}
+                                              ref={lastPropertyRef}
+                                          >
+                                              <CardPropertySearch
+                                                  property={property}
+                                              />
+                                          </div>
+                                      );
+                                  }
+                                  return (
+                                      <CardPropertySearch
+                                          key={index}
+                                          property={property}
+                                      />
+                                  );
+                              })
                             : null}
                     </div>
-                    <div className="sticky top-3.5 w-full sm:w-1/3 flex flex-col gap-3">
+                    <div className="sticky top-3.5 w-full sm:w-1/3 flex flex-col gap-40">
                         {banner?.length > 0
                             ? banner.map((bnr, index) => (
-                                <Link href={bnr.link} key={index}>
-                                    <img
-                                        src={`/storage/${bnr.image_path}`}
-                                        alt={bnr.image_alt || "Banner"}
-                                        className="object-contain rounded-2xl w-full"
-                                    />
-                                </Link>
-                            ))
+                                  <Link href={bnr.link} key={index}>
+                                      <img
+                                          src={
+                                              bnr.image_path
+                                                  ? `/storage/${bnr.image_path}`
+                                                  : `/assets/bannerfallback.png`
+                                          }
+                                          alt={bnr.image_alt || "Banner"}
+                                          className="object-contain rounded-2xl w-full"
+                                      />
+                                  </Link>
+                              ))
                             : null}
                     </div>
                 </div>

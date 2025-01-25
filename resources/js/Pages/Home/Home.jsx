@@ -89,7 +89,7 @@ export default function Home({
                                                 src={
                                                     banner.image_path
                                                         ? `/storage/${banner.image_path}`
-                                                        : img
+                                                        : `/assets/bannerfallback.png`
                                                 }
                                                 alt={`Carousel item ${index}`}
                                                 className="object-contain md:rounded-2xl rounded-none w-[100vw] sm:w-auto sm:h-full"

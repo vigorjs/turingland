@@ -25,7 +25,7 @@ class HomeController extends Controller
             'categories' => Category::select('id', 'name', 'icon')->with(['properties.images'])->get(),
             'locations' => Location::select('id', 'name')->get(),
             'testimonials' => Testimony::all(),
-            'banners' => Banner::all(),
+            'banners' => Banner::where('is_active', true)->get(),
             'webPreferences' => WebPreferences::all(),
             'latestProperties' => Property::with(['area', 'developer', 'categories', 'images'])
                 ->latest()

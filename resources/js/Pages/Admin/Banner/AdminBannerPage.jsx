@@ -326,7 +326,7 @@ export default function AdminBannerPage({ banners, auth }) {
                                                         src={
                                                             banner.image_path
                                                                 ? `/storage/${banner.image_path}`
-                                                                : "/assets/hero-banner.webp"
+                                                                : "/assets/bannerfallback.png"
                                                         }
                                                         alt={banner.title}
                                                         className="w-full h-auto object-contain"
