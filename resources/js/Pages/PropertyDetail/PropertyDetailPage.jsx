@@ -34,8 +34,6 @@ export default function PropertyDetailPage({
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [isInfoLess, setIsInfoLess] = useState(true);
 
-    console.log("property.images: ", property.images);
-
     const imagePrimary = property.images.length > 0 ? property.images[0] : null;
     // const imagePrimary = property.images.filter(
     //     (img) => img.is_primary == true
@@ -48,9 +46,8 @@ export default function PropertyDetailPage({
 
     const allImages = [imagePrimary, ...otherImages];
 
-    console.log("property: ", property);
-    // console.log("imagePrimary: ", imagePrimary);
-    // console.log("otherImages: ", otherImages);
+    //
+    //
 
     return (
         <GuestLayout auth={auth}>
