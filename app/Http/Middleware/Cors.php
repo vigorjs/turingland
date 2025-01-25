@@ -16,11 +16,11 @@ class Cors
     public function handle(Request $request, Closure $next): Response
     {
         $response = $next($request);
-    
+
         $response->headers->set('Access-Control-Allow-Origin', '*');
         $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
         $response->headers->set('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Authorization, X-Request-With');
-    
+
         return $response;
     }
 }

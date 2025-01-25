@@ -358,8 +358,13 @@ export default function PropertyDetailPage({
                                     </p>
                                 </div>
                             </div>
-                            <Link
-                                href={`https://wa.me/${property.agent.wa_number}`}
+                            <a
+                                href={`https://wa.me/${property.agent.wa_number.replace(
+                                    /[-. ]/g,
+                                    ""
+                                )}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
                             >
                                 <Button className="w-full mt-3 bg-green-500 hover:bg-green-600">
                                     <FaWhatsapp className="text-white" />
@@ -367,7 +372,7 @@ export default function PropertyDetailPage({
                                         Whatsapp
                                     </p>
                                 </Button>
-                            </Link>
+                            </a>
                         </div>
 
                         <div className="shadow-md p-4 rounded-2xl mb-7">
