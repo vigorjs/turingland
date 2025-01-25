@@ -359,7 +359,7 @@ export default function PropertyDetailPage({
                                 </div>
                             </div>
                             <Link
-                                href={`https://api.whatsapp.com/send?phone=${property.agent.wa_number}`}
+                                href={`https://wa.me/${property.agent.wa_number}`}
                             >
                                 <Button className="w-full mt-3 bg-green-500 hover:bg-green-600">
                                     <FaWhatsapp className="text-white" />
