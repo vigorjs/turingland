@@ -18,7 +18,7 @@ class SearchController extends Controller
     {
         $properties = Property::query()
             ->filter($request->all())
-            ->with(['developer', 'images', 'categories', 'area'])
+            ->with(['developer', 'images', 'categories', 'area', 'agent'])
             ->paginate(12)
             ->withQueryString();
 

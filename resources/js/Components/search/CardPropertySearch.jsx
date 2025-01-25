@@ -14,11 +14,6 @@ import { Link } from "@inertiajs/react";
 import { typeProperty } from "@/const/TypeProperty";
 
 export default function CardPropertySearch({ property }) {
-    const img2 =
-        "https://ik.imagekit.io/pashouses/pb1/tr:n-hl_v3/property/front-house/-JDoNqEMWigKKq7jtLReZVFmjQ7pfFdb0Op7MHND.jpeg";
-    const img1 =
-        "https://s3-alpha-sig.figma.com/img/db80/4347/cb68839c79ca58a9b46777e9c9c07cc0?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=nXWoIhqAUTi-at1criMJPC8l-xudGFynTTWb9Y-EQ3SJVxbjtvcOe0gMCLVH-t9DqTyNiL-Yzev8ZoIv8rUhxICHbXB8rkLeNKxj7EQ62uTTgu9cxyvbWTE~QRaByjGG1cJ6vcaSQ6MXKBL0oqfIGiBf0VqSA6UKFh5uufI7P4FLQmWmiBmecXFnhZ2A5p2FkQ5Vc~d9jsWCoMVMpC711S6lfNymccRCkodcG15Mx22s-p2ydCVU06b5TyCZg7x1tG2lcqPcdyaX07KFBNHfmAp9N23KdaCvnBgsmBAeg76eEDgO9y7B4xcEcerX559xGjDraUB~HpMhDXtZGXxetg__";
-
     const imagePrimary = property.images;
 
     return (
@@ -152,16 +147,42 @@ export default function CardPropertySearch({ property }) {
                         </div>
 
                         <div className="flex justify-center items-center gap-2 w-full lg:w-auto">
-                            <Button variant="outline" className="w-full mt-3">
-                                <PhoneCall className="text-primary" />
-                                <p className="text-primary text-sm">
-                                    08581700...
-                                </p>
-                            </Button>
-                            <Button className="w-full mt-3 bg-green-500 hover:bg-green-600">
-                                <FaWhatsapp className="text-white" />
-                                <p className="text-white text-sm">Whatsapp</p>
-                            </Button>
+                            <a
+                                href={`https://wa.me/${property.agent.wa_number.replace(
+                                    /[-. ]/g,
+                                    ""
+                                )}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <Button
+                                    variant="outline"
+                                    className="w-full mt-3"
+                                >
+                                    <PhoneCall className="text-primary" />
+                                    <p className="text-primary text-sm">
+                                        {property.agent.wa_number.replace(
+                                            /[-. ]/g,
+                                            ""
+                                        )}
+                                    </p>
+                                </Button>
+                            </a>
+                            <a
+                                href={`https://wa.me/${property.agent.wa_number.replace(
+                                    /[-. ]/g,
+                                    ""
+                                )}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <Button className="w-full mt-3 bg-green-500 hover:bg-green-600">
+                                    <FaWhatsapp className="text-white" />
+                                    <p className="text-white text-sm">
+                                        Whatsapp
+                                    </p>
+                                </Button>
+                            </a>
                         </div>
                     </div>
                 </div>

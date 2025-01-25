@@ -44,6 +44,8 @@ export default function SearchQueryChart({ logs }) {
                     query = context.min_price;
                 } else if (context.max_price) {
                     query = context.max_price;
+                } else if (context.max_price) {
+                    query = context.t;
                 }
 
                 // Ensure query is a string and truncate if too long
