@@ -56,7 +56,7 @@ const SearchBar = ({ categories, areas, filters, setPropertiesData }) => {
     const orderAdsTexts = ["Terbaru", "Harga Termurah", "Luas Bangunan Terluas"];
 
     const { data, setData } = useForm({
-        query: "",
+        query: filters["query"] ?? "",
     });
 
     const debounce = useDebouncedCallback(async (query) => {
