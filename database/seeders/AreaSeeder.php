@@ -15,49 +15,49 @@ class AreaSeeder extends Seeder
     {
         $areas = [
             [
-                'name' => 'Central Park',
+                'name' => 'PIK Jakarta',
                 'description' => 'A beautiful park located in the city center.',
                 'is_active' => true,
                 "location_id" => 1,
             ],
             [
-                'name' => 'Downtown District',
+                'name' => 'SCBD',
                 'description' => 'The main business and entertainment area.',
                 'is_active' => true,
                 "location_id" => 2,
             ],
             [
-                'name' => 'Riverside',
+                'name' => 'Ragunan',
                 'description' => 'A peaceful area next to the river with stunning views.',
                 'is_active' => true,
                 "location_id" => 3,
             ],
             [
-                'name' => 'Historic Quarter',
+                'name' => 'Sudirman',
                 'description' => 'An area rich in history with many landmarks.',
                 'is_active' => true,
                 "location_id" => 4,
             ],
             [
-                'name' => 'Industrial Zone',
+                'name' => 'Karawang',
                 'description' => 'A zone designated for industrial use.',
                 'is_active' => false,
                 "location_id" => 1,
             ],
             [
-                'name' => 'Suburban Neighborhood',
+                'name' => 'Puncak',
                 'description' => 'A quiet residential area outside the city center.',
                 'is_active' => true,
                 "location_id" => 2,
             ],
             [
-                'name' => 'Mountain Retreat',
+                'name' => 'Gunung Muria',
                 'description' => 'A remote area surrounded by mountains.',
                 'is_active' => true,
                 "location_id" => 3,
             ],
             [
-                'name' => 'Beachside',
+                'name' => 'PIK Selatan',
                 'description' => 'A popular destination by the beach.',
                 'is_active' => true,
                 "location_id" => 4,
