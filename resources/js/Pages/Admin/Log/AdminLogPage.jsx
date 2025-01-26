@@ -6,6 +6,8 @@ import { toast } from "@/hooks/use-toast";
 import { router } from "@inertiajs/react";
 import { HiSortAscending, HiSortDescending } from "react-icons/hi";
 import { Input } from "@/Components/ui/input";
+import { FaPlus, FaRegFileExcel } from "react-icons/fa";
+import { Button } from "@/Components/ui/button";
 
 export default function AdminLogPage({ logs, auth }) {
     const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
@@ -60,6 +62,14 @@ export default function AdminLogPage({ logs, auth }) {
 
     return (
         <AdminLayout auth={auth} title="Logs">
+            <Button
+                onClick={() => {
+                    window.location.href = route("dashboard.log.export");
+                }}
+                className="text-white mb-3.5 bg-green-500 hover:bg-green-600 flex items-center gap-2"
+            >
+                <FaRegFileExcel /> Export CSV
+            </Button>
             <div className="flex flex-col">
                 <div className="overflow-x-auto pb-4">
                     <div className="block">

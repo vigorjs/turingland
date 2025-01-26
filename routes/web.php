@@ -47,6 +47,7 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified', 'role:admin|agent']
     Route::get('/logs', [LogController::class, 'index'])->middleware('role:admin')->name('dashboard.log');
     Route::get('/logs/level/{level}', [LogController::class, 'filterByLevel'])->middleware('role:admin')->name('dashboard.log.level');
     Route::delete('/logs/{id}', [LogController::class, 'destroy'])->middleware('role:admin')->name('dashboard.log.destroy');
+    Route::get('/logs/export', [LogController::class, 'export'])->middleware('role:admin')->name('dashboard.log.export');
 
     // DASHBOARD
     Route::get('', [AdminDashboardController::class, 'index'])->middleware('role:admin|agent')->name('dashboard');

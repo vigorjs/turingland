@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\LogsExport;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Maatwebsite\Excel\Facades\Excel;
 use Yoeriboven\LaravelLogDb\Models\LogMessage;
 
 class LogController extends Controller
@@ -66,5 +68,9 @@ class LogController extends Controller
         $log->delete();
 
         return redirect()->back();
+    }
+
+    public function export(){
+        return Excel::download(new LogsExport, 'search_query.csv');
     }
 }
