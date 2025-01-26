@@ -20,9 +20,8 @@ import {
     BedDoubleIcon,
     CarFrontIcon,
     MapPinIcon,
-    QuoteIcon,
 } from "lucide-react";
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home({
     auth,
@@ -33,12 +32,27 @@ export default function Home({
     latestProperties,
     featuredProperties,
 }) {
+    const [api, setApi] = useState();
+    const [current, setCurrent] = useState(0);
+
     const img =
         "https://ecatalog.sinarmasland.com/_next/image?url=https%3A%2F%2Fecatalog.sinarmasland.com%2Fassets%2Fsite-setting-files%2F1%2Fhomepage-background-banner-desktop-677b6f397dc74.jpg&w=3840&q=75";
 
     const heroUrl = webPreferences?.find(
         (pref) => pref.key === "hero_url"
     )?.value;
+
+    useEffect(() => {
+        if (!api) {
+            return;
+        }
+
+        setCurrent(api.selectedScrollSnap() + 1);
+
+        api.on("select", () => {
+            setCurrent(api.selectedScrollSnap() + 1);
+        });
+    }, [api]);
 
     return (
         <GuestLayout auth={auth}>
@@ -64,7 +78,8 @@ export default function Home({
                 <div className="px-3 sm:px-4 md:px-6 lg:px-[150px]">
                     {/* ADS SECTION */}
                     <Carousel
-                        className="mb-4"
+                        setApi={setApi}
+                        className="mb-4 relative"
                         plugins={[
                             Autoplay({
                                 delay: 2500,
@@ -75,16 +90,20 @@ export default function Home({
                             loop: true,
                         }}
                     >
-                        <CarouselContent>
+                        <CarouselContent className="flex gap-4">
                             {banners
-                                .filter((banner) => banner.is_active == true)
+                                .filter((banner) => banner.is_active)
                                 .sort((a, b) => a.order - b.order) // Urutkan berdasarkan banner.order dari kecil ke besar
                                 .map((banner, index) => (
                                     <CarouselItem
                                         key={`ads-section-${index}`}
-                                        className="flex-shrink-0 basis-1/1 md:basis-1/2 max-h-[40vh]"
+                                        className="flex-shrink-0 basis-full sm:basis-1/1 md:basis-1/2 lg:basis-1/3 max-h-[40vh]"
                                     >
-                                        <a href={banner.link} target="_blank">
+                                        <a
+                                            href={banner.link}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
                                             <img
                                                 src={
                                                     banner.image_path
@@ -92,15 +111,29 @@ export default function Home({
                                                         : `/assets/bannerfallback.png`
                                                 }
                                                 alt={`Carousel item ${index}`}
-                                                className="object-contain md:rounded-2xl rounded-none w-[100vw] sm:w-auto sm:h-full"
+                                                className="object-contain rounded-none md:rounded-2xl w-full h-full"
                                             />
                                         </a>
                                     </CarouselItem>
                                 ))}
                         </CarouselContent>
-                        <div className="absolute -bottom-5 w-full bg-background flex justify-center items-center">
-                            <CarouselPrevious className="absolute left-0 bottom-0" />
-                            <CarouselNext className="absolute right-0 bottom-0" />
+                        <div className="absolute -bottom-5 w-full flex justify-between px-4 items-center">
+                            <CarouselPrevious className="bg-white p-2 left-0 rounded-full shadow-md cursor-pointer" />
+                            <CarouselNext className="bg-white p-2 right-0 rounded-full shadow-md cursor-pointer" />
+                        </div>
+                        <div className="absolute -bottom-6 w-full flex justify-center items-center space-x-2">
+                            {banners
+                                .filter((banner) => banner.is_active === true)
+                                .map((_, index) => (
+                                    <span
+                                        key={`dot-${index}`}
+                                        className={`w-3 h-3 rounded-full ${
+                                            index === current
+                                                ? "bg-primary"
+                                                : "bg-gray-400"
+                                        }`}
+                                    />
+                                ))}
                         </div>
                     </Carousel>
 
