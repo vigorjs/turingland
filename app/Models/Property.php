@@ -64,25 +64,24 @@ class Property extends Model
             }
         }
 
-        // if (!empty($filters['query'])) {
-        //     $query->where('title', 'like', '%' . $filters['query'] . '%');
-        // }
-
         if (!empty($filters['query'])) {
-            $query
-                ->where('title', 'like', '%' . $filters['query'] . '%')
-                ->orWhereHas('categories', function ($query) use ($filters) {
-                    $query->where('categories.name', 'like', '%' . $filters['query'] . '%');
-                })
-                ->orWhereHas('area', function ($query) use ($filters) {
-                    $query->where('areas.name', 'like', '%' . $filters['query'] . '%');
-                })
-                ->orWhereHas('developer', function ($query) use ($filters) {
-                    $query->where('developers.name', 'like', '%' . $filters['query'] . '%');
-                })
-                ->orWhereHas('agent', function ($query) use ($filters) {
-                    $query->where('users.name', 'like', '%' . $filters['query'] . '%');
-                });
+            $query->where(function ($q) use ($filters) {
+                $searchTerm = '%' . strtolower($filters['query']) . '%';
+                
+                $q->whereRaw('LOWER(title) LIKE ?', [$searchTerm])
+                  ->orWhereHas('categories', function ($subQuery) use ($searchTerm) {
+                      $subQuery->whereRaw('LOWER(name) LIKE ?', [$searchTerm]);
+                  })
+                  ->orWhereHas('area', function ($subQuery) use ($searchTerm) {
+                      $subQuery->whereRaw('LOWER(name) LIKE ?', [$searchTerm]);
+                  })
+                  ->orWhereHas('developer', function ($subQuery) use ($searchTerm) {
+                      $subQuery->whereRaw('LOWER(name) LIKE ?', [$searchTerm]);
+                  })
+                  ->orWhereHas('agent', function ($subQuery) use ($searchTerm) {
+                      $subQuery->whereRaw('LOWER(name) LIKE ?', [$searchTerm]);
+                  });
+            });
         }
 
         // Untuk category_id
