@@ -106,7 +106,7 @@ export default function SearchPage({
                     <div className="sticky top-3.5 w-full sm:w-1/3 flex flex-col gap-40">
                         {banner?.length > 0
                             ? banner.map((bnr, index) => (
-                                  <Link href={bnr.link} key={index}>
+                                  <a href={bnr.link} key={index}>
                                       <img
                                           src={
                                               bnr.image_path
@@ -116,7 +116,7 @@ export default function SearchPage({
                                           alt={bnr.image_alt || "Banner"}
                                           className="object-contain rounded-2xl w-full"
                                       />
-                                  </Link>
+                                  </a>
                               ))
                             : null}
                     </div>
