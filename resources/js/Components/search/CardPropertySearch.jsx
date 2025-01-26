@@ -148,7 +148,7 @@ export default function CardPropertySearch({ property }) {
 
                         <div className="flex justify-center items-center gap-2 w-full lg:w-auto">
                             <a
-                                href={`https://wa.me/${property.agent.wa_number.replace(
+                                href={`https://wa.me/${property?.agent?.wa_number.replace(
                                     /[-. ]/g,
                                     ""
                                 )}`}
@@ -161,7 +161,7 @@ export default function CardPropertySearch({ property }) {
                                 >
                                     <PhoneCall className="text-primary" />
                                     <p className="text-primary text-sm">
-                                        {property.agent.wa_number.replace(
+                                        {property?.agent?.wa_number.replace(
                                             /[-. ]/g,
                                             ""
                                         )}
@@ -169,7 +169,7 @@ export default function CardPropertySearch({ property }) {
                                 </Button>
                             </a>
                             <a
-                                href={`https://wa.me/${property.agent.wa_number.replace(
+                                href={`https://wa.me/${property?.agent?.wa_number.replace(
                                     /[-. ]/g,
                                     ""
                                 )}`}

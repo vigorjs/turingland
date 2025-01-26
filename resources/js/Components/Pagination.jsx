@@ -12,12 +12,12 @@ const Pagination = ({
             className="flex items-center justify-center py-4"
             aria-label="Table navigation"
         >
-            <ul className="flex items-center justify-center text-sm h-auto gap-12">
+            <ul className="flex flex-wrap items-center justify-center text-sm gap-4 sm:gap-6 md:gap-8">
                 {prev_page_url && (
                     <li>
                         <Link
                             href={first_page_url}
-                            className="flex items-center justify-center gap-2 px-3 h-8 ml-0 text-gray-500 bg-white font-medium text-base leading-7 hover:text-gray-700"
+                            className="flex items-center justify-center gap-2 px-3 h-10 text-gray-500 bg-white font-medium text-sm sm:text-base leading-7 rounded-md hover:text-gray-700 hover:bg-gray-100"
                         >
                             <svg
                                 width="21"
@@ -40,12 +40,12 @@ const Pagination = ({
                 )}
 
                 <li>
-                    <ul className="flex items-center justify-center gap-4">
+                    <ul className="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
                         {links.map((link, index) => (
                             <li key={index}>
                                 <Link
                                     href={link.url || "javascript:;"}
-                                    className={`font-normal text-base leading-7 py-2.5 px-4 rounded-full transition-all duration-500 ${
+                                    className={`text-sm sm:text-base font-normal leading-7 py-2 px-3 sm:py-2.5 sm:px-4 rounded-full transition-all duration-300 ${
                                         link.active
                                             ? "bg-primary text-white"
                                             : "bg-white text-gray-500 hover:bg-primary hover:text-white"
@@ -63,7 +63,7 @@ const Pagination = ({
                     <li>
                         <Link
                             href={last_page_url}
-                            className="flex items-center justify-center gap-2 px-3 h-8 ml-0 text-gray-500 bg-white font-medium text-base leading-7 hover:text-gray-700"
+                            className="flex items-center justify-center gap-2 px-3 h-10 text-gray-500 bg-white font-medium text-sm sm:text-base leading-7 rounded-md hover:text-gray-700 hover:bg-gray-100"
                         >
                             Last
                             <svg
